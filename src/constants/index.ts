@@ -1,0 +1,1 @@
+// FOLDER FOR CONSTANS (example - BASE URL, EXPORTS)

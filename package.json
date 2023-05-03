@@ -1,0 +1,33 @@
+{
+  "name": "store-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.29.5",
+    "@types/node": "18.16.3",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
+    "next": "13.3.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@mui/material": "^5.12.3",
+    "@testing-library/react": "^14.0.0",
+    "eslint": "^8.39.0",
+    "eslint-config-next": "^13.3.4",
+    "jest": "^29.5.0",
+    "react-test-renderer": "^18.2.0",
+    "sass": "^1.62.1",
+    "typescript": "^5.0.4"
+  }
+}
