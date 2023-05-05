@@ -74,7 +74,7 @@ const Authorization = (props: Props) => {
 							wrap='wrap'
 						>
 							<Typography
-								variant='h1'
+								variant='h2'
 								color='initial'
 								sx={{ fontWeight: 500, fontSize: 45, lineHeight: '52.79px' }}
 							>
@@ -83,14 +83,14 @@ const Authorization = (props: Props) => {
 							<Typography
 								variant='body1'
 								// color="initial"
-								sx={{
-									fontWeight: 300,
-									fontSize: 15,
-									lineHeight: '17.6px',
-									color: '#5C5C5C',
-									mt: 2,
-									mb: 6,
-								}}
+								// sx={{
+								// 	fontWeight: 300,
+								// 	fontSize: 15,
+								// 	lineHeight: '17.6px',
+								// 	color: '#5C5C5C',
+								// 	mt: 2,
+								// 	mb: 6,
+								// }}
 							>
 								Welcome back! Please enter your details to log into your
 								account.
