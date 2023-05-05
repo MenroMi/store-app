@@ -21,6 +21,18 @@ import Link from 'next/link'
 type Props = {}
 
 const Authorization = (props: Props) => {
+	const [email, setEmail] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
+	
+	const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		if (email && password) {
+			console.log(email, password)
+			setEmail('')
+			setPassword('')
+		}
+	}
+
 	return (
 		<>
 			<Head>
@@ -73,101 +85,61 @@ const Authorization = (props: Props) => {
 							alignContent='center'
 							wrap='wrap'
 						>
-							<Typography
-								variant='h2'
-								color='initial'
-								sx={{ fontWeight: 500, fontSize: 45, lineHeight: '52.79px' }}
-							>
-								Welcome back
-							</Typography>
+							<Typography variant='h2'>Welcome back</Typography>
 							<Typography
 								variant='body1'
-								// color="initial"
-								// sx={{
-								// 	fontWeight: 300,
-								// 	fontSize: 15,
-								// 	lineHeight: '17.6px',
-								// 	color: '#5C5C5C',
-								// 	mt: 2,
-								// 	mb: 6,
-								// }}
+								sx={{
+									mt: 2,
+									mb: 6,
+								}}
 							>
 								Welcome back! Please enter your details to log into your
 								account.
 							</Typography>
-							<Form action=''>
+							<Form action='' onSubmit={handleSubmit}>
 								<FormControl>
-									<FormLabel
-										sx={{
-											pb: 1,
-										}}
-										htmlFor='email'
-									>
-										<Box
-											component={'span'}
-											sx={{
-												fontWeight: 500,
-												fontSize: 15,
-												lineHeight: '17.6px',
-												color: '#494949',
-											}}
-										>
+									<FormLabel htmlFor='email'>
+										<Typography variant='body2' sx={{ display: 'inline' }}>
 											Email{' '}
-										</Box>
-										<Box
-											component={'span'}
-											sx={{
-												fontWeight: 500,
-												fontSize: 15,
-												lineHeight: '17.6px',
-												color: '#FE645E',
-											}}
+										</Typography>
+										<Typography
+											variant='body2'
+											sx={{ display: 'inline', color: '#FE645E' }}
 										>
 											*
-										</Box>
+										</Typography>
 									</FormLabel>
 									<OutlinedInput
-										sx={{ width: '436px', heigth: '48px', borderRadius: '8px' }}
-										size='medium'
+										sx={{ width: '436px', mt: 1 }}
 										id='email'
-										defaultValue='example@mail.com'
+										placeholder='example@mail.com'
+										required
+										type='email'
+										value={email}
+										onChange={e => setEmail(e.target.value)}
 									/>
 								</FormControl>
 								<FormControl sx={{ mt: 3 }}>
-									<FormLabel
-										sx={{
-											pb: 1,
-										}}
-										htmlFor='password'
-									>
-										<Box
-											component={'span'}
-											sx={{
-												fontWeight: 500,
-												fontSize: 15,
-												lineHeight: '17.6px',
-												color: '#494949',
-											}}
-										>
+									<FormLabel htmlFor='email'>
+										<Typography variant='body2' sx={{ display: 'inline' }}>
 											Password{' '}
-										</Box>
-										<Box
-											component={'span'}
-											sx={{
-												fontWeight: 500,
-												fontSize: 15,
-												lineHeight: '17.6px',
-												color: '#FE645E',
-											}}
+										</Typography>
+										<Typography
+											variant='body2'
+											sx={{ display: 'inline', color: '#FE645E' }}
 										>
 											*
-										</Box>
+										</Typography>
 									</FormLabel>
 									<OutlinedInput
-										sx={{ width: '436px', heigth: '48px', borderRadius: '8px' }}
-										size='medium'
+										sx={{ width: '436px', mt: 1 }}
 										id='password'
-										defaultValue='at least 8 characters'
+										required
+										placeholder='at least 8 characters'
+										type='password'
+										inputProps={{ minLength: 8 }}
+										onChange={e => setPassword(e.target.value)}
+										value={password}
 									/>
 								</FormControl>
 								<Box
@@ -176,64 +148,43 @@ const Authorization = (props: Props) => {
 										display: 'flex',
 										alignItems: 'center',
 										justifyContent: 'space-between',
-										mt: 1,
+										mt: 2,
 									}}
 								>
 									<FormControlLabel
 										control={<Checkbox size='small' />}
-										label='Remember me'
+										label={<Typography variant='body2'>Remember me</Typography>}
+										sx={{ px: '0px' }}
 									/>
-
-									<LinkMui
-										component={Link}
-										href='/'
-										underline='none'
-										sx={{
-											fontWeight: 300,
-											fontSize: 15,
-											lineHeight: '17.6px',
-											color: '#FE645E',
-										}}
-									>
-										Forgot password?
+									<LinkMui component={Link} href='/' underline='none'>
+										<Typography variant='body1' sx={{ color: '#FE645E' }}>
+											Forgot password?
+										</Typography>
 									</LinkMui>
 								</Box>
-								<Button variant='contained' sx={{ mt: 7 }} type='submit'>
+								<Button variant='contained' sx={{ mt: 6 }} type='submit'>
 									Sign in
 								</Button>
 							</Form>
-								<Box
-									component={'p'}
-									sx={{
-										mx:'auto',
-										mt: 2,
-									}}
-								>
-									<Box
-										component={'span'}
-										sx={{
-											fontWeight: 500,
-											fontSize: 15,
-											lineHeight: '17.6px',
-											color: '#494949',
-										}}
-									>
-										Don’t have an account?{' '}
-									</Box>
-									<LinkMui
-										component={Link}
-										href='/registration'
-										underline='none'
-										sx={{
-											fontWeight: 500,
-											fontSize: 15,
-											lineHeight: '18px',
-											color: '#FE645E',
-										}}
+							<Box
+								component={'div'}
+								sx={{
+									mx: 'auto',
+									mt: 2,
+								}}
+							>
+								<Typography variant='body2' sx={{ display: 'inline' }}>
+									Forgot password?{' '}
+								</Typography>
+								<LinkMui component={Link} href='/registration' underline='none'>
+									<Typography
+										variant='body2'
+										sx={{ color: '#FE645E', display: 'inline' }}
 									>
 										Sign up
-									</LinkMui>
-								</Box>
+									</Typography>
+								</LinkMui>
+							</Box>
 						</Grid>
 					</Grid>
 					<Grid item sm={6} sx={{ position: 'relative' }}>
@@ -241,6 +192,8 @@ const Authorization = (props: Props) => {
 							src={singIn}
 							alt='singIn'
 							fill
+							sizes='100vw,50vw,33vw'
+							priority
 							style={{ objectFit: 'cover' }}
 						/>
 					</Grid>
