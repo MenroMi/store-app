@@ -1,7 +1,15 @@
 import { createTheme } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+    interface TypeText {
+        iconLight: string;
+        iconDark: string;
+        caption: string;
+    }
+}
+
 // Create a theme instance.
-const theme = createTheme({
+let theme = createTheme({
     palette: {
         primary: {                                                                                                                                                      
             main: '#FE645E',
@@ -11,8 +19,14 @@ const theme = createTheme({
         text: {
             primary: '#5C5C5C',
             secondary: '#000000',
+            iconLight: '#6E7278',
+            iconDark: '#292D32',
+            caption: '#494949',
         }
     },
+});
+
+theme = createTheme(theme, {
     typography: {
         fontFamily: 'Work Sans',
         fontWeightRegular: 300,                         
@@ -38,16 +52,24 @@ const theme = createTheme({
             fontWeightRegular: 500,
         },
         body1: {
-            color: '#5C5C5C',
+            color: theme.palette.text.primary,
         },
         body2: {
-            color: '#5C5C5C',
+            color: theme.palette.text.primary,
         },
         caption: {
-            color: '#494949',
+            color: theme.palette.text.caption,
             fontWeightRegular: 500,
             fontSize: 15
         },
+        subtitle1: {
+            fontSize: 22,
+            fontWeightRegular: 500,
+        },
+        subtitle2: {
+            fontSize: 18,
+            fontWeightRegular: 500,
+        }
     },
     components: {
         MuiButton: {
@@ -64,11 +86,11 @@ const theme = createTheme({
         MuiOutlinedInput: {
             styleOverrides: {
                 notchedOutline: {
-                    borderColor: '#494949',
+                    borderColor: theme.palette.text.caption,
                 },
                 input: {
                     '&::placeholder': {
-                        color: '#5C5C5C',
+                        color: theme.palette.text.primary,
                     },
                 },
             }
