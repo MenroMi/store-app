@@ -18,6 +18,7 @@ import {
 } from '@mui/material'
 import Form from '@/components/Form'
 import Link from 'next/link'
+import { Routes } from '@/constants'
 
 type Props = {}
 
@@ -158,7 +159,7 @@ const Authorization = (props: Props) => {
 										label={<Typography variant='body2'>Remember me</Typography>}
 										sx={{ px: '0px' }}
 									/>
-									<LinkMui component={Link} href='/' underline='none'>
+									<LinkMui component={Link} href={Routes.forgot} underline='none'>
 										<Typography variant='body1' sx={{ color: main }}>
 											Forgot password?
 										</Typography>
@@ -176,9 +177,9 @@ const Authorization = (props: Props) => {
 								}}
 							>
 								<Typography variant='body2' sx={{ display: 'inline' }}>
-									Forgot password?{' '}
+									Don’t have an account?{' '}
 								</Typography>
-								<LinkMui component={Link} href='/registration' underline='none'>
+								<LinkMui component={Link} href={Routes.registration} underline='none'>
 									<Typography
 										variant='body2'
 										sx={{ color: main, display: 'inline' }}

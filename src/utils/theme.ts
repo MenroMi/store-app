@@ -73,6 +73,7 @@ const theme = createTheme({
                     borderRadius: '8px'
 				},
 				input: {
+					color:'#000000',
 					'&::placeholder': {
 						color: '#5C5C5C',
 					},
