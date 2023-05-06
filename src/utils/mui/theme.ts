@@ -55,14 +55,25 @@ theme = createTheme(theme, {
         body1: {
             fontSize: 15,
             color: theme.palette.text.primary,
+            [theme.breakpoints.between("xs", "sm")]: {
+                fontSize: 12,
+            },
         },
         body2: {
+            fontSize: 12,
+            fontWeight: 500,
             color: theme.palette.text.primary,
+            [theme.breakpoints.between("xs", "sm")]: {
+                fontWeight: 300,
+            },
         },
         caption: {
             color: theme.palette.text.caption,
             fontWeight: 500,
-            fontSize: 15
+            fontSize: 15,
+            [theme.breakpoints.between("xs", "sm")]: {
+                fontSize: 12,
+            },
         },
         subtitle1: {
             fontSize: 22,
@@ -93,8 +104,14 @@ theme = createTheme(theme, {
         }, 
         MuiOutlinedInput: {
             styleOverrides: {
+                root: {
+                    fontFamily: 'inherit',
+                    fontSize: 15,
+                    fontWeight: 300,
+                },
                 notchedOutline: {
                     borderColor: theme.palette.text.caption,
+                    borderRadius: 8
                 },
                 input: {
                     '&::placeholder': {
@@ -114,14 +131,9 @@ theme = createTheme(theme, {
                     h3Bold: "h3",
                     h3Thin: "h3",
                     h4Warning: "h4",
+                    h4Thin: "h4",
+                    h4Bold: "h4",
                 }
-            },
-        },
-        MuiFormControlLabel: {
-            styleOverrides: {
-                label: {
-                    color: theme.palette.text.caption,
-                },
             },
         },
         MuiCheckbox: {
@@ -158,6 +170,24 @@ theme = createTheme(theme, {
             ...theme.typography.h4,
             fontWeight: 600,
             color: theme.palette.primary.main,
+        },
+        h4Thin: {
+            ...theme.typography.h4,
+            fontWeight: 400,
+        },
+        h4Bold: {
+            ...theme.typography.h4,
+            fontWeight: 600,
+        },
+        subtitle2Thin: {
+            ...theme.typography.subtitle2,
+            fontWeight: 400,
+            color: theme.palette.text.primary,
+        },        
+        subtitle2Gray: {
+            ...theme.typography.subtitle2,
+            color: theme.palette.text.primary,
+            fontSize: 16,
         },
         btnIconText: {
             fontWeight: 400,
