@@ -14,6 +14,7 @@ import {
 	Checkbox,
 	FormControlLabel,
 	Button,
+	useTheme,
 } from '@mui/material'
 import Form from '@/components/Form'
 import Link from 'next/link'
@@ -23,6 +24,7 @@ type Props = {}
 const Authorization = (props: Props) => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
+	const {palette:{primary:{main}}} = useTheme()
 	
 	const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
@@ -104,7 +106,7 @@ const Authorization = (props: Props) => {
 										</Typography>
 										<Typography
 											variant='body2'
-											sx={{ display: 'inline', color: '#FE645E' }}
+											sx={{ display: 'inline', color: main}}
 										>
 											*
 										</Typography>
@@ -157,7 +159,7 @@ const Authorization = (props: Props) => {
 										sx={{ px: '0px' }}
 									/>
 									<LinkMui component={Link} href='/' underline='none'>
-										<Typography variant='body1' sx={{ color: '#FE645E' }}>
+										<Typography variant='body1' sx={{ color: main }}>
 											Forgot password?
 										</Typography>
 									</LinkMui>
@@ -179,7 +181,7 @@ const Authorization = (props: Props) => {
 								<LinkMui component={Link} href='/registration' underline='none'>
 									<Typography
 										variant='body2'
-										sx={{ color: '#FE645E', display: 'inline' }}
+										sx={{ color: {main}, display: 'inline' }}
 									>
 										Sign up
 									</Typography>
