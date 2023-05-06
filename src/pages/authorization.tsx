@@ -181,7 +181,7 @@ const Authorization = (props: Props) => {
 								<LinkMui component={Link} href='/registration' underline='none'>
 									<Typography
 										variant='body2'
-										sx={{ color: {main}, display: 'inline' }}
+										sx={{ color: main, display: 'inline' }}
 									>
 										Sign up
 									</Typography>
