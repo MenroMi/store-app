@@ -36,11 +36,7 @@ const Registration = (props: Props) => {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		if (email && password && name && confirm && password === confirm) {
-			console.log(email, password,name, confirm)
-			setEmail('')
-			setPassword('')
-			setName('')
-			setConfirm('')
+			console.log(email, password, name, confirm)
 		}
 	}
 	return (
@@ -191,26 +187,20 @@ const Registration = (props: Props) => {
 										required
 										placeholder='at least 8 characters'
 										type='password'
-										inputProps={{ minLength: 8, title:`passwords don't match`, pattern:`${password}` }}
+										inputProps={{
+											minLength: 8,
+											title: `passwords don't match`,
+											pattern: `${password}`,
+										}}
 										onChange={e => setConfirm(e.target.value)}
 										value={confirm}
 									/>
 								</FormControl>
-								<Box
-									component={'div'}
-									sx={{
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'space-between',
-										mt: 2,
-									}}
-								>
-									<FormControlLabel
-										control={<Checkbox size='small' />}
-										label={<Typography variant='body2'>Remember me</Typography>}
-										sx={{ px: '0px' }}
-									/>
-								</Box>
+								<FormControlLabel
+									control={<Checkbox size='small' />}
+									label={<Typography variant='body2'>Remember me</Typography>}
+									sx={{ mt: 2 }}
+								/>
 								<Button variant='contained' sx={{ mt: 6 }} type='submit'>
 									Sign up
 								</Button>
@@ -225,7 +215,11 @@ const Registration = (props: Props) => {
 								<Typography variant='body2' sx={{ display: 'inline' }}>
 									Already have an account?{' '}
 								</Typography>
-								<LinkMui component={Link} href={Routes.authorization} underline='none'>
+								<LinkMui
+									component={Link}
+									href={Routes.authorization}
+									underline='none'
+								>
 									<Typography
 										variant='body2'
 										sx={{ color: main, display: 'inline' }}

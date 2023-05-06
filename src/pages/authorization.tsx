@@ -25,9 +25,13 @@ type Props = {}
 const Authorization = (props: Props) => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
-	const {palette:{primary:{main}}} = useTheme()
-	
-	const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
+	const {
+		palette: {
+			primary: { main },
+		},
+	} = useTheme()
+
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		if (email && password) {
 			console.log(email, password)
@@ -107,7 +111,7 @@ const Authorization = (props: Props) => {
 										</Typography>
 										<Typography
 											variant='body2'
-											sx={{ display: 'inline', color: main}}
+											sx={{ display: 'inline', color: main }}
 										>
 											*
 										</Typography>
@@ -123,7 +127,7 @@ const Authorization = (props: Props) => {
 									/>
 								</FormControl>
 								<FormControl sx={{ mt: 3 }}>
-									<FormLabel htmlFor='email'>
+									<FormLabel htmlFor='password'>
 										<Typography variant='body2' sx={{ display: 'inline' }}>
 											Password{' '}
 										</Typography>
@@ -157,9 +161,12 @@ const Authorization = (props: Props) => {
 									<FormControlLabel
 										control={<Checkbox size='small' />}
 										label={<Typography variant='body2'>Remember me</Typography>}
-										sx={{ px: '0px' }}
 									/>
-									<LinkMui component={Link} href={Routes.forgot} underline='none'>
+									<LinkMui
+										component={Link}
+										href={Routes.forgot}
+										underline='none'
+									>
 										<Typography variant='body1' sx={{ color: main }}>
 											Forgot password?
 										</Typography>
@@ -179,7 +186,11 @@ const Authorization = (props: Props) => {
 								<Typography variant='body2' sx={{ display: 'inline' }}>
 									Don’t have an account?{' '}
 								</Typography>
-								<LinkMui component={Link} href={Routes.registration} underline='none'>
+								<LinkMui
+									component={Link}
+									href={Routes.registration}
+									underline='none'
+								>
 									<Typography
 										variant='body2'
 										sx={{ color: main, display: 'inline' }}
