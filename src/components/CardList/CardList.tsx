@@ -3,6 +3,9 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Grid } from '@mui/material';
 
+// styled component
+import { CardsGridContainer } from './CardListStyles';
+
 // component
 import Card from '../Card/Card';
 
@@ -15,7 +18,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
   const queryMD = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    <Grid
+    <CardsGridContainer
       container
       columnSpacing={{
         md: 5,
@@ -24,12 +27,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
       }}
       rowGap="32px"
       sx={{
-        '&.MuiGrid-root': {
-          marginTop: '2.25em',
-        },
-        margin: '0 auto',
         padding: `${!queryMD && '0 20px'}`,
-        justifyContent: 'space-between',
       }}
     >
       {[...new Array(16).fill(null)].map((_, id) => {
@@ -47,7 +45,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
           </Grid>
         );
       })}
-    </Grid>
+    </CardsGridContainer>
   );
 };
 

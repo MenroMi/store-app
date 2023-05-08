@@ -4,17 +4,18 @@ import Image from 'next/image';
 // mui
 import InputAdornment from '@mui/material/InputAdornment';
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 // images
 import arrowIcon from '../../assets/icons/down.svg';
 import searchIcon from '../../assets/icons/search.svg';
 
-// interface
-import { FilterListRender, CategoriesList } from '@/types/filterListTypes';
-
-// styles
+// styled components
 import { CustomTextField, CustomFilterHeader } from './FilterListStyles';
+
+// interfaces
+import { FilterListRender, CategoriesList } from '@/types/filterListTypes';
 
 // filters hardcode
 const filters = [
@@ -38,8 +39,11 @@ const filters = [
   { name: 'color', label: 'Color', id: 5 },
 ];
 
+// FUNCTION COMPONENT
 export default function FiltersList(): JSX.Element {
   const theme = useTheme();
+  const queryLG = useMediaQuery(theme.breakpoints.down('lg'));
+  const queryMD = useMediaQuery(theme.breakpoints.down('md'));
 
   const isinputs = (inputs: string[] | undefined, name: string) => {
     return (
@@ -57,9 +61,6 @@ export default function FiltersList(): JSX.Element {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                mt: '16px',
-                color: theme?.palette?.text?.caption,
-                ml: '0',
               }}
             />
           ))}
@@ -75,7 +76,7 @@ export default function FiltersList(): JSX.Element {
   ): false | JSX.Element | undefined => {
     return (
       searchbar && (
-        <Box component="form" id={name} mt="20px">
+        <Box component="form" id={name} mt="28px">
           {
             <>
               <CustomTextField
@@ -112,18 +113,15 @@ export default function FiltersList(): JSX.Element {
                             }
                             control={<Checkbox />}
                             sx={{
-                              m: '13px 0 0 0',
                               display: 'flex',
                               alignItems: 'center',
+                              mt: '8px',
                               fontWeight: '400',
-                              '	.MuiFormControlLabel-label': {
-                                color: theme?.palette?.text?.caption,
-                              },
                             }}
                           />
                           <Box
                             component="p"
-                            sx={{ m: '13px 0 0 5px', p: '0', color: '#6e7278', fontWeight: '300' }}
+                            sx={{ m: '8px 0 0 0', p: '0', color: '#6e7278', fontWeight: '300' }}
                           >
                             (+{amount})
                           </Box>
@@ -160,10 +158,10 @@ export default function FiltersList(): JSX.Element {
             key={id}
             sx={{
               borderBottom: '1px solid #eaecf0',
-              p: '0 0 28px 39px',
+              p: `${!queryMD ? '0 0 23px 39px' : '20px'}`,
               mt: '23px',
-              width: '320px',
-              height: '100%',
+              width: `${!queryLG ? '320px' : !queryMD ? '295px' : '100%'}`,
+              height: `${!queryMD && '100%'}`,
             }}
           >
             <CustomFilterHeader>

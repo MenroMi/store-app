@@ -1,14 +1,18 @@
 // mui
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
+// styled component
+import { CustomFlexWrapper } from './SearchPathStyles';
+
+// FUNCTIONAL COMPONENT
 export default function SearchPath() {
   const theme = useTheme();
   const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    <Box display="flex" flexDirection="column" mt={`${!queryUpMd && '8px'}`}>
+    <CustomFlexWrapper mt={`${!queryUpMd && '8px'}`}>
       <Typography
         variant="body1"
         sx={{
@@ -29,6 +33,6 @@ export default function SearchPath() {
       >
         Air Force 1 (137)
       </Typography>
-    </Box>
+    </CustomFlexWrapper>
   );
 }
