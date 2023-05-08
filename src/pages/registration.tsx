@@ -87,9 +87,9 @@ const Registration = (props: Props) => {
 							container
 							direction='column'
 							justifyContent='center'
-							alignItems='start'
 							alignContent='center'
-							wrap='wrap'
+							alignItems='start'
+
 						>
 							<Typography variant='h2'>Create an account</Typography>
 							<Typography
@@ -101,132 +101,135 @@ const Registration = (props: Props) => {
 							>
 								Create an account to get an easy access to your dream shopping.
 							</Typography>
-							<Form action='' onSubmit={handleSubmit}>
-								<FormControl>
-									<FormLabel htmlFor='name'>
-										<Typography variant='body2' sx={{ display: 'inline' }}>
-											Name{' '}
-										</Typography>
-										<Typography
-											variant='body2'
-											sx={{ display: 'inline', color: main }}
-										>
-											*
-										</Typography>
-									</FormLabel>
-									<OutlinedInput
-										sx={{ width: '436px', mt: 1 }}
-										id='name'
-										placeholder='Hayman Andrews'
-										required
-										type='text'
-										value={name}
-										onChange={e => setName(e.target.value)}
+							<Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+								<Form action='' onSubmit={handleSubmit}>
+									<FormControl>
+										<FormLabel htmlFor='name'>
+											<Typography variant='caption' sx={{ display: 'inline' }}>
+												Name{' '}
+											</Typography>
+											<Typography
+												variant='caption'
+												sx={{ display: 'inline', color: main }}
+											>
+												*
+											</Typography>
+										</FormLabel>
+										<OutlinedInput
+											sx={{ width: '436px', mt: 1 }}
+											id='name'
+											placeholder='Hayman Andrews'
+											required
+											type='text'
+											value={name}
+											onChange={e => setName(e.target.value)}
+										/>
+									</FormControl>
+									<FormControl sx={{ mt: 3 }}>
+										<FormLabel htmlFor='email'>
+											<Typography variant='caption' sx={{ display: 'inline' }}>
+												Email{' '}
+											</Typography>
+											<Typography
+												variant='caption'
+												sx={{ display: 'inline', color: main }}
+											>
+												*
+											</Typography>
+										</FormLabel>
+										<OutlinedInput
+											sx={{ width: '436px', mt: 1 }}
+											id='email'
+											placeholder='example@mail.com'
+											required
+											type='email'
+											value={email}
+											onChange={e => setEmail(e.target.value)}
+										/>
+									</FormControl>
+									<FormControl sx={{ mt: 3 }}>
+										<FormLabel htmlFor='password'>
+											<Typography variant='caption' sx={{ display: 'inline' }}>
+												Password{' '}
+											</Typography>
+											<Typography
+												variant='caption'
+												sx={{ display: 'inline', color: main }}
+											>
+												*
+											</Typography>
+										</FormLabel>
+										<OutlinedInput
+											sx={{ width: '436px', mt: 1 }}
+											id='password'
+											required
+											placeholder='at least 8 characters'
+											type='password'
+											inputProps={{ minLength: 8 }}
+											onChange={e => setPassword(e.target.value)}
+											value={password}
+										/>
+									</FormControl>
+									<FormControl sx={{ mt: 3 }}>
+										<FormLabel htmlFor='confirm'>
+											<Typography variant='caption' sx={{ display: 'inline' }}>
+												Confirm password{' '}
+											</Typography>
+											<Typography
+												variant='caption'
+												sx={{ display: 'inline', color: main }}
+											>
+												*
+											</Typography>
+										</FormLabel>
+										<OutlinedInput
+											sx={{ width: '436px', mt: 1 }}
+											id='confirm'
+											required
+											placeholder='at least 8 characters'
+											type='password'
+											inputProps={{
+												minLength: 8,
+												title: `passwords don't match`,
+												pattern: `${password}`,
+											}}
+											onChange={e => setConfirm(e.target.value)}
+											value={confirm}
+										/>
+									</FormControl>
+									<FormControlLabel
+										control={<Checkbox size='small' />}
+										label={<Typography variant='caption'>Remember me</Typography>}
+										sx={{ mt: 2 }}
 									/>
-								</FormControl>
-								<FormControl sx={{ mt: 3 }}>
-									<FormLabel htmlFor='email'>
-										<Typography variant='body2' sx={{ display: 'inline' }}>
-											Email{' '}
-										</Typography>
-										<Typography
-											variant='body2'
-											sx={{ display: 'inline', color: main }}
-										>
-											*
-										</Typography>
-									</FormLabel>
-									<OutlinedInput
-										sx={{ width: '436px', mt: 1 }}
-										id='email'
-										placeholder='example@mail.com'
-										required
-										type='email'
-										value={email}
-										onChange={e => setEmail(e.target.value)}
-									/>
-								</FormControl>
-								<FormControl sx={{ mt: 3 }}>
-									<FormLabel htmlFor='password'>
-										<Typography variant='body2' sx={{ display: 'inline' }}>
-											Password{' '}
-										</Typography>
-										<Typography
-											variant='body2'
-											sx={{ display: 'inline', color: main }}
-										>
-											*
-										</Typography>
-									</FormLabel>
-									<OutlinedInput
-										sx={{ width: '436px', mt: 1 }}
-										id='password'
-										required
-										placeholder='at least 8 characters'
-										type='password'
-										inputProps={{ minLength: 8 }}
-										onChange={e => setPassword(e.target.value)}
-										value={password}
-									/>
-								</FormControl>
-								<FormControl sx={{ mt: 3 }}>
-									<FormLabel htmlFor='confirm'>
-										<Typography variant='body2' sx={{ display: 'inline' }}>
-											Confirm password{' '}
-										</Typography>
-										<Typography
-											variant='body2'
-											sx={{ display: 'inline', color: main }}
-										>
-											*
-										</Typography>
-									</FormLabel>
-									<OutlinedInput
-										sx={{ width: '436px', mt: 1 }}
-										id='confirm'
-										required
-										placeholder='at least 8 characters'
-										type='password'
-										inputProps={{
-											minLength: 8,
-											title: `passwords don't match`,
-											pattern: `${password}`,
-										}}
-										onChange={e => setConfirm(e.target.value)}
-										value={confirm}
-									/>
-								</FormControl>
-								<FormControlLabel
-									control={<Checkbox size='small' />}
-									label={<Typography variant='body2'>Remember me</Typography>}
-									sx={{ mt: 2 }}
-								/>
-								<Button variant='contained' sx={{ mt: 6 }} type='submit'>
-									Sign up
-								</Button>
-							</Form>
-							<Box
-								component={'div'}
-								sx={{
-									mx: 'auto',
-									mt: 2,
-								}}
-							>
-								<Typography variant='body2' sx={{ display: 'inline' }}>
-									Already have an account?{' '}
-								</Typography>
-								<LinkMui
-									component={Link}
-									href={Routes.authorization}
-									underline='none'
+									<Button variant='contained' sx={{ mt: 6 }} type='submit'>
+										Sign up
+									</Button>
+								</Form>
+								<Box
+									component={'div'}
+									sx={{
+										width: '436px',
+										textAlign: 'center',
+										mt: 2,
+									}}
 								>
-									<Typography
-										variant='body2'
-										sx={{ color: main, display: 'inline' }}
-									>
-										Log in
+									<Typography variant='caption' sx={{ display: 'inline' }}>
+										Already have an account?{' '}
 									</Typography>
-								</LinkMui>
+									<LinkMui
+										component={Link}
+										href={Routes.authorization}
+										underline='none'
+									>
+										<Typography
+											variant='caption'
+											sx={{ color: main, display: 'inline' }}
+										>
+											Log in
+										</Typography>
+									</LinkMui>
+								</Box>
 							</Box>
 						</Grid>
 					</Grid>

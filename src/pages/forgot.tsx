@@ -79,9 +79,8 @@ const Forgot = (props: Props) => {
 							container
 							direction='column'
 							justifyContent='center'
-							alignItems='start'
 							alignContent='center'
-							wrap='wrap'
+							alignItems='start'
 						>
 							<Typography variant='h2'>Forgot password?</Typography>
 							<Typography
@@ -93,38 +92,41 @@ const Forgot = (props: Props) => {
 							>
 								Don’t worry, we’ll send you reset instructions.
 							</Typography>
-							<Form action='' onSubmit={handleSubmit}>
-								<FormControl>
-									<FormLabel htmlFor='email'>
-										<Typography variant='body2' sx={{ display: 'inline' }}>
-											Email
-										</Typography>
-									</FormLabel>
-									<OutlinedInput
-										sx={{ width: '436px', mt: 1 }}
-										id='email'
-										placeholder='Enter your email'
-										required
-										type='email'
-										value={email}
-										onChange={e => setEmail(e.target.value)}
-									/>
-								</FormControl>
-								<Button variant='contained' sx={{ mt: '20px' }} type='submit'>
-									Reset password
-								</Button>
-							</Form>
-							<LinkMui
-								component={Link}
-								href={Routes.authorization}
-								underline='none'
-								sx={{
-									mx: 'auto',
-									mt: 2,
-								}}
-							>
-								<Typography variant='body2'>Back to log in</Typography>
-							</LinkMui>
+							<Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+								<Form action='' onSubmit={handleSubmit}>
+									<FormControl>
+										<FormLabel htmlFor='email'>
+											<Typography variant='caption' sx={{ display: 'inline' }}>
+												Email
+											</Typography>
+										</FormLabel>
+										<OutlinedInput
+											sx={{ mt: 1 }}
+											id='email'
+											placeholder='Enter your email'
+											required
+											type='email'
+											value={email}
+											onChange={e => setEmail(e.target.value)}
+										/>
+									</FormControl>
+									<Button variant='contained' sx={{ mt: '20px' }} type='submit'>
+										Reset password
+									</Button>
+								</Form>
+								<LinkMui
+									component={Link}
+									href={Routes.authorization}
+									underline='none'
+									sx={{
+										display: 'block',
+										textAlign: 'center',
+										mt: 2,
+									}}
+								>
+									<Typography variant='caption'>Back to log in</Typography>
+								</LinkMui>
+							</Box>
 						</Grid>
 					</Grid>
 					<Grid item sm={6} sx={{ position: 'relative' }}>

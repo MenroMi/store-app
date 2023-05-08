@@ -86,9 +86,8 @@ const Reset = (props: Props) => {
 							container
 							direction='column'
 							justifyContent='center'
-							alignItems='start'
 							alignContent='center'
-							wrap='wrap'
+							alignItems='start'
 						>
 							<Typography variant='h2'>Reset password</Typography>
 							<Typography
@@ -100,72 +99,76 @@ const Reset = (props: Props) => {
 							>
 								Please create new password here.
 							</Typography>
-							<Form action='' onSubmit={handleSubmit}>
-								<FormControl sx={{ mt: 3 }}>
-									<FormLabel htmlFor='password'>
-										<Typography variant='body2' sx={{ display: 'inline' }}>
-											Password{' '}
-										</Typography>
-										<Typography
-											variant='body2'
-											sx={{ display: 'inline', color: main }}
-										>
-											*
-										</Typography>
-									</FormLabel>
-									<OutlinedInput
-										sx={{ width: '436px', mt: 1 }}
-										id='password'
-										required
-										placeholder='at least 8 characters'
-										type='password'
-										inputProps={{ minLength: 8 }}
-										onChange={e => setPassword(e.target.value)}
-										value={password}
-									/>
-								</FormControl>
-								<FormControl sx={{ mt: 3 }}>
-									<FormLabel htmlFor='confirm'>
-										<Typography variant='body2' sx={{ display: 'inline' }}>
-											Confirm password{' '}
-										</Typography>
-										<Typography
-											variant='body2'
-											sx={{ display: 'inline', color: main }}
-										>
-											*
-										</Typography>
-									</FormLabel>
-									<OutlinedInput
-										sx={{ width: '436px', mt: 1 }}
-										id='confirm'
-										required
-										placeholder='at least 8 characters'
-										type='password'
-										inputProps={{
-											minLength: 8,
-											title: `passwords don't match`,
-											pattern: `${password}`,
-										}}
-										onChange={e => setConfirm(e.target.value)}
-										value={confirm}
-									/>
-								</FormControl>
-								<Button variant='contained' sx={{ mt: '20px' }} type='submit'>
-									Reset password
-								</Button>
-							</Form>
-							<LinkMui
-								component={Link}
-								href={Routes.authorization}
-								underline='none'
-								sx={{
-									mx: 'auto',
-									mt: 2,
-								}}
-							>
-								<Typography variant='body2'>Back to log in</Typography>
-							</LinkMui>
+							<Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+								<Form action='' onSubmit={handleSubmit}>
+									<FormControl sx={{ mt: 3 }}>
+										<FormLabel htmlFor='password'>
+											<Typography variant='caption' sx={{ display: 'inline' }}>
+												Password{' '}
+											</Typography>
+											<Typography
+												variant='caption'
+												sx={{ display: 'inline', color: main }}
+											>
+												*
+											</Typography>
+										</FormLabel>
+										<OutlinedInput
+											sx={{ width: '436px', mt: 1 }}
+											id='password'
+											required
+											placeholder='at least 8 characters'
+											type='password'
+											inputProps={{ minLength: 8 }}
+											onChange={e => setPassword(e.target.value)}
+											value={password}
+										/>
+									</FormControl>
+									<FormControl sx={{ mt: 3 }}>
+										<FormLabel htmlFor='confirm'>
+											<Typography variant='caption' sx={{ display: 'inline' }}>
+												Confirm password{' '}
+											</Typography>
+											<Typography
+												variant='caption'
+												sx={{ display: 'inline', color: main }}
+											>
+												*
+											</Typography>
+										</FormLabel>
+										<OutlinedInput
+											sx={{ width: '436px', mt: 1 }}
+											id='confirm'
+											required
+											placeholder='at least 8 characters'
+											type='password'
+											inputProps={{
+												minLength: 8,
+												title: `passwords don't match`,
+												pattern: `${password}`,
+											}}
+											onChange={e => setConfirm(e.target.value)}
+											value={confirm}
+										/>
+									</FormControl>
+									<Button variant='contained' sx={{ mt: '20px' }} type='submit'>
+										Reset password
+									</Button>
+								</Form>
+								<LinkMui
+									component={Link}
+									href={Routes.authorization}
+									underline='none'
+									sx={{
+										display: 'block',
+										textAlign: 'center',
+										mt: 2,
+									}}
+
+								>
+									<Typography variant='caption'>Back to log in</Typography>
+								</LinkMui>
+							</Box>
 						</Grid>
 					</Grid>
 					<Grid item sm={6} sx={{ position: 'relative' }}>
