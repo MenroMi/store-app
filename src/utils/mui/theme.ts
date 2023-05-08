@@ -85,6 +85,7 @@ theme = createTheme(theme, {
         subtitle2: {
             fontSize: 18,
             fontWeight: 500,
+            color: theme.palette.text.primary,
             [theme.breakpoints.between("xs", "sm")]: {
                 fontSize: 9,
             },
@@ -182,11 +183,9 @@ theme = createTheme(theme, {
         subtitle2Thin: {
             ...theme.typography.subtitle2,
             fontWeight: 400,
-            color: theme.palette.text.primary,
         },        
-        subtitle2Gray: {
+        subtitle2Small: {
             ...theme.typography.subtitle2,
-            color: theme.palette.text.primary,
             fontSize: 16,
         },
         btnIconText: {
