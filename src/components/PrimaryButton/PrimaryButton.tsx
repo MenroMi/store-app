@@ -12,6 +12,7 @@ const PrimaryButton = ({ children }: ButtonProps) => {
       variant="contained"
       sx={{
         color: 'white',
+        height: '40px',
         textTransform: 'none',
         maxWidth: '436px',
         fontSize: { sx: '12px', sm: '16px' },

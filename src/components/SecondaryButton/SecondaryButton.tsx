@@ -12,6 +12,7 @@ const PrimaryButton = ({ children }: ButtonProps) => {
         backgroundColor: 'transparent',
         border: '1px solid',
         width: '100%',
+        height: '40px',
         borderRadius: '5px',
         fontFamily: '"Work Sans", sans-serif',
         fontWeight: 500,
