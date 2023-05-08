@@ -1,5 +1,5 @@
 import SideBarFilters from '@/components/SideBarFilters/SideBarFilters';
-import SearchResultWin from '@/components/SearchResultWindow/SearchResultWin';
+import SearchResultWin from '@/components/SearchResultWin/SearchResultWin';
 import { Box } from '@mui/material';
 import { useState } from 'react';
 
