@@ -18,7 +18,7 @@ import {
 } from '@mui/material'
 import Form from '@/components/Form'
 import Link from 'next/link'
-import { Routes } from '@/constants'
+import { Routes, comments } from '@/constants'
 
 type Props = {}
 
@@ -235,8 +235,43 @@ const Registration = (props: Props) => {
 							src={singUp}
 							alt='singUp'
 							fill
-							style={{ objectFit: 'cover' }}
+							style={{ objectFit: 'cover', zIndex: 1000 }}
 						/>
+						<Box
+							component={'div'}
+							sx={{
+								position: 'absolute',
+								zIndex: 'tooltip',
+								width: '100%',
+								display: 'flex',
+								justifyContent: 'center',
+								bottom: '255px',
+							}}
+						>
+							<Box
+								component={'section'}
+								sx={{
+									width: '756px',
+									height: '317px',
+									backdropFilter: 'blur(12px)',
+									border: '2px solid',
+									borderRadius: 4,
+									px: 8, py: 7
+								}}
+							>
+								<Box component={'div'}>
+									<Typography variant='h4'>
+										{`"${comments[0].text}"`}
+									</Typography>
+									<Box component={'div'}>
+									</Box>
+									<Typography variant='body1'
+									>
+										{`"${comments[0].text}"`}
+									</Typography>
+								</Box>
+							</Box>
+						</Box>
 					</Grid>
 				</Grid>
 			</main>

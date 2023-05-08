@@ -27,7 +27,8 @@ const theme = createTheme({
 		},
 		h4: {
 			fontSize: 25,
-			fontWeight: 500,
+			fontWeight: 400,
+			color:'#0D0D0D'
 		},
 		h5: {
 			fontSize: 20,
@@ -50,7 +51,7 @@ const theme = createTheme({
 		},
 		caption: {
 			color: '#494949',
-			fontWeightRegular: 500,
+			fontWeight: 500,
 			fontSize: 15,
 		},
 	},
