@@ -33,14 +33,13 @@ export default function SearchResultPage(): JSX.Element {
 
   return (
     <>
-      <div style={{ border: '5px solid black', height: '120px' }}></div>
       <Box
         maxWidth="1920px"
         m="0 auto"
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        sx={{ p: { md: '0 60px' } }}
+        sx={{ p: { md: `${hide ? '0 60px' : '0 60px 0 0'}` } }}
       >
         <Box
           onClick={(e) => onHideFilters(e)}
