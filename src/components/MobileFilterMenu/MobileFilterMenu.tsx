@@ -14,7 +14,7 @@ import { CustomOverlay } from './MobileFilterMenuStyles';
 // FUNCTIONAL COMPONENT
 const MobileFilterMenu: React.FC = (): JSX.Element => {
   const theme = useTheme();
-  const queryMD = useMediaQuery(theme.breakpoints.down('md'));
+  const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -26,8 +26,8 @@ const MobileFilterMenu: React.FC = (): JSX.Element => {
   return (
     <CustomOverlay
       sx={{
-        display: `${queryMD ? 'block' : 'none'}`,
-        boxShadow: `${queryMD && '3px -11px 24px 0px rgba(0, 0, 0, 0.4);'}`,
+        display: `${queryDownMd ? 'block' : 'none'}`,
+        boxShadow: `${queryDownMd && '3px -11px 24px 0px rgba(0, 0, 0, 0.4);'}`,
       }}
     >
       <FiltersList />

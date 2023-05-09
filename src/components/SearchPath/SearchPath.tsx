@@ -23,7 +23,10 @@ const SearchPath: React.FC<ISearchPathProps> = ({ hide }): JSX.Element => {
         sx={{
           fontWeight: '300',
           lineHeight: '18px',
-          ml: `${queryUpMd && hide ? '0' : !queryUpMd ? '0' : '40px'}`,
+          pl: `${queryUpMd && hide ? '0' : !queryUpMd ? '0' : '40px'}`,
+          '&.MuiTypography-root': {
+            fontSize: '15px',
+          },
         }}
       >
         Shoes/Air Force 1
@@ -34,7 +37,7 @@ const SearchPath: React.FC<ISearchPathProps> = ({ hide }): JSX.Element => {
           marginTop: `${queryUpMd && '8px'}`,
           borderBottom: `${queryUpMd && !hide && '1px solid #eaecf0'}`,
           pl: `${queryUpMd && hide ? '0' : !queryUpMd ? '0' : '40px'}`,
-          pb: `${!hide && '16px'}`,
+          pb: `${queryUpMd && !hide && '16px'}`,
         }}
       >
         Air Force 1 (137)

@@ -7,4 +7,10 @@ export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   },
   margin: '0 auto',
   justifyContent: 'space-between',
+
+  [theme.breakpoints.down('sm')]: {
+    '&.MuiGrid-root': {
+      marginTop: '1em',
+    },
+  },
 }));

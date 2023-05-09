@@ -42,16 +42,7 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
         </>
       ) : null}
 
-      <CustomGridContainer
-        container
-        columnSpacing={{
-          xs: 0,
-          md: 5,
-          lg: 4,
-          xl: 7,
-        }}
-        p={`${!queryUpMd && '0 20px'}`}
-      >
+      <CustomGridContainer container p={`${!queryUpMd && '0 20px'}`}>
         <Grid item>
           {!queryUpMd || hide ? (
             <SearchPath hide={hide} />
@@ -60,8 +51,7 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
               variant="h2"
               sx={{
                 padding: '0',
-                fontSize: { md: 45, xs: 40 },
-                flex: 2,
+                fontSize: { xl: 45, md: 35, xs: 40 },
               }}
             >
               Search results
@@ -74,15 +64,17 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
             onClick={onHide}
             variant="text"
             endIcon={
-              <Image
+              <Box
+                component={Image}
                 src={hideFilterIcon}
                 alt="hide filter"
-                style={{ width: `${!queryUpMd && '20px'}`, height: `${!queryUpMd && '20px'}` }}
+                sx={{
+                  width: { md: '24px', sm: '18px', xs: '15px' },
+                }}
               />
             }
             sx={{
-              fontSize: `${!queryUpMd ? '20px' : '24px'}`,
-              height: `${!queryUpMd ? '30px' : '50px'}`,
+              fontSize: { lg: '24px', md: '24px', sm: '16px', xs: '15px' },
             }}
           >
             {hide ? 'Filters' : 'Hide Filters'}

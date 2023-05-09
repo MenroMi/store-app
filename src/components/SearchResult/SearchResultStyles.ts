@@ -1,27 +1,33 @@
 import { styled } from '@mui/material/styles';
-import { Box, Button, Divider, Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
-export const CustomTypographyH2 = styled(Typography)(() => ({
+export const CustomTypographyH2 = styled(Typography)(({ theme }) => ({
   padding: '0 20px',
-  margin: '0',
-  lineHeight: '53px',
+
+  [theme.breakpoints.up('sm')]: {
+    lineHeight: '45px',
+  },
 }));
 
-export const CustomHideFilterBtn = styled(Button)(() => ({
+export const CustomHideFilterBtn = styled(Button)(({ theme }) => ({
   fontWeight: '400',
-  lineHeight: '28px',
   color: theme?.palette?.text?.primary,
-  textTransform: 'none',
   borderRadius: '10px',
   '&:hover': {
     backgroundColor: 'rgba(0, 0, 0, 0.04)',
+  },
+
+  paddingTop: '0',
+  paddingBottom: '0',
+
+  [theme.breakpoints.down('sm')]: {
+    fontWeight: '300',
   },
 }));
 
 export const CustomGridContainer = styled(Grid)(() => ({
   justifyContent: 'space-between',
   alignItems: 'flex-end',
-  top: '0',
   backgroundColor: theme?.palette?.primary?.contrastText,
 }));

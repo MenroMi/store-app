@@ -42,8 +42,8 @@ const filters = [
 // FUNCTION COMPONENT
 const FiltersList: React.FC = (): JSX.Element => {
   const theme = useTheme();
-  const queryLG = useMediaQuery(theme.breakpoints.down('lg'));
-  const queryMD = useMediaQuery(theme.breakpoints.down('md'));
+  const queryDownLg = useMediaQuery(theme.breakpoints.down('lg'));
+  const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const isinputs = (inputs: string[] | undefined, name: string) => {
     return (
@@ -76,7 +76,7 @@ const FiltersList: React.FC = (): JSX.Element => {
   ): false | JSX.Element | undefined => {
     return (
       searchbar && (
-        <Box component="form" id={name} mt="28px">
+        <Box component="form" id={name} mt="20px">
           {
             <>
               <CustomTextField
@@ -104,7 +104,7 @@ const FiltersList: React.FC = (): JSX.Element => {
                       label: string;
                     }): JSX.Element => {
                       return (
-                        <div style={{ display: 'flex', alignItems: 'center' }} key={id}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }} key={id}>
                           <FormControlLabel
                             label={
                               <Typography variant="h6" sx={{ fontWeight: '400' }}>
@@ -112,20 +112,11 @@ const FiltersList: React.FC = (): JSX.Element => {
                               </Typography>
                             }
                             control={<Checkbox />}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              mt: '8px',
-                              fontWeight: '400',
-                            }}
                           />
-                          <Box
-                            component="p"
-                            sx={{ m: '8px 0 0 0', p: '0', color: '#6e7278', fontWeight: '300' }}
-                          >
+                          <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
                             (+{amount})
                           </Box>
-                        </div>
+                        </Box>
                       );
                     }
                   )}
@@ -158,10 +149,9 @@ const FiltersList: React.FC = (): JSX.Element => {
             key={id}
             sx={{
               borderBottom: '1px solid #eaecf0',
-              p: `${!queryMD ? '0 0 23px 39px' : '20px'}`,
-              mt: '23px',
-              width: `${!queryLG ? '320px' : !queryMD ? '295px' : '100%'}`,
-              height: `${!queryMD && '100%'}`,
+              p: `${!queryDownMd ? '0 0 23px 39px' : '20px'}`,
+              mt: `${!queryDownMd ? '28px' : '0'}`,
+              width: `${!queryDownLg ? '320px' : !queryDownMd ? '280px' : '100%'}`,
             }}
           >
             <CustomFilterHeader>

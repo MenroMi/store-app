@@ -6,18 +6,13 @@ export const CustomFilterHeader = styled('div')(() => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   h6: {
-    margin: '0',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: '1rem',
     lineHeight: '19px',
   },
 }));
 
 export const CustomTextField = styled(TextField)(() => ({
   '& .MuiOutlinedInput-root': {
-    '& fieldset': { borderRadius: '42px', border: '1px solid #494949' },
-    fontFamily: 'Work Sans, sans-serif',
+    '& fieldset': { borderRadius: '42px' },
     fontSize: '12px',
     fontWeight: '500',
   },
