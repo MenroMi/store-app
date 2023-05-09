@@ -54,6 +54,7 @@ theme = createTheme(theme, {
         },
         body1: {
             fontSize: 15,
+            fontWeight: 300,
             color: theme.palette.text.primary,
             [theme.breakpoints.between("xs", "sm")]: {
                 fontSize: 12,
