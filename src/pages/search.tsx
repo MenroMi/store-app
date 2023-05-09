@@ -35,6 +35,7 @@ export default function SearchResultPage(): JSX.Element {
     <>
       <Box
         maxWidth="1920px"
+        m="0 auto"
         display="flex"
         flexDirection="column"
         justifyContent="center"
