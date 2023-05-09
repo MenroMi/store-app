@@ -13,21 +13,22 @@ import PathAndSearchResult from '@/components/PathAndSearchResult/PathAndSearchR
 
 // FUNCTIONAL COMPONENT
 export default function SearchResultPage(): JSX.Element {
-  const [hide, setHide] = useState(false); // for fun
-  const [mobile, setMobile] = useState(false); // for fun
+  const [hide, setHide] = useState(false);
+  const [mobileVer, setMobileVer] = useState(false);
   const theme = useTheme();
   const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
-  const testFunc = (e: any): void => {
+  const onHideFilters = (e: any): void => {
     if (e.target?.dataset?.overlay) {
       setHide(true);
     }
+    return;
   };
 
   useEffect(() => {
-    setMobile(true);
+    setMobileVer(true);
 
-    return () => setMobile(false);
+    return () => setMobileVer(false);
   }, []);
 
   return (
@@ -42,7 +43,7 @@ export default function SearchResultPage(): JSX.Element {
         sx={{ p: { md: '0 60px' } }}
       >
         <Box
-          onClick={(e) => testFunc(e)}
+          onClick={(e) => onHideFilters(e)}
           sx={{
             position: 'fixed',
             top: '0',
@@ -50,8 +51,8 @@ export default function SearchResultPage(): JSX.Element {
             zIndex: '9',
             width: '100%',
             height: '100%',
-            display: `${!hide && mobile && !queryUpMd ? 'block' : 'none'}`,
-            backgroundColor: `${!hide && mobile && !queryUpMd && 'rgba(0,0,0, 0.5)'}`,
+            display: `${!hide && mobileVer && !queryUpMd ? 'block' : 'none'}`,
+            backgroundColor: `${!hide && mobileVer && !queryUpMd && 'rgba(0,0,0, 0.5)'}`,
           }}
           data-overlay="overlay"
         />
