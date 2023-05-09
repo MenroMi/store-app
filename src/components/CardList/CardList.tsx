@@ -27,9 +27,9 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
         lg: 5,
         xl: 7,
       }}
-      rowGap="32px"
       sx={{
         padding: `${!queryUpMd && '0 20px'}`,
+        rowGap: { md: '32px', xs: '16px' },
       }}
     >
       {[...new Array(16).fill(null)].map((_, id) => {
