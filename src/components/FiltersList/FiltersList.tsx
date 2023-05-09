@@ -40,7 +40,7 @@ const filters = [
 ];
 
 // FUNCTION COMPONENT
-export default function FiltersList(): JSX.Element {
+const FiltersList: React.FC = (): JSX.Element => {
   const theme = useTheme();
   const queryLG = useMediaQuery(theme.breakpoints.down('lg'));
   const queryMD = useMediaQuery(theme.breakpoints.down('md'));
@@ -181,4 +181,6 @@ export default function FiltersList(): JSX.Element {
       })}
     </>
   );
-}
+};
+
+export default FiltersList;

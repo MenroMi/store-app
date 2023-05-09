@@ -30,7 +30,7 @@ const PathAndSearchResult: React.FC<IPathAndSearchResultProps> = ({
         zIndex: 1,
       }}
     >
-      {!queryUpMd ? null : <SearchPath />}
+      {!queryUpMd || hide ? null : <SearchPath hide={hide} />}
       <SearchResult hide={hide} onHide={onHide} />
     </Box>
   );

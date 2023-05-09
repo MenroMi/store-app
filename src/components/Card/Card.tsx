@@ -5,8 +5,8 @@ import Image from 'next/image';
 import singInImg from '../../assets/singInBg.png';
 import { Box, Typography } from '@mui/material';
 
-// component
-export default function Card() {
+// FUNCTIONAL COMPONENT
+const Card: React.FC = (): JSX.Element => {
   return (
     <Box display="flex" flexDirection="column" maxWidth="320px" maxHeight="443px">
       <Image
@@ -24,4 +24,6 @@ export default function Card() {
       <Typography variant="subtitle2Gray">Women&apos;s Shoes</Typography>
     </Box>
   );
-}
+};
+
+export default Card;

@@ -24,16 +24,23 @@ interface ISearchResultProps {
 // FUNCTIONAL COMPONENT
 const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Box sx={{ alignSelf: 'flex-end', flex: 2 }}>
-      {!matches && (
+      {!queryUpMd || hide ? (
         <>
-          <CustomTypographyH2 variant="h2">Search results</CustomTypographyH2>
+          <CustomTypographyH2
+            variant="h2"
+            sx={{
+              p: `${hide && queryUpMd && '0'}`,
+            }}
+          >
+            Search results
+          </CustomTypographyH2>
           <Divider sx={{ width: '100%', marginTop: '12px' }} />
         </>
-      )}
+      ) : null}
 
       <CustomGridContainer
         container
@@ -43,11 +50,11 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
           lg: 4,
           xl: 7,
         }}
-        p={`${!matches && '0 20px'}`}
+        p={`${!queryUpMd && '0 20px'}`}
       >
         <Grid item>
-          {!matches ? (
-            <SearchPath />
+          {!queryUpMd || hide ? (
+            <SearchPath hide={hide} />
           ) : (
             <CustomTypographyH2
               variant="h2"
@@ -70,12 +77,12 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
               <Image
                 src={hideFilterIcon}
                 alt="hide filter"
-                style={{ width: `${!matches && '20px'}`, height: `${!matches && '20px'}` }}
+                style={{ width: `${!queryUpMd && '20px'}`, height: `${!queryUpMd && '20px'}` }}
               />
             }
             sx={{
-              fontSize: `${!matches ? '20px' : '24px'}`,
-              height: `${!matches ? '30px' : '50px'}`,
+              fontSize: `${!queryUpMd ? '20px' : '24px'}`,
+              height: `${!queryUpMd ? '30px' : '50px'}`,
             }}
           >
             {hide ? 'Filters' : 'Hide Filters'}

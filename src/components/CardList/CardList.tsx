@@ -3,19 +3,21 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Grid } from '@mui/material';
 
-// styled component
-import { CardsGridContainer } from './CardListStyles';
-
 // component
 import Card from '../Card/Card';
 
+// styled component
+import { CardsGridContainer } from './CardListStyles';
+
+// interface
 interface ICardListProps {
   hide: boolean;
 }
 
+// FUNCTIONAL COMPONENT
 const CardList: React.FC<ICardListProps> = ({ hide }) => {
   const theme = useTheme();
-  const queryMD = useMediaQuery(theme.breakpoints.up('md'));
+  const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <CardsGridContainer
@@ -27,7 +29,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
       }}
       rowGap="32px"
       sx={{
-        padding: `${!queryMD && '0 20px'}`,
+        padding: `${!queryUpMd && '0 20px'}`,
       }}
     >
       {[...new Array(16).fill(null)].map((_, id) => {
