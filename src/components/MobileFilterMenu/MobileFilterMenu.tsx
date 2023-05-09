@@ -56,6 +56,7 @@ const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({ onHide }): JSX.Ele
             width: '10px',
             height: '10px',
             m: '20px 13px 30px 0',
+            cursor: 'pointer',
           }}
         />
       </Box>
