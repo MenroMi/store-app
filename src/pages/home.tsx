@@ -1,6 +1,6 @@
 // libs
 import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, Link as LinkMui } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -45,7 +45,7 @@ export default function Home() {
       productCategory: "Women's shoes",
     },
   ];
-  
+
   return (
     <Box sx={{ maxWidth: '1480px' }}>
       <Head>
@@ -60,11 +60,11 @@ export default function Home() {
       <Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 15, mb: 4.5 }}>
           <Typography variant="h2">My products</Typography>
-          <Link href="/add-product">
+          <LinkMui component={Link} href="/add-product" underline="none">
             <Button variant="contained" sx={{ padding: '10px 26px' }}>
               Add product
             </Button>
-          </Link>
+          </LinkMui>
         </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
