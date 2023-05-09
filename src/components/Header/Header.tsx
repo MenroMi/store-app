@@ -29,12 +29,11 @@ export default function Header({ navItems }: IHeaderProps) {
         </styles.NavList>
       </nav>
       <styles.Options>
-        <TextField
+        <styles.SearchBar
           id="search"
           type="search"
           placeholder="search"
           size="small"
-          sx={{ width: 320, height: 48 }}
           InputProps={{
             style: {
               height: '100%',

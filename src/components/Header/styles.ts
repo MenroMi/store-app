@@ -1,5 +1,7 @@
+import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
+import theme from '@/utils/mui/theme';
 
 export const Header = styled('header')`
   display: flex;
@@ -27,6 +29,10 @@ export const NavListItem = styled('li')`
 export const NavListLink = styled(Link)`
   text-decoration: none;
   color: inherit;
+  transition: 0.3s;
+  &:hover {
+    color: ${theme.palette.primary.main};
+  }
 `;
 
 export const Options = styled('section')`
@@ -34,7 +40,16 @@ export const Options = styled('section')`
   column-gap: 26px;
 `;
 
+export const SearchBar = styled(TextField)`
+  width: 320px;
+  height: 48px;
+  fieldset {
+    border-radius: 42px;
+  }
+`;
+
 export const Cart = styled('section')`
+  [&.fieldset]: border-radius: 42px;
   display: flex;
   align-items: center;
 `;
