@@ -51,14 +51,14 @@ export default function SearchResultPage(): JSX.Element {
             width: '100%',
             height: '100%',
             display: `${!hide && mobileVer && !queryUpMd ? 'block' : 'none'}`,
-            backgroundColor: `${!hide && mobileVer && !queryUpMd && 'rgba(0,0,0, 0.5)'}`,
+            backgroundColor: `${!hide && mobileVer && !queryUpMd && 'rgba(243, 243, 243, 0.9)'}`,
           }}
           data-overlay="overlay"
         />
         <PathAndSearchResult hide={hide} onHide={(): void => setHide(!hide)} />
         <FiltersAndCards hide={hide} />
 
-        {!hide && !queryUpMd && <MobileFilterMenu />}
+        {!hide && !queryUpMd && <MobileFilterMenu onHide={(): void => setHide(!hide)} />}
       </Box>
     </>
   );

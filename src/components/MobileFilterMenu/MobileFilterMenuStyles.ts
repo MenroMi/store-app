@@ -6,7 +6,9 @@ export const CustomOverlay = styled(Box)(() => ({
   zIndex: '1000',
   overflowY: 'auto',
   bottom: '0',
-  width: '100%',
-  height: '50%',
+  right: '0',
+  width: '75%',
+  height: '100%',
   backgroundColor: 'rgba(255,255,255, 0.95)',
+  padding: '0 20px',
 }));
