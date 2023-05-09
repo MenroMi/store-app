@@ -2,8 +2,10 @@
 import Image from 'next/image';
 
 // mui
-import singInImg from '../../assets/singInBg.png';
 import { Box, Typography } from '@mui/material';
+
+// image
+import singInImg from '../../assets/singInBg.png';
 
 // FUNCTIONAL COMPONENT
 const Card: React.FC = (): JSX.Element => {
