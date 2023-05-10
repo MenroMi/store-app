@@ -125,24 +125,6 @@ const ProductCardBag = ({
               <BagParameterButton ButtonValue={'Size'} />
               <BagParameterButton ButtonValue={'Color'} />
               <BagParameterButton ButtonValue={'Quantity'} />
-              {/* <Button sx={{ padding: '0', width: '70px', justifyContent: 'space-between' }}>
-                <Typography variant="btnIconText" color={caption}>
-                  Size
-                </Typography>
-                <Image src={DownIcon} alt="down" className={styles.product__down}></Image>
-              </Button>
-              <Button sx={{ padding: '0', width: '84px', justifyContent: 'space-between' }}>
-                <Typography variant="btnIconText" color={caption}>
-                  Color
-                </Typography>
-                <Image src={DownIcon} alt="down" className={styles.product__down}></Image>
-              </Button>
-              <Button sx={{ padding: '0', width: '121px', justifyContent: 'space-between' }}>
-                <Typography variant="btnIconText" color={caption}>
-                  Quantity
-                </Typography>
-                <Image src={DownIcon} alt="down" className={styles.product__down}></Image>
-              </Button> */}
             </Box>
             <Box
               sx={{
