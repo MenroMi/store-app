@@ -150,15 +150,7 @@ theme = createTheme(theme, {
       },
     },
   },
-});
-
-// MuiCheckbox:{
-// 			styleOverrides: {
-// 				root:{
-// 					padding: '4px 0px 4px 10px',
-// 				}
-// 			}
-// 		}
+}); 
 
 theme = createTheme(theme, {
     typography: {

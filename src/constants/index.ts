@@ -1,9 +1,19 @@
 // FOLDER FOR CONSTANS (example - BASE URL, EXPORTS)
+import signIn from '../assets/singInBg.png'
+import signUp from '../assets/singUpBg.png'
+import forgotReset from '../assets/forgotResetBg.png' 
+import error404 from '../assets/error404.png'
+import error500 from '../assets/error500.png'
+import { StaticImageData } from 'next/image';
+
 export enum Routes {
 	registration = '/registration',
 	authorization = '/authorization',
 	forgot = '/forgot',
-	reset = '/reset'
+	reset = '/reset',
+	error404 = '/404',
+	error500 = '/500',
+
 }
 
 interface IComment{
@@ -44,3 +54,21 @@ export const comments: IComment[] = [
 		location:'Venice, Italy'
 	},
 ]
+
+export const getImage = (route: string): StaticImageData => {
+  switch (route) {
+    case Routes.authorization:
+      return signIn;
+    case Routes.registration:
+      return signUp;
+    case (Routes.forgot):
+      return forgotReset;
+    case (Routes.reset):
+      return forgotReset;
+    case (Routes.error404):
+      return error404;
+    case (Routes.error500):
+      return error500;
+		default: return forgotReset
+		}
+};

@@ -12,9 +12,7 @@ import { Routes } from '@/constants'
 import { useRouter } from 'next/router'
 import LayoutSignError from '@/components/LayoutSignError'
 
-type Props = {}
-
-const Forgot = (props: Props) => {
+const Forgot = () => {
 	const [email, setEmail] = useState<string>('')
 	const router = useRouter()
 

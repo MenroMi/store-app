@@ -12,9 +12,7 @@ import Link from 'next/link'
 import { Routes } from '@/constants'
 import LayoutSignError from '@/components/LayoutSignError'
 
-type Props = {}
-
-const Authorization = (props: Props) => {
+const Authorization = () => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 	const {

@@ -13,9 +13,7 @@ import { Routes } from '@/constants'
 import { useRouter } from 'next/router'
 import LayoutSignError from '@/components/LayoutSignError'
 
-type Props = {}
-
-const Reset = (props: Props) => {
+const Reset = () => {
 	const [password, setPassword] = useState<string>('')
 	const [confirm, setConfirm] = useState<string>('')
 	const router = useRouter()

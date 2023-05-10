@@ -4,7 +4,7 @@ import { Box, Button, Checkbox, FormControl, FormControlLabel, FormLabel, Outlin
 import Link from 'next/link';
 import { Dispatch, FC, FormEventHandler, SetStateAction } from 'react';
 
-interface IForm {
+interface IFormProps {
   handleSubmit: FormEventHandler<HTMLFormElement>,
   email?: string,
   setEmail?: Dispatch<SetStateAction<string>>,
@@ -21,7 +21,7 @@ const FormMui = styled('form')({
   flexDirection: 'column',
 });
 
-const Form = ({ handleSubmit, email, setEmail, password, setPassword, name, setName, confirm, setConfirm }: IForm) => {
+const Form = ({ handleSubmit, email, setEmail, password, setPassword, name, setName, confirm, setConfirm }: IFormProps) => {
   const {
     palette: {
       primary: { main },

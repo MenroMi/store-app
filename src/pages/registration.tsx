@@ -12,9 +12,7 @@ import { Routes, comments } from '@/constants'
 import Form from '@/components/Form'
 import LayoutSignError from '@/components/LayoutSignError'
 
-type Props = {}
-
-const Registration = (props: Props) => {
+const Registration = () => {
 	const [email, setEmail] = useState<string>('')
 	const [name, setName] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
