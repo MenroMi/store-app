@@ -1,11 +1,5 @@
-import Head from "next/head";
-import styles from "../styles/pageStyles/Home.module.css";
+import Layout from '@/components/Layout';
 
 export default function Home() {
-  return (
-    <>
-   
-      <h1 className={styles.txt}>Here start our journey</h1>
-    </>
-  );
+  return <Layout title="Shoes Shop | Home Page">hello from main</Layout>;
 }
