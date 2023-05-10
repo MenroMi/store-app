@@ -15,6 +15,7 @@ interface ISearchPathProps {
 const SearchPath: React.FC<ISearchPathProps> = ({ hide }): JSX.Element => {
   const theme = useTheme();
   const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  const queryDownLg = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
     <CustomFlexWrapper mt={`${queryUpMd && hide ? '8px' : !queryUpMd ? '8px' : '0'}`}>
@@ -35,6 +36,7 @@ const SearchPath: React.FC<ISearchPathProps> = ({ hide }): JSX.Element => {
         variant="h4"
         sx={{
           marginTop: `${queryUpMd && '8px'}`,
+          marginRight: `${queryDownLg && '40px'}`,
           borderBottom: `${queryUpMd && !hide && '1px solid #eaecf0'}`,
           pl: `${queryUpMd && hide ? '0' : !queryUpMd ? '0' : '40px'}`,
           pb: `${queryUpMd && !hide && '16px'}`,
