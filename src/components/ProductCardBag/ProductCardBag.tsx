@@ -1,10 +1,11 @@
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import { Box, Button, Divider, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import Image, { StaticImageData } from 'next/image';
 import DeleteIcon from '@/assets/icons/delete.svg';
 import SaveIcon from '@/assets/icons/save.svg';
 import DownIcon from '@/assets/icons/down.svg';
 import styles from '@/styles/componentStyles/ProductCardBag.module.scss';
+import BagParameterButton from '../BagParameterButton/BagParameterButton';
 
 interface ICardBagProps {
   productImageSrc: string | StaticImageData;
@@ -34,9 +35,10 @@ const ProductCardBag = ({
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
-          maxWidth: '963px',
-          height: '214px',
+          maxWidth: '983px',
+          height: '234px',
           borderRadius: '6px',
+          padding: '10px',
           '&:hover': {
             boxShadow: 4,
           },
@@ -108,7 +110,6 @@ const ProductCardBag = ({
               display: 'flex',
               justifyContent: 'space-between',
               minHeight: { lg: '28px', md: 'auto' },
-              marginBottom: '10px',
             }}
           >
             <Box
@@ -121,7 +122,10 @@ const ProductCardBag = ({
                 maxWidth: '362px',
               }}
             >
-              <Button sx={{ padding: '0', width: '70px', justifyContent: 'space-between' }}>
+              <BagParameterButton ButtonValue={'Size'} />
+              <BagParameterButton ButtonValue={'Color'} />
+              <BagParameterButton ButtonValue={'Quantity'} />
+              {/* <Button sx={{ padding: '0', width: '70px', justifyContent: 'space-between' }}>
                 <Typography variant="btnIconText" color={caption}>
                   Size
                 </Typography>
@@ -138,12 +142,12 @@ const ProductCardBag = ({
                   Quantity
                 </Typography>
                 <Image src={DownIcon} alt="down" className={styles.product__down}></Image>
-              </Button>
+              </Button> */}
             </Box>
             <Box
               sx={{
                 display: 'flex',
-                gap: { lg: '30px', md: '0', sm: '30px', xs: 'auto' },
+                gap: { lg: '15px', md: '0', sm: '15px', xs: 'auto' },
                 flexDirection: { lg: 'row', md: 'column', sm: 'row', xs: 'column' },
                 justifyContent: {
                   lg: 'space-between',
@@ -174,6 +178,7 @@ const ProductCardBag = ({
                   Save
                 </Typography>
               </Button>
+              <Divider orientation="vertical" flexItem />
               <Button
                 sx={{ padding: '0', width: '108px', justifyContent: 'flex-end', minHeight: '28px' }}
               >

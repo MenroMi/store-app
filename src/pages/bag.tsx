@@ -9,6 +9,7 @@ import Head from 'next/head';
 import productImage from '../assets/singInBg.png';
 import ProductCardBag from '@/components/ProductCardBag/ProductCardBag';
 import { useEffect, useState } from 'react';
+import CountBagComponent from '@/components/CountBagComponent/CountBagComponent';
 
 const MOCKED_PRODUCTS = [
   {
@@ -174,27 +175,9 @@ const Bag = () => {
                     marginBottom: '56px',
                   }}
                 >
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="h3">Subtotal</Typography>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography variant="h3">$</Typography>
-                      <Typography variant="h3">{subTotal}</Typography>
-                    </Box>
-                  </Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="h3">Shipping</Typography>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography variant="h3">$</Typography>
-                      <Typography variant="h3">{shipping}</Typography>
-                    </Box>
-                  </Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="h3">Tax</Typography>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography variant="h3">$</Typography>
-                      <Typography variant="h3">{tax}</Typography>
-                    </Box>
-                  </Box>
+                  <CountBagComponent CountCategory={'Subtotal'} PriceValue={subTotal} />
+                  <CountBagComponent CountCategory={'Shipping'} PriceValue={shipping} />
+                  <CountBagComponent CountCategory={'Tax'} PriceValue={tax} />
                 </Box>
                 <Box
                   sx={{
@@ -207,7 +190,7 @@ const Bag = () => {
                     borderTop: '1px #EAECF0 solid',
                   }}
                 >
-                  <Typography variant="h3">Total</Typography>
+                  <Typography variant="h3Bold">Total</Typography>
                   <Box sx={{ display: 'flex' }}>
                     <Typography variant="h3">$</Typography>
                     <Typography variant="h3">{total}</Typography>
