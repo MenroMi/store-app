@@ -1,33 +1,91 @@
-import FullProductCard from '@/components/FullProductCard/FullProductCard';
 import PrimaryButton from '@/components/PrimaryButton/PrimaryButton';
 import SecondaryButton from '@/components/SecondaryButton/SecondaryButton';
-import {
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-  SvgIcon,
-  FormControl,
-  FormLabel,
-  OutlinedInput,
-  Link as LinkMui,
-  Checkbox,
-  FormControlLabel,
-  Button,
-  useTheme,
-} from '@mui/material';
+import DownIcon from '@/assets/icons/down.svg';
+import Image, { StaticImageData } from 'next/image';
+import styles from '@/styles/pageStyles/Bag.module.scss';
+import { Grid, Stack, Typography, Button, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import Head from 'next/head';
-import Link from 'next/link';
+import productImage from '../assets/singInBg.png';
+import ProductCardBag from '@/components/ProductCardBag/ProductCardBag';
+import { useEffect, useState } from 'react';
 
-type Props = {};
+const MOCKED_PRODUCTS = [
+  {
+    id: 1,
+    productImageSrc: productImage,
+    productName: 'Nike Air Max 270',
+    productPrice: 160,
+    productCategory: "Women's shoes",
+    inStock: true,
+  },
+  {
+    id: 2,
+    productImageSrc: productImage,
+    productName: 'Nike Air Max 270',
+    productPrice: 160,
+    productCategory: "Women's shoes",
+    inStock: true,
+  },
+  {
+    id: 3,
+    productImageSrc: productImage,
+    productName: 'Nike Air Max 270',
+    productPrice: 160,
+    productCategory: "Women's shoes",
+    inStock: true,
+  },
+  {
+    id: 4,
+    productImageSrc: productImage,
+    productName: 'Nike Air Max 270',
+    productPrice: 160,
+    productCategory: "Women's shoes",
+    inStock: true,
+  },
+];
 
-const Bag = (props: Props) => {
+const Bag = () => {
+  const [subTotal, setSubTotal] = useState<number>(0);
+  const [shipping, setShipping] = useState<number>(0);
+  const [tax, setTax] = useState<number>(0);
+  const [total, setTotal] = useState<number>(0);
   const {
     palette: {
-      primary: { main },
+      text: { caption },
     },
   } = useTheme();
+
+  const countSubTotal = () => {
+    const priceArray = MOCKED_PRODUCTS.map(({ productPrice }) => productPrice);
+    const countSubTotal = priceArray.reduce((value, acc) => value + acc);
+    setSubTotal(countSubTotal);
+  };
+
+  const countShipping = () => {
+    const currentShipping = MOCKED_PRODUCTS.length * 5;
+    setShipping(currentShipping);
+  };
+
+  const countTax = () => {
+    const currentTax = subTotal * 0.2;
+    setTax(currentTax);
+  };
+
+  const countTotal = () => {
+    const totalPrice = subTotal + shipping + tax;
+    setTotal(totalPrice);
+  };
+
+  useEffect(() => {
+    countSubTotal();
+    countShipping();
+  }, MOCKED_PRODUCTS);
+
+  useEffect(() => {
+    countTax();
+    countTotal();
+  }, MOCKED_PRODUCTS);
 
   return (
     <main>
@@ -52,19 +110,32 @@ const Bag = (props: Props) => {
           }}
         >
           {/* Left container */}
-          <Box sx={{ width: '100%', maxWidth: '963px' }}>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '963px',
+            }}
+          >
             <Typography variant="h2">Chart</Typography>
-            <Grid item xs={12} mt={5} sx={{ marginInline: 'auto' }}>
-              <Stack spacing={3} mb={3}>
-                <FullProductCard />
+            <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
+              <Stack spacing={16} mb={3}>
+                {MOCKED_PRODUCTS.map((product) => (
+                  <ProductCardBag
+                    productCategory={product.productCategory}
+                    productImageSrc={product.productImageSrc}
+                    productName={product.productName}
+                    productPrice={product.productPrice}
+                    key={product.id}
+                    inStock={true}
+                  />
+                ))}
               </Stack>
             </Grid>
           </Box>
-
           {/* Right Container */}
           <Box
             sx={{
-              marginLeft: 'auto',
+              marginLeft: { lg: 'auto', md: '20px' },
             }}
           >
             <Box
@@ -76,15 +147,23 @@ const Bag = (props: Props) => {
               }}
             >
               <Typography variant="h2">Summary</Typography>
-              <Typography variant="h5" sx={{ marginTop: '59px' }}>
-                Do you have a promocode?
-                <SvgIcon sx={{ position: 'relative', top: 6 }}>
-                  <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-                </SvgIcon>
-              </Typography>
+              <Button
+                sx={{
+                  marginTop: '65px',
+                  width: '285px',
+                  justifyContent: 'space-between',
+                  color: caption,
+                  padding: '0',
+                }}
+              >
+                <Typography variant="btnIconText" fontSize={20}>
+                  Do you have a promocode?
+                </Typography>
+                <Image src={DownIcon} alt="down" className={styles.product__down}></Image>
+              </Button>
               <Box
                 sx={{
-                  marginTop: '38px',
+                  marginTop: '30px',
                 }}
               >
                 <Box
@@ -97,15 +176,24 @@ const Bag = (props: Props) => {
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h3">Subtotal</Typography>
-                    <Typography variant="h3">$</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="h3">$</Typography>
+                      <Typography variant="h3">{subTotal}</Typography>
+                    </Box>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h3">Shipping</Typography>
-                    <Typography variant="h3">$</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="h3">$</Typography>
+                      <Typography variant="h3">{shipping}</Typography>
+                    </Box>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h3">Tax</Typography>
-                    <Typography variant="h3">$</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="h3">$</Typography>
+                      <Typography variant="h3">{tax}</Typography>
+                    </Box>
                   </Box>
                 </Box>
                 <Box
@@ -120,7 +208,10 @@ const Bag = (props: Props) => {
                   }}
                 >
                   <Typography variant="h3">Total</Typography>
-                  <Typography variant="h3">$</Typography>
+                  <Box sx={{ display: 'flex' }}>
+                    <Typography variant="h3">$</Typography>
+                    <Typography variant="h3">{total}</Typography>
+                  </Box>
                 </Box>
                 <Box
                   sx={{
@@ -130,11 +221,6 @@ const Bag = (props: Props) => {
                     marginTop: '53px',
                   }}
                 >
-                  {/* <LinkMui component={Link} href="/bag" underline="none">
-                    <Typography variant="body2" sx={{ color: main, display: 'inline' }}>
-                      Checkout
-                    </Typography>
-                  </LinkMui> */}
                   <SecondaryButton>PayPal</SecondaryButton>
                   <PrimaryButton>Checkout</PrimaryButton>
                 </Box>
