@@ -41,26 +41,3 @@ const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({ hide }): JSX.Element
 };
 
 export default FiltersAndCards;
-
-/***
- * 
- *           { <Box
-            sx={{
-              maxHeight: { xl: '1000px', lg: '550px', md: '350px' },
-              overflowY: 'scroll',
-              overflowX: 'hidden',
-              '&::-webkit-scrollbar': {
-                width: '3px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: theme?.palette?.primary?.main,
-                backgroundClip: 'content-box',
-                borderRadius: '100vw',
-                opacity: '0.1',
-              },
-            }}
-          >
-          </Box> }
- * 
- * 
- */
