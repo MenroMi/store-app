@@ -1,6 +1,6 @@
 // mui
 import { Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // components
@@ -18,8 +18,8 @@ const PathAndSearchResult: React.FC<IPathAndSearchResultProps> = ({
   onHide,
   hide,
 }): JSX.Element => {
-  const theme = useTheme();
-  const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  const theme = useTheme<Theme>();
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
   return (
     <Box
       display="flex"

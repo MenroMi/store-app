@@ -1,5 +1,5 @@
 // mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Grid } from '@mui/material';
 
@@ -16,8 +16,8 @@ interface ICardListProps {
 
 // FUNCTIONAL COMPONENT
 const CardList: React.FC<ICardListProps> = ({ hide }) => {
-  const theme = useTheme();
-  const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  const theme = useTheme<Theme>();
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   return (
     <CardsGridContainer

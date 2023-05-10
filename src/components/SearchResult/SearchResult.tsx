@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 // mui
 import { Box, Divider, Grid } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // image
@@ -23,8 +23,8 @@ interface ISearchResultProps {
 
 // FUNCTIONAL COMPONENT
 const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
-  const theme = useTheme();
-  const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  const theme = useTheme<Theme>();
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   return (
     <Box sx={{ alignSelf: 'flex-end', flex: 2 }}>

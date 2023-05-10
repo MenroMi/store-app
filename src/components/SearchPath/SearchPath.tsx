@@ -1,5 +1,5 @@
 // mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Typography } from '@mui/material';
 
@@ -13,9 +13,9 @@ interface ISearchPathProps {
 
 // FUNCTIONAL COMPONENT
 const SearchPath: React.FC<ISearchPathProps> = ({ hide }): JSX.Element => {
-  const theme = useTheme();
-  const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
-  const queryDownLg = useMediaQuery(theme.breakpoints.down('lg'));
+  const theme = useTheme<Theme>();
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
+  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
 
   return (
     <CustomFlexWrapper mt={`${queryUpMd && hide ? '8px' : !queryUpMd ? '8px' : '0'}`}>

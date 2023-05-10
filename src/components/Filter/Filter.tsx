@@ -1,23 +1,30 @@
+// basic
 import Image from 'next/image';
 import { useState } from 'react';
 
+// mui
 import { Box, Typography, Collapse } from '@mui/material';
-import { CustomFilterHeader } from './FilterStyles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 
+// image
 import arrowIcon from '../../assets/icons/down.svg';
 
+// styled component
+import { CustomFilterHeader } from './FilterStyles';
+
+// interface
 interface IFilterProps {
   label: string;
   children: React.ReactNode;
 }
 
+// FUNCTIONAL COMPONENT
 const Filter: React.FC<IFilterProps> = ({ label, children }): JSX.Element => {
   const [hideFilter, setHideFilter] = useState<boolean>(false);
-  const theme = useTheme();
-  const queryDownLg = useMediaQuery(theme.breakpoints.down('lg'));
-  const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme<Theme>();
+  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
   return (
     <Box

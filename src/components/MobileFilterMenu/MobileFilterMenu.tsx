@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 
 // mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import { Box, Slide } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -24,8 +24,8 @@ interface IMobileFilterMenuProps {
 
 // FUNCTIONAL COMPONENT
 const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({ hide, onHide }): JSX.Element => {
-  const theme = useTheme();
-  const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme<Theme>();
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';

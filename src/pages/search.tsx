@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 // mui
 import { Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // components
@@ -13,10 +13,10 @@ import PathAndSearchResult from '@/components/PathAndSearchResult/PathAndSearchR
 
 // FUNCTIONAL COMPONENT
 export default function SearchResultPage(): JSX.Element {
-  const [hide, setHide] = useState(false);
-  const [mobileVer, setMobileVer] = useState(false);
-  const theme = useTheme();
-  const queryUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  const [hide, setHide] = useState<boolean>(false);
+  const [mobileVer, setMobileVer] = useState<boolean>(false);
+  const theme = useTheme<Theme>();
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   const onHideFilters = (e: any): void => {
     if (e.target?.dataset?.overlay) {
@@ -57,7 +57,6 @@ export default function SearchResultPage(): JSX.Element {
         />
         <PathAndSearchResult hide={hide} onHide={(): void => setHide(!hide)} />
         <FiltersAndCards hide={hide} />
-
         <MobileFilterMenu hide={hide} onHide={(): void => setHide(!hide)} />
       </Box>
     </>
