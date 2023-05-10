@@ -23,7 +23,7 @@ const Card: React.FC = (): JSX.Element => {
         <Typography variant="subtitle1">Nike Air Max 270</Typography>
         <Typography variant="subtitle1">$160</Typography>
       </Box>
-      <Typography variant="subtitle2Gray">Women&apos;s Shoes</Typography>
+      <Typography variant="subtitle2Small">Women&apos;s Shoes</Typography>
     </Box>
   );
 };

@@ -1,21 +1,18 @@
 // basic
 import Image from 'next/image';
-
 // mui
 import InputAdornment from '@mui/material/InputAdornment';
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import { Box, Checkbox, FormControlLabel, Typography, Collapse } from '@mui/material';
 
 // images
-import arrowIcon from '../../assets/icons/down.svg';
 import searchIcon from '../../assets/icons/search.svg';
 
 // styled components
-import { CustomTextField, CustomFilterHeader } from './FilterListStyles';
+import { CustomTextField } from './FilterListStyles';
 
 // interfaces
 import { FilterListRender, CategoriesList } from '@/types/filterListTypes';
+import Filter from '../Filter/Filter';
 
 // filters hardcode
 const filters = [
@@ -41,10 +38,6 @@ const filters = [
 
 // FUNCTION COMPONENT
 const FiltersList: React.FC = (): JSX.Element => {
-  const theme = useTheme();
-  const queryDownLg = useMediaQuery(theme.breakpoints.down('lg'));
-  const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
-
   const isinputs = (inputs: string[] | undefined, name: string) => {
     return (
       inputs && (
@@ -145,28 +138,12 @@ const FiltersList: React.FC = (): JSX.Element => {
         const { name, label, id, searchbar, inputs, categories, color, price } = props;
 
         return (
-          <Box
-            key={id}
-            sx={{
-              borderBottom: '1px solid #eaecf0',
-              p: `${!queryDownMd ? '0 0 23px 39px' : '20px'}`,
-              mt: `${!queryDownMd ? '28px' : '0'}`,
-              width: `${!queryDownLg ? '320px' : !queryDownMd ? '280px' : '100%'}`,
-            }}
-          >
-            <CustomFilterHeader>
-              <Typography variant="h6">{label}</Typography>
-              <Image
-                src={arrowIcon}
-                alt="arrow for dropdown list with filters"
-                style={{ marginRight: '10px' }}
-              />
-            </CustomFilterHeader>
+          <Filter key={id} label={label}>
             {isinputs(inputs, name)}
             {isSearchBrand(searchbar, categories!, name)}
             {isFilter(price, name)}
             {isFilter(color, name)}
-          </Box>
+          </Filter>
         );
       })}
     </>
