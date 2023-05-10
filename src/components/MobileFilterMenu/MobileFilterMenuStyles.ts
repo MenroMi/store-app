@@ -10,5 +10,5 @@ export const CustomOverlay = styled(Box)(() => ({
   width: '75%',
   height: '100%',
   backgroundColor: 'rgba(255,255,255, 0.95)',
-  padding: '0 20px',
+  padding: '0',
 }));

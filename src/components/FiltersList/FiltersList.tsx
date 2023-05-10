@@ -149,7 +149,7 @@ const FiltersList: React.FC = (): JSX.Element => {
             key={id}
             sx={{
               borderBottom: '1px solid #eaecf0',
-              p: `${!queryDownMd ? '0 0 23px 39px' : '20px 0'}`,
+              p: `${!queryDownMd ? '0 0 23px 39px' : '20px'}`,
               mt: `${!queryDownMd ? '28px' : '0'}`,
               width: `${!queryDownLg ? '320px' : !queryDownMd ? '280px' : '100%'}`,
             }}
