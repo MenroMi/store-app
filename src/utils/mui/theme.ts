@@ -98,7 +98,7 @@ theme = createTheme(theme, {
                     fontWeight: 500,
                     borderRadius: 8,
                     textTransform: 'none',
-                    padding: 9,
+                    padding: 5,
                 }
             }
         }, 
@@ -178,6 +178,10 @@ theme = createTheme(theme, {
         h4Bold: {
             ...theme.typography.h4,
             fontWeight: 600,
+        },
+        h5Gray: {
+            ...theme.typography.h5,
+            color: theme.palette.text.primary,
         },
         subtitle2Thin: {
             ...theme.typography.subtitle2,
