@@ -24,14 +24,12 @@ export default function UpdateProfile() {
   const [email, setEmail] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
 
-  const handleSetName = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
-
-  const handleSetSurname = (e: React.ChangeEvent<HTMLInputElement>) => setSurname(e.target.value);
-
-  const handleSetEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-
-  const handleSetPhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPhoneNumber(e.target.value);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setValue: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    setValue(e.target.value);
+  };
 
   return (
     <Box>
@@ -77,20 +75,19 @@ export default function UpdateProfile() {
                   ? surname
                   : input.id === 'email'
                   ? email
-                  : input.id === 'phonenumber'
-                  ? phoneNumber
-                  : null
+                  : phoneNumber
               }
-              onChange={
-                input.id === 'name'
-                  ? handleSetName
-                  : input.id === 'surname'
-                  ? handleSetSurname
-                  : input.id === 'email'
-                  ? handleSetEmail
-                  : input.id === 'phonenumber'
-                  ? handleSetPhoneNumber
-                  : undefined
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange(
+                  e,
+                  input.id === 'name'
+                    ? setName
+                    : input.id === 'surname'
+                    ? setSurname
+                    : input.id === 'email'
+                    ? setEmail
+                    : setPhoneNumber
+                )
               }
             />
           </FormControl>
