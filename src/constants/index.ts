@@ -11,6 +11,7 @@ import forgotReset from '../assets/forgotResetBg.png';
 import error404 from '../assets/error404.png';
 import error500 from '../assets/error500.png';
 import { StaticImageData } from 'next/image';
+import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 
 export const REGULAR_NAV_LINKS = [
   {
@@ -129,3 +130,35 @@ export const getImage = (route: string): StaticImageData => {
       return forgotReset;
   }
 };
+
+export const UPDATE_PROFILE_INPUTS: IUpdateProfileInput[] = [
+  {
+    id: 'name',
+    placeholder: 'Jane',
+    label: 'Name',
+    type: 'text',
+  },
+
+  {
+    id: 'surname',
+    placeholder: 'Meldrum',
+    label: 'Surname',
+    type: 'text',
+  },
+
+  {
+    id: 'email',
+    placeholder: 'email@example.com',
+    label: 'Email',
+    type: 'email',
+  },
+
+  {
+    id: 'phonenumber',
+    placeholder: '(949) 354-2574',
+    label: 'Phone number',
+    type: 'tel',
+  },
+];
+
+

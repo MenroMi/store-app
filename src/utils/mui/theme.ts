@@ -2,20 +2,20 @@ import { createTheme } from '@mui/material/styles';
 
 // Create a theme instance.
 let theme = createTheme({
-    palette: {
-        primary: {                                                                                                                                                      
-            main: '#FE645E',
-            dark: '#e45a54',
-            contrastText: '#FFFFFF'
-        },
-        text: {
-            primary: '#5C5C5C',
-            secondary: '#000000',
-            iconLight: '#6E7278',
-            iconDark: '#292D32',
-            caption: '#494949',
-        }
+  palette: {
+    primary: {
+      main: '#FE645E',
+      dark: '#e45a54',
+      contrastText: '#FFFFFF',
     },
+    text: {
+      primary: '#5C5C5C',
+      secondary: '#000000',
+      iconLight: '#6E7278',
+      iconDark: '#292D32',
+      caption: '#494949',
+    },
+  },
 });
 
 theme = createTheme(theme, {
@@ -86,6 +86,7 @@ theme = createTheme(theme, {
     subtitle2: {
       fontSize: 18,
       fontWeight: 500,
+      color: theme.palette.text.primary,
       [theme.breakpoints.between('xs', 'sm')]: {
         fontSize: 9,
       },
@@ -150,7 +151,7 @@ theme = createTheme(theme, {
       },
     },
   },
-}); 
+});
 
 theme = createTheme(theme, {
     typography: {
