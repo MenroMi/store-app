@@ -15,7 +15,7 @@ declare module '@mui/material/styles' {
             h4Bold: React.CSSProperties;
             h5Gray: React.CSSProperties;
             subtitle2Thin: React.CSSProperties;
-            subtitle2Gray: React.CSSProperties;
+            subtitle2Small: React.CSSProperties;
         }
       // allow configuration using `createTheme`
     interface TypographyVariantsOptions {
@@ -27,7 +27,7 @@ declare module '@mui/material/styles' {
             h4Bold?: React.CSSProperties;
             h5Gray?: React.CSSProperties;
             subtitle2Thin?: React.CSSProperties;
-            subtitle2Gray?: React.CSSProperties;
+            subtitle2Small?: React.CSSProperties;
         }
     }
     
@@ -42,6 +42,6 @@ declare module '@mui/material/styles' {
         h4Bold: true;
         h5Gray: true;
         subtitle2Thin: true;
-        subtitle2Gray: true;
+        subtitle2Small: true;
     }
 }
