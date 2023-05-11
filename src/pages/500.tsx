@@ -1,11 +1,13 @@
 import { Grid, Button, styled, Typography, useTheme, Stack } from "@mui/material";
 import Image from "next/image";
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import bgImage from '@/assets/error500big.png';
+import Layout from '@/components/Layout';
 
 const mockData = {
     title: 'Oh snap!',
-    description: "We can't find the page you are looking for. Sorry for the inconvenience."
+    description: "We’re not quite sure what went wrong. You can go back home..."
 }
 
 const Description = styled(Typography)(({theme}) => ({
@@ -29,7 +31,7 @@ const ErrorMessage = styled(Stack)(({theme}) => ({
 
 const CustomButton = styled(Button)(({theme}) => ({       
     width: '280px',
-    marginTop: '8px',
+    padding: 5,
     [theme.breakpoints.between("xs", "sm")]: {
         width: '230px',
         alignSelf: 'flex-end'
@@ -55,21 +57,23 @@ const ContentContainer = styled(Grid)(({theme}) => ({
 export default function Error500() {
     const router = useRouter();
 
-    const handleGoHome = () => {
+    const handleGoHome = () : void  => {
         router.push('/');
     };
     return (
-        <Grid container height={1} justifyContent='center'>
-            <BackgroundImage src={bgImage} alt="Background Image" />
-            <Grid item>
-                <ContentContainer container justifyContent="center" alignItems='self-start' flexWrap='wrap'>
-                    <ErrorMessage justifyContent='center' flexWrap='wrap'>
-                        <Typography variant="h2">{mockData.title}</Typography>
-                        <Description variant="h5Gray">{mockData.description}</Description>
-                    </ErrorMessage>
-                    <CustomButton variant="contained" onClick={handleGoHome}>Back home</CustomButton>
-                </ContentContainer>
+        // <Layout title='Page not found...'>
+            <Grid container height={1} justifyContent='center'>
+                <BackgroundImage src={bgImage} alt="Background Image" />
+                <Grid item>
+                    <ContentContainer container justifyContent="center" alignItems='self-start' flexWrap='wrap'>
+                        <ErrorMessage justifyContent='center' flexWrap='wrap'>
+                            <Typography variant="h2">{mockData.title}</Typography>
+                            <Description variant="h5Gray">{mockData.description}</Description>
+                        </ErrorMessage>
+                        <CustomButton variant="contained" onClick={handleGoHome}>Back home</CustomButton>
+                    </ContentContainer>
+                </Grid>
             </Grid>
-        </Grid>
+        // </Layout>
     );
 }

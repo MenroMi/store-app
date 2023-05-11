@@ -99,7 +99,7 @@ theme = createTheme(theme, {
           fontWeight: 500,
           borderRadius: 8,
           textTransform: 'none',
-          padding: 5,
+          padding: 9,
         },
       },
     },

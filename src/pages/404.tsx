@@ -1,7 +1,8 @@
 import { Grid, Button, styled, Box, Typography } from "@mui/material";
-import Image from "next/image";
-import error404Img from '../assets/error404.png';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
+import SplitLayout from '@/components/SplitLayout';
+import Layout from '@/components/Layout';
 
 const mockData = {
     title: 'Error 404',
@@ -10,36 +11,34 @@ const mockData = {
 
 const CustomButton = styled(Button)({       
     width: '152px',
-    marginTop: '8px'
+    marginTop: '8px',
+    padding: 5,
 });
 
 export default function Error404() {
     const router = useRouter();
 
-    const handleGoBack = () => {
+    const handleGoBack = () : void => {
         router.back();
     };
 
-    const handleGoHome = () => {
+    const handleGoHome = () : void => {
         router.push('/');
     };
     return (
-        <Grid container height={1}>
-            <Grid item sm={6}>
+        // <Layout title='Page not found...'>
+            <SplitLayout>
                 <Grid container justifyContent="center" alignItems='center' height={1}>
                     <Grid item container flexDirection='row' width='60%'>
                         <Typography variant="h2">{mockData.title}</Typography>
                         <Typography variant="h5Gray" mt={2} mb={2}>{mockData.description}</Typography>
-                        <Box sx={{ display: 'flex', gap: '16px' }}>
+                        <Box display='flex' gap={2}>
                             <CustomButton variant="outlined" onClick={handleGoBack}>Go back</CustomButton>
                             <CustomButton variant="contained" onClick={handleGoHome}>Home</CustomButton>
                         </Box>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid item sm={6} position='relative'>
-                <Image src={error404Img} alt='Error 404 Page Not Found' fill style={{ objectFit: 'cover', zIndex: 1000 }}/>
-            </Grid>
-        </Grid>
+            </SplitLayout>
+        // </Layout>
     );
 }

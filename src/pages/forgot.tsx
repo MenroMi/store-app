@@ -10,7 +10,7 @@ import Form from '@/components/Form'
 import Link from 'next/link'
 import { Routes } from '@/constants'
 import { useRouter } from 'next/router'
-import LayoutSignError from '@/components/LayoutSignError'
+import SplitLayout from '@/components/SplitLayout'
 
 const Forgot = () => {
 	const [email, setEmail] = useState<string>('')
@@ -29,7 +29,7 @@ const Forgot = () => {
 				<title>Forgot Password</title>
 			</Head>
 			<main>
-				<LayoutSignError>
+				<SplitLayout>
 					<Grid
 						container
 						sx={{
@@ -73,7 +73,7 @@ const Forgot = () => {
 							</LinkMui>
 						</Box>
 					</Grid>
-				</LayoutSignError>
+				</SplitLayout>
 			</main>
 		</>
 	)
