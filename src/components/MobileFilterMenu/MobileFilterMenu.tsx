@@ -38,7 +38,7 @@ const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({ hide, onHide }): J
     <Slide in={!hide} direction="left">
       <CustomOverlay
         sx={{
-          display: `${queryDownMd && !hide ? 'block' : 'none'}`,
+          display: `${queryDownMd ? 'block' : 'none'}`,
           boxShadow: `${queryDownMd && '3px -11px 24px 0px rgba(0, 0, 0, 0.4);'}`,
         }}
       >
