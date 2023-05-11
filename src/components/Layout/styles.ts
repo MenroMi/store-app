@@ -1,0 +1,15 @@
+import { styled } from '@mui/material/styles';
+
+export const Layout = styled('section')`
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
+export const Main = styled('main')`
+  display: flex;
+  width: 100%;
+  height: 200px;
+  padding-left: 40px;
+  padding-right: 60px;
+`;
