@@ -2,17 +2,20 @@
 import Image from 'next/image';
 // mui
 import InputAdornment from '@mui/material/InputAdornment';
-import { Box, Checkbox, FormControlLabel, Typography, Collapse } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
+import { useTheme, Theme } from '@mui/material';
 
 // images
 import searchIcon from '../../assets/icons/search.svg';
+
+// components
+import Filter from '../Filter/Filter';
 
 // styled components
 import { CustomTextField } from './FilterListStyles';
 
 // interfaces
 import { FilterListRender, CategoriesList } from '@/types/filterListTypes';
-import Filter from '../Filter/Filter';
 
 // filters hardcode
 const filters = [
@@ -38,6 +41,8 @@ const filters = [
 
 // FUNCTION COMPONENT
 const FiltersList: React.FC = (): JSX.Element => {
+  const theme = useTheme<Theme>();
+
   const isinputs = (inputs: string[] | undefined, name: string) => {
     return (
       inputs && (
@@ -45,15 +50,19 @@ const FiltersList: React.FC = (): JSX.Element => {
           {inputs.map((elem: string) => (
             <FormControlLabel
               label={
-                <Typography variant="h6" sx={{ fontWeight: '400' }}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: '400', color: theme?.palette?.text?.caption }}
+                >
                   {elem}
                 </Typography>
               }
-              control={<Checkbox />}
+              control={<Checkbox sx={{ mr: '12px' }} />}
               key={elem}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                mt: '15px',
               }}
             />
           ))}
@@ -100,11 +109,14 @@ const FiltersList: React.FC = (): JSX.Element => {
                         <Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }} key={id}>
                           <FormControlLabel
                             label={
-                              <Typography variant="h6" sx={{ fontWeight: '400' }}>
+                              <Typography
+                                variant="h6"
+                                sx={{ fontWeight: '400', color: theme?.palette?.text?.caption }}
+                              >
                                 {label}
                               </Typography>
                             }
-                            control={<Checkbox />}
+                            control={<Checkbox sx={{ mr: '12px' }} />}
                           />
                           <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
                             (+{amount})
