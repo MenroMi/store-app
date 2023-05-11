@@ -11,7 +11,7 @@ import productImage from '../assets/singInBg.png';
 
 // components
 import UserProfile from '@/components/UserProfile';
-import ProductCardBasic from '@/components/ProductCardBasic';
+import Card from '@/components/Card/Card';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server
@@ -69,7 +69,7 @@ export default function Home() {
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           {MOCKED_PRODUCTS.map((product) => (
-            <ProductCardBasic
+            <Card
               productCategory={product.productCategory}
               productImageSrc={product.productImageSrc}
               productName={product.productName}
