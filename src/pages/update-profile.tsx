@@ -58,7 +58,7 @@ export default function UpdateProfile() {
 
       <CustomForm>
         {UPDATE_PROFILE_INPUTS.map((input) => (
-          <FormControl sx={{ mb: 3 }}>
+          <FormControl key={input.id} sx={{ mb: 3 }}>
             <FormLabel htmlFor={input.id}>
               <Typography variant="caption">{input.label}</Typography>
             </FormLabel>
