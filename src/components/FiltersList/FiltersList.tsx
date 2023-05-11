@@ -109,11 +109,14 @@ const FiltersList: React.FC = (): JSX.Element => {
                         <Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }} key={id}>
                           <FormControlLabel
                             label={
-                              <Typography variant="h6" sx={{ fontWeight: '400' }}>
+                              <Typography
+                                variant="h6"
+                                sx={{ fontWeight: '400', color: theme?.palette?.text?.caption }}
+                              >
                                 {label}
                               </Typography>
                             }
-                            control={<Checkbox />}
+                            control={<Checkbox sx={{ mr: '12px' }} />}
                           />
                           <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
                             (+{amount})
