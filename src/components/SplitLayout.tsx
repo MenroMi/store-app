@@ -6,26 +6,21 @@ import React from 'react'
 import { Routes, getImage } from '@/constants'
 import SignComments from './SignComments'
 
-
-
-type ILayoutSignError = {
+type ISplitLayoutProps = {
   children: React.ReactNode,
 }
 
-const LayoutSignError = ({ children }: ILayoutSignError) => {
+const SplitLayout = ({ children }: ISplitLayoutProps) => {
   const { pathname } = useRouter()
   return (
     <>
       {(pathname === Routes.authorization || pathname === Routes.registration || pathname === Routes.forgot || pathname === Routes.reset) &&
         < Image src={logo} alt={'logoIcon'} style={{ position: 'absolute', top: 50, left: 40 }} />
       }
-      <Grid container sx={{ height: 1 }}>
+      <Grid container height={1}>
         <Grid item sm={6}>{children}</Grid>
-        <Grid item sm={6} sx={{ position: 'relative' }}>
+        <Grid item sm={6} position='relative'>
           <Image
-            // src={
-            //   pathname === Routes.registration ? singUp : pathname === Routes.authorization ? singIn : forgotResetBg
-            // }
             src={getImage(pathname)}
             alt={`${pathname.slice(1)}Bg`}
             fill
@@ -41,4 +36,4 @@ const LayoutSignError = ({ children }: ILayoutSignError) => {
   )
 }
 
-export default LayoutSignError
+export default SplitLayout;

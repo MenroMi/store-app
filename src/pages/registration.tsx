@@ -10,7 +10,7 @@ import {
 import Link from 'next/link'
 import { Routes, comments } from '@/constants'
 import Form from '@/components/Form'
-import LayoutSignError from '@/components/LayoutSignError'
+import SplitLayout from '@/components/SplitLayout'
 
 const Registration = () => {
 	const [email, setEmail] = useState<string>('')
@@ -35,7 +35,7 @@ const Registration = () => {
 				<title>Registration</title>
 			</Head>
 			<main>
-				<LayoutSignError>
+				<SplitLayout>
 					<Grid
 						container
 						sx={{
@@ -91,7 +91,7 @@ const Registration = () => {
 							</Box>
 						</Box>
 					</Grid>
-				</LayoutSignError>
+				</SplitLayout>
 			</main>
 		</>
 	)
