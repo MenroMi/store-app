@@ -1,4 +1,4 @@
-import { Grid, Button, styled, Typography, useTheme } from "@mui/material";
+import { Grid, Button, styled, Typography, useTheme, Stack } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from 'next/router';
 import bgImage from '@/assets/error500big.png';
@@ -14,12 +14,11 @@ const Description = styled(Typography)(({theme}) => ({
     color: theme.palette.primary.contrastText,
     [theme.breakpoints.between("xs", "sm")]: {
         fontSize: 12,
-        marginBottom: 360,
     },
 }));
 
-const ErrorMessage = styled(Grid)(({theme}) => ({
-    width: '45%',
+const ErrorMessage = styled(Stack)(({theme}) => ({
+    width: '100%',
     textAlign: 'center',
     zIndex: 1,
     color: theme.palette.primary.contrastText,
@@ -33,6 +32,7 @@ const CustomButton = styled(Button)(({theme}) => ({
     marginTop: '8px',
     [theme.breakpoints.between("xs", "sm")]: {
         width: '230px',
+        alignSelf: 'flex-end'
     },
 }));
 
@@ -44,6 +44,14 @@ const BackgroundImage = styled(Image)({
     objectFit: 'cover',
 });
 
+const ContentContainer = styled(Grid)(({theme}) => ({
+    paddingTop: '135px',
+    paddingBottom: '40px',
+    [theme.breakpoints.between("xs", "sm")]: {
+        height: '100%',
+    },
+}));
+
 export default function Error500() {
     const router = useRouter();
 
@@ -54,13 +62,13 @@ export default function Error500() {
         <Grid container height={1} justifyContent='center'>
             <BackgroundImage src={bgImage} alt="Background Image" />
             <Grid item>
-                <Grid container justifyContent="center" alignItems='flex-start' height={1} mt='135px'>
-                    <ErrorMessage item container flexDirection='row' alignItems='center' justifyContent='center'>
+                <ContentContainer container justifyContent="center" alignItems='self-start' flexWrap='wrap'>
+                    <ErrorMessage justifyContent='center' flexWrap='wrap'>
                         <Typography variant="h2">{mockData.title}</Typography>
                         <Description variant="h5Gray">{mockData.description}</Description>
-                        <CustomButton variant="contained" onClick={handleGoHome}>Back home</CustomButton>
                     </ErrorMessage>
-                </Grid>
+                    <CustomButton variant="contained" onClick={handleGoHome}>Back home</CustomButton>
+                </ContentContainer>
             </Grid>
         </Grid>
     );
