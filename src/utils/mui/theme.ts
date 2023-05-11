@@ -123,6 +123,25 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'inherit',
+          fontSize: 15,
+          fontWeight: 300,
+          color: theme.palette.text.caption,
+        },
+        notchedOutline: {
+          borderColor: theme.palette.text.caption,
+          borderRadius: 8,
+        },
+        input: {
+          '&::placeholder': {
+            color: theme.palette.text.primary,
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
@@ -154,51 +173,55 @@ theme = createTheme(theme, {
 });
 
 theme = createTheme(theme, {
-  typography: {
-    ...theme.typography,
-    h3Thin: {
-      ...theme.typography.h3,
-      fontWeight: 400,
-      [theme.breakpoints.between('xs', 'sm')]: {
-        fontSize: 20,
-      },
-    },
-    h3Bold: {
-      ...theme.typography.h3,
-      fontWeight: 600,
-      [theme.breakpoints.between('xs', 'sm')]: {
-        fontSize: 20,
-      },
-    },
-    h4Warning: {
-      ...theme.typography.h4,
-      fontWeight: 600,
-      color: theme.palette.primary.main,
-    },
-    h4Thin: {
-      ...theme.typography.h4,
-      fontWeight: 400,
-    },
-    h4Bold: {
-      ...theme.typography.h4,
-      fontWeight: 600,
-    },
-    subtitle2Thin: {
-      ...theme.typography.subtitle2,
-      fontWeight: 400,
-    },
-    subtitle2Small: {
-      ...theme.typography.subtitle2,
-      fontSize: 16,
-    },
-    btnIconText: {
-      fontWeight: 400,
-      fontSize: 24,
-      [theme.breakpoints.between('xs', 'sm')]: {
-        fontSize: 12,
-      },
-    },
-  },
+    typography: {
+        ...theme.typography,
+        h3Thin: {
+            ...theme.typography.h3,
+            fontWeight: 400,
+            [theme.breakpoints.between("xs", "sm")]: {
+                fontSize: 20,
+            }
+        },
+        h3Bold: {
+            ...theme.typography.h3,
+            fontWeight: 600,
+            [theme.breakpoints.between("xs", "sm")]: {
+                fontSize: 20,
+            }
+        },
+        h4Warning: {
+            ...theme.typography.h4,
+            fontWeight: 600,
+            color: theme.palette.primary.main,
+        },
+        h4Thin: {
+            ...theme.typography.h4,
+            fontWeight: 400,
+        },
+        h4Bold: {
+            ...theme.typography.h4,
+            fontWeight: 600,
+        },
+        h5Gray: {
+            ...theme.typography.h5,
+            color: theme.palette.text.primary,
+        },
+        subtitle2Thin: {
+            ...theme.typography.subtitle2,
+            fontWeight: 400,
+        },        
+        subtitle2Small: {
+            ...theme.typography.subtitle2,
+            fontSize: 16,
+        },
+        btnIconText: {
+            fontWeight: 400,
+            fontSize: 24,
+            [theme.breakpoints.between("xs", "sm")]: {
+                fontSize: 12
+            }
+        }
+    } 
 });
 
 export default theme;
