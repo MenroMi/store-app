@@ -161,4 +161,8 @@ export const UPDATE_PROFILE_INPUTS: IUpdateProfileInput[] = [
   },
 ];
 
+export const SHOE_SIZES: string[] = ['EU-36', 'EU-37', 'EU-38', 'EU-39', 'EU-40'];
 
+export const BRANDS: string[] = ['Nike', 'Adidas', 'Puma', 'Reebok'];
+
+export const GENDERS: string[] = ['Male', 'Feemale'];
