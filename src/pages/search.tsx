@@ -57,7 +57,7 @@ export default function SearchResultPage(): JSX.Element {
         />
         <PathAndSearchResult hide={hide} onHide={(): void => setHide(!hide)} />
         <FiltersAndCards hide={hide} />
-        <MobileFilterMenu hide={hide} onHide={(): void => setHide(!hide)} />
+        {!queryUpMd && <MobileFilterMenu hide={hide} onHide={(): void => setHide(!hide)} />}
       </Box>
     </>
   );
