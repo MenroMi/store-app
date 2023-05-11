@@ -1,31 +1,21 @@
-import { Button } from '@mui/material';
-import { ReactNode } from 'react';
+// styled component
+import { CustomSecondaryButton } from './styles';
 
 interface ButtonProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-const PrimaryButton = ({ children }: ButtonProps) => {
+const SecondaryButton = ({ children }: ButtonProps) => {
   return (
-    <Button
+    <CustomSecondaryButton
       sx={{
-        backgroundColor: 'transparent',
-        border: '1px solid',
-        width: '100%',
-        height: '40px',
-        borderRadius: '5px',
-        fontFamily: '"Work Sans", sans-serif',
-        fontWeight: 500,
-        textTransform: 'none',
-        cursor: 'pointer',
-        maxWidth: '436px',
         fontSize: { md: '16px' },
       }}
       variant="outlined"
     >
       {children}
-    </Button>
+    </CustomSecondaryButton>
   );
 };
 
-export default PrimaryButton;
+export default SecondaryButton;

@@ -1,9 +1,13 @@
-import { Button, Typography, useTheme } from '@mui/material';
-import React from 'react';
-import styles from '@/styles/componentStyles/ProductCardBag.module.scss';
-import DownIcon from '@/assets/icons/down.svg';
+// basic
 import Image from 'next/image';
 
+// mui
+import { Button, Typography, useTheme, Box } from '@mui/material';
+
+// image
+import DownIcon from '@/assets/icons/down.svg';
+
+// interface
 interface IBagButtonProps {
   ButtonValue: string;
 }
@@ -19,7 +23,16 @@ const BagParameterButton = ({ ButtonValue }: IBagButtonProps) => {
       <Typography variant="btnIconText" color={caption}>
         {ButtonValue}
       </Typography>
-      <Image src={DownIcon} alt="down" className={styles.product__down}></Image>
+      <Box
+        component={Image}
+        src={DownIcon}
+        alt="down"
+        sx={{
+          position: 'relative',
+          top: '2px',
+          left: '2px',
+        }}
+      ></Box>
     </Button>
   );
 };

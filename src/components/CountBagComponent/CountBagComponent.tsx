@@ -1,6 +1,7 @@
+// mui
 import { Box, Typography } from '@mui/material';
-import React from 'react';
 
+// interface
 interface ICountBagProps {
   CountCategory: string;
   PriceValue: number;

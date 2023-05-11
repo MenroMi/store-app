@@ -1,26 +1,21 @@
-import { Button } from '@mui/material';
-import { ReactNode } from 'react';
+import { CustomPrimaryButton } from './styles';
 
+// interface
 interface ButtonProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 const PrimaryButton = ({ children }: ButtonProps) => {
   return (
-    <Button
+    <CustomPrimaryButton
       type="submit"
       variant="contained"
       sx={{
-        color: 'white',
-        height: '40px',
-        textTransform: 'none',
-        maxWidth: '436px',
         fontSize: { sx: '12px', sm: '16px' },
-        width: '100%',
       }}
     >
       {children}
-    </Button>
+    </CustomPrimaryButton>
   );
 };
 

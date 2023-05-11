@@ -1,16 +1,22 @@
+// basic
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Head from 'next/head';
+
+// mui
+import { Grid, Stack, Typography, Button, useTheme, Box, Theme } from '@mui/material';
+
+// images
+import productImage from '../assets/singInBg.png';
+import DownIcon from '@/assets/icons/down.svg';
+
+// components
+import ProductCardBag from '@/components/ProductCardBag/ProductCardBag';
+import CountBagComponent from '@/components/CountBagComponent/CountBagComponent';
 import PrimaryButton from '@/components/PrimaryButton/PrimaryButton';
 import SecondaryButton from '@/components/SecondaryButton/SecondaryButton';
-import DownIcon from '@/assets/icons/down.svg';
-import Image, { StaticImageData } from 'next/image';
-import styles from '@/styles/pageStyles/Bag.module.scss';
-import { Grid, Stack, Typography, Button, useTheme } from '@mui/material';
-import { Box } from '@mui/system';
-import Head from 'next/head';
-import productImage from '../assets/singInBg.png';
-import ProductCardBag from '@/components/ProductCardBag/ProductCardBag';
-import { useEffect, useState } from 'react';
-import CountBagComponent from '@/components/CountBagComponent/CountBagComponent';
 
+// data
 const MOCKED_PRODUCTS = [
   {
     id: 1,
@@ -55,7 +61,7 @@ const Bag = () => {
     palette: {
       text: { caption },
     },
-  } = useTheme();
+  } = useTheme<Theme>();
 
   const countSubTotal = () => {
     const priceArray = MOCKED_PRODUCTS.map(({ productPrice }) => productPrice);
@@ -160,7 +166,15 @@ const Bag = () => {
                 <Typography variant="btnIconText" fontSize={20}>
                   Do you have a promocode?
                 </Typography>
-                <Image src={DownIcon} alt="down" className={styles.product__down}></Image>
+                <Box
+                  component={Image}
+                  src={DownIcon}
+                  alt="down"
+                  sx={{
+                    top: '2px',
+                    left: '8px',
+                  }}
+                ></Box>
               </Button>
               <Box
                 sx={{
