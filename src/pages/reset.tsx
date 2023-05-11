@@ -2,11 +2,7 @@ import Head from 'next/head'
 import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import {
-	Link as LinkMui,
-	Box,
-	useTheme,
-} from '@mui/material'
+import { Link as LinkMui, Box, useTheme } from '@mui/material'
 import Form from '@/components/Form'
 import Link from 'next/link'
 import { Routes } from '@/constants'
@@ -40,9 +36,11 @@ const Reset = () => {
 					<Grid
 						container
 						sx={{
-							height: 1, flexDirection: 'column', justifyContent: 'center',
+							height: 1,
+							flexDirection: 'column',
+							justifyContent: 'center',
 							alignContent: 'center',
-							alignItems: 'start'
+							alignItems: 'start',
 						}}
 					>
 						<Typography variant='h2'>Reset password</Typography>
@@ -72,11 +70,8 @@ const Reset = () => {
 									textAlign: 'center',
 									mt: 2,
 								}}
-
 							>
-								<Typography variant='caption'>
-									Back to log in
-								</Typography>
+								<Typography variant='caption'>Back to log in</Typography>
 							</LinkMui>
 						</Box>
 					</Grid>

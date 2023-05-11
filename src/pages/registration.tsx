@@ -2,11 +2,7 @@ import Head from 'next/head'
 import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import {
-	Link as LinkMui,
-	Box,
-	useTheme,
-} from '@mui/material'
+import { Link as LinkMui, Box, useTheme } from '@mui/material'
 import Link from 'next/link'
 import { Routes, comments } from '@/constants'
 import Form from '@/components/Form'
@@ -39,9 +35,11 @@ const Registration = () => {
 					<Grid
 						container
 						sx={{
-							height: 1, flexDirection: 'column', justifyContent: 'center',
+							height: 1,
+							flexDirection: 'column',
+							justifyContent: 'center',
 							alignContent: 'center',
-							alignItems: 'start'
+							alignItems: 'start',
 						}}
 					>
 						<Typography variant='h2'>Create an account</Typography>
@@ -55,15 +53,16 @@ const Registration = () => {
 							Create an account to get an easy access to your dream shopping.
 						</Typography>
 						<Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
-							<Form 
-							handleSubmit={handleSubmit} 
-							name={name} setName={setName} 
-							email={email} 
-							setEmail={setEmail} 
-							password={password} 
-							setPassword={setPassword} 
-							confirm={confirm} 
-							setConfirm={setConfirm} 
+							<Form
+								handleSubmit={handleSubmit}
+								name={name}
+								setName={setName}
+								email={email}
+								setEmail={setEmail}
+								password={password}
+								setPassword={setPassword}
+								confirm={confirm}
+								setConfirm={setConfirm}
 							/>
 							<Box
 								component={'div'}

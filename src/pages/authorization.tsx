@@ -2,11 +2,7 @@ import Head from 'next/head'
 import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import {
-	Link as LinkMui,
-	Box,
-	useTheme,
-} from '@mui/material'
+import { Link as LinkMui, Box, useTheme } from '@mui/material'
 import Form from '@/components/Form'
 import Link from 'next/link'
 import { Routes } from '@/constants'
@@ -40,9 +36,11 @@ const Authorization = () => {
 					<Grid
 						container
 						sx={{
-							height: 1, flexDirection: 'column', justifyContent: 'center',
+							height: 1,
+							flexDirection: 'column',
+							justifyContent: 'center',
 							alignContent: 'center',
-							alignItems: 'start'
+							alignItems: 'start',
 						}}
 					>
 						<Typography variant='h2'>Welcome back</Typography>
@@ -53,8 +51,7 @@ const Authorization = () => {
 								mb: 6,
 							}}
 						>
-							Welcome back! Please enter your details to log into your
-							account.
+							Welcome back! Please enter your details to log into your account.
 						</Typography>
 						<Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
 							<Form
