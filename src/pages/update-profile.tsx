@@ -8,6 +8,9 @@ import avatarSrc from '@/assets/avatarExample.png';
 import styled from '@emotion/styled';
 import Head from 'next/head';
 
+// constants
+import { UPDATE_PROFILE_INPUTS } from '@/constants';
+
 const CustomForm = styled('form')({
   display: 'flex',
   flexDirection: 'column',
@@ -47,7 +50,7 @@ export default function UpdateProfile() {
       </Typography>
 
       <CustomForm>
-        <FormControl sx={{ mb: 3 }}>
+        {/* <FormControl sx={{ mb: 3 }}>
           <FormLabel htmlFor="name">
             <Typography variant="caption">Name</Typography>
           </FormLabel>
@@ -106,8 +109,24 @@ export default function UpdateProfile() {
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </FormControl>
+ */}
 
-
+        {UPDATE_PROFILE_INPUTS.map((input) => (
+          <FormControl sx={{ mb: 3 }}>
+            <FormLabel htmlFor={input.id}>
+              <Typography variant="caption">{input.label}</Typography>
+            </FormLabel>
+            <OutlinedInput
+              sx={{ mt: 1 }}
+              id={input.id}
+              placeholder={input.placeholder}
+              required
+              type={input.type}
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </FormControl>
+        ))}
       </CustomForm>
     </Box>
   );
