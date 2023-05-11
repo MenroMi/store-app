@@ -24,6 +24,15 @@ export default function UpdateProfile() {
   const [email, setEmail] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
 
+  const handleSetName = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
+
+  const handleSetSurname = (e: React.ChangeEvent<HTMLInputElement>) => setSurname(e.target.value);
+
+  const handleSetEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+
+  const handleSetPhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPhoneNumber(e.target.value);
+
   return (
     <Box>
       <Head>
@@ -50,67 +59,6 @@ export default function UpdateProfile() {
       </Typography>
 
       <CustomForm>
-        {/* <FormControl sx={{ mb: 3 }}>
-          <FormLabel htmlFor="name">
-            <Typography variant="caption">Name</Typography>
-          </FormLabel>
-          <OutlinedInput
-            sx={{ mt: 1 }}
-            id="name"
-            placeholder="Name"
-            required
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl sx={{ mb: 3 }}>
-          <FormLabel htmlFor="name">
-            <Typography variant="caption">Surname</Typography>
-          </FormLabel>
-          <OutlinedInput
-            sx={{ mt: 1.5 }}
-            id="surname"
-            placeholder="Surname"
-            required
-            type="text"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl sx={{ mb: 3 }}>
-          <FormLabel htmlFor="email">
-            <Typography variant="caption">Email</Typography>
-          </FormLabel>
-          <OutlinedInput
-            sx={{ mt: 1 }}
-            id="email"
-            placeholder="email@example.com"
-            required
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel htmlFor="phonenumber">
-            <Typography variant="caption">Phone number</Typography>
-          </FormLabel>
-          <OutlinedInput
-            sx={{ mt: 1 }}
-            id="phonenumber"
-            placeholder="(949) 354-2574"
-            required
-            type="tel"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-        </FormControl>
- */}
-
         {UPDATE_PROFILE_INPUTS.map((input) => (
           <FormControl sx={{ mb: 3 }}>
             <FormLabel htmlFor={input.id}>
@@ -122,8 +70,28 @@ export default function UpdateProfile() {
               placeholder={input.placeholder}
               required
               type={input.type}
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              value={
+                input.id === 'name'
+                  ? name
+                  : input.id === 'surname'
+                  ? surname
+                  : input.id === 'email'
+                  ? email
+                  : input.id === 'phonenumber'
+                  ? phoneNumber
+                  : null
+              }
+              onChange={
+                input.id === 'name'
+                  ? handleSetName
+                  : input.id === 'surname'
+                  ? handleSetSurname
+                  : input.id === 'email'
+                  ? handleSetEmail
+                  : input.id === 'phonenumber'
+                  ? handleSetPhoneNumber
+                  : undefined
+              }
             />
           </FormControl>
         ))}
