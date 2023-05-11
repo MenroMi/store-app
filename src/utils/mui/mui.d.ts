@@ -12,7 +12,8 @@ declare module '@mui/material/styles' {
             h4Warning: React.CSSProperties;
             btnIconText: React.CSSProperties;
             h4Thin: React.CSSProperties;
-            h4Thin: React.CSSProperties;
+            h4Bold: React.CSSProperties;
+            h5Gray: React.CSSProperties;
             subtitle2Thin: React.CSSProperties;
             subtitle2Small: React.CSSProperties;
         }
@@ -24,6 +25,7 @@ declare module '@mui/material/styles' {
             btnIconText?: React.CSSProperties;
             h4Thin?: React.CSSProperties;
             h4Bold?: React.CSSProperties;
+            h5Gray?: React.CSSProperties;
             subtitle2Thin?: React.CSSProperties;
             subtitle2Small?: React.CSSProperties;
         }
@@ -38,6 +40,7 @@ declare module '@mui/material/styles' {
         btnIconText: true;
         h4Thin: true;
         h4Bold: true;
+        h5Gray: true;
         subtitle2Thin: true;
         subtitle2Small: true;
     }

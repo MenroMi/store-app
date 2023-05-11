@@ -11,7 +11,7 @@ import Form from '@/components/Form'
 import Link from 'next/link'
 import { Routes } from '@/constants'
 import { useRouter } from 'next/router'
-import LayoutSignError from '@/components/LayoutSignError'
+import SplitLayout from '@/components/SplitLayout'
 
 const Reset = () => {
 	const [password, setPassword] = useState<string>('')
@@ -36,7 +36,7 @@ const Reset = () => {
 				<title>Reset Password</title>
 			</Head>
 			<main>
-				<LayoutSignError>
+				<SplitLayout>
 					<Grid
 						container
 						sx={{
@@ -80,7 +80,7 @@ const Reset = () => {
 							</LinkMui>
 						</Box>
 					</Grid>
-				</LayoutSignError>
+				</SplitLayout>
 			</main>
 		</>
 	)
