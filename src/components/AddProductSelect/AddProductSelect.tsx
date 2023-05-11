@@ -34,8 +34,9 @@ export default function AddProductSelect({
         onChange={(e) => handleChangeValue(e.target.value)}
         sx={{ mt: 1.5 }}
       >
-        {options.map((gender) => (
-          <MenuItem value={gender}>
+        {options.map((gender, index) => (
+          // fix key in the future, index is bad practice
+          <MenuItem key={index} value={gender}>
             <Typography variant="body1">{gender}</Typography>
           </MenuItem>
         ))}
