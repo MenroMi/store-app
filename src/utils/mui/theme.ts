@@ -123,6 +123,25 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'inherit',
+          fontSize: 15,
+          fontWeight: 300,
+          color: theme.palette.text.caption,
+        },
+        notchedOutline: {
+          borderColor: theme.palette.text.caption,
+          borderRadius: 8,
+        },
+        input: {
+          '&::placeholder': {
+            color: theme.palette.text.primary,
+          },
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
