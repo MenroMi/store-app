@@ -10,7 +10,7 @@ import profileTopBg from '../assets/profileTopBg.png';
 
 // components
 import UserProfile from '@/components/UserProfile';
-import ProductCardBasic from '@/components/ProductCardBasic';
+import Card from '@/components/Card/Card';
 
 export default function Profile() {
   const MOCKED_PRODUCTS = [
@@ -18,28 +18,28 @@ export default function Profile() {
       id: 1,
       productImageSrc: productImage,
       productName: 'Nike Air Max 270',
-      productPrice: '160$',
+      productPrice: 160,
       productCategory: "Women's shoes",
     },
     {
       id: 2,
       productImageSrc: productImage,
       productName: 'Nike Air Max 270',
-      productPrice: '160$',
+      productPrice: 160,
       productCategory: "Women's shoes",
     },
     {
       id: 3,
       productImageSrc: productImage,
       productName: 'Nike Air Max 270',
-      productPrice: '160$',
+      productPrice: 160,
       productCategory: "Women's shoes",
     },
     {
       id: 4,
       productImageSrc: productImage,
       productName: 'Nike Air Max 270',
-      productPrice: '160$',
+      productPrice: 160,
       productCategory: "Women's shoes",
     },
   ];
@@ -63,7 +63,7 @@ export default function Profile() {
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             {MOCKED_PRODUCTS.map((product) => (
-              <ProductCardBasic
+              <Card
                 productCategory={product.productCategory}
                 productImageSrc={product.productImageSrc}
                 productName={product.productName}
