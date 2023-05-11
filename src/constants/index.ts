@@ -1,16 +1,17 @@
 // FOLDER FOR CONSTANS (example - BASE URL, EXPORTS)
 
-import leftBurgerSetting from '../assets/icons/leftBurgerSetting.svg'
-import bonusAcc from '../assets/icons/bonusAcc.svg'
-import bag from '../assets/icons/bag.svg'
-import profile from '../assets/icons/profile.svg'
-import logout from '../assets/icons/logout.svg'
-import signIn from '../assets/singInBg.png'
-import signUp from '../assets/singUpBg.png'
-import forgotReset from '../assets/forgotResetBg.png'
-import error404 from '../assets/error404.png'
-import error500 from '../assets/error500.png'
-import { StaticImageData } from 'next/image'
+import leftBurgerSetting from '../assets/icons/leftBurgerSetting.svg';
+import bonusAcc from '../assets/icons/bonusAcc.svg';
+import bag from '../assets/icons/bag.svg';
+import profile from '../assets/icons/profile.svg';
+import logout from '../assets/icons/logout.svg';
+import signIn from '../assets/singInBg.png';
+import signUp from '../assets/singUpBg.png';
+import forgotReset from '../assets/forgotResetBg.png';
+import error404 from '../assets/error404.png';
+import error500 from '../assets/error500.png';
+import { StaticImageData } from 'next/image';
+import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 
 export const REGULAR_NAV_LINKS = [
 	{
@@ -113,20 +114,52 @@ export const comments: IComment[] = [
 ]
 
 export const getImage = (route: string): StaticImageData => {
-	switch (route) {
-		case Routes.authorization:
-			return signIn
-		case Routes.registration:
-			return signUp
-		case Routes.forgot:
-			return forgotReset
-		case Routes.reset:
-			return forgotReset
-		case Routes.error404:
-			return error404
-		case Routes.error500:
-			return error500
-		default:
-			return forgotReset
-	}
-}
+  switch (route) {
+    case Routes.authorization:
+      return signIn;
+    case Routes.registration:
+      return signUp;
+    case Routes.forgot:
+      return forgotReset;
+    case Routes.reset:
+      return forgotReset;
+    case Routes.error404:
+      return error404;
+    case Routes.error500:
+      return error500;
+    default:
+      return forgotReset;
+  }
+};
+
+export const UPDATE_PROFILE_INPUTS: IUpdateProfileInput[] = [
+  {
+    id: 'name',
+    placeholder: 'Jane',
+    label: 'Name',
+    type: 'text',
+  },
+
+  {
+    id: 'surname',
+    placeholder: 'Meldrum',
+    label: 'Surname',
+    type: 'text',
+  },
+
+  {
+    id: 'email',
+    placeholder: 'email@example.com',
+    label: 'Email',
+    type: 'email',
+  },
+
+  {
+    id: 'phonenumber',
+    placeholder: '(949) 354-2574',
+    label: 'Phone number',
+    type: 'tel',
+  },
+];
+
+
