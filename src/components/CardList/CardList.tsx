@@ -50,7 +50,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
               productCategory="Women's shoes"
               productImageSrc={singInImg}
               productName="Nike Air Max 270"
-              productPrice="160$"
+              productPrice={160}
             />
           </Grid>
         );

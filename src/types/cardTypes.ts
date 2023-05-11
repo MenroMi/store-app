@@ -4,5 +4,5 @@ export interface ICardProps {
   productCategory: string;
   productImageSrc: StaticImageData;
   productName: string;
-  productPrice: string;
+  productPrice: number;
 }
