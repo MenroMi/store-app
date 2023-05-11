@@ -3,9 +3,6 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Grid } from '@mui/material';
 
-// image
-import singInImg from '../../assets/singInBg.png';
-
 // component
 import Card from '../Card/Card';
 
@@ -46,12 +43,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
             xs={5.7}
             item
           >
-            <Card
-              productCategory="Women's shoes"
-              productImageSrc={singInImg}
-              productName="Nike Air Max 270"
-              productPrice="160$"
-            />
+            <Card />
           </Grid>
         );
       })}

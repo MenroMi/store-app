@@ -2,39 +2,29 @@
 import Image from 'next/image';
 
 // mui
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-// images
-import dotsBtn from '@/assets/icons/dots.svg';
-
-// styled components
-import { CustomCardWrapper, CustomTypographyWrapper, CustomDotsImage } from './CardStyles';
-
-// interface
-import { ICardProps } from '@/types/cardTypes';
+// image
+import singInImg from '../../assets/singInBg.png';
 
 // FUNCTIONAL COMPONENT
-const Card: React.FC<ICardProps> = ({
-  productCategory,
-  productImageSrc,
-  productName,
-  productPrice,
-}): JSX.Element => {
+const Card: React.FC = (): JSX.Element => {
   return (
-    <CustomCardWrapper>
+    <Box display="flex" flexDirection="column" maxWidth="320px" maxHeight="443px">
       <Image
         style={{ maxWidth: '100%', height: '100%' }}
-        src={productImageSrc}
+        src={singInImg}
         alt="product template"
         placeholder="blur"
       />
-      <CustomDotsImage src={dotsBtn} alt="More" />
-      <CustomTypographyWrapper>
-        <Typography variant="subtitle1">{productName}</Typography>
-        <Typography variant="subtitle1">{productPrice}</Typography>
-      </CustomTypographyWrapper>
-      <Typography variant="subtitle2Small">{productCategory}</Typography>
-    </CustomCardWrapper>
+      <Box
+        sx={{ mt: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+      >
+        <Typography variant="subtitle1">Nike Air Max 270</Typography>
+        <Typography variant="subtitle1">$160</Typography>
+      </Box>
+      <Typography variant="subtitle2Small">Women&apos;s Shoes</Typography>
+    </Box>
   );
 };
 
