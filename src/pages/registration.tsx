@@ -39,57 +39,46 @@ const Registration = () => {
       </Head>
       <main>
         <SplitLayout>
-          <Grid
-            container
+          <Typography variant="h2">Create an account</Typography>
+          <Typography
+            variant="body1"
             sx={{
-              height: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'start',
+              mt: 2,
+              mb: 6,
             }}
           >
-            <Typography variant="h2">Create an account</Typography>
-            <Typography
-              variant="body1"
+            Create an account to get an easy access to your dream shopping.
+          </Typography>
+          <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+            <Form
+              handleSubmit={handleSubmit}
+              name={name}
+              setName={setName}
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              confirm={confirm}
+              setConfirm={setConfirm}
+            />
+            <Box
+              component={'div'}
               sx={{
+                width: '436px',
+                textAlign: 'center',
                 mt: 2,
-                mb: 6,
               }}
             >
-              Create an account to get an easy access to your dream shopping.
-            </Typography>
-            <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
-              <Form
-                handleSubmit={handleSubmit}
-                name={name}
-                setName={setName}
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                confirm={confirm}
-                setConfirm={setConfirm}
-              />
-              <Box
-                component={'div'}
-                sx={{
-                  width: '436px',
-                  textAlign: 'center',
-                  mt: 2,
-                }}
-              >
-                <Typography variant="caption" sx={{ display: 'inline' }}>
-                  Already have an account?{' '}
+              <Typography variant="caption" sx={{ display: 'inline' }}>
+                Already have an account?{' '}
+              </Typography>
+              <LinkMui component={Link} href={Routes.authorization} underline="none">
+                <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
+                  Log in
                 </Typography>
-                <LinkMui component={Link} href={Routes.authorization} underline="none">
-                  <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
-                    Log in
-                  </Typography>
-                </LinkMui>
-              </Box>
+              </LinkMui>
             </Box>
-          </Grid>
+          </Box>
         </SplitLayout>
       </main>
     </>

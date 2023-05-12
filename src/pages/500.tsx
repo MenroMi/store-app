@@ -32,21 +32,26 @@ export default function Error500() {
     router.push('/');
   };
   return (
-    // <Layout title='Page not found...'>
-    <Grid container height={1} justifyContent="center">
-      <BackgroundImage src={bgImage} alt="Background Image" />
-      <Grid item>
-        <ContentContainer container justifyContent="center" alignItems="self-start" flexWrap="wrap">
-          <ErrorMessage justifyContent="center" flexWrap="wrap">
-            <Typography variant="h2">{mockData.title}</Typography>
-            <Description variant="h5Gray">{mockData.description}</Description>
-          </ErrorMessage>
-          <CustomButton variant="contained" onClick={handleGoHome}>
-            Back home
-          </CustomButton>
-        </ContentContainer>
+    <Layout title="Page not found...">
+      <Grid container height={1} justifyContent="center">
+        <BackgroundImage src={bgImage} alt="Background Image" />
+        <Grid item>
+          <ContentContainer
+            container
+            justifyContent="center"
+            alignItems="self-start"
+            flexWrap="wrap"
+          >
+            <ErrorMessage justifyContent="center" flexWrap="wrap">
+              <Typography variant="h2">{mockData.title}</Typography>
+              <Description variant="h5Gray">{mockData.description}</Description>
+            </ErrorMessage>
+            <CustomButton variant="contained" onClick={handleGoHome}>
+              Back home
+            </CustomButton>
+          </ContentContainer>
+        </Grid>
       </Grid>
-    </Grid>
-    // </Layout>
+    </Layout>
   );
 }

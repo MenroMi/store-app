@@ -10,6 +10,9 @@ import { Grid, Stack, Typography, Button, useTheme, Box, Theme } from '@mui/mate
 import productImage from '@/assets/singInBg.png';
 import DownIcon from '@/assets/icons/down.svg';
 
+// layout
+import Layout from '@/components/Layout/MainLayout';
+
 // components
 import ProductCardBag from '@/components/UI/Cards/ProductCardBag/ProductCardBag';
 import CountBagComponent from '@/components/UI/CountBagComponent/CountBagComponent';
@@ -94,120 +97,122 @@ const Bag = () => {
   useEffect(() => {
     countSubTotal();
     countShipping();
-  }, MOCKED_PRODUCTS);
+    countTax();
+  }, []);
 
   useEffect(() => {
-    countTax();
     countTotal();
-  }, MOCKED_PRODUCTS);
+  }, []);
 
   return (
-    <main>
-      <Head>
-        <title>Bag</title>
-      </Head>
-      <Grid
-        container
-        p={2}
-        sx={{
-          padding: '0',
-        }}
-      >
-        <CustomBagPageWrapper py={8}>
-          {/* Left container */}
-          <Box
-            sx={{
-              width: '100%',
-              maxWidth: '963px',
-            }}
-          >
-            <Typography variant="h2">Chart</Typography>
-            <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
-              <Stack spacing={16} mb={3}>
-                {MOCKED_PRODUCTS.map((product) => (
-                  <ProductCardBag
-                    productCategory={product.productCategory}
-                    productImageSrc={product.productImageSrc}
-                    productName={product.productName}
-                    productPrice={product.productPrice}
-                    key={product.id}
-                    inStock={true}
-                  />
-                ))}
-              </Stack>
-            </Grid>
-          </Box>
-          {/* Right Container */}
-          <Box
-            sx={{
-              marginLeft: { lg: 'auto', md: '20px' },
-            }}
-          >
+    <Layout title="Bag">
+      <main style={{ marginTop: '80px' }}>
+        <Head>
+          <title>Bag</title>
+        </Head>
+        <Grid
+          container
+          p={2}
+          sx={{
+            padding: '0',
+          }}
+        >
+          <CustomBagPageWrapper py={8}>
+            {/* Left container */}
             <Box
               sx={{
-                width: '399px',
-                marginInline: 'auto',
-                textAlign: 'left',
-                display: { xs: 'none', md: 'block' },
+                width: '100%',
+                maxWidth: '963px',
               }}
             >
-              <Typography variant="h2">Summary</Typography>
-              <Button
-                sx={{
-                  marginTop: '65px',
-                  width: '285px',
-                  justifyContent: 'space-between',
-                  color: caption,
-                  padding: '0',
-                }}
-              >
-                <Typography variant="btnIconText" fontSize={20}>
-                  Do you have a promocode?
-                </Typography>
-                <Box
-                  component={Image}
-                  src={DownIcon}
-                  alt="down"
-                  sx={{
-                    top: '2px',
-                    left: '8px',
-                  }}
-                ></Box>
-              </Button>
+              <Typography variant="h2">Chart</Typography>
+              <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
+                <Stack spacing={16} mb={3}>
+                  {MOCKED_PRODUCTS.map((product) => (
+                    <ProductCardBag
+                      productCategory={product.productCategory}
+                      productImageSrc={product.productImageSrc}
+                      productName={product.productName}
+                      productPrice={product.productPrice}
+                      key={product.id}
+                      inStock={true}
+                    />
+                  ))}
+                </Stack>
+              </Grid>
+            </Box>
+            {/* Right Container */}
+            <Box
+              sx={{
+                marginLeft: { lg: 'auto', md: '20px' },
+              }}
+            >
               <Box
                 sx={{
-                  marginTop: '30px',
+                  width: '399px',
+                  marginInline: 'auto',
+                  textAlign: 'left',
+                  display: { xs: 'none', md: 'block' },
                 }}
               >
-                <Box
+                <Typography variant="h2">Summary</Typography>
+                <Button
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px',
-                    marginBottom: '56px',
+                    marginTop: '65px',
+                    width: '285px',
+                    justifyContent: 'space-between',
+                    color: caption,
+                    padding: '0',
                   }}
                 >
-                  <CountBagComponent CountCategory={'Subtotal'} PriceValue={subTotal} />
-                  <CountBagComponent CountCategory={'Shipping'} PriceValue={shipping} />
-                  <CountBagComponent CountCategory={'Tax'} PriceValue={tax} />
-                </Box>
-                <CustomTotalSummaryWrapper>
-                  <Typography variant="h3Bold">Total</Typography>
-                  <Box sx={{ display: 'flex' }}>
-                    <Typography variant="h3">$</Typography>
-                    <Typography variant="h3">{total}</Typography>
+                  <Typography variant="btnIconText" fontSize={20}>
+                    Do you have a promocode?
+                  </Typography>
+                  <Box
+                    component={Image}
+                    src={DownIcon}
+                    alt="down"
+                    sx={{
+                      top: '2px',
+                      left: '8px',
+                    }}
+                  ></Box>
+                </Button>
+                <Box
+                  sx={{
+                    marginTop: '30px',
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '20px',
+                      marginBottom: '56px',
+                    }}
+                  >
+                    <CountBagComponent CountCategory={'Subtotal'} PriceValue={subTotal} />
+                    <CountBagComponent CountCategory={'Shipping'} PriceValue={shipping} />
+                    <CountBagComponent CountCategory={'Tax'} PriceValue={tax} />
                   </Box>
-                </CustomTotalSummaryWrapper>
-                <CustomBagBtnsWrapper>
-                  <SecondaryButton>PayPal</SecondaryButton>
-                  <PrimaryButton>Checkout</PrimaryButton>
-                </CustomBagBtnsWrapper>
+                  <CustomTotalSummaryWrapper>
+                    <Typography variant="h3Bold">Total</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="h3">$</Typography>
+                      <Typography variant="h3">{total}</Typography>
+                    </Box>
+                  </CustomTotalSummaryWrapper>
+                  <CustomBagBtnsWrapper>
+                    <SecondaryButton>PayPal</SecondaryButton>
+                    <PrimaryButton>Checkout</PrimaryButton>
+                  </CustomBagBtnsWrapper>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </CustomBagPageWrapper>
-      </Grid>
-    </main>
+          </CustomBagPageWrapper>
+        </Grid>
+      </main>
+    </Layout>
   );
 };
 

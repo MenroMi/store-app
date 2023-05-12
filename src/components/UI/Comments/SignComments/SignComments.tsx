@@ -43,9 +43,15 @@ const SignComments = () => {
   };
 
   return (
-    <CustomBoxComments
+    <Box
+      component={'div'}
       sx={{
+        position: 'absolute',
         zIndex: 'tooltip',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        top: '48.5%',
       }}
     >
       <Box
@@ -67,13 +73,18 @@ const SignComments = () => {
           }}
         >
           {comments.map((comment) => (
-            <CustomComments
+            <Box
+              component={'section'}
               key={comment.id}
               sx={{
+                minWidth: 1,
+                backdropFilter: 'blur(12px)',
+                border: '2px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: 4,
                 px: 7,
                 py: 6,
-                minWidth: 1,
+                display: 'flex',
+                gap: '4px',
               }}
             >
               <Box component={'div'}>
@@ -99,28 +110,44 @@ const SignComments = () => {
                   gap: 4,
                 }}
               >
-                <CustomArrow
+                <Box
+                  component={'div'}
                   onClick={handleLeftArrow}
                   sx={{
+                    width: '36px',
+                    height: '36px',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
                     pl: '11px',
+                    cursor: 'pointer',
                   }}
                 >
                   <Image src={left} alt={'arrowLeft'} />
-                </CustomArrow>
-                <CustomArrow
+                </Box>
+                <Box
+                  component={'div'}
                   onClick={handleRightArrow}
                   sx={{
+                    width: '36px',
+                    height: '36px',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
                     pl: '13px',
+                    cursor: 'pointer',
                   }}
                 >
                   <Image src={right} alt={'arrowRight'} />
-                </CustomArrow>
+                </Box>
               </Box>
-            </CustomComments>
+            </Box>
           ))}
         </Box>
       </Box>
-    </CustomBoxComments>
+    </Box>
   );
 };
 

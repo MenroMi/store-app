@@ -59,7 +59,7 @@ const FormRegistration = ({
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ width: '436px', mt: 1 }}
+              sx={{ maxWidth: '436px', mt: 1 }}
               id="name"
               placeholder="Hayman Andrews"
               required
@@ -80,7 +80,7 @@ const FormRegistration = ({
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ width: '436px', mt: 1 }}
+              sx={{ maxWidth: '436px', mt: 1 }}
               id="email"
               placeholder="example@mail.com"
               required
@@ -101,7 +101,7 @@ const FormRegistration = ({
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ width: '436px', mt: 1 }}
+              sx={{ maxWidth: '436px', mt: 1 }}
               id="password"
               required
               placeholder="at least 8 characters"
@@ -123,7 +123,7 @@ const FormRegistration = ({
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ width: '436px', mt: 1 }}
+              sx={{ maxWidth: '436px', mt: 1 }}
               id="confirm"
               required
               placeholder="at least 8 characters"

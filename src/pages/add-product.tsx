@@ -18,6 +18,9 @@ import {
 // image
 import productImageExample from '@/assets/forgotResetBg.png';
 
+// layout
+import Layout from '@/components/Layout/MainLayout';
+
 // components
 import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
 import AddProductUploadImage from '@/components/UI/AddProduct/AddProductUploadImage/AddProductUploadImage';
@@ -39,138 +42,136 @@ export default function AddProduct() {
   };
 
   return (
-    <>
-      <Head>
-        <title>Add product</title>
-      </Head>
-
-      <form>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4.5 }}>
-          <Typography variant="h2">Add product</Typography>
-          <Box sx={{ display: 'flex' }}>
-            <Button variant="outlined" sx={{ padding: '10px 40px', mr: 2.5 }}>
-              Schedule
-            </Button>
-            <Button variant="contained" type="submit" sx={{ padding: '10px 60px' }}>
-              Save
-            </Button>
+    <Layout title="Add Product">
+      <Box sx={{ mt: '38px' }}>
+        <form>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4.5 }}>
+            <Typography variant="h2">Add product</Typography>
+            <Box sx={{ display: 'flex' }}>
+              <Button variant="outlined" sx={{ padding: '10px 40px', mr: 2.5 }}>
+                Schedule
+              </Button>
+              <Button variant="contained" type="submit" sx={{ padding: '10px 60px' }}>
+                Save
+              </Button>
+            </Box>
           </Box>
-        </Box>
 
-        <Typography variant="body1" sx={{ maxWidth: '890px' }}>
-          Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print,
-          graphic or web designs. The passage is attributed to an unknown typesetter in the 15th
-          century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum
-          for use in a type specimen book. It usually begins with:
-        </Typography>
+          <Typography variant="body1" sx={{ maxWidth: '890px' }}>
+            Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print,
+            graphic or web designs. The passage is attributed to an unknown typesetter in the 15th
+            century who is thought to have scrambled parts of Cicero&apos;s De Finibus Bonorum et
+            Malorum for use in a type specimen book. It usually begins with:
+          </Typography>
 
-        <Box sx={{ display: 'flex', mt: 6 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '436px' }}>
-            <FormControl sx={{ mb: 3 }}>
-              <FormLabel htmlFor="product-name">
-                <Typography variant="caption">Product name</Typography>
-              </FormLabel>
-              <OutlinedInput
-                sx={{ mt: 1 }}
-                id="product-name"
-                placeholder="Nike Air Max 90"
-                required
-                type="text"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-              />
-            </FormControl>
+          <Box sx={{ display: 'flex', mt: 6 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '436px' }}>
+              <FormControl sx={{ mb: 3 }}>
+                <FormLabel htmlFor="product-name">
+                  <Typography variant="caption">Product name</Typography>
+                </FormLabel>
+                <OutlinedInput
+                  sx={{ mt: 1 }}
+                  id="product-name"
+                  placeholder="Nike Air Max 90"
+                  required
+                  type="text"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                />
+              </FormControl>
 
-            <FormControl sx={{ mb: 3 }}>
-              <FormLabel htmlFor="category">
-                <Typography variant="caption">Category</Typography>
-              </FormLabel>
-              <OutlinedInput
-                sx={{ mt: 1.5 }}
-                id="category"
-                placeholder="Sport"
-                required
-                type="text"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              />
-            </FormControl>
+              <FormControl sx={{ mb: 3 }}>
+                <FormLabel htmlFor="category">
+                  <Typography variant="caption">Category</Typography>
+                </FormLabel>
+                <OutlinedInput
+                  sx={{ mt: 1.5 }}
+                  id="category"
+                  placeholder="Sport"
+                  required
+                  type="text"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                />
+              </FormControl>
 
-            <Box sx={{ display: 'flex', mb: 3, width: '100%' }}>
-              <AddProductSelect
-                id="gender"
-                label="Gender"
-                options={GENDERS}
-                selectedValue={gender}
-                handleChangeValue={setGender}
-              />
+              <Box sx={{ display: 'flex', mb: 3, width: '100%' }}>
+                <AddProductSelect
+                  id="gender"
+                  label="Gender"
+                  options={GENDERS}
+                  selectedValue={gender}
+                  handleChangeValue={setGender}
+                />
 
-              <AddProductSelect
-                id="brand"
-                label="Brand"
-                options={BRANDS}
-                selectedValue={brand}
-                handleChangeValue={setBrand}
+                <AddProductSelect
+                  id="brand"
+                  label="Brand"
+                  options={BRANDS}
+                  selectedValue={brand}
+                  handleChangeValue={setBrand}
+                />
+              </Box>
+
+              <FormControl>
+                <FormLabel htmlFor="description">
+                  <Typography variant="caption">Description</Typography>
+                </FormLabel>
+                <TextField
+                  sx={{ mt: 1 }}
+                  id="description"
+                  placeholder="Do not exceed 300 characters"
+                  multiline
+                  required
+                  rows={11}
+                  inputProps={{ maxLength: 300 }}
+                />
+              </FormControl>
+
+              <AddProductRadioGroup
+                handleSelectSize={handleSelectSize}
+                sizes={SHOE_SIZES}
+                selectedSize={selectedSize}
               />
             </Box>
 
-            <FormControl>
-              <FormLabel htmlFor="description">
-                <Typography variant="caption">Description</Typography>
-              </FormLabel>
-              <TextField
-                sx={{ mt: 1 }}
-                id="description"
-                placeholder="Do not exceed 300 characters"
-                multiline
-                required
-                rows={11}
-                inputProps={{ maxLength: 300 }}
-              />
-            </FormControl>
+            <Box sx={{ ml: 29.25 }}>
+              <Typography variant="caption" sx={{ mb: 2.5, display: 'block' }}>
+                Product images
+              </Typography>
 
-            <AddProductRadioGroup
-              handleSelectSize={handleSelectSize}
-              sizes={SHOE_SIZES}
-              selectedSize={selectedSize}
-            />
-          </Box>
+              <Grid container sx={{ maxWidth: '692px' }} spacing={6.5}>
+                <Grid item xs={6} sx={{ maxWidth: '320px', maxHeight: '380px' }}>
+                  <AddProductUploadImage />
+                </Grid>
 
-          <Box sx={{ ml: 29.25 }}>
-            <Typography variant="caption" sx={{ mb: 2.5, display: 'block' }}>
-              Product images
-            </Typography>
-
-            <Grid container sx={{ maxWidth: '692px' }} spacing={6.5}>
-              <Grid item xs={6} sx={{ maxWidth: '320px', maxHeight: '380px' }}>
-                <AddProductUploadImage />
+                {Array(3)
+                  .fill({
+                    productImageSrc: productImageExample,
+                  })
+                  .map((productImage, index) => (
+                    <Grid
+                      key={index}
+                      item
+                      xs={6}
+                      sx={{
+                        maxWidth: '320px',
+                        maxHeight: '380px',
+                      }}
+                    >
+                      <Image
+                        src={productImage.productImageSrc}
+                        alt="Product image"
+                        style={{ maxWidth: '100%', height: '100%' }}
+                      />
+                    </Grid>
+                  ))}
               </Grid>
-
-              {Array(3)
-                .fill({
-                  productImageSrc: productImageExample,
-                })
-                .map((productImage, index) => (
-                  <Grid
-                    key={index}
-                    item
-                    xs={6}
-                    sx={{
-                      maxWidth: '320px',
-                      maxHeight: '380px',
-                    }}
-                  >
-                    <Image
-                      src={productImage.productImageSrc}
-                      alt="Product image"
-                      style={{ maxWidth: '100%', height: '100%' }}
-                    />
-                  </Grid>
-                ))}
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-      </form>
-    </>
+        </form>
+      </Box>
+    </Layout>
   );
 }

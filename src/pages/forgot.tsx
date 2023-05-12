@@ -34,42 +34,32 @@ const Forgot = () => {
       </Head>
       <main>
         <SplitLayout>
-          <Grid
-            container
+          <Typography variant="h2">Forgot password?</Typography>
+          <Typography
+            variant="body1"
             sx={{
-              height: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'start',
+              mt: 2,
+              mb: 6,
             }}
           >
-            <Typography variant="h2">Forgot password?</Typography>
-            <Typography
-              variant="body1"
+            Don’t worry, we’ll send you reset instructions.
+          </Typography>
+          <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+            <Form handleSubmit={handleSubmit} email={email} setEmail={setEmail} />
+            <LinkMui
+              component={Link}
+              href={Routes.authorization}
+              underline="none"
               sx={{
+                display: 'block',
+                textAlign: 'center',
+                width: '436px',
                 mt: 2,
-                mb: 6,
               }}
             >
-              Don’t worry, we’ll send you reset instructions.
-            </Typography>
-            <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
-              <Form handleSubmit={handleSubmit} email={email} setEmail={setEmail} />
-              <LinkMui
-                component={Link}
-                href={Routes.authorization}
-                underline="none"
-                sx={{
-                  display: 'block',
-                  textAlign: 'center',
-                  mt: 2,
-                }}
-              >
-                <Typography variant="caption">Back to log in</Typography>
-              </LinkMui>
-            </Box>
-          </Grid>
+              <Typography variant="caption">Back to log in</Typography>
+            </LinkMui>
+          </Box>
         </SplitLayout>
       </main>
     </>

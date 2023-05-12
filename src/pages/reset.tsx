@@ -40,48 +40,38 @@ const Reset = () => {
       </Head>
       <main>
         <SplitLayout>
-          <Grid
-            container
+          <Typography variant="h2">Reset password</Typography>
+          <Typography
+            variant="body1"
             sx={{
-              height: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems: 'start',
+              mt: 2,
+              mb: 6,
             }}
           >
-            <Typography variant="h2">Reset password</Typography>
-            <Typography
-              variant="body1"
+            Please create new password here.
+          </Typography>
+          <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+            <Form
+              handleSubmit={handleSubmit}
+              password={password}
+              setPassword={setPassword}
+              confirm={confirm}
+              setConfirm={setConfirm}
+            />
+            <LinkMui
+              component={Link}
+              href={Routes.authorization}
+              underline="none"
               sx={{
+                display: 'block',
+                textAlign: 'center',
+                width: '436px',
                 mt: 2,
-                mb: 6,
               }}
             >
-              Please create new password here.
-            </Typography>
-            <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
-              <Form
-                handleSubmit={handleSubmit}
-                password={password}
-                setPassword={setPassword}
-                confirm={confirm}
-                setConfirm={setConfirm}
-              />
-              <LinkMui
-                component={Link}
-                href={Routes.authorization}
-                underline="none"
-                sx={{
-                  display: 'block',
-                  textAlign: 'center',
-                  mt: 2,
-                }}
-              >
-                <Typography variant="caption">Back to log in</Typography>
-              </LinkMui>
-            </Box>
-          </Grid>
+              <Typography variant="caption">Back to log in</Typography>
+            </LinkMui>
+          </Box>
         </SplitLayout>
       </main>
     </>
