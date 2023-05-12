@@ -17,7 +17,7 @@ import Layout from '@/components/Layout/MainLayout';
 // components
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import Card from '@/components/UI/Cards/Card/Card';
-import AsideProfileMenu from '@/components/AsideProfileMenu/AsideProfileMenu';
+import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server
