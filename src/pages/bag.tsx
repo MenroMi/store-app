@@ -105,7 +105,7 @@ const Bag = () => {
   }, []);
 
   return (
-    <Layout title="Bag">
+    <Layout title="Bag ">
       <main style={{ marginTop: '80px' }}>
         <Head>
           <title>Bag</title>

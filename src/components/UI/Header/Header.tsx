@@ -18,7 +18,7 @@ export default function Header({ navItems }: IHeaderProps) {
     <styles.Header>
       <nav>
         <styles.NavList>
-          <Link href="/">
+          <Link href="/home">
             <Image src={Logo} alt="logo" />
           </Link>
           {navItems.map((item, index) => (
@@ -46,7 +46,7 @@ export default function Header({ navItems }: IHeaderProps) {
           }}
         />
         <styles.Cart>
-          <Link href={'/'}>
+          <Link href={'/bag'}>
             <Image src={CartIcon} alt="cart-icon" />
           </Link>
         </styles.Cart>
