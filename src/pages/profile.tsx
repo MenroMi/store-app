@@ -13,8 +13,8 @@ import profileTopBg from '../assets/profileTopBg.png';
 import Layout from '@/components/Layout/MainLayout';
 
 // components
-import UserProfile from '@/components/UserProfile';
-import Card from '@/components/Card/Card';
+import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
+import Card from '@/components/UI/Cards/Card/Card';
 import AsideProfileMenu from '@/components/AsideProfileMenu/AsideProfileMenu';
 
 export default function Profile() {
@@ -50,36 +50,34 @@ export default function Profile() {
   ];
 
   return (
-    <Box sx={{ maxWidth: '1920px', display: 'flex' }}>
-      <Head>
-        <title>Profile</title>
-      </Head>
-
-      <AsideProfileMenu />
-      <Box>
-        <UserProfile
-          avatarSrc={avatarExample}
-          profileTopBgSrc={profileTopBg}
-          userBonusPoints="1 374"
-          username="Jane Meldrum"
-        />
-        <Box sx={{ mt: 15 }}>
-          <Typography variant="h2" sx={{ mb: 4.5 }}>
-            Last Viewed Products
-          </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            {MOCKED_PRODUCTS.map((product) => (
-              <Card
-                productCategory={product.productCategory}
-                productImageSrc={product.productImageSrc}
-                productName={product.productName}
-                productPrice={product.productPrice}
-                key={product.id}
-              />
-            ))}
+    <Layout title="Profile">
+      <Box sx={{ maxWidth: '1920px', display: 'flex', mt: '38px', gap: '60px' }}>
+        <AsideProfileMenu />
+        <Box>
+          <UserProfile
+            avatarSrc={avatarExample}
+            profileTopBgSrc={profileTopBg}
+            userBonusPoints="1 374"
+            username="Jane Meldrum"
+          />
+          <Box sx={{ mt: 15 }}>
+            <Typography variant="h2" sx={{ mb: 4.5 }}>
+              Last Viewed Products
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              {MOCKED_PRODUCTS.map((product) => (
+                <Card
+                  productCategory={product.productCategory}
+                  productImageSrc={product.productImageSrc}
+                  productName={product.productName}
+                  productPrice={product.productPrice}
+                  key={product.id}
+                />
+              ))}
+            </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Layout>
   );
 }
