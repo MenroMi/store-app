@@ -7,9 +7,9 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // components
-import FiltersAndCards from '@/components/FiltersAndCards/FiltersAndCards';
-import MobileFilterMenu from '../components/MobileFilterMenu/MobileFilterMenu';
-import PathAndSearchResult from '@/components/PathAndSearchResult/PathAndSearchResult';
+import FiltersAndCards from '@/components/UI/CombineComponents/FiltersAndCards/FiltersAndCards';
+import MobileFilterMenu from '@/components/UI/Filters/MobileFilterMenu/MobileFilterMenu';
+import PathAndSearchResult from '@/components/UI/CombineComponents/PathAndSearchResult/PathAndSearchResult';
 
 // FUNCTIONAL COMPONENT
 export default function SearchResultPage(): JSX.Element {

@@ -1,6 +1,7 @@
-// libs
+// basic
 import Head from 'next/head';
-import React from 'react';
+
+// mui
 import { Box, Typography } from '@mui/material';
 
 // images
@@ -9,8 +10,8 @@ import productImage from '../assets/singInBg.png';
 import profileTopBg from '../assets/profileTopBg.png';
 
 // components
-import UserProfile from '@/components/UserProfile';
-import Card from '@/components/Card/Card';
+import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
+import Card from '@/components/UI/Cards/Card/Card';
 
 export default function Profile() {
   const MOCKED_PRODUCTS = [

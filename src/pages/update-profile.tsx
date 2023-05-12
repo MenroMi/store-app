@@ -1,22 +1,19 @@
-// libs
-import { Box, Button, FormControl, FormLabel, OutlinedInput, Typography } from '@mui/material';
+// basic
 import Image from 'next/image';
 import React, { useState } from 'react';
+import Head from 'next/head';
+
+// mui
+import { Box, Button, FormControl, FormLabel, OutlinedInput, Typography } from '@mui/material';
 
 // images
 import avatarSrc from '@/assets/avatarExample.png';
-import styled from '@emotion/styled';
-import Head from 'next/head';
+
+// styled components
+import { CustomForm } from '@/styles/pageStyles/muiStyledComponents/UpdateProfileStyles';
 
 // constants
 import { UPDATE_PROFILE_INPUTS } from '@/constants';
-
-const CustomForm = styled('form')({
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: '48px',
-  width: '436px',
-});
 
 export default function UpdateProfile() {
   const [name, setName] = useState<string>('');

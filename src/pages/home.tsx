@@ -1,8 +1,10 @@
-// libs
+// basic
 import React from 'react';
-import { Box, Button, Typography, Link as LinkMui } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
+
+// mui
+import { Box, Button, Typography, Link as LinkMui } from '@mui/material';
 
 // images
 import profileTopBg from '../assets/profileTopBg.png';
@@ -10,8 +12,8 @@ import avatarExample from '../assets/avatarExample.png';
 import productImage from '../assets/singInBg.png';
 
 // components
-import UserProfile from '@/components/UserProfile';
-import Card from '@/components/Card/Card';
+import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
+import Card from '@/components/UI/Cards/Card/Card';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server

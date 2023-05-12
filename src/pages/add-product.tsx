@@ -1,5 +1,9 @@
-// libs
-import styled from '@emotion/styled';
+// basic
+import Head from 'next/head';
+import { useState } from 'react';
+import Image from 'next/image';
+
+// mui
 import {
   Box,
   Button,
@@ -10,18 +14,17 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Head from 'next/head';
-import React, { useState } from 'react';
-import Image from 'next/image';
 
-// assets
+// image
 import productImageExample from '@/assets/forgotResetBg.png';
+
+// components
+import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
+import AddProductUploadImage from '@/components/UI/AddProduct/AddProductUploadImage/AddProductUploadImage';
+import AddProductSelect from '@/components/UI/AddProduct/AddProductSelect/AddProductSelect';
 
 // constants
 import { BRANDS, GENDERS, SHOE_SIZES } from '@/constants';
-import AddProductRadioGroup from '@/components/AddProductRadioGroup/AddProductRadioGroup';
-import AddProductUploadImage from '@/components/AddProductUploadImage/AddProductUploadImage';
-import AddProductSelect from '@/components/AddProductSelect/AddProductSelect';
 
 export default function AddProduct() {
   const [productName, setProductName] = useState<string>('');

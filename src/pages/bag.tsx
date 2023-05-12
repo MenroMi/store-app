@@ -7,14 +7,21 @@ import Head from 'next/head';
 import { Grid, Stack, Typography, Button, useTheme, Box, Theme } from '@mui/material';
 
 // images
-import productImage from '../assets/singInBg.png';
+import productImage from '@/assets/singInBg.png';
 import DownIcon from '@/assets/icons/down.svg';
 
 // components
-import ProductCardBag from '@/components/ProductCardBag/ProductCardBag';
-import CountBagComponent from '@/components/CountBagComponent/CountBagComponent';
-import PrimaryButton from '@/components/PrimaryButton/PrimaryButton';
-import SecondaryButton from '@/components/SecondaryButton/SecondaryButton';
+import ProductCardBag from '@/components/UI/Cards/ProductCardBag/ProductCardBag';
+import CountBagComponent from '@/components/UI/CountBagComponent/CountBagComponent';
+import PrimaryButton from '@/components/UI/Buttons/PrimaryButton/PrimaryButton';
+import SecondaryButton from '@/components/UI/Buttons/SecondaryButton/SecondaryButton';
+
+// styled components
+import {
+  CustomBagPageWrapper,
+  CustomTotalSummaryWrapper,
+  CustomBagBtnsWrapper,
+} from '@/styles/pageStyles/muiStyledComponents/BagStyles';
 
 // data
 const MOCKED_PRODUCTS = [
@@ -106,16 +113,7 @@ const Bag = () => {
           padding: '0',
         }}
       >
-        <Box
-          py={8}
-          sx={{
-            display: 'flex',
-            width: '100%',
-            maxWidth: '1528px',
-            marginInline: 'auto',
-            padding: '0',
-          }}
-        >
+        <CustomBagPageWrapper py={8}>
           {/* Left container */}
           <Box
             sx={{
@@ -193,38 +191,21 @@ const Bag = () => {
                   <CountBagComponent CountCategory={'Shipping'} PriceValue={shipping} />
                   <CountBagComponent CountCategory={'Tax'} PriceValue={tax} />
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    fontWeight: '500',
-                    paddingBottom: '22px',
-                    paddingTop: '18px',
-                    borderBottom: '1px #EAECF0 solid',
-                    borderTop: '1px #EAECF0 solid',
-                  }}
-                >
+                <CustomTotalSummaryWrapper>
                   <Typography variant="h3Bold">Total</Typography>
                   <Box sx={{ display: 'flex' }}>
                     <Typography variant="h3">$</Typography>
                     <Typography variant="h3">{total}</Typography>
                   </Box>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px',
-                    marginTop: '53px',
-                  }}
-                >
+                </CustomTotalSummaryWrapper>
+                <CustomBagBtnsWrapper>
                   <SecondaryButton>PayPal</SecondaryButton>
                   <PrimaryButton>Checkout</PrimaryButton>
-                </Box>
+                </CustomBagBtnsWrapper>
               </Box>
             </Box>
           </Box>
-        </Box>
+        </CustomBagPageWrapper>
       </Grid>
     </main>
   );
