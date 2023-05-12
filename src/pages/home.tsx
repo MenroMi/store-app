@@ -1,17 +1,23 @@
-// libs
+// basic
 import React from 'react';
-import { Box, Button, Typography, Link as LinkMui } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
+
+// mui
+import { Box, Button, Typography, Link as LinkMui } from '@mui/material';
 
 // images
 import profileTopBg from '../assets/profileTopBg.png';
 import avatarExample from '../assets/avatarExample.png';
 import productImage from '../assets/singInBg.png';
 
+// layout
+import Layout from '@/components/Layout/MainLayout';
+
 // components
-import UserProfile from '@/components/UserProfile';
-import Card from '@/components/Card/Card';
+import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
+import Card from '@/components/UI/Cards/Card/Card';
+import AsideProfileMenu from '@/components/AsideProfileMenu/AsideProfileMenu';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server
@@ -47,38 +53,40 @@ export default function Home() {
   ];
 
   return (
-    <Box sx={{ maxWidth: '1480px' }}>
-      <Head>
-        <title>Home</title>
-      </Head>
-      <UserProfile
-        avatarSrc={avatarExample}
-        profileTopBgSrc={profileTopBg}
-        userBonusPoints="1 374"
-        username="Jane Meldrum"
-      />
-      <Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 15, mb: 4.5 }}>
-          <Typography variant="h2">My products</Typography>
-          <LinkMui component={Link} href="/add-product" underline="none">
-            <Button variant="contained" sx={{ padding: '10px 26px' }}>
-              Add product
-            </Button>
-          </LinkMui>
-        </Box>
+    <Layout title="Home">
+      <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
+        <AsideProfileMenu />
+        <Box sx={{ maxWidth: '1480px' }}>
+          <UserProfile
+            avatarSrc={avatarExample}
+            profileTopBgSrc={profileTopBg}
+            userBonusPoints="1 374"
+            username="Jane Meldrum"
+          />
+          <Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 15, mb: 4.5 }}>
+              <Typography variant="h2">My products</Typography>
+              <LinkMui component={Link} href="/add-product" underline="none">
+                <Button variant="contained" sx={{ padding: '10px 26px' }}>
+                  Add product
+                </Button>
+              </LinkMui>
+            </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          {MOCKED_PRODUCTS.map((product) => (
-            <Card
-              productCategory={product.productCategory}
-              productImageSrc={product.productImageSrc}
-              productName={product.productName}
-              productPrice={product.productPrice}
-              key={product.id}
-            />
-          ))}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              {MOCKED_PRODUCTS.map((product) => (
+                <Card
+                  productCategory={product.productCategory}
+                  productImageSrc={product.productImageSrc}
+                  productName={product.productName}
+                  productPrice={product.productPrice}
+                  key={product.id}
+                />
+              ))}
+            </Box>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Layout>
   );
 }
