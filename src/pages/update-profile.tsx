@@ -13,7 +13,7 @@ import avatarSrc from '@/assets/avatarExample.png';
 import Layout from '@/components/Layout/MainLayout';
 
 // components
-import AsideProfileMenu from '@/components/AsideProfileMenu/AsideProfileMenu';
+import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 
 // styled components
 import { CustomForm } from '@/styles/pageStyles/UpdateProfileStyles';

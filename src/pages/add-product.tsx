@@ -25,7 +25,7 @@ import Layout from '@/components/Layout/MainLayout';
 import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
 import AddProductUploadImage from '@/components/UI/AddProduct/AddProductUploadImage/AddProductUploadImage';
 import AddProductSelect from '@/components/UI/AddProduct/AddProductSelect/AddProductSelect';
-import AsideProfileMenu from '@/components/AsideProfileMenu/AsideProfileMenu';
+import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 
 // constants
 import { BRANDS, GENDERS, SHOE_SIZES } from '@/constants';
