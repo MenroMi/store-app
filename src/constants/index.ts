@@ -12,6 +12,15 @@ import error404 from '../assets/error404.png';
 import error500 from '../assets/error500.png';
 import { StaticImageData } from 'next/image';
 import { IUpdateProfileInput } from '@/types/updateProfileTypes';
+import bagIcon from '@/assets/icons/bagSideMenu.svg';
+import profileIcon from '@/assets/icons/profile.svg';
+import wishListIcon from '@/assets/icons/wishListPreferences.svg';
+import newslettersIcon from '@/assets/icons/newsLetters.svg';
+import walletIcon from '@/assets/icons/wallet.svg';
+import bonusAccountIcon from '@/assets/icons/bonusAcc.svg';
+import premiumSubIcon from '@/assets/icons/premiumSub.svg';
+import feedbackIcon from '@/assets/icons/feedback.svg';
+import logoutIcon from '@/assets/icons/logout.svg';
 
 export const REGULAR_NAV_LINKS = [
 	{
@@ -63,6 +72,63 @@ export const REGULAR_NAV_BURGER_LINKS = [
 		to: '/',
 	},
 ]
+
+export const ASIDE_MENU_LINKS = [
+  {
+    id: 1,
+    icon: profileIcon,
+    name: 'My profile',
+    to: '/#',
+  },
+  {
+    id: 2,
+    icon: bagIcon,
+    name: 'My orders',
+    to: '/#',
+  },
+  {
+    id: 3,
+    icon: wishListIcon,
+    name: 'Wish list',
+    to: '/#',
+  },
+  {
+    id: 4,
+    icon: newslettersIcon,
+    name: 'Newsletters',
+    to: '/#',
+  },
+  {
+    id: 5,
+    icon: walletIcon,
+    name: 'My wallet',
+    to: '/#',
+  },
+  {
+    id: 6,
+    icon: bonusAccountIcon,
+    name: 'My bonus account',
+    to: '/#',
+  },
+  {
+    id: 7,
+    icon: premiumSubIcon,
+    name: 'Premium subscription',
+    to: '/#',
+  },
+  {
+    id: 8,
+    icon: feedbackIcon,
+    name: 'My feedback',
+    to: '/#',
+  },
+  {
+    id: 9,
+    icon: logoutIcon,
+    name: 'Log out',
+    to: '/#',
+  },
+];
 
 export enum Routes {
 	registration = '/registration',
