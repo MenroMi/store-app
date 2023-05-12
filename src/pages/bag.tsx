@@ -21,7 +21,7 @@ import {
   CustomBagPageWrapper,
   CustomTotalSummaryWrapper,
   CustomBagBtnsWrapper,
-} from '@/styles/pageStyles/muiStyledComponents/BagStyles';
+} from '@/styles/pageStyles/BagStyles';
 
 // data
 const MOCKED_PRODUCTS = [

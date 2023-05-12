@@ -17,7 +17,7 @@ import {
   CustomButton,
   BackgroundImage,
   ContentContainer,
-} from '@/styles/pageStyles/muiStyledComponents/Error500Styles';
+} from '@/styles/pageStyles/Error500Styles';
 
 // mock data
 const mockData = {

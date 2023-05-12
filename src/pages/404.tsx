@@ -15,7 +15,7 @@ const mockData = {
 };
 
 // styled components
-import { CustomButton } from '@/styles/pageStyles/muiStyledComponents/Error404Styles';
+import { CustomButton } from '@/styles/pageStyles/Error404Styles';
 
 export default function Error404() {
   const router = useRouter();
