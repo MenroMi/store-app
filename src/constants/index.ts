@@ -14,103 +14,104 @@ import { StaticImageData } from 'next/image';
 import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 
 export const REGULAR_NAV_LINKS = [
-  {
-    name: 'Home',
-    to: '/',
-  },
-  {
-    name: 'For women',
-    to: '/##',
-  },
-  {
-    name: 'For men',
-    to: '/##',
-  },
-  {
-    name: 'Accessories',
-    to: '/##',
-  },
-  {
-    name: 'Sale',
-    to: '/##',
-  },
-];
+	{
+		name: 'Home',
+		to: '/',
+	},
+	{
+		name: 'For women',
+		to: '/##',
+	},
+	{
+		name: 'For men',
+		to: '/##',
+	},
+	{
+		name: 'Accessories',
+		to: '/##',
+	},
+	{
+		name: 'Sale',
+		to: '/##',
+	},
+]
 
 export const REGULAR_NAV_BURGER_LINKS = [
-  {
-    icon: leftBurgerSetting,
-    name: 'Home',
-    to: '/',
-  },
-  {
-    icon: bonusAcc,
-    name: 'Products',
-    to: '/',
-  },
-  {
-    icon: bag,
-    name: 'Bag',
-    to: '/',
-  },
-  {
-    icon: profile,
-    name: 'My profile',
-    to: '/',
-  },
-  {
-    icon: logout,
-    name: 'Log out',
-    to: '/',
-  },
-];
+	{
+		icon: leftBurgerSetting,
+		name: 'Home',
+		to: '/',
+	},
+	{
+		icon: bonusAcc,
+		name: 'Products',
+		to: '/',
+	},
+	{
+		icon: bag,
+		name: 'Bag',
+		to: '/',
+	},
+	{
+		icon: profile,
+		name: 'My profile',
+		to: '/',
+	},
+	{
+		icon: logout,
+		name: 'Log out',
+		to: '/',
+	},
+]
 
 export enum Routes {
-  registration = '/registration',
-  authorization = '/authorization',
-  forgot = '/forgot',
-  reset = '/reset',
-  error404 = '/404',
-  error500 = '/500',
+	registration = '/registration',
+	authorization = '/authorization',
+	forgot = '/forgot',
+	reset = '/reset',
+	sign = '/sign',
+	error404 = '/404',
+	error500 = '/500',
 }
 
 interface IComment {
-  id: number;
-  text: string;
-  name: string;
-  rating: number;
-  location: string;
+	id: number
+	text: string
+	name: string
+	rating: number
+	location: string
 }
 
 export const comments: IComment[] = [
-  {
-    id: 1,
-    text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
-    name: 'John Stone',
-    rating: 5,
-    location: 'Ukraine, Chernivtsi',
-  },
-  {
-    id: 2,
-    text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
-    name: 'Mike Vilson',
-    rating: 3,
-    location: 'Poland, Warzaw',
-  },
-  {
-    id: 3,
-    text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
-    name: 'Yana Rubskaja',
-    rating: 4,
-    location: 'Lithuania, Vilnius',
-  },
-  {
-    id: 4,
-    text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
-    name: 'Don Mariant',
-    rating: 5,
-    location: 'Venice, Italy',
-  },
-];
+	{
+		id: 1,
+		text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
+		name: 'John Stone',
+		rating: 5,
+		location: 'Ukraine, Chernivtsi',
+	},
+	{
+		id: 2,
+		text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
+		name: 'Mike Vilson',
+		rating: 3,
+		location: 'Poland, Warzaw',
+	},
+	{
+		id: 3,
+		text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
+		name: 'Yana Rubskaja',
+		rating: 4,
+		location: 'Lithuania, Vilnius',
+	},
+	{
+		id: 4,
+		text: 'Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.',
+		name: 'Don Mariant',
+		rating: 5,
+		location: 'Venice, Italy',
+	},
+]
 
 export const getImage = (route: string): StaticImageData => {
   switch (route) {
