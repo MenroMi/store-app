@@ -11,6 +11,7 @@ import profileTopBg from '../assets/profileTopBg.png';
 // components
 import UserProfile from '@/components/UserProfile';
 import Card from '@/components/Card/Card';
+import AsideProfileMenu from '@/components/AsideProfileMenu/AsideProfileMenu';
 
 export default function Profile() {
   const MOCKED_PRODUCTS = [
@@ -45,11 +46,12 @@ export default function Profile() {
   ];
 
   return (
-    <Box sx={{ maxWidth: '1480px' }}>
+    <Box sx={{ maxWidth: '1920px', display: 'flex' }}>
       <Head>
         <title>Profile</title>
       </Head>
 
+      <AsideProfileMenu />
       <Box>
         <UserProfile
           avatarSrc={avatarExample}
