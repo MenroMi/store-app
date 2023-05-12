@@ -20,9 +20,7 @@ export default function Layout({ title, headerItems = REGULAR_NAV_LINKS, childre
 
       <styles.Layout>
         <Header navItems={headerItems} />
-        <styles.Main>
-          <section>{children}</section>
-        </styles.Main>
+        <styles.Main>{children}</styles.Main>
       </styles.Layout>
     </>
   );

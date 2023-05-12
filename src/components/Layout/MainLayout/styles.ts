@@ -7,9 +7,8 @@ export const Layout = styled('section')`
 `;
 
 export const Main = styled('main')`
-  display: flex;
+  position: relative;
   width: 100%;
-  height: 200px;
   padding-left: 40px;
   padding-right: 60px;
 `;

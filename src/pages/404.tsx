@@ -13,13 +13,20 @@ const mockData = {
   title: 'Error 404',
   description: "We can't find the page you are looking for. Sorry for the inconvenience.",
 };
+  title: 'Error 404',
+  description: "We can't find the page you are looking for. Sorry for the inconvenience.",
+};
 
 // styled components
 import { CustomButton } from '@/styles/pageStyles/Error404Styles';
 
 export default function Error404() {
   const router = useRouter();
+  const router = useRouter();
 
+  const handleGoBack = (): void => {
+    router.back();
+  };
   const handleGoBack = (): void => {
     router.back();
   };
@@ -50,3 +57,4 @@ export default function Error404() {
     // </Layout>
   );
 }
+
