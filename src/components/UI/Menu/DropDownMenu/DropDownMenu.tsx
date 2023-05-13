@@ -13,19 +13,10 @@ import dotsBtn from '@/assets/icons/dots.svg';
 import { CustomDotsBtn, CustomDropDownMenu } from './styles';
 
 // interface
-interface MenuItemParams {
-  id: number;
-  label: string;
-  method?: () => void;
-}
+import { MenuItemParams } from '@/types';
 
-// objects with items for menu
-const homeItems: MenuItemParams[] = [{ id: 1, label: 'Delete', method: () => {} }];
-const othersItems: MenuItemParams[] = [
-  { id: 1, label: 'View', method: () => {} },
-  { id: 2, label: 'Add to Wish List', method: () => {} },
-  { id: 3, label: 'Add to Cart', method: () => {} },
-];
+// constants
+import { homeItems, othersItems } from '@/constants';
 
 const DropDownMenu: React.FC = (): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
