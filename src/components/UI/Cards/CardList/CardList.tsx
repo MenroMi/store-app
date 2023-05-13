@@ -8,6 +8,7 @@ import singInImg from '@/assets/singInBg.png';
 
 // component
 import Card from '@/components/UI/Cards/Card/Card';
+import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer } from './CardListStyles';
@@ -51,7 +52,9 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
               productImageSrc={singInImg}
               productName="Nike Air Max 270"
               productPrice={160}
-            />
+            >
+              <DropDownMenu />
+            </Card>
           </Grid>
         );
       })}
