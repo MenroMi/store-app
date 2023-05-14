@@ -32,6 +32,8 @@ const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({ hide }): JSX.Element
         component="main"
         sx={{
           maxWidth: `${hide ? '1920px' : '1580px'}`,
+          width: '100%',
+          height: '100%',
         }}
       >
         <CardList hide={hide} />

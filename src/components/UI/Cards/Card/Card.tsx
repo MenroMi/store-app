@@ -30,7 +30,9 @@ const Card: React.FC<ICardProps> = ({
       />
       <CustomDotsImage src={dotsBtn} alt="More" />
       <CustomTypographyWrapper>
-        <Typography variant="subtitle1">{productName}</Typography>
+        <Typography variant="subtitle1" sx={{ lineHeight: '1.3' }}>
+          {productName}
+        </Typography>
         <Typography variant="subtitle1">{`$` + productPrice}</Typography>
       </CustomTypographyWrapper>
       <Typography variant="subtitle2Small">{productCategory}</Typography>
