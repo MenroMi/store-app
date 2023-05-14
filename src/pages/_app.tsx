@@ -14,7 +14,7 @@ const ReactQueryDevtoolsProduction = dynamic(
 );
 
 import type { AppProps } from 'next/app';
-import theme from '../utils/mui/theme';
+import theme from '@/utils/mui/theme';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -30,10 +30,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <Hydrate state={pageProps.dehydrateState}>
         <ReactQueryDevtools initialIsOpen />
         {showDevtools && (
-        <React.Suspense fallback={null}>
-          <ReactQueryDevtoolsProduction />
-        </React.Suspense>
-      )}
+          <React.Suspense fallback={null}>
+            <ReactQueryDevtoolsProduction />
+          </React.Suspense>
+        )}
         <ThemeProvider theme={theme}>
           <Component {...pageProps} />
         </ThemeProvider>

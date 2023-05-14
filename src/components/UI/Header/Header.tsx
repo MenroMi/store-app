@@ -3,7 +3,8 @@ import * as styles from './styles';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { InputAdornment, TextField } from '@mui/material';
+import { InputAdornment } from '@mui/material';
+import { Routes } from '@/constants';
 
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
@@ -18,7 +19,7 @@ export default function Header({ navItems }: IHeaderProps) {
     <styles.Header>
       <nav>
         <styles.NavList>
-          <Link href="/home">
+          <Link href={Routes.home}>
             <Image src={Logo} alt="logo" />
           </Link>
           {navItems.map((item, index) => (
@@ -46,7 +47,7 @@ export default function Header({ navItems }: IHeaderProps) {
           }}
         />
         <styles.Cart>
-          <Link href={'/bag'}>
+          <Link href={Routes.bag}>
             <Image src={CartIcon} alt="cart-icon" />
           </Link>
         </styles.Cart>

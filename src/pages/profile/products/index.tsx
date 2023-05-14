@@ -7,9 +7,9 @@ import Link from 'next/link';
 import { Box, Button, Typography, Link as LinkMui } from '@mui/material';
 
 // images
-import profileTopBg from '../assets/profileTopBg.png';
-import avatarExample from '../assets/avatarExample.png';
-import productImage from '../assets/singInBg.png';
+import profileTopBg from '@/assets/profileTopBg.png';
+import avatarExample from '@/assets/avatarExample.png';
+import productImage from '@/assets/singInBg.png';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -18,6 +18,8 @@ import Layout from '@/components/Layout/MainLayout';
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import Card from '@/components/UI/Cards/Card/Card';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
+
+import { Routes } from '@/constants';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server
@@ -66,7 +68,7 @@ export default function Home() {
           <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 15, mb: 4.5 }}>
               <Typography variant="h2">My products</Typography>
-              <LinkMui component={Link} href="/add-product" underline="none">
+              <LinkMui component={Link} href={Routes.addProduct} underline="none">
                 <Button variant="contained" sx={{ padding: '10px 26px' }}>
                   Add product
                 </Button>

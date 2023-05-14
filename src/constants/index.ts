@@ -1,15 +1,15 @@
 // FOLDER FOR CONSTANS (example - BASE URL, EXPORTS)
 
-import leftBurgerSetting from '../assets/icons/leftBurgerSetting.svg';
-import bonusAcc from '../assets/icons/bonusAcc.svg';
-import bag from '../assets/icons/bag.svg';
-import profile from '../assets/icons/profile.svg';
-import logout from '../assets/icons/logout.svg';
-import signIn from '../assets/singInBg.png';
-import signUp from '../assets/singUpBg.png';
-import forgotReset from '../assets/forgotResetBg.png';
-import error404 from '../assets/error404.png';
-import error500 from '../assets/error500.png';
+import leftBurgerSetting from '@/assets/icons/leftBurgerSetting.svg';
+import bonusAcc from '@/assets/icons/bonusAcc.svg';
+import bag from '@/assets/icons/bag.svg';
+import profile from '@/assets/icons/profile.svg';
+import logout from '@/assets/icons/logout.svg';
+import signIn from '@/assets/singInBg.png';
+import signUp from '@/assets/singUpBg.png';
+import forgotReset from '@/assets/forgotResetBg.png';
+import error404 from '@/assets/error404.png';
+import error500 from '@/assets/error500.png';
 import { StaticImageData } from 'next/image';
 import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 import bagIcon from '@/assets/icons/bagSideMenu.svg';
@@ -26,7 +26,7 @@ import settingsIcon from '@/assets/icons/settings.svg';
 export const REGULAR_NAV_LINKS = [
   {
     name: 'Home',
-    to: '/home',
+    to: '/profile/home',
   },
   {
     name: 'For women',
@@ -79,13 +79,14 @@ export const ASIDE_MENU_LINKS = [
     id: 1,
     icon: profileIcon,
     name: 'My profile',
-    to: '/profile',
+    to: '/profile/products/',
   },
   {
     id: 2,
     icon: bagIcon,
     name: 'My orders',
-    to: '/bag',
+    to: '#',
+    // to: '/history/orders/',
   },
   {
     id: 3,
@@ -127,7 +128,7 @@ export const ASIDE_MENU_LINKS = [
     id: 9,
     icon: settingsIcon,
     name: 'Settings',
-    to: '/update-profile',
+    to: '/profile/settings/',
   },
   {
     id: 10,
@@ -145,6 +146,9 @@ export enum Routes {
   sign = '/auth/mobile-login',
   error404 = '/404',
   error500 = '/500',
+  bag = '/profile/bag/',
+  home = '/profile/home',
+  addProduct = '/profile/products/add',
 }
 
 interface IComment {

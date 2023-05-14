@@ -1,5 +1,6 @@
 // basic
 import { useRouter } from 'next/router';
+import { Routes } from '@/constants';
 
 // mui
 import { Grid, Typography } from '@mui/material';
@@ -29,7 +30,7 @@ export default function Error500() {
   const router = useRouter();
 
   const handleGoHome = (): void => {
-    router.push('/');
+    router.push(Routes.home);
   };
   return (
     <Layout title="Page not found...">
