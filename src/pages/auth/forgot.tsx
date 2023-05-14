@@ -48,7 +48,7 @@ const Forgot = () => {
             <Form handleSubmit={handleSubmit} email={email} setEmail={setEmail} />
             <LinkMui
               component={Link}
-              href={Routes.authorization}
+              href={Routes.login}
               underline="none"
               sx={{
                 display: 'block',

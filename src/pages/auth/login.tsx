@@ -79,7 +79,7 @@ const Authorization = () => {
                 <Typography variant="caption" sx={{ display: 'inline' }}>
                   Don’t have an account?{' '}
                 </Typography>
-                <LinkMui component={Link} href={Routes.registration} underline="none">
+                <LinkMui component={Link} href={Routes.register} underline="none">
                   <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
                     Sign up
                   </Typography>

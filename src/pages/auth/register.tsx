@@ -72,7 +72,7 @@ const Registration = () => {
               <Typography variant="caption" sx={{ display: 'inline' }}>
                 Already have an account?{' '}
               </Typography>
-              <LinkMui component={Link} href={Routes.authorization} underline="none">
+              <LinkMui component={Link} href={Routes.login} underline="none">
                 <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
                   Log in
                 </Typography>

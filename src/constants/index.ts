@@ -133,13 +133,13 @@ export const ASIDE_MENU_LINKS = [
     id: 10,
     icon: logoutIcon,
     name: 'Log out',
-    to: '/authorization',
+    to: '/auth/login',
   },
 ];
 
 export enum Routes {
-  registration = '/auth/register',
-  authorization = '/auth/login',
+  register = '/auth/register',
+  login = '/auth/login',
   forgot = '/auth/forgot',
   reset = '/auth/reset',
   sign = '/auth/mobile-login',
@@ -188,9 +188,9 @@ export const comments: IComment[] = [
 
 export const getImage = (route: string): StaticImageData => {
   switch (route) {
-    case Routes.authorization:
+    case Routes.login:
       return signIn;
-    case Routes.registration:
+    case Routes.register:
       return signUp;
     case Routes.forgot:
       return forgotReset;

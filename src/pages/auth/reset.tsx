@@ -30,7 +30,7 @@ const Reset = () => {
     event.preventDefault();
     if (password && confirm && password === confirm) {
       console.log(password, confirm);
-      router.push(Routes.authorization);
+      router.push(Routes.login);
     }
   };
   return (
@@ -60,7 +60,7 @@ const Reset = () => {
             />
             <LinkMui
               component={Link}
-              href={Routes.authorization}
+              href={Routes.login}
               underline="none"
               sx={{
                 display: 'block',

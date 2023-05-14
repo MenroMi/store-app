@@ -24,8 +24,8 @@ const SplitLayout = ({ children }: ISplitLayoutProps) => {
   return (
     <LayoutSignErrorPages>
       <Grid container sx={{ height: 1 }}>
-        {pathname === Routes.authorization ||
-        pathname === Routes.registration ||
+        {pathname === Routes.login ||
+        pathname === Routes.register ||
         pathname === Routes.forgot ||
         pathname === Routes.reset ? (
           <Image
@@ -64,7 +64,7 @@ const SplitLayout = ({ children }: ISplitLayoutProps) => {
             fill
             style={{ objectFit: 'cover', zIndex: 1000 }}
           />
-          {pathname === Routes.registration && <SignComments />}
+          {pathname === Routes.register && <SignComments />}
         </Grid>
       </Grid>
     </LayoutSignErrorPages>
