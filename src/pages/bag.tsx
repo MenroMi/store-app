@@ -105,7 +105,7 @@ const Bag = () => {
   }, []);
 
   return (
-    // <Layout title="Bag ">
+    <Layout title="Bag ">
       <main style={{ marginTop: '80px', width: '100%', }}>
         <Head>
           <title>Bag</title>
@@ -214,7 +214,7 @@ const Bag = () => {
           </CustomBagPageWrapper>
         </Grid>
       </main>
-    // </Layout>
+    </Layout>
   );
 };
 
