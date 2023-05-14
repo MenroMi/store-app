@@ -138,11 +138,11 @@ export const ASIDE_MENU_LINKS = [
 ];
 
 export enum Routes {
-  registration = '/registration',
-  authorization = '/authorization',
-  forgot = '/forgot',
-  reset = '/reset',
-  sign = '/sign',
+  registration = '/auth/register',
+  authorization = '/auth/login',
+  forgot = '/auth/forgot',
+  reset = '/auth/reset',
+  sign = '/auth/mobile-login',
   error404 = '/404',
   error500 = '/500',
 }
