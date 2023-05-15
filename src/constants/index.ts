@@ -108,6 +108,7 @@ export enum Routes {
   sign = '/sign',
   error404 = '/404',
   error500 = '/500',
+  home = '/home',
 }
 
 export const comments: IComment[] = [
