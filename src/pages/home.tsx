@@ -25,6 +25,7 @@ import Layout from '@/components/Layout/MainLayout';
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import CardList from '@/components/UI/Cards/CardList/CardList';
+import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server
@@ -93,11 +94,12 @@ export default function Home() {
                 </LinkMui>
               )}
             </Box>
+
             <CardList products={MOCKED_PRODUCTS} />
 
             {queryDownMd && (
               <LinkMui component={Link} href="/add-product" underline="none">
-                <Button variant="contained" sx={{ padding: '10px 26px', mt: 3 }}>
+                <Button variant="contained" sx={{ padding: '5px 13px', mt: 2.5 }}>
                   Add product
                 </Button>
               </LinkMui>

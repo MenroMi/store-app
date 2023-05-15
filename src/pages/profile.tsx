@@ -15,6 +15,7 @@ import Layout from '@/components/Layout/MainLayout';
 // components
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
+import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import CardList from '@/components/UI/Cards/CardList/CardList';
 
 export default function Profile() {
@@ -74,6 +75,7 @@ export default function Profile() {
             >
               <Typography variant="h2">Last viewed products</Typography>
             </Box>
+
             <CardList products={MOCKED_PRODUCTS} />
           </Box>
         </Box>

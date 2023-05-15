@@ -20,10 +20,3 @@ export const CustomTypographyWrapper = styled('div')(() => ({
   justifyContent: 'space-between',
   alignItems: 'center',
 }));
-
-export const CustomDotsImage = styled(Image)(() => ({
-  position: 'absolute',
-  top: '20px',
-  right: '16px',
-  cursor: 'pointer',
-}));

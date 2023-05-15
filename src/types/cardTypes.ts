@@ -9,4 +9,5 @@ export interface ICardProps {
   productName: string;
   productPrice: number;
   marginRight?: string | number;
+  children: JSX.Element;
 }
