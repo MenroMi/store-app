@@ -6,6 +6,6 @@ const instance = axios.create({
   baseURL,
 });
 
-export const getDataFromStrapi = async (url: string, params: string = 'populate=*') => {
+export const getDataFromServer = async (url: string, params: string = 'populate=*') => {
   return await instance.get(`${url}?${params}`);
 };

@@ -1,12 +1,12 @@
-import { getDataFromStrapi } from './apiClient';
+import { getDataFromServer } from './apiClient';
 
 export const getProducts = async () => {
-  return getDataFromStrapi('/products').then((res) => res.data);
+  return getDataFromServer('/products').then((res) => res.data);
 };
 
 export const getFilters = async () => {
   const endpoints = ['/genders', '/brands'];
-  const filters = await Promise.allSettled(endpoints.map((ep) => getDataFromStrapi(ep)));
+  const filters = await Promise.allSettled(endpoints.map((ep) => getDataFromServer(ep)));
 
   const res = filters.map((promise, id) => {
     let data;
