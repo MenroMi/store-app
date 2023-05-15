@@ -57,13 +57,7 @@ const ProductCardBag = ({
         <CustomBox
           sx={{
             flexDirection: 'column',
-            marginLeft: {
-              xl: '25px',
-              lg: '25px',
-              md: '20px',
-              sm: '20px',
-              xs: '20px',
-            },
+            marginLeft: queryUpSm ? '25px' : '20px',
           }}
         >
           <CustomBox>
