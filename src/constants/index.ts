@@ -23,7 +23,7 @@ import feedbackIcon from '@/assets/icons/feedback.svg';
 import logoutIcon from '@/assets/icons/logout.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
 
-export const REGULAR_NAV_LINKS = [
+export const NAV_LINKS = [
   {
     name: 'Home',
     to: '/home',
@@ -36,21 +36,13 @@ export const REGULAR_NAV_LINKS = [
     name: 'For men',
     to: '/##',
   },
-  {
-    name: 'Accessories',
-    to: '/##',
-  },
-  {
-    name: 'Sale',
-    to: '/##',
-  },
 ];
 
-export const REGULAR_NAV_BURGER_LINKS = [
+export const NAV_BURGER_LINKS = [
   {
     icon: leftBurgerSetting,
     name: 'Home',
-    to: '/',
+    to: '/home',
   },
   {
     icon: bonusAcc,
@@ -69,7 +61,7 @@ export const REGULAR_NAV_BURGER_LINKS = [
   },
   {
     icon: logout,
-    name: 'Log out',
+    name: 'Log In',
     to: '/',
   },
 ];
