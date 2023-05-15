@@ -1,10 +1,17 @@
 // basic
 import React from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 
 // mui
-import { Box, Button, Typography, Link as LinkMui } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography,
+  Link as LinkMui,
+  useTheme,
+  Theme,
+  useMediaQuery,
+} from '@mui/material';
 
 // images
 import profileTopBg from '../assets/profileTopBg.png';
@@ -16,8 +23,8 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
-import Card from '@/components/UI/Cards/Card/Card';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
+import CardList from '@/components/UI/Cards/CardList/CardList';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server
@@ -52,41 +59,49 @@ export default function Home() {
     },
   ];
 
+  const theme = useTheme<Theme>();
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
+
   return (
-    <Layout title="Home">
-      <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
-        <AsideProfileMenu />
-        <Box sx={{ maxWidth: '1480px' }}>
-          <UserProfile
-            avatarSrc={avatarExample}
-            profileTopBgSrc={profileTopBg}
-            userBonusPoints="1 374"
-            username="Jane Meldrum"
-          />
-          <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 15, mb: 4.5 }}>
-              <Typography variant="h2">My products</Typography>
+    <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
+      <Box sx={{ maxWidth: '1480px' }}>
+        <UserProfile
+          avatarSrc={avatarExample}
+          profileTopBgSrc={profileTopBg}
+          userBonusPoints="1 374"
+          username="Jane Meldrum"
+        />
+        <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              mt: queryDownSm ? 6 : 15,
+              mb: 4.5,
+            }}
+          >
+            <Typography variant="h2">My products</Typography>
+            {!queryDownMd && (
               <LinkMui component={Link} href="/add-product" underline="none">
                 <Button variant="contained" sx={{ padding: '10px 26px' }}>
                   Add product
                 </Button>
               </LinkMui>
-            </Box>
-
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              {MOCKED_PRODUCTS.map((product) => (
-                <Card
-                  productCategory={product.productCategory}
-                  productImageSrc={product.productImageSrc}
-                  productName={product.productName}
-                  productPrice={product.productPrice}
-                  key={product.id}
-                />
-              ))}
-            </Box>
+            )}
           </Box>
+          <CardList products={MOCKED_PRODUCTS} />
+
+          {queryDownMd && (
+            <LinkMui component={Link} href="/add-product" underline="none">
+              <Button variant="contained" sx={{ padding: '10px 26px', mt: 3 }}>
+                Add product
+              </Button>
+            </LinkMui>
+          )}
         </Box>
       </Box>
-    </Layout>
+    </Box>
   );
 }
