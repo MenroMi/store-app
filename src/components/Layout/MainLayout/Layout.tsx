@@ -1,15 +1,13 @@
 import Head from 'next/head';
 import Header from '@/components/UI/Header';
 import * as styles from './styles';
-import { REGULAR_NAV_LINKS } from '@/constants';
 
 interface ILayoutProps {
   title?: string;
-  headerItems?: { name: string; to: string }[];
   children: React.ReactNode;
 }
 
-export default function Layout({ title, headerItems = REGULAR_NAV_LINKS, children }: ILayoutProps) {
+export default function Layout({ title, children }: ILayoutProps) {
   return (
     <>
       <Head>
@@ -19,8 +17,17 @@ export default function Layout({ title, headerItems = REGULAR_NAV_LINKS, childre
       </Head>
 
       <styles.Layout>
-        <Header navItems={headerItems} />
-        <styles.Main>{children}</styles.Main>
+        <Header />
+        <styles.Main
+          sx={{
+            padding: {
+              xl: '0 60px 0 40px',
+              xs: '0 20px 0 20px',
+            },
+          }}
+        >
+          {children}
+        </styles.Main>
       </styles.Layout>
     </>
   );
