@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 // mui
-import { Box, Typography, useTheme, Theme } from '@mui/material';
+import { Box, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
 
 // images
 import DeleteIcon from '@/assets/icons/delete.svg';
@@ -24,13 +24,14 @@ const ProductCardBag = ({
   inStock,
 }: ICardBagProps) => {
   const theme = useTheme<Theme>();
+  const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <>
       <CustomBagWrapper
         sx={{
-          height: { xl: '244px', lg: '244px', md: '244px', sm: '244px', xs: '121px' },
-          padding: { xl: '15px', lg: '15px', md: '15px', sm: '15px', xs: '10px' },
+          minHeight: queryUpSm ? '244px' : '121px',
+          padding: queryUpSm ? '15px' : '10px',
           '&:hover': {
             boxShadow: 4,
           },
@@ -39,7 +40,7 @@ const ProductCardBag = ({
         <Box
           sx={{
             width: '100%',
-            maxWidth: { lg: '223px', md: '223px', sm: '223px', xs: '104px' },
+            maxWidth: queryUpSm ? '223px' : '104px',
           }}
         >
           <Box
@@ -48,8 +49,8 @@ const ProductCardBag = ({
             alt="Product"
             sx={{
               borderRadius: '6px',
-              width: { lg: '223px', md: '223px', sm: '223px', xs: '104px' },
-              height: { lg: '214px', md: '214px', sm: '214px', xs: '101px' },
+              maxWidth: queryUpSm ? '223px' : '104px',
+              maxHeight: queryUpSm ? '214px' : '101px',
             }}
           ></Box>
         </Box>
@@ -100,7 +101,7 @@ const ProductCardBag = ({
                 sx={{
                   position: 'relative',
                   right: '7px',
-                  width: { lg: 'auto', md: 'auto', sm: 'auto', xs: '15px' },
+                  width: queryUpSm ? 'auto' : '15px',
                 }}
               ></Box>
               <Typography variant="btnIconText" color={theme?.palette?.text?.iconLight}>

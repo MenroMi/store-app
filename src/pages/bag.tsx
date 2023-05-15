@@ -4,7 +4,17 @@ import Image from 'next/image';
 import Head from 'next/head';
 
 // mui
-import { Grid, Stack, Typography, Button, useTheme, Box, Theme } from '@mui/material';
+import {
+  Grid,
+  Stack,
+  Typography,
+  Button,
+  useTheme,
+  Box,
+  Theme,
+  useMediaQuery,
+} from '@mui/material';
+import theme from '@/utils/mui/theme';
 
 // images
 import productImage from '@/assets/singInBg.png';
@@ -104,9 +114,11 @@ const Bag = () => {
     countTotal();
   }, []);
 
+  const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
+
   return (
     <Layout title="Bag ">
-      <main style={{ marginTop: '80px', width: '100%', }}>
+      <main style={{ marginTop: '80px', width: '100%' }}>
         <Head>
           <title>Bag</title>
         </Head>
@@ -117,10 +129,7 @@ const Bag = () => {
             padding: '0',
           }}
         >
-          <CustomBagPageWrapper
-            py={8}
-            sx={{ flexDirection: { lg: 'row', md: 'column', xs: 'column' } }}
-          >
+          <CustomBagPageWrapper py={8} sx={{ flexDirection: queryUpLg ? 'row' : 'column' }}>
             {/* Left container */}
             <Box
               sx={{
@@ -129,7 +138,7 @@ const Bag = () => {
             >
               <Typography variant="h2">Chart</Typography>
               <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
-              <Stack spacing={{xl:16, lg: 12, md: 10, sm: 8, xs: 4}} mb={3}>
+                <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
                   {MOCKED_PRODUCTS.map((product) => (
                     <ProductCardBag
                       productCategory={product.productCategory}
@@ -146,12 +155,12 @@ const Bag = () => {
             {/* Right Container */}
             <Box
               sx={{
-                marginLeft: { lg: '80px', md: '20px' },
+                marginLeft: queryUpLg ? '80px' : '20px',
               }}
             >
               <Box
                 sx={{
-                minWidth: {xl:'399px', lg: '399px', md: 'auto'},
+                  minWidth: queryUpLg ? '399px' : 'auto',
                   marginInline: 'auto',
                   textAlign: 'left',
                 }}
@@ -159,7 +168,7 @@ const Bag = () => {
                 <Typography variant="h2">Summary</Typography>
                 <Button
                   sx={{
-                    marginTop: { lg: '65px', md: '20px', xs: '20px' },
+                    marginTop: queryUpLg ? '65px' : '20px',
                     maxWidth: '285px',
                     justifyContent: 'space-between',
                     color: caption,

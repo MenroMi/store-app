@@ -31,6 +31,7 @@ const BagParameterButton = ({ ButtonValue }: IBagButtonProps) => {
           position: 'relative',
           top: '2px',
           left: '2px',
+          width: { sm: 'auto', xs: '7px' },
         }}
       ></Box>
     </Button>
