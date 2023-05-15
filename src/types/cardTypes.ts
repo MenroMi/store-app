@@ -5,4 +5,5 @@ export interface ICardProps {
   productImageSrc: StaticImageData;
   productName: string;
   productPrice: number;
+  children: JSX.Element;
 }

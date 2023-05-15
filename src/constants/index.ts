@@ -1,10 +1,7 @@
 // FOLDER FOR CONSTANS (example - BASE URL, EXPORTS)
 
 import leftBurgerSetting from '../assets/icons/leftBurgerSetting.svg';
-import bonusAcc from '../assets/icons/bonusAcc.svg';
 import bag from '../assets/icons/bag.svg';
-import profile from '../assets/icons/profile.svg';
-import logout from '../assets/icons/logout.svg';
 import signIn from '../assets/singInBg.png';
 import signUp from '../assets/singUpBg.png';
 import forgotReset from '../assets/forgotResetBg.png';
@@ -15,14 +12,10 @@ import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 import bagIcon from '@/assets/icons/bagSideMenu.svg';
 import profileIcon from '@/assets/icons/profile.svg';
 import wishListIcon from '@/assets/icons/wishListPreferences.svg';
-import newslettersIcon from '@/assets/icons/newsLetters.svg';
-import walletIcon from '@/assets/icons/wallet.svg';
 import bonusAccountIcon from '@/assets/icons/bonusAcc.svg';
-import premiumSubIcon from '@/assets/icons/premiumSub.svg';
-import feedbackIcon from '@/assets/icons/feedback.svg';
 import logoutIcon from '@/assets/icons/logout.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
-
+import { MenuItemParams, IComment } from '@/types';
 export const REGULAR_NAV_LINKS = [
   {
     name: 'Home',
@@ -53,7 +46,7 @@ export const REGULAR_NAV_BURGER_LINKS = [
     to: '/',
   },
   {
-    icon: bonusAcc,
+    icon: bonusAccountIcon,
     name: 'Products',
     to: '/',
   },
@@ -63,12 +56,12 @@ export const REGULAR_NAV_BURGER_LINKS = [
     to: '/',
   },
   {
-    icon: profile,
+    icon: profileIcon,
     name: 'My profile',
     to: '/',
   },
   {
-    icon: logout,
+    icon: logoutIcon,
     name: 'Log out',
     to: '/',
   },
@@ -95,42 +88,12 @@ export const ASIDE_MENU_LINKS = [
   },
   {
     id: 4,
-    icon: newslettersIcon,
-    name: 'Newsletters',
-    to: '/#',
-  },
-  {
-    id: 5,
-    icon: walletIcon,
-    name: 'My wallet',
-    to: '/#',
-  },
-  {
-    id: 6,
-    icon: bonusAccountIcon,
-    name: 'My bonus account',
-    to: '/#',
-  },
-  {
-    id: 7,
-    icon: premiumSubIcon,
-    name: 'Premium subscription',
-    to: '/#',
-  },
-  {
-    id: 8,
-    icon: feedbackIcon,
-    name: 'My feedback',
-    to: '/#',
-  },
-  {
-    id: 9,
     icon: settingsIcon,
     name: 'Settings',
     to: '/update-profile',
   },
   {
-    id: 10,
+    id: 5,
     icon: logoutIcon,
     name: 'Log out',
     to: '/authorization',
@@ -145,14 +108,6 @@ export enum Routes {
   sign = '/sign',
   error404 = '/404',
   error500 = '/500',
-}
-
-interface IComment {
-  id: number;
-  text: string;
-  name: string;
-  rating: number;
-  location: string;
 }
 
 export const comments: IComment[] = [
@@ -240,3 +195,10 @@ export const SHOE_SIZES: string[] = ['EU-36', 'EU-37', 'EU-38', 'EU-39', 'EU-40'
 export const BRANDS: string[] = ['Nike', 'Adidas', 'Puma', 'Reebok'];
 
 export const GENDERS: string[] = ['Male', 'Feemale'];
+
+export const homeItems: MenuItemParams[] = [{ id: 1, label: 'Delete', method: () => {} }];
+export const othersItems: MenuItemParams[] = [
+  { id: 1, label: 'View', method: () => {} },
+  { id: 2, label: 'Add to Wish List', method: () => {} },
+  { id: 3, label: 'Add to Cart', method: () => {} },
+];
