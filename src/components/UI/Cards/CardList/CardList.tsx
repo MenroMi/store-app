@@ -12,6 +12,7 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer } from './CardListStyles';
+import { ONE_MOCKED_PRODUCT } from '@/constants';
 
 // interface
 interface ICardListProps {
@@ -20,7 +21,10 @@ interface ICardListProps {
 }
 
 // FUNCTIONAL COMPONENT
-const CardList: React.FC<ICardListProps> = ({ hide, products = [...new Array(16).fill(null)] }) => {
+const CardList: React.FC<ICardListProps> = ({
+  hide,
+  products = [...new Array(16).fill(ONE_MOCKED_PRODUCT)],
+}) => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
@@ -49,10 +53,10 @@ const CardList: React.FC<ICardListProps> = ({ hide, products = [...new Array(16)
             item
           >
             <Card
-              productCategory={product.productCategory || "Women's shoes"}
-              productImageSrc={product.productImageSrc || singInImg}
-              productName={product.productName || 'Nike Air Max 270'}
-              productPrice={product.productPrice || 160}
+              productCategory={product.productCategory}
+              productImageSrc={product.productImageSrc}
+              productName={product.productName}
+              productPrice={product.productPrice}
             >
               <DropDownMenu />
             </Card>
