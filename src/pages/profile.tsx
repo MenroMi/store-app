@@ -16,6 +16,7 @@ import Layout from '@/components/Layout/MainLayout';
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import Card from '@/components/UI/Cards/Card/Card';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
+import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 export default function Profile() {
   const MOCKED_PRODUCTS = [
@@ -72,7 +73,9 @@ export default function Profile() {
                   productName={product.productName}
                   productPrice={product.productPrice}
                   key={product.id}
-                />
+                >
+                  <DropDownMenu />
+                </Card>
               ))}
             </Box>
           </Box>

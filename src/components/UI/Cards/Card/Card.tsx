@@ -4,11 +4,8 @@ import Image from 'next/image';
 // mui
 import { Typography } from '@mui/material';
 
-// images
-import dotsBtn from '@/assets/icons/dots.svg';
-
 // styled components
-import { CustomCardWrapper, CustomTypographyWrapper, CustomDotsImage } from './CardStyles';
+import { CustomCardWrapper, CustomTypographyWrapper } from './CardStyles';
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
@@ -19,6 +16,7 @@ const Card: React.FC<ICardProps> = ({
   productImageSrc,
   productName,
   productPrice,
+  children,
 }): JSX.Element => {
   return (
     <CustomCardWrapper>
@@ -28,7 +26,7 @@ const Card: React.FC<ICardProps> = ({
         alt="product template"
         placeholder="blur"
       />
-      <CustomDotsImage src={dotsBtn} alt="More" />
+      {children}
       <CustomTypographyWrapper>
         <Typography variant="subtitle1" sx={{ lineHeight: '1.3' }}>
           {productName}

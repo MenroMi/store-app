@@ -16,6 +16,7 @@ import emptyIcon from '@/assets/icons/empty.svg';
 
 // component
 import Card from '@/components/UI/Cards/Card/Card';
+import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer, CatalogIsEmptyContainer } from './CardListStyles';
@@ -101,9 +102,11 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
             sx={{
               opacity: '0.1',
             }}
-          />
+            >
+            <DropDownMenu />
           <Typography variant="h2" sx={{ opacity: '0.5' }}>
             Catalog is empty.
+            </Card>
           </Typography>
         </CatalogIsEmptyContainer>
       )}
