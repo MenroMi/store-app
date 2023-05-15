@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { Link as LinkMui, Box, useTheme } from '@mui/material';
 
 // components
-import Form from '@/components/forms/FormRegistration/FormRegistration';
+import Form from '@/components/Forms/FormRegistration/FormRegistration';
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 
 // constants

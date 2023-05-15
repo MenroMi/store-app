@@ -11,7 +11,7 @@ import { Link as LinkMui, Box, useTheme } from '@mui/material';
 
 // components
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
-import Form from '@/components/forms/FormRegistration/FormRegistration';
+import Form from '@/components/Forms/FormRegistration/FormRegistration';
 
 // constants
 import { Routes } from '@/constants';
