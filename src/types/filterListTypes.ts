@@ -1,17 +1,21 @@
 export interface FilterListRender {
-  name: string;
   label: string;
-  id: number;
-  searchbar?: boolean;
-  inputs?: string[];
-  categories?: { name: string; label: string; amount: number; id: number }[];
-  price?: object;
-  color?: object;
+  name: string;
+  values: object[];
 }
 
-export interface CategoriesList {
-  name: string;
-  label: string;
-  amount: number;
+export interface AttrTypes {
+  name?: string;
+  createdAt?: string;
+  updateAt?: string;
+  publishedAt?: string;
+}
+
+export interface IFiltersListProps {
+  filters: FilterListRender[];
+}
+
+export interface InputsData {
   id: number;
+  attributes: AttrTypes;
 }
