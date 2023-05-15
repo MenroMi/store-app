@@ -1,9 +1,10 @@
 // basic
 import Image from 'next/image';
+import { Fragment } from 'react';
+
 // mui
 import InputAdornment from '@mui/material/InputAdornment';
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
-import { useTheme, Theme } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, Typography, useTheme, Theme } from '@mui/material';
 
 // images
 import searchIcon from '@/assets/icons/search.svg';
@@ -14,131 +15,104 @@ import Filter from '@/components/UI/Filters/Filter/Filter';
 // styled components
 import { CustomTextField } from './FilterListStyles';
 
-// interfaces
-import { FilterListRender, CategoriesList } from '@/types/filterListTypes';
-
-// filters hardcode
-const filters = [
-  { name: 'gender', label: 'Gender', id: 1, inputs: ['Men', 'Women'] },
-  { name: 'kids', label: 'Kids', id: 2, inputs: ['Boys', 'Girls'] },
-  {
-    name: 'brand',
-    label: 'Brand',
-    id: 3,
-    searchbar: true,
-    categories: [
-      { name: 'adidas', label: 'Adidas', amount: 350, id: 1 },
-      { name: 'asics', label: 'Asics', amount: 840, id: 2 },
-      { name: 'new-balance', label: 'New Balance', amount: 840, id: 3 },
-      { name: 'nike', label: 'Nike', amount: 500, id: 4 },
-      { name: 'puma', label: 'Puma', amount: 350, id: 5 },
-      { name: 'reebok', label: 'Reebok', amount: 97, id: 6 },
-    ],
-  },
-  { name: 'price', label: 'Price', id: 4 },
-  { name: 'color', label: 'Color', id: 5 },
-];
+// interface
+import { InputsData, IFiltersListProps } from '@/types/filterListTypes';
 
 // FUNCTION COMPONENT
-const FiltersList: React.FC = (): JSX.Element => {
+const FiltersList: React.FC<IFiltersListProps> = ({ filters }): JSX.Element => {
   const theme = useTheme<Theme>();
 
-  const isinputs = (inputs: string[] | undefined, name: string) => {
-    return (
-      inputs && (
-        <Box component="form" id={name} mt="13px">
-          {inputs.map((elem: string) => (
-            <FormControlLabel
-              label={
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: '400', color: theme?.palette?.text?.caption }}
-                >
-                  {elem}
-                </Typography>
-              }
-              control={<Checkbox sx={{ mr: '12px' }} />}
-              key={elem}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                mt: '15px',
+  const isinputs = (inputs: object[] | undefined, label: string) => {
+    if (label === 'brand') {
+      return (
+        inputs && (
+          <Box component="form" id={label} mt="20px">
+            <CustomTextField
+              variant="outlined"
+              placeholder="Search"
+              size="small"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    {<Image src={searchIcon} alt="search bar" />}
+                  </InputAdornment>
+                ),
               }}
             />
-          ))}
-        </Box>
-      )
-    );
-  };
+            {inputs.map((input) => {
+              const { id, attributes } = input as InputsData;
+              return (
+                <Fragment key={id}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }}>
+                    <FormControlLabel
+                      label={
+                        <Typography
+                          variant="h6"
+                          sx={{ fontWeight: '400', color: theme?.palette?.text?.caption }}
+                        >
+                          {attributes?.name}
+                        </Typography>
+                      }
+                      control={<Checkbox sx={{ mr: '12px' }} />}
+                    />
+                    <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
+                      (+{100})
+                    </Box>
+                  </Box>
+                </Fragment>
+              );
+            })}
+          </Box>
+        )
+      );
+    }
 
-  const isSearchBrand = (
-    searchbar: boolean | undefined,
-    categories: CategoriesList[],
-    name: string
-  ): false | JSX.Element | undefined => {
     return (
-      searchbar && (
-        <Box component="form" id={name} mt="20px">
-          {
-            <>
-              <CustomTextField
-                variant="outlined"
-                placeholder="Search"
-                size="small"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      {<Image src={searchIcon} alt="search bar" />}
-                    </InputAdornment>
-                  ),
+      inputs && (
+        <Box component="form" id={label} mt="13px">
+          {inputs.map((input) => {
+            const { id, attributes } = input as InputsData;
+
+            return (
+              <FormControlLabel
+                label={
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: '400', color: theme?.palette?.text?.caption }}
+                  >
+                    {attributes.name}
+                  </Typography>
+                }
+                control={<Checkbox sx={{ mr: '12px' }} />}
+                key={id}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  mt: '15px',
                 }}
               />
-              <div>
-                {categories &&
-                  categories.map(
-                    ({
-                      id,
-                      label,
-                      amount,
-                    }: {
-                      id: number;
-                      amount: number;
-                      label: string;
-                    }): JSX.Element => {
-                      return (
-                        <Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }} key={id}>
-                          <FormControlLabel
-                            label={
-                              <Typography
-                                variant="h6"
-                                sx={{ fontWeight: '400', color: theme?.palette?.text?.caption }}
-                              >
-                                {label}
-                              </Typography>
-                            }
-                            control={<Checkbox sx={{ mr: '12px' }} />}
-                          />
-                          <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
-                            (+{amount})
-                          </Box>
-                        </Box>
-                      );
-                    }
-                  )}
-              </div>
-            </>
-          }
+            );
+          })}
         </Box>
       )
     );
   };
 
-  const isFilter = (prop: object | undefined, name: string): JSX.Element | undefined | false => {
-    switch (name) {
+  const isFilter = (
+    values: object[] | undefined,
+    label: string
+  ): JSX.Element | undefined | false => {
+    switch (label) {
+      case 'gender':
+        return isinputs(values, label);
+      case 'kids':
+        return isinputs(values, label);
+      case 'brand':
+        return isinputs(values, label);
       case 'price':
-        return prop && <p>price</p>;
+        return isinputs(values, label);
       case 'color':
-        return prop && <p>color</p>;
+        return isinputs(values, label);
       default:
         return undefined;
     }
@@ -146,18 +120,14 @@ const FiltersList: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {filters.map((props: FilterListRender): JSX.Element => {
-        const { name, label, id, searchbar, inputs, categories, color, price } = props;
-
-        return (
-          <Filter key={id} label={label}>
-            {isinputs(inputs, name)}
-            {isSearchBrand(searchbar, categories!, name)}
-            {isFilter(price, name)}
-            {isFilter(color, name)}
-          </Filter>
-        );
-      })}
+      {filters &&
+        filters.map(({ label, name, values }, id): JSX.Element => {
+          return (
+            <Filter key={id} name={name}>
+              {isFilter(values, label)}
+            </Filter>
+          );
+        })}
     </>
   );
 };

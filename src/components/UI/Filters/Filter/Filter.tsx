@@ -15,12 +15,12 @@ import { CustomFilterHeader } from './FilterStyles';
 
 // interface
 interface IFilterProps {
-  label: string;
+  name: string;
   children: React.ReactNode;
 }
 
 // FUNCTIONAL COMPONENT
-const Filter: React.FC<IFilterProps> = ({ label, children }): JSX.Element => {
+const Filter: React.FC<IFilterProps> = ({ name, children }): JSX.Element => {
   const [hideFilter, setHideFilter] = useState<boolean>(false);
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
@@ -36,7 +36,7 @@ const Filter: React.FC<IFilterProps> = ({ label, children }): JSX.Element => {
       }}
     >
       <CustomFilterHeader onClick={() => setHideFilter(!hideFilter)}>
-        <Typography variant="h6">{label}</Typography>
+        <Typography variant="h6">{name}</Typography>
         <Box
           component={Image}
           src={arrowIcon}
