@@ -69,7 +69,6 @@ const ProductCardBag = ({
             <Box
               sx={{
                 width: '100%',
-                // maxWidth: '245px',
               }}
             >
               <Typography variant="h3">{productName}</Typography>
