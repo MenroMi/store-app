@@ -87,7 +87,9 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
               productImageSrc={singInImg}
               productName={name}
               productPrice={price}
-            />,
+            >
+              <DropDownMenu />
+            </Card>,
             id
           );
         })
@@ -102,11 +104,9 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
             sx={{
               opacity: '0.1',
             }}
-            >
-            <DropDownMenu />
+          />
           <Typography variant="h2" sx={{ opacity: '0.5' }}>
             Catalog is empty.
-            </Card>
           </Typography>
         </CatalogIsEmptyContainer>
       )}
