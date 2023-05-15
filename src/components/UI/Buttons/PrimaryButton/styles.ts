@@ -7,4 +7,5 @@ export const CustomPrimaryButton = styled(Button)(() => ({
   textTransform: 'none',
   maxWidth: '436px',
   width: '100%',
+  margin: '0 auto',
 }));
