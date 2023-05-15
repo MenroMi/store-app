@@ -5,10 +5,7 @@ export const CustomBagWrapper = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   width: '100%',
-  maxWidth: '983px',
-  height: '234px',
   borderRadius: '6px',
-  padding: '10px',
 }));
 
 export const CustomBox = styled('div')(() => ({

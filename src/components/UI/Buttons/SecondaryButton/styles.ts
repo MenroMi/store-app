@@ -12,4 +12,5 @@ export const CustomSecondaryButton = styled(Button)(() => ({
   textTransform: 'none',
   cursor: 'pointer',
   maxWidth: '436px',
+  margin: '0 auto',
 }));
