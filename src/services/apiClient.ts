@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { baseURL } from '@/constants';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: 'https://shoes-shop-strapi.herokuapp.com/api/',
+  baseURL,
 });
 
-export default instance;
+export const getDataFromStrapi = async (url: string, params: string = 'populate=*') => {
+  return await instance.get(`${url}?${params}`);
+};
