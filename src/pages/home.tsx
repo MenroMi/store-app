@@ -64,44 +64,47 @@ export default function Home() {
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   return (
-    <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
-      <Box sx={{ maxWidth: '1480px' }}>
-        <UserProfile
-          avatarSrc={avatarExample}
-          profileTopBgSrc={profileTopBg}
-          userBonusPoints="1 374"
-          username="Jane Meldrum"
-        />
-        <Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mt: queryDownSm ? 6 : 15,
-              mb: 4.5,
-            }}
-          >
-            <Typography variant="h2">My products</Typography>
-            {!queryDownMd && (
+    <Layout title="Home">
+      <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
+        <AsideProfileMenu />
+        <Box sx={{ maxWidth: '1480px' }}>
+          <UserProfile
+            avatarSrc={avatarExample}
+            profileTopBgSrc={profileTopBg}
+            userBonusPoints="1 374"
+            username="Jane Meldrum"
+          />
+          <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mt: queryDownSm ? 6 : 15,
+                mb: 4.5,
+              }}
+            >
+              <Typography variant="h2">My products</Typography>
+              {!queryDownMd && (
+                <LinkMui component={Link} href="/add-product" underline="none">
+                  <Button variant="contained" sx={{ padding: '10px 26px' }}>
+                    Add product
+                  </Button>
+                </LinkMui>
+              )}
+            </Box>
+            <CardList products={MOCKED_PRODUCTS} />
+
+            {queryDownMd && (
               <LinkMui component={Link} href="/add-product" underline="none">
-                <Button variant="contained" sx={{ padding: '10px 26px' }}>
+                <Button variant="contained" sx={{ padding: '10px 26px', mt: 3 }}>
                   Add product
                 </Button>
               </LinkMui>
             )}
           </Box>
-          <CardList products={MOCKED_PRODUCTS} />
-
-          {queryDownMd && (
-            <LinkMui component={Link} href="/add-product" underline="none">
-              <Button variant="contained" sx={{ padding: '10px 26px', mt: 3 }}>
-                Add product
-              </Button>
-            </LinkMui>
-          )}
         </Box>
       </Box>
-    </Box>
+    </Layout>
   );
 }
