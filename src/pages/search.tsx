@@ -48,6 +48,16 @@ export default function SearchResultPage(): JSX.Element {
         justifyContent="center"
         sx={{ p: { md: `${hide ? '0 60px' : '0'}` } }}
       >
+        <PathAndSearchResult hide={hide} onHide={(): void => setHide(!hide)} />
+
+        <FiltersAndCards
+          hide={hide}
+          isFetched={isFetched}
+          isLoading={isLoading}
+          isError={isError}
+          error={error}
+          filters={data}
+        />
         <Box
           onClick={(e) => onHideFilters(e)}
           sx={{
@@ -62,25 +72,18 @@ export default function SearchResultPage(): JSX.Element {
           }}
           data-overlay="overlay"
         />
-        <PathAndSearchResult hide={hide} onHide={(): void => setHide(!hide)} />
-        <FiltersAndCards
-          hide={hide}
-          isFetched={isFetched}
-          isLoading={isLoading}
-          isError={isError}
-          error={error}
-          filters={data}
-        />
         {!queryUpMd && !hide && (
-          <MobileFilterMenu
-            hide={hide}
-            onHide={(): void => setHide(!hide)}
-            isFetched={isFetched}
-            isLoading={isLoading}
-            isError={isError}
-            error={error}
-            filters={data}
-          />
+          <Box>
+            <MobileFilterMenu
+              hide={hide}
+              onHide={(): void => setHide(!hide)}
+              isFetched={isFetched}
+              isLoading={isLoading}
+              isError={isError}
+              error={error}
+              filters={data}
+            />
+          </Box>
         )}
       </Box>
     </Layout>

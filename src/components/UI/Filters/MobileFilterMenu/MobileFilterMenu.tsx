@@ -40,37 +40,38 @@ const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({
   }, []);
 
   return (
-    <Slide in={!hide} direction="left">
-      <CustomOverlay
+    <CustomOverlay
+      sx={{
+        display: `${queryDownMd ? 'block' : 'none'}`,
+        boxShadow: `${queryDownMd && '3px -11px 24px 0px rgba(0, 0, 0, 0.4);'}`,
+      }}
+    >
+      <Box
         sx={{
-          display: `${queryDownMd ? 'block' : 'none'}`,
-          boxShadow: `${queryDownMd && '3px -11px 24px 0px rgba(0, 0, 0, 0.4);'}`,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
         }}
       >
         <Box
+          onClick={onHide}
+          component={Image}
+          src={deleteIcon}
+          alt="cross for close filter menu"
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            width: '100%',
+            width: '10px',
+            height: '10px',
+            m: '20px 33px 30px 0',
+            cursor: 'pointer',
           }}
-        >
-          <Box
-            onClick={onHide}
-            component={Image}
-            src={deleteIcon}
-            alt="cross for close filter menu"
-            sx={{
-              width: '10px',
-              height: '10px',
-              m: '20px 33px 30px 0',
-              cursor: 'pointer',
-            }}
-          />
-        </Box>
-        <FiltersList filters={filters} />
-      </CustomOverlay>
-    </Slide>
+        />
+      </Box>
+      <FiltersList filters={filters} />
+    </CustomOverlay>
   );
 };
 
 export default MobileFilterMenu;
+
+/* <Slide in={!hide} direction="left"> */
+// </Slide>
