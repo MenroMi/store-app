@@ -15,8 +15,10 @@ import wishListIcon from '@/assets/icons/wishListPreferences.svg';
 import bonusAccountIcon from '@/assets/icons/bonusAcc.svg';
 import logoutIcon from '@/assets/icons/logout.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
-import { MenuItemParams } from '@/types';
-export const REGULAR_NAV_LINKS = [
+import { MenuItemParams, IComment } from '@/types';
+import productImage from '@/assets/singInBg.png';
+
+export const NAV_LINKS = [
   {
     name: 'Home',
     to: '/profile/home',
@@ -29,21 +31,13 @@ export const REGULAR_NAV_LINKS = [
     name: 'For men',
     to: '/##',
   },
-  {
-    name: 'Accessories',
-    to: '/##',
-  },
-  {
-    name: 'Sale',
-    to: '/##',
-  },
 ];
 
-export const REGULAR_NAV_BURGER_LINKS = [
+export const NAV_BURGER_LINKS = [
   {
     icon: leftBurgerSetting,
     name: 'Home',
-    to: '/',
+    to: '/home',
   },
   {
     icon: bonusAccountIcon,
@@ -62,7 +56,7 @@ export const REGULAR_NAV_BURGER_LINKS = [
   },
   {
     icon: logoutIcon,
-    name: 'Log out',
+    name: 'Log In',
     to: '/',
   },
 ];
@@ -112,14 +106,6 @@ export enum Routes {
   bag = '/profile/bag/',
   home = '/profile/home',
   addProduct = '/profile/products/add',
-}
-
-interface IComment {
-  id: number;
-  text: string;
-  name: string;
-  rating: number;
-  location: string;
 }
 
 export const comments: IComment[] = [
@@ -214,3 +200,11 @@ export const othersItems: MenuItemParams[] = [
   { id: 2, label: 'Add to Wish List', method: () => {} },
   { id: 3, label: 'Add to Cart', method: () => {} },
 ];
+
+export const ONE_MOCKED_PRODUCT = {
+  id: 3,
+  productImageSrc: productImage,
+  productName: 'Nike Air Max 270',
+  productPrice: 160,
+  productCategory: "Women's shoes",
+};
