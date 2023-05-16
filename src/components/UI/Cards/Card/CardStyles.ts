@@ -1,5 +1,4 @@
-import { styled } from '@mui/material/styles';
-import Image from 'next/image';
+import { styled } from '@mui/material';
 
 export const CustomCardWrapper = styled('div')(() => ({
   position: 'relative',
@@ -14,11 +13,4 @@ export const CustomTypographyWrapper = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-}));
-
-export const CustomDotsImage = styled(Image)(() => ({
-  position: 'absolute',
-  top: '20px',
-  right: '16px',
-  cursor: 'pointer',
 }));
