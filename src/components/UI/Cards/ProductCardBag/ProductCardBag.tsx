@@ -1,30 +1,49 @@
 // basic
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 // mui
 import { Box, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
 
-// images
-import DeleteIcon from '@/assets/icons/delete.svg';
-
 // components
-import BagParameterButton from '@/components/UI/Buttons/BagParameterButton/BagParameterButton';
+import BagQuantityButton from '@/components/UI/Buttons/BagQuantityButton/BagQuantityButton';
+import BagDeleteButton from '@/components/UI/Buttons/BagDeleteButton/BagDeleteButton';
 
 // styled components
-import { CustomBagWrapper, CustomBox, CustomButton } from './styles';
+import { CustomBagWrapper, CustomBox } from './styles';
 
 // interface
 import { ICardBagProps } from '@/types/productCardBag';
+import { useState } from 'react';
+
+interface IProductBagProps {
+  id: number;
+  productImageSrc: string | StaticImageData;
+  productName: string;
+  productPrice: number;
+  productCategory: string;
+  inStock: boolean;
+  initialQuantity: number;
+  addProduct: () => void;
+  removeProduct: () => void;
+  deleteProduct: (e: React.MouseEvent<HTMLElement>) => void;
+}
 
 const ProductCardBag = ({
+  id,
   productImageSrc,
   productName,
   productPrice,
   productCategory,
   inStock,
-}: ICardBagProps) => {
+  initialQuantity,
+  addProduct,
+  removeProduct,
+  deleteProduct,
+}: IProductBagProps) => {
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const [quantity, setQuantity] = useState<number>(initialQuantity);
 
   return (
     <>
@@ -83,25 +102,15 @@ const ProductCardBag = ({
           </CustomBox>
           <CustomBox
             sx={{
-              minHeight: { lg: '28px', md: 'auto' },
+              maxHeight: { sm: '28px', xs: '20px' },
             }}
           >
-            <BagParameterButton ButtonValue={'Quantity'} />
-            <CustomButton>
-              <Box
-                component={Image}
-                src={DeleteIcon}
-                alt="delete"
-                sx={{
-                  position: 'relative',
-                  right: '7px',
-                  width: queryUpSm ? 'auto' : '15px',
-                }}
-              ></Box>
-              <Typography variant="btnIconText" color={theme?.palette?.text?.iconLight}>
-                Delete
-              </Typography>
-            </CustomButton>
+            <BagQuantityButton
+              initialQuantity={initialQuantity}
+              addProduct={addProduct}
+              removeProduct={removeProduct}
+            />
+            <BagDeleteButton deleteProduct={deleteProduct} />
           </CustomBox>
         </CustomBox>
       </CustomBagWrapper>

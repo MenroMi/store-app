@@ -35,6 +35,7 @@ import {
   CustomTotalSummaryWrapper,
   CustomBagBtnsWrapper,
 } from '@/styles/pageStyles/BagStyles';
+import { ICardBagProps } from '@/types/productCardBag';
 
 // data
 const MOCKED_PRODUCTS = [
@@ -45,6 +46,7 @@ const MOCKED_PRODUCTS = [
     productPrice: 160,
     productCategory: "Women's shoes",
     inStock: true,
+    quantity: 1,
   },
   {
     id: 2,
@@ -53,6 +55,7 @@ const MOCKED_PRODUCTS = [
     productPrice: 160,
     productCategory: "Women's shoes",
     inStock: true,
+    quantity: 1,
   },
   {
     id: 3,
@@ -61,6 +64,7 @@ const MOCKED_PRODUCTS = [
     productPrice: 160,
     productCategory: "Women's shoes",
     inStock: true,
+    quantity: 1,
   },
   {
     id: 4,
@@ -69,14 +73,20 @@ const MOCKED_PRODUCTS = [
     productPrice: 160,
     productCategory: "Women's shoes",
     inStock: true,
+    quantity: 1,
   },
 ];
 
 const Bag = () => {
+  const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
+  const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
+
   const [subTotal, setSubTotal] = useState<number>(0);
   const [shipping, setShipping] = useState<number>(0);
   const [tax, setTax] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [products, setProducts] = useState<ICardBagProps[]>(MOCKED_PRODUCTS);
   const {
     palette: {
       text: { caption },
@@ -84,37 +94,57 @@ const Bag = () => {
   } = useTheme<Theme>();
 
   const countSubTotal = () => {
-    const priceArray = MOCKED_PRODUCTS.map(({ productPrice }) => productPrice);
-    const countSubTotal = priceArray.reduce((value, acc) => value + acc);
+    const priceArray: number[] = MOCKED_PRODUCTS.map(({ productPrice }) => productPrice * quantity);
+    const countSubTotal: number = priceArray.reduce((value, acc) => value + acc);
     setSubTotal(countSubTotal);
   };
 
   const countShipping = () => {
-    const currentShipping = MOCKED_PRODUCTS.length * 5;
+    const currentShipping: number = MOCKED_PRODUCTS.length < 4 ? MOCKED_PRODUCTS.length * 5 : 20;
     setShipping(currentShipping);
   };
 
   const countTax = () => {
-    const currentTax = subTotal * 0.2;
+    const currentTax: number = subTotal * 0.2;
     setTax(currentTax);
   };
 
   const countTotal = () => {
-    const totalPrice = subTotal + shipping + tax;
+    const totalPrice: number = subTotal + shipping + tax;
     setTotal(totalPrice);
+  };
+
+  const addProduct = () => {
+    setQuantity((quantity) => quantity + 1);
+  };
+
+  const removeProduct = () => {
+    setQuantity((quantity) => quantity - 1);
+    if (quantity <= 1) {
+      setQuantity(1);
+    }
+  };
+
+  const deleteProduct = () => {
+    const newArray: any = products.pop();
+    setProducts(newArray);
   };
 
   useEffect(() => {
     countSubTotal();
+  }, [products]);
+
+  useEffect(() => {
     countShipping();
+  }, []);
+
+  useEffect(() => {
     countTax();
   }, []);
 
   useEffect(() => {
     countTotal();
   }, []);
-
-  const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
 
   return (
     <Layout title="Bag ">
@@ -136,10 +166,12 @@ const Bag = () => {
                 width: '100%',
               }}
             >
-              <Typography variant="h2">Chart</Typography>
+              <Typography variant="h2" sx={{ marginLeft: '15px' }}>
+                Chart
+              </Typography>
               <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
                 <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
-                  {MOCKED_PRODUCTS.map((product) => (
+                  {products.map((product: any) => (
                     <ProductCardBag
                       productCategory={product.productCategory}
                       productImageSrc={product.productImageSrc}
@@ -147,6 +179,12 @@ const Bag = () => {
                       productPrice={product.productPrice}
                       key={product.id}
                       inStock={true}
+                      // quantity={quantity}
+                      addProduct={addProduct}
+                      removeProduct={removeProduct}
+                      deleteProduct={deleteProduct}
+                      id={product.id}
+                      initialQuantity={1}
                     />
                   ))}
                 </Stack>
@@ -155,7 +193,8 @@ const Bag = () => {
             {/* Right Container */}
             <Box
               sx={{
-                marginLeft: queryUpLg ? '80px' : '20px',
+                marginLeft: queryUpLg ? '80px' : queryUpSm ? '20px' : '0',
+                marginRight: queryUpSm ? '20px' : '0',
               }}
             >
               <Box
