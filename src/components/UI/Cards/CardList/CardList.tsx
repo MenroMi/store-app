@@ -20,13 +20,17 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer, CatalogIsEmptyContainer } from './CardListStyles';
+import { ONE_MOCKED_PRODUCT } from '@/constants';
 
 // interface
 import { ICardListProps, AttrFromData } from '@/types/cardListTypes';
 import { uploadImageURL } from '@/constants';
 
 // FUNCTIONAL COMPONENT
-const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
+const CardList: React.FC<ICardListProps> = ({
+  hide,
+  products = [...new Array(8).fill(ONE_MOCKED_PRODUCT)],
+}): JSX.Element | null => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
@@ -69,7 +73,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
       }}
     >
       {isFetching && isLoading ? (
-        [...new Array(8).fill(null)].map((_, id) => {
+        products.map((_, id) => {
           return isVisible(<Skeleton width={320} height={443} variant="rectangular" />, id);
         })
       ) : isFetched && !isError && !isLoading && data ? (

@@ -12,7 +12,10 @@ import {
   Grid,
   OutlinedInput,
   TextField,
+  Theme,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 
 // image
@@ -35,8 +38,11 @@ export default function AddProduct() {
   const [category, setCategory] = useState<string>('');
   const [gender, setGender] = useState<string>('male');
   const [brand, setBrand] = useState<string>('');
-
   const [selectedSize, setSelectedSize] = useState<string>('');
+
+  const theme = useTheme<Theme>();
+  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
   const handleSelectSize = (size: string) => {
     setSelectedSize(size);
@@ -50,14 +56,16 @@ export default function AddProduct() {
           <form>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4.5 }}>
               <Typography variant="h2">Add product</Typography>
-              <Box sx={{ display: 'flex' }}>
-                <Button variant="outlined" sx={{ padding: '10px 40px', mr: 2.5 }}>
-                  Schedule
-                </Button>
-                <Button variant="contained" type="submit" sx={{ padding: '10px 60px' }}>
-                  Save
-                </Button>
-              </Box>
+              {!queryDownLg && (
+                <Box sx={{ display: 'flex' }}>
+                  <Button variant="outlined" sx={{ padding: '10px 40px', mr: 2.5 }}>
+                    Schedule
+                  </Button>
+                  <Button variant="contained" type="submit" sx={{ padding: '10px 60px' }}>
+                    Save
+                  </Button>
+                </Box>
+              )}
             </Box>
 
             <Typography variant="body1" sx={{ maxWidth: '890px' }}>
@@ -67,8 +75,24 @@ export default function AddProduct() {
               Bonorum et Malorum for use in a type specimen book. It usually begins with:
             </Typography>
 
-            <Box sx={{ display: 'flex', mt: 6 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '436px' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                mt: 6,
+                justifyContent: 'space-between',
+                flexDirection: queryDownLg ? 'column' : 'row',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  maxWidth: {
+                    xl: '436px',
+                    lg: '350px',
+                  },
+                }}
+              >
                 <FormControl sx={{ mb: 3 }}>
                   <FormLabel htmlFor="product-name">
                     <Typography variant="caption">Product name</Typography>
@@ -139,39 +163,68 @@ export default function AddProduct() {
                 />
               </Box>
 
-              <Box sx={{ ml: 29.25 }}>
-                <Typography variant="caption" sx={{ mb: 2.5, display: 'block' }}>
+              <Box>
+                <Typography
+                  variant="caption"
+                  sx={{ mb: 2.5, display: 'block', marginTop: queryDownLg ? '24px' : 0 }}
+                >
                   Product images
                 </Typography>
+                {queryDownMd ? (
+                  <input type="file" name="images" multiple={true} />
+                ) : (
+                  <Grid
+                    container
+                    sx={{
+                      maxWidth: {
+                        xl: '692px',
+                        lg: '500px',
+                      },
+                    }}
+                    spacing={{
+                      xl: 6.5,
+                      lg: 4,
+                      md: 2,
+                    }}
+                  >
+                    <Grid item xs={6} sx={{ maxWidth: '320px', maxHeight: '380px' }}>
+                      <AddProductUploadImage />
+                    </Grid>
 
-                <Grid container sx={{ maxWidth: '692px' }} spacing={6.5}>
-                  <Grid item xs={6} sx={{ maxWidth: '320px', maxHeight: '380px' }}>
-                    <AddProductUploadImage />
+                    {Array(3)
+                      .fill({
+                        productImageSrc: productImageExample,
+                      })
+                      .map((productImage, index) => (
+                        <Grid
+                          key={index}
+                          item
+                          xs={6}
+                          sx={{
+                            maxWidth: '320px',
+                            maxHeight: '380px',
+                          }}
+                        >
+                          <Image
+                            src={productImage.productImageSrc}
+                            alt="Product image"
+                            style={{ maxWidth: '100%', height: '100%' }}
+                          />
+                        </Grid>
+                      ))}
                   </Grid>
-
-                  {Array(3)
-                    .fill({
-                      productImageSrc: productImageExample,
-                    })
-                    .map((productImage, index) => (
-                      <Grid
-                        key={index}
-                        item
-                        xs={6}
-                        sx={{
-                          maxWidth: '320px',
-                          maxHeight: '380px',
-                        }}
-                      >
-                        <Image
-                          src={productImage.productImageSrc}
-                          alt="Product image"
-                          style={{ maxWidth: '100%', height: '100%' }}
-                        />
-                      </Grid>
-                    ))}
-                </Grid>
+                )}
               </Box>
+              {queryDownLg && (
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+                  <Button variant="outlined" sx={{ padding: '10px 40px', mr: 2.5 }}>
+                    Schedule
+                  </Button>
+                  <Button variant="contained" type="submit" sx={{ padding: '10px 60px' }}>
+                    Save
+                  </Button>
+                </Box>
+              )}
             </Box>
           </form>
         </Box>

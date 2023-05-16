@@ -24,10 +24,11 @@ const Card: React.FC<ICardProps> = ({
   productImageSrc,
   productName,
   productPrice,
+  marginRight,
   children,
 }): JSX.Element => {
   return (
-    <CustomCardWrapper>
+    <CustomCardWrapper marginRight={marginRight}>
       <Box>
         <CustomImage src={productImageSrc} alt="product template" width={320} height={380} />
       </Box>

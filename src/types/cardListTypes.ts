@@ -1,5 +1,6 @@
 export interface ICardListProps {
-  hide: boolean;
+  hide?: boolean;
+  products?: any[];
 }
 
 interface ImageAttrData {

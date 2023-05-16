@@ -16,7 +16,9 @@ import bonusAccountIcon from '@/assets/icons/bonusAcc.svg';
 import logoutIcon from '@/assets/icons/logout.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
-export const REGULAR_NAV_LINKS = [
+import productImage from '@/assets/singInBg.png';
+
+export const NAV_LINKS = [
   {
     name: 'Home',
     to: '/home',
@@ -29,21 +31,13 @@ export const REGULAR_NAV_LINKS = [
     name: 'For men',
     to: '/##',
   },
-  {
-    name: 'Accessories',
-    to: '/##',
-  },
-  {
-    name: 'Sale',
-    to: '/##',
-  },
 ];
 
-export const REGULAR_NAV_BURGER_LINKS = [
+export const NAV_BURGER_LINKS = [
   {
     icon: leftBurgerSetting,
     name: 'Home',
-    to: '/',
+    to: '/home',
   },
   {
     icon: bonusAccountIcon,
@@ -62,7 +56,7 @@ export const REGULAR_NAV_BURGER_LINKS = [
   },
   {
     icon: logoutIcon,
-    name: 'Log out',
+    name: 'Log In',
     to: '/',
   },
 ];
@@ -108,6 +102,7 @@ export enum Routes {
   sign = '/sign',
   error404 = '/404',
   error500 = '/500',
+  home = '/home',
 }
 
 export const comments: IComment[] = [
@@ -205,3 +200,11 @@ export const othersItems: MenuItemParams[] = [
 
 export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
 export const uploadImageURL = 'https://shoes-shop-strapi.herokuapp.com';
+
+export const ONE_MOCKED_PRODUCT = {
+  id: 3,
+  productImageSrc: productImage,
+  productName: 'Nike Air Max 270',
+  productPrice: 160,
+  productCategory: "Women's shoes",
+};

@@ -2,29 +2,58 @@ import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
 import theme from '@/utils/mui/theme';
+import Image from 'next/image';
+
+interface INavProps {
+  burger: boolean;
+}
 
 export const Header = styled('header')`
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 120px;
-  padding-left: 40px;
-  padding-right: 60px;
   border-bottom: 1px solid #eaecf0;
 `;
 
-export const NavList = styled('ul')`
+export const Nav = styled('nav')`
+  display: flex;
+  column-gap: 44px;
+`;
+
+export const NavList = styled('ul')<INavProps>`
   display: flex;
   list-style-type: none;
-  column-gap: 36px;
+  ${(props) =>
+    props.burger
+      ? `
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 270px;
+      min-height: 100vh;
+      padding: 80px 20px;
+      list-style-type: none;
+      background-color: green;
+      row-gap: 36px;
+      background-color: #fff;
+      box-shadow: 0 0 0 9999px rgba(243, 243, 243, 0.9);
+      `
+      : `column-gap: 36px;`}
 `;
 
 export const NavListItem = styled('li')`
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
   font-size: 16px;
   font-weight: 500;
   line-height: 30px;
 `;
+
+export const NavListItemIcon = styled(Image)``;
 
 export const NavListLink = styled(Link)`
   text-decoration: none;
@@ -40,9 +69,12 @@ export const Options = styled('section')`
   column-gap: 26px;
 `;
 
+export const OptionsImage = styled(Image)`
+  z-index: 1;
+`;
+
 export const SearchBar = styled(TextField)`
-  width: 320px;
-  height: 48px;
+  transition: 0.3s;
   fieldset {
     border-radius: 42px;
   }
@@ -53,3 +85,24 @@ export const Cart = styled('section')`
   display: flex;
   align-items: center;
 `;
+
+export const Burger = styled('section')`
+  position: relative;
+  display: flex;
+  z-index: 10000;
+  align-items: center;
+`;
+
+export const NavBurgerList = styled('section')``;
+
+export const Header_Adaptive = {
+  height: {
+    lg: '120px',
+    md: '100px',
+    xs: '64px',
+  },
+  padding: {
+    md: '0 40px 0 40px',
+    xs: '0 20px 0 20px',
+  },
+};
