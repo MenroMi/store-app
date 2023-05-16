@@ -16,6 +16,7 @@ import bonusAccountIcon from '@/assets/icons/bonusAcc.svg';
 import logoutIcon from '@/assets/icons/logout.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
+import productImage from '@/assets/singInBg.png';
 
 export const NAV_LINKS = [
   {
@@ -196,3 +197,11 @@ export const othersItems: MenuItemParams[] = [
   { id: 2, label: 'Add to Wish List', method: () => {} },
   { id: 3, label: 'Add to Cart', method: () => {} },
 ];
+
+export const ONE_MOCKED_PRODUCT = {
+  id: 3,
+  productImageSrc: productImage,
+  productName: 'Nike Air Max 270',
+  productPrice: 160,
+  productCategory: "Women's shoes",
+};
