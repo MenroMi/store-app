@@ -23,7 +23,8 @@ const PathAndSearchResult: React.FC<IPathAndSearchResultProps> = ({
   return (
     <Box
       display="flex"
-      mt="44px"
+      mt="13px"
+      mb="12px"
       sx={{
         gap: { lg: `${!hide ? '59px' : '52px'}`, md: '16px' },
         position: 'relative',

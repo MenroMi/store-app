@@ -6,6 +6,10 @@ import { Box } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
+// react-query
+import { useQuery } from '@tanstack/react-query';
+import { getFilters } from '@/services/searchApi';
+
 // components
 import FiltersAndCards from '@/components/UI/CombineComponents/FiltersAndCards/FiltersAndCards';
 import MobileFilterMenu from '@/components/UI/Filters/MobileFilterMenu/MobileFilterMenu';
@@ -18,6 +22,8 @@ export default function SearchResultPage(): JSX.Element {
   const [mobileVer, setMobileVer] = useState<boolean>(false);
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
+
+  const { isFetched, isLoading, isError, error, data } = useQuery(['filters'], getFilters);
 
   const onHideFilters = (e: any): void => {
     if (e.target?.dataset?.overlay) {
@@ -57,9 +63,24 @@ export default function SearchResultPage(): JSX.Element {
           data-overlay="overlay"
         />
         <PathAndSearchResult hide={hide} onHide={(): void => setHide(!hide)} />
-        <FiltersAndCards hide={hide} />
+        <FiltersAndCards
+          hide={hide}
+          isFetched={isFetched}
+          isLoading={isLoading}
+          isError={isError}
+          error={error}
+          filters={data}
+        />
         {!queryUpMd && !hide && (
-          <MobileFilterMenu hide={hide} onHide={(): void => setHide(!hide)} />
+          <MobileFilterMenu
+            hide={hide}
+            onHide={(): void => setHide(!hide)}
+            isFetched={isFetched}
+            isLoading={isLoading}
+            isError={isError}
+            error={error}
+            filters={data}
+          />
         )}
       </Box>
     </Layout>

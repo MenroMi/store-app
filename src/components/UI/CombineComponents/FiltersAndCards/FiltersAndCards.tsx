@@ -1,29 +1,27 @@
 // mui
 import { Box, Skeleton } from '@mui/material';
 
-// react-query
-import { useQuery } from '@tanstack/react-query';
-
 // components
 import CardList from '../../Cards/CardList/CardList';
 import FiltersList from '../../Filters/FiltersList/FiltersList';
 
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
-import { getFilters } from '@/services/searchApi';
-import { useEffect } from 'react';
 
 // interface
-interface IFiltersAndCardsProps {
-  hide: boolean;
-}
+import { IFiltersAndCardsProps } from '@/types/filterListTypes';
 
 // FUNCTIONAL COMPONENT
-const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({ hide }): JSX.Element => {
-  const { isFetched, isLoading, isError, error, data } = useQuery(['filters'], getFilters);
-
+const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({
+  hide,
+  isFetched,
+  isError,
+  isLoading,
+  error,
+  filters,
+}): JSX.Element => {
   if (isFetched) {
-    console.log(data);
+    console.log(filters);
   }
 
   if (isError) {
@@ -41,7 +39,7 @@ const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({ hide }): JSX.Element
       {!hide ? (
         <CustomAside>
           {isFetched && !isLoading ? (
-            <FiltersList filters={data} />
+            <FiltersList filters={filters} />
           ) : (
             [...new Array(5).fill(null)].map((_, id) => {
               return (

@@ -17,13 +17,18 @@ import FiltersList from '@/components/UI/Filters/FiltersList/FiltersList';
 import { CustomOverlay } from './MobileFilterMenuStyles';
 
 // interface
-interface IMobileFilterMenuProps {
-  hide: boolean;
-  onHide: (event: React.MouseEvent<HTMLImageElement>) => void;
-}
+import { IMobileFilterMenuProps } from '@/types/filterListTypes';
 
 // FUNCTIONAL COMPONENT
-const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({ hide, onHide }): JSX.Element => {
+const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({
+  hide,
+  onHide,
+  isFetched,
+  isError,
+  isLoading,
+  error,
+  filters,
+}): JSX.Element => {
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
@@ -62,7 +67,7 @@ const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({ hide, onHide }): J
             }}
           />
         </Box>
-        <FiltersList />
+        <FiltersList filters={filters} />
       </CustomOverlay>
     </Slide>
   );
