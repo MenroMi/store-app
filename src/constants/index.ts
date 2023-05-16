@@ -18,7 +18,7 @@ import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
 import productImage from '@/assets/singInBg.png';
 
-export const REGULAR_NAV_LINKS = [
+export const NAV_LINKS = [
   {
     name: 'Home',
     to: '/home',
@@ -31,21 +31,13 @@ export const REGULAR_NAV_LINKS = [
     name: 'For men',
     to: '/##',
   },
-  {
-    name: 'Accessories',
-    to: '/##',
-  },
-  {
-    name: 'Sale',
-    to: '/##',
-  },
 ];
 
-export const REGULAR_NAV_BURGER_LINKS = [
+export const NAV_BURGER_LINKS = [
   {
     icon: leftBurgerSetting,
     name: 'Home',
-    to: '/',
+    to: '/home',
   },
   {
     icon: bonusAccountIcon,
@@ -64,7 +56,7 @@ export const REGULAR_NAV_BURGER_LINKS = [
   },
   {
     icon: logoutIcon,
-    name: 'Log out',
+    name: 'Log In',
     to: '/',
   },
 ];
