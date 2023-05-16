@@ -9,6 +9,4 @@ export const Layout = styled('section')`
 export const Main = styled('main')`
   position: relative;
   width: 100%;
-  padding-left: 40px;
-  padding-right: 60px;
 `;

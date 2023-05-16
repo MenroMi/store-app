@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import singMobBg from '../assets/singMobBg.png'
+import singMobBg from '@/assets/singMobBg.png'
 import Image from 'next/image'
-import logo from '../assets/icons/logo.svg'
+import logo from '@/assets/icons/logo.svg'
 import { Box, Button, Typography, Link as LinkMui, useTheme } from '@mui/material'
 import { useRouter } from 'next/router'
 import { Routes } from '@/constants'
@@ -59,7 +59,7 @@ const Sign = () => {
 					<Button
 						variant='contained'
 						sx={{ mt: '20px', width: 1 }}
-						onClick={() => router.push(Routes.authorization)}
+						onClick={() => router.push(Routes.login)}
 					>
 						Sign in
 					</Button>
@@ -69,7 +69,7 @@ const Sign = () => {
 						</Typography>
 						<LinkMui
 							component={Link}
-							href={Routes.registration}
+							href={Routes.register}
 							underline='none'
 							sx={{p:0, lineHeight:1}}
 						>

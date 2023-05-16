@@ -22,6 +22,7 @@ import { Routes } from '@/constants';
 
 // interface
 import { IFormProps } from '@/types/formTypes';
+import ButtonLoader from '@/components/UI/ButtonLoader/ButtonLoader';
 
 const FormMui = styled('form')({
   display: 'flex',
@@ -38,6 +39,7 @@ const FormRegistration = ({
   setName,
   confirm,
   setConfirm,
+  loading
 }: IFormProps) => {
   const {
     palette: {
@@ -162,8 +164,16 @@ const FormRegistration = ({
           )}
         </Box>
       )}
-      <Button variant="contained" sx={{ mt: setEmail && setPassword ? 6 : '20px' }} type="submit">
-        {setName ? 'Sign up' : setEmail && setPassword ? 'Sign in' : 'Reset password'}
+      <Button variant="contained" disabled={loading && true} sx={{ mt: setEmail && setPassword ? 6 : '20px' }} type="submit">
+
+        {loading ?
+          <ButtonLoader />
+          : (setName ?
+            'Sign up'
+            : setEmail && setPassword ?
+              'Sign in'
+              : 'Reset password')
+        }
       </Button>
     </FormMui>
   );
