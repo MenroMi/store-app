@@ -2,11 +2,10 @@
 import Image from 'next/image';
 
 // mui
-import { Box, Divider, Typography, useTheme, Theme } from '@mui/material';
+import { Box, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
 
 // images
 import DeleteIcon from '@/assets/icons/delete.svg';
-import SaveIcon from '@/assets/icons/save.svg';
 
 // components
 import BagParameterButton from '@/components/UI/Buttons/BagParameterButton/BagParameterButton';
@@ -25,11 +24,14 @@ const ProductCardBag = ({
   inStock,
 }: ICardBagProps) => {
   const theme = useTheme<Theme>();
+  const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <>
       <CustomBagWrapper
         sx={{
+          minHeight: queryUpSm ? '244px' : '121px',
+          padding: queryUpSm ? '15px' : '10px',
           '&:hover': {
             boxShadow: 4,
           },
@@ -38,40 +40,30 @@ const ProductCardBag = ({
         <Box
           sx={{
             width: '100%',
-            maxWidth: '223px',
+            maxWidth: queryUpSm ? '223px' : '104px',
           }}
         >
           <Box
             component={Image}
             src={productImageSrc}
             alt="Product"
-            width={223}
-            height={214}
-            sx={{ borderRadius: '6px' }}
+            sx={{
+              borderRadius: '6px',
+              maxWidth: queryUpSm ? '223px' : '104px',
+              maxHeight: queryUpSm ? '214px' : '101px',
+            }}
           ></Box>
         </Box>
         <CustomBox
           sx={{
             flexDirection: 'column',
-            maxWidth: '694px',
-            marginLeft: {
-              xl: 'auto',
-              lg: '40px',
-              md: '20px',
-              sm: '20px',
-            },
+            marginLeft: queryUpSm ? '25px' : '20px',
           }}
         >
-          <CustomBox
-            sx={{
-              marginTop: '3px',
-              maxWidth: '694px',
-            }}
-          >
+          <CustomBox>
             <Box
               sx={{
                 width: '100%',
-                maxWidth: '245px',
               }}
             >
               <Typography variant="h3">{productName}</Typography>
@@ -80,7 +72,6 @@ const ProductCardBag = ({
                 variant="h4Warning"
                 sx={{
                   marginTop: '10px',
-                  display: { lg: 'block', md: 'none', sm: 'block', xs: 'none' },
                 }}
               >
                 {inStock ? 'In Stock' : 'Not available'}
@@ -95,69 +86,22 @@ const ProductCardBag = ({
               minHeight: { lg: '28px', md: 'auto' },
             }}
           >
-            <CustomBox
-              sx={{
-                flexDirection: { lg: 'row', md: 'column', sm: 'row', xs: 'column' },
-                minHeight: { lg: '28px', md: 'auto', sm: '28px', xs: 'auto' },
-                maxWidth: '362px',
-              }}
-            >
-              <BagParameterButton ButtonValue={'Size'} />
-              <BagParameterButton ButtonValue={'Color'} />
-              <BagParameterButton ButtonValue={'Quantity'} />
-            </CustomBox>
-            <Box
-              sx={{
-                display: 'flex',
-                gap: { lg: '15px', md: '0', sm: '15px', xs: 'auto' },
-                flexDirection: { lg: 'row', md: 'column', sm: 'row', xs: 'column' },
-                justifyContent: {
-                  lg: 'space-between',
-                  md: 'flex-end',
-                  sm: 'space-between',
-                  xs: 'flex-end',
-                },
-                alignItems: {
-                  lg: 'space-between',
-                  md: 'flex-start',
-                  sm: 'space-between',
-                  xs: 'flex-end',
-                },
-                minHeight: { lg: '28px', md: 'auto', sm: '28px', xs: 'auto' },
-                maxWidth: '227px',
-              }}
-            >
-              <CustomButton sx={{ width: '87px' }}>
-                <Box
-                  component={Image}
-                  src={SaveIcon}
-                  alt="Save"
-                  sx={{
-                    position: 'relative',
-                    bottom: '2px',
-                    right: '7px',
-                  }}
-                ></Box>
-                <Typography variant="btnIconText" color="#6E7278">
-                  Save
-                </Typography>
-              </CustomButton>
-              <Divider orientation="vertical" flexItem />
-              <CustomButton sx={{ width: '108px' }}>
-                <Box
-                  component={Image}
-                  src={DeleteIcon}
-                  alt="delete"
-                  sx={{
-                    position: 'relative',
-                    right: '7px',
-                  }}
-                ></Box>
-                <Typography variant="btnIconText" color={theme?.palette?.text?.iconLight}>
-                  Delete
-                </Typography>
-              </CustomButton>
-            </Box>
+            <BagParameterButton ButtonValue={'Quantity'} />
+            <CustomButton>
+              <Box
+                component={Image}
+                src={DeleteIcon}
+                alt="delete"
+                sx={{
+                  position: 'relative',
+                  right: '7px',
+                  width: queryUpSm ? 'auto' : '15px',
+                }}
+              ></Box>
+              <Typography variant="btnIconText" color={theme?.palette?.text?.iconLight}>
+                Delete
+              </Typography>
+            </CustomButton>
           </CustomBox>
         </CustomBox>
       </CustomBagWrapper>
