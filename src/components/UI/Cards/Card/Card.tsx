@@ -2,10 +2,18 @@
 import Image from 'next/image';
 
 // mui
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+
+// image
+import singInImg from '@/assets/singInBg.png';
 
 // styled components
-import { CustomCardWrapper, CustomTypographyWrapper } from './CardStyles';
+import {
+  CustomCardWrapper,
+  CustomTypographyWrapper,
+  CustomImage,
+  CustomTypographyName,
+} from './CardStyles';
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
@@ -20,17 +28,12 @@ const Card: React.FC<ICardProps> = ({
 }): JSX.Element => {
   return (
     <CustomCardWrapper>
-      <Image
-        style={{ maxWidth: '100%', height: '100%' }}
-        src={productImageSrc}
-        alt="product template"
-        placeholder="blur"
-      />
+      <Box sx={{ overflow: 'hidden', maxHeight: '380px' }}>
+        <CustomImage src={productImageSrc} alt="product template" width={320} height={380} />
+      </Box>
       {children}
       <CustomTypographyWrapper>
-        <Typography variant="subtitle1" sx={{ lineHeight: '1.3' }}>
-          {productName}
-        </Typography>
+        <CustomTypographyName variant="subtitle1">{productName}</CustomTypographyName>
         <Typography variant="subtitle1">{`$` + productPrice}</Typography>
       </CustomTypographyWrapper>
       <Typography variant="subtitle2Small">{productCategory}</Typography>

@@ -4,7 +4,7 @@ import Router from 'next/router';
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Box, Grid, Skeleton, Typography, Stack } from '@mui/material';
+import { Box, Grid, Skeleton, Typography } from '@mui/material';
 // react-query
 import { useQuery } from '@tanstack/react-query';
 // service
@@ -22,17 +22,8 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import { CardsGridContainer, CatalogIsEmptyContainer } from './CardListStyles';
 
 // interface
-interface ICardListProps {
-  hide: boolean;
-}
-
-interface AttrFromData {
-  id: number;
-  attributes: {
-    name: string;
-    price: number;
-  };
-}
+import { ICardListProps, AttrFromData } from '@/types/cardListTypes';
+import { uploadImageURL } from '@/constants';
 
 // FUNCTIONAL COMPONENT
 const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
@@ -54,6 +45,10 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
     );
   };
 
+  if (isFetched) {
+    console.log(data);
+  }
+
   if (isError) {
     Router.push('/404');
     return null;
@@ -70,21 +65,28 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
       sx={{
         padding: `${!queryUpMd && '0 20px'}`,
         rowGap: { md: '32px', xs: '16px' },
-        justifyContent: `${hide ? 'space-between' : 'flex-start'}`,
+        justifyContent: 'space-between',
       }}
     >
       {isFetching && isLoading ? (
         [...new Array(8).fill(null)].map((_, id) => {
           return isVisible(<Skeleton width={320} height={443} variant="rectangular" />, id);
         })
-      ) : isFetched && !isError && !isLoading && data?.data ? (
-        data?.data?.map(({ id, attributes }: AttrFromData) => {
-          const { name, price } = attributes;
+      ) : isFetched && !isError && !isLoading && data ? (
+        data?.map(({ id, attributes }: AttrFromData) => {
+          const { name, price, images } = attributes;
+          let url;
+
+          if (images?.data === null) {
+            url = singInImg;
+          } else {
+            url = uploadImageURL + images?.data?.[0]?.attributes?.url;
+          }
 
           return isVisible(
             <Card
               productCategory="Women's shoes"
-              productImageSrc={singInImg}
+              productImageSrc={url}
               productName={name}
               productPrice={price}
             >

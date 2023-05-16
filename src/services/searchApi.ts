@@ -1,7 +1,27 @@
 import { getDataFromServer } from './apiClient';
+import { AttrFromData } from '@/types/cardListTypes';
 
 export const getProducts = async () => {
-  return getDataFromServer('/products').then((res) => res.data);
+  const products = await getDataFromServer('/products').then((res) => res?.data?.data);
+
+  const productsEA = products.map(({ id, attributes }: AttrFromData) => {
+    const { name, images, price, teamName } = attributes;
+
+    if (teamName === 'ea-team') {
+      return {
+        id,
+        attributes: {
+          name,
+          images,
+          price,
+        },
+      };
+    }
+
+    return null;
+  });
+
+  return productsEA.filter((item: object) => item !== null);
 };
 
 export const getFilters = async () => {

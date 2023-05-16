@@ -204,3 +204,4 @@ export const othersItems: MenuItemParams[] = [
 ];
 
 export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
+export const uploadImageURL = 'https://shoes-shop-strapi.herokuapp.com';
