@@ -28,7 +28,7 @@ const Card: React.FC<ICardProps> = ({
 }): JSX.Element => {
   return (
     <CustomCardWrapper>
-      <Box sx={{ overflow: 'hidden', maxHeight: '380px' }}>
+      <Box>
         <CustomImage src={productImageSrc} alt="product template" width={320} height={380} />
       </Box>
       {children}

@@ -5,7 +5,7 @@ export const getProducts = async () => {
   const products = await getDataFromServer('/products').then((res) => res?.data?.data);
 
   const productsEA = products.map(({ id, attributes }: AttrFromData) => {
-    const { name, images, price, teamName } = attributes;
+    const { name, images, price, gender, teamName } = attributes;
 
     if (teamName === 'ea-team') {
       return {
@@ -14,6 +14,7 @@ export const getProducts = async () => {
           name,
           images,
           price,
+          gender,
         },
       };
     }

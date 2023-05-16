@@ -65,7 +65,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
       sx={{
         padding: `${!queryUpMd && '0 20px'}`,
         rowGap: { md: '32px', xs: '16px' },
-        justifyContent: 'space-between',
+        justifyContent: `${hide ? 'flex-start' : 'space-between'}`,
       }}
     >
       {isFetching && isLoading ? (
@@ -74,7 +74,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
         })
       ) : isFetched && !isError && !isLoading && data ? (
         data?.map(({ id, attributes }: AttrFromData) => {
-          const { name, price, images } = attributes;
+          const { name, price, images, gender } = attributes;
           let url;
 
           if (images?.data === null) {
@@ -85,7 +85,7 @@ const CardList: React.FC<ICardListProps> = ({ hide }): JSX.Element | null => {
 
           return isVisible(
             <Card
-              productCategory="Women's shoes"
+              productCategory={gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
               productImageSrc={url}
               productName={name}
               productPrice={price}
