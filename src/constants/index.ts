@@ -208,3 +208,5 @@ export const ONE_MOCKED_PRODUCT = {
   productPrice: 160,
   productCategory: "Women's shoes",
 };
+
+export const BASE_URL = 'https://shoes-shop-strapi.herokuapp.com/api';
