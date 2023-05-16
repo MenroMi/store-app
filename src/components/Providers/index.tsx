@@ -8,11 +8,11 @@ import { ThemeProvider } from '@mui/material/styles';
 
 // react query
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { QueryClientProvider, QueryClient, Hydrate } from '@tanstack/react-query';
+import { QueryClientProvider, QueryClient, Hydrate, DehydratedState } from '@tanstack/react-query';
 
 interface IProvidersProps {
     children: ReactNode;
-    dehydrateState: string;
+    dehydrateState: DehydratedState;
 }
 
 const ReactQueryDevtoolsProduction = dynamic(
