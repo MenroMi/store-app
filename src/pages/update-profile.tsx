@@ -1,10 +1,18 @@
 // basic
 import Image from 'next/image';
 import React, { useState } from 'react';
-import Head from 'next/head';
 
 // mui
-import { Box, Button, FormControl, FormLabel, OutlinedInput, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  OutlinedInput,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
+import { useTheme, Theme } from '@mui/material/styles';
 
 // images
 import avatarSrc from '@/assets/avatarExample.png';
@@ -27,6 +35,9 @@ export default function UpdateProfile() {
   const [email, setEmail] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
 
+  const theme = useTheme<Theme>();
+  const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setValue: React.Dispatch<React.SetStateAction<string>>
@@ -44,18 +55,42 @@ export default function UpdateProfile() {
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Image src={avatarSrc} alt="Avatar" width={150} height={150} />
-            <Box sx={{ display: 'flex', flexDirection: 'column', ml: 9.5 }}>
-              <Button variant="outlined" sx={{ padding: '10px 20px' }}>
+            <Image
+              src={avatarSrc}
+              alt="Avatar"
+              width={queryDownMd ? 100 : 150}
+              height={queryDownMd ? 100 : 150}
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                ml: `${queryDownMd ? '28px' : '76px'}`,
+              }}
+            >
+              <Button
+                variant="outlined"
+                sx={{
+                  padding: `${queryDownMd ? '8px 16px' : '10px 20px'}`,
+                  fontSize: `${queryDownMd && '12px'}`,
+                }}
+              >
                 Change photo
               </Button>
-              <Button variant="contained" sx={{ mt: 3, padding: '10px 50px' }}>
+              <Button
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  padding: `${queryDownMd ? '8px 40px' : '10px 50px'}`,
+                  fontSize: `${queryDownMd && '12px'}`,
+                }}
+              >
                 Delete
               </Button>
             </Box>
           </Box>
 
-          <Typography variant="body1" sx={{ mt: 6 }}>
+          <Typography variant="body1" sx={{ mt: `${queryDownMd ? '12px' : '48px'}` }}>
             Welcome back! Please enter your details to log into your account.
           </Typography>
 

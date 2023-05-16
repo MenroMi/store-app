@@ -12,14 +12,19 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer } from './CardListStyles';
+import { ONE_MOCKED_PRODUCT } from '@/constants';
 
 // interface
 interface ICardListProps {
-  hide: boolean;
+  hide?: boolean;
+  products?: any[];
 }
 
 // FUNCTIONAL COMPONENT
-const CardList: React.FC<ICardListProps> = ({ hide }) => {
+const CardList: React.FC<ICardListProps> = ({
+  hide,
+  products = [...new Array(16).fill(ONE_MOCKED_PRODUCT)],
+}) => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
@@ -36,10 +41,10 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
         rowGap: { md: '32px', xs: '16px' },
       }}
     >
-      {[...new Array(16).fill(null)].map((_, id) => {
+      {products.map((product, id) => {
         return (
           <Grid
-            key={id}
+            key={product.id || id}
             xl={hide ? 2.3 : 3}
             lg={hide ? 3 : 4}
             md={hide ? 4 : 6}
@@ -48,10 +53,10 @@ const CardList: React.FC<ICardListProps> = ({ hide }) => {
             item
           >
             <Card
-              productCategory="Women's shoes"
-              productImageSrc={singInImg}
-              productName="Nike Air Max 270"
-              productPrice={160}
+              productCategory={product.productCategory}
+              productImageSrc={product.productImageSrc}
+              productName={product.productName}
+              productPrice={product.productPrice}
             >
               <DropDownMenu />
             </Card>

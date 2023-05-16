@@ -16,10 +16,11 @@ const Card: React.FC<ICardProps> = ({
   productImageSrc,
   productName,
   productPrice,
+  marginRight,
   children,
 }): JSX.Element => {
   return (
-    <CustomCardWrapper>
+    <CustomCardWrapper marginRight={marginRight}>
       <Image
         style={{ maxWidth: '100%', height: '100%' }}
         src={productImageSrc}
