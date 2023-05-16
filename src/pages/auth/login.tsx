@@ -1,5 +1,5 @@
 // basic
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 // mui
@@ -7,19 +7,16 @@ import Typography from '@mui/material/Typography';
 import { Link as LinkMui, Box, useTheme } from '@mui/material';
 
 // components
-import FormRegistration from '@/components/forms/FormRegistration/FormRegistration';
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
+import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
 
 // constants
 import { Routes } from '@/constants';
 
-const Registration = () => {
+const Authorization = () => {
   const [email, setEmail] = useState<string>('');
-  const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [confirm, setConfirm] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-
   const {
     palette: {
       primary: { main },
@@ -28,17 +25,18 @@ const Registration = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
-    if (email && password && name && confirm && password === confirm) {
-      console.log(email, password, name, confirm);
+    if (email && password) {
+      console.log(email, password);
+      setLoading(true);
+      setEmail('');
+      setPassword('');
+      setTimeout(() => setLoading(false), 3000);
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
   };
+
   return (
-    <SplitLayout title="Registration">
-      <Typography variant="h2">Create an account</Typography>
+    <SplitLayout title="Login">
+      <Typography variant="h2">Welcome back</Typography>
       <Typography
         variant="body1"
         sx={{
@@ -46,19 +44,15 @@ const Registration = () => {
           mb: 6,
         }}
       >
-        Create an account to get an easy access to your dream shopping.
+        Welcome back! Please enter your details to log into your account.
       </Typography>
       <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
         <FormRegistration
           handleSubmit={handleSubmit}
-          name={name}
-          setName={setName}
           email={email}
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
-          confirm={confirm}
-          setConfirm={setConfirm}
           loading={loading}
         />
         <Box
@@ -70,11 +64,11 @@ const Registration = () => {
           }}
         >
           <Typography variant="caption" sx={{ display: 'inline' }}>
-            Already have an account?{' '}
+            Don’t have an account?{' '}
           </Typography>
-          <LinkMui component={Link} href={Routes.authorization} underline="none">
+          <LinkMui component={Link} href={Routes.register} underline="none">
             <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
-              Log in
+              Sign up
             </Typography>
           </LinkMui>
         </Box>
@@ -83,4 +77,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default Authorization;

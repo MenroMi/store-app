@@ -1,5 +1,6 @@
 // basic
 import { useRouter } from 'next/router';
+import { Routes } from '@/constants';
 
 // mui
 import { Grid, Box, Typography } from '@mui/material';
@@ -25,7 +26,7 @@ export default function Error404() {
   };
 
   const handleGoHome = (): void => {
-    router.push('/');
+    router.push(Routes.home);
   };
   return (
     <Layout title="Page not found...">

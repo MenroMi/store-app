@@ -1,12 +1,12 @@
 // FOLDER FOR CONSTANS (example - BASE URL, EXPORTS)
 
-import leftBurgerSetting from '../assets/icons/leftBurgerSetting.svg';
-import bag from '../assets/icons/bag.svg';
-import signIn from '../assets/singInBg.png';
-import signUp from '../assets/singUpBg.png';
-import forgotReset from '../assets/forgotResetBg.png';
-import error404 from '../assets/error404.png';
-import error500 from '../assets/error500.png';
+import leftBurgerSetting from '@/assets/icons/leftBurgerSetting.svg';
+import bag from '@/assets/icons/bag.svg';
+import signIn from '@/assets/singInBg.png';
+import signUp from '@/assets/singUpBg.png';
+import forgotReset from '@/assets/forgotResetBg.png';
+import error404 from '@/assets/error404.png';
+import error500 from '@/assets/error500.png';
 import { StaticImageData } from 'next/image';
 import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 import bagIcon from '@/assets/icons/bagSideMenu.svg';
@@ -21,7 +21,7 @@ import productImage from '@/assets/singInBg.png';
 export const NAV_LINKS = [
   {
     name: 'Home',
-    to: '/home',
+    to: '/profile/home',
   },
   {
     name: 'For women',
@@ -66,13 +66,14 @@ export const ASIDE_MENU_LINKS = [
     id: 1,
     icon: profileIcon,
     name: 'My profile',
-    to: '/profile',
+    to: '/profile/products/',
   },
   {
     id: 2,
     icon: bagIcon,
     name: 'My orders',
-    to: '/bag',
+    to: '#',
+    // to: '/history/orders/',
   },
   {
     id: 3,
@@ -84,25 +85,27 @@ export const ASIDE_MENU_LINKS = [
     id: 4,
     icon: settingsIcon,
     name: 'Settings',
-    to: '/update-profile',
+    to: '/profile/settings/',
   },
   {
     id: 5,
     icon: logoutIcon,
     name: 'Log out',
-    to: '/authorization',
+    to: '/auth/login',
   },
 ];
 
 export enum Routes {
-  registration = '/registration',
-  authorization = '/authorization',
-  forgot = '/forgot',
-  reset = '/reset',
-  sign = '/sign',
+  register = '/auth/register',
+  login = '/auth/login',
+  forgot = '/auth/forgot',
+  reset = '/auth/reset',
+  sign = '/auth/mobile-login',
   error404 = '/404',
   error500 = '/500',
-  home = '/home',
+  bag = '/profile/bag/',
+  home = '/profile/home',
+  addProduct = '/profile/products/add',
 }
 
 export const comments: IComment[] = [
@@ -138,9 +141,9 @@ export const comments: IComment[] = [
 
 export const getImage = (route: string): StaticImageData => {
   switch (route) {
-    case Routes.authorization:
+    case Routes.login:
       return signIn;
-    case Routes.registration:
+    case Routes.register:
       return signUp;
     case Routes.forgot:
       return forgotReset;

@@ -4,6 +4,7 @@ import * as styles from './styles';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Icon, InputAdornment, SvgIcon } from '@mui/material';
+import { Routes } from '@/constants';
 
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
@@ -21,15 +22,14 @@ export default function Header() {
   return (
     <styles.Header sx={styles.Header_Adaptive}>
       <styles.Nav>
-        <Link href="/home">
+        <Link href={Routes.home}>
           <Image src={Logo} alt="logo" />
         </Link>
         <styles.NavList
           burger={false}
           sx={{
             display: {
-              md: 'flex',
-              xs: 'none',
+              ms: 'none',
             },
           }}
         >
@@ -88,7 +88,7 @@ export default function Header() {
           }}
         />
         <styles.Cart>
-          <Link href={'/bag'}>
+          <Link href={Routes.bag}>
             <Image width={22} src={CartIcon} alt="cart-icon" />
           </Link>
         </styles.Cart>
