@@ -9,7 +9,7 @@ import { Link as LinkMui, Box, useTheme } from '@mui/material';
 
 // components
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
-import FormRegistration from '@/components/forms/FormRegistration/FormRegistration';
+import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
 
 // constants
 import { Routes } from '@/constants';
@@ -32,7 +32,7 @@ const Reset = () => {
       setLoading(true);
       setTimeout(() => {
         console.log(password, confirm);
-        router.push(Routes.authorization);
+        router.push(Routes.login);
         setLoading(false);
       }, 3000);
     }
@@ -60,7 +60,7 @@ const Reset = () => {
         />
         <LinkMui
           component={Link}
-          href={Routes.authorization}
+          href={Routes.login}
           underline="none"
           sx={{
             display: 'block',

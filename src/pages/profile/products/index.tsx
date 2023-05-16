@@ -14,9 +14,9 @@ import {
 } from '@mui/material';
 
 // images
-import profileTopBg from '../assets/profileTopBg.png';
-import avatarExample from '../assets/avatarExample.png';
-import productImage from '../assets/singInBg.png';
+import profileTopBg from '@/assets/profileTopBg.png';
+import avatarExample from '@/assets/avatarExample.png';
+import productImage from '@/assets/singInBg.png';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -26,6 +26,8 @@ import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import CardList from '@/components/UI/Cards/CardList/CardList';
 import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
+
+import { Routes } from '@/constants';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server
@@ -98,7 +100,7 @@ export default function Home() {
             <CardList products={MOCKED_PRODUCTS} />
 
             {queryDownMd && (
-              <LinkMui component={Link} href="/add-product" underline="none">
+              <LinkMui component={Link} href={Routes.addProduct} underline="none">
                 <Button variant="contained" sx={{ padding: '5px 13px', mt: 2.5 }}>
                   Add product
                 </Button>

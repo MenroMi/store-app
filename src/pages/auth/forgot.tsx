@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Link as LinkMui, Box } from '@mui/material';
 
 // components
-import FormRegistration from '@/components/forms/FormRegistration/FormRegistration';
+import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 
 // constants
@@ -52,7 +52,7 @@ const Forgot = () => {
         />
         <LinkMui
           component={Link}
-          href={Routes.authorization}
+          href={Routes.login}
           underline="none"
           sx={{
             display: 'block',

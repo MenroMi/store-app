@@ -5,9 +5,9 @@ import Head from 'next/head';
 import { Box, Grid, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 // images
-import avatarExample from '../assets/avatarExample.png';
-import productImage from '../assets/singInBg.png';
-import profileTopBg from '../assets/profileTopBg.png';
+import avatarExample from '@/assets/avatarExample.png';
+import productImage from '@/assets/singInBg.png';
+import profileTopBg from '@/assets/profileTopBg.png';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';

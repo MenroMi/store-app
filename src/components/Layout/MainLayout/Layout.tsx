@@ -22,7 +22,7 @@ export default function Layout({ title, children }: ILayoutProps) {
           sx={{
             padding: {
               xl: '0 60px 0 40px',
-              xs: '0 20px 0 20px',
+              xs: '0',
             },
           }}
         >
