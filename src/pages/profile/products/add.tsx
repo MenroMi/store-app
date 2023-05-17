@@ -31,12 +31,19 @@ import AddProductSelect from '@/components/UI/AddProduct/AddProductSelect/AddPro
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 
 // constants
-import { BRANDS, GENDERS, SHOE_SIZES } from '@/constants';
+import { SHOE_SIZES } from '@/constants';
+
+// services
+import { getBrands, getGenders } from '@/services/addProductApi';
+import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query';
 
 export default function AddProduct() {
+  const { data: brandsData } = useQuery<any>(['brands'], getBrands);
+  const { data: gendersData } = useQuery<any>(['genders'], getGenders);
+
   const [productName, setProductName] = useState<string>('');
   const [category, setCategory] = useState<string>('');
-  const [gender, setGender] = useState<string>('male');
+  const [gender, setGender] = useState<string>('');
   const [brand, setBrand] = useState<string>('');
   const [selectedSize, setSelectedSize] = useState<string>('');
 
@@ -127,7 +134,7 @@ export default function AddProduct() {
                   <AddProductSelect
                     id="gender"
                     label="Gender"
-                    options={GENDERS}
+                    options={gendersData}
                     selectedValue={gender}
                     handleChangeValue={setGender}
                   />
@@ -135,7 +142,7 @@ export default function AddProduct() {
                   <AddProductSelect
                     id="brand"
                     label="Brand"
-                    options={BRANDS}
+                    options={brandsData}
                     selectedValue={brand}
                     handleChangeValue={setBrand}
                   />
@@ -208,7 +215,7 @@ export default function AddProduct() {
                           <Image
                             src={productImage.productImageSrc}
                             alt="Product image"
-                            style={{ maxWidth: '100%', height: '100%' }}
+                            style={{ width: '100%', height: '100%' }}
                           />
                         </Grid>
                       ))}
@@ -231,4 +238,19 @@ export default function AddProduct() {
       </Box>
     </Layout>
   );
+}
+
+export async function getServerSideProps() {
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery(['brands'], getBrands),
+    queryClient.prefetchQuery(['genders', getGenders]),
+  ]);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 }

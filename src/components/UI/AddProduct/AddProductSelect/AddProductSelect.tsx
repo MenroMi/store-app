@@ -6,12 +6,15 @@ import React from 'react';
 // assets
 import downArrow from '@/assets/icons/down.svg';
 
+// interfaces
+import { IBrandsData, IGendersData } from '@/types/addProductTypes';
+
 interface IAddProductSelect {
   id: string;
   label: string;
   selectedValue: string;
   handleChangeValue: (value: string) => void;
-  options: string[];
+  options: IBrandsData[] | IGendersData[];
 }
 
 export default function AddProductSelect({
@@ -34,10 +37,9 @@ export default function AddProductSelect({
         onChange={(e) => handleChangeValue(e.target.value)}
         sx={{ mt: 1.5 }}
       >
-        {options.map((gender, index) => (
-          // fix key in the future, index is bad practice
-          <MenuItem key={index} value={gender}>
-            <Typography variant="body1">{gender}</Typography>
+        {options?.map((option) => (
+          <MenuItem key={option.id} value={option.id}>
+            <Typography variant="body1">{option.attributes.name}</Typography>
           </MenuItem>
         ))}
       </Select>
