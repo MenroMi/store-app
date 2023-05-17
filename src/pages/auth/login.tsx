@@ -1,12 +1,14 @@
 // basic
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Link from 'next/link';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { login } from '@/services/authService';
+import { useRouter } from 'next/router';
 
 // mui
 import Typography from '@mui/material/Typography';
-import { Link as LinkMui, Box, useTheme } from '@mui/material';
+import { Link as LinkMui, Box, useTheme, useMediaQuery } from '@mui/material';
+import theme from '@/utils/mui/theme';
 
 // components
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
@@ -14,12 +16,17 @@ import FormRegistration from '@/components/Forms/FormRegistration/FormRegistrati
 
 // constants
 import { Routes } from '@/constants';
+import { AuthUserContext } from '@/components/Providers/auth';
 
 const Authorization = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const {mutate, isLoading, isError, error} = useMutation(login)
+  const [checked, setChecked] = useState<boolean>(false);
+  const { setUserToken } = useContext(AuthUserContext);
+  const { push } = useRouter();
+  const { mutate, isLoading, isError } = useMutation(login);
+
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const {
     palette: {
       primary: { main },
@@ -29,18 +36,24 @@ const Authorization = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (email && password) {
-      setLoading(true);
-      
-      console.log(email, password);
-      mutate({identifier: email, password})
-      // setEmail('');
-      // setPassword('');
-      setTimeout(() => {
-  
-        setLoading(false);
-      }, 3000);
+      mutate(
+        { identifier: email, password },
+        {
+          onSuccess: (data) => {
+            if (checked) {
+              localStorage.setItem('token', data.jwt);
+              setUserToken(localStorage.getItem('token'));
+            } else {
+              sessionStorage.setItem('token', data.jwt);
+              setUserToken(sessionStorage.getItem('token'));
+            }
+            push(Routes.home);
+          },
+        }
+      );
     }
   };
+  console.log(checked);
 
   return (
     <SplitLayout title="Login">
@@ -49,11 +62,19 @@ const Authorization = () => {
         variant="body1"
         sx={{
           mt: 2,
-          mb: 6,
+          mb: isError ? 0 : 6,
         }}
       >
         Welcome back! Please enter your details to log into your account.
       </Typography>
+      {isError && (
+        <Typography
+          variant="h4Bold"
+          sx={{ pb: 2, pt: queryDownMd ? '7.3px' : '1.14px', color: main }}
+        >
+          Incorrect Email or Password
+        </Typography>
+      )}
       <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
         <FormRegistration
           handleSubmit={handleSubmit}
@@ -61,7 +82,9 @@ const Authorization = () => {
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
-          loading={loading}
+          checked={checked}
+          setChecked={setChecked}
+          loading={isLoading}
         />
         <Box
           component={'div'}

@@ -1,5 +1,6 @@
 // basic
 import Head from 'next/head';
+import {useContext, useEffect} from 'react'
 
 // mui
 import { Box, Grid, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -17,6 +18,7 @@ import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import CardList from '@/components/UI/Cards/CardList/CardList';
+import { AuthUserContext } from '@/components/Providers/auth';
 
 export default function Profile() {
   const MOCKED_PRODUCTS = [
@@ -54,6 +56,7 @@ export default function Profile() {
 
   return (
     <Layout title="Profile">
+
       <Box sx={{ maxWidth: '1920px', display: 'flex', mt: '38px', gap: '60px' }}>
         <AsideProfileMenu />
         <Box>

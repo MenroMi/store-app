@@ -10,5 +10,7 @@ export interface IFormProps {
   setName?: Dispatch<SetStateAction<string>>;
   confirm?: string;
   setConfirm?: Dispatch<SetStateAction<string>>;
+  checked?: boolean;
+  setChecked?: Dispatch<SetStateAction<boolean>>
   loading?: boolean;
 }

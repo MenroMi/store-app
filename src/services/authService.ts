@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 // const api = axios.create({
 //   baseURL: 'https://shoes-shop-strapi.herokuapp.com/api',
@@ -15,6 +15,6 @@ export const login = async (params: LoginProps) => {
     params
   );
   console.log(response.data);
-  
+
   return response.data;
 };

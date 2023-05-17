@@ -1,5 +1,6 @@
 // basic
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 // mui
 import styled from '@emotion/styled';
@@ -23,6 +24,7 @@ import { Routes } from '@/constants';
 // interface
 import { IFormProps } from '@/types/formTypes';
 import ButtonLoader from '@/components/UI/ButtonLoader/ButtonLoader';
+import { ChangeEvent } from 'react';
 
 const FormMui = styled('form')({
   display: 'flex',
@@ -39,8 +41,11 @@ const FormRegistration = ({
   setName,
   confirm,
   setConfirm,
-  loading
+  checked,
+  setChecked,
+  loading,
 }: IFormProps) => {
+  const { pathname } = useRouter();
   const {
     palette: {
       primary: { main },
@@ -141,7 +146,8 @@ const FormRegistration = ({
           </FormControl>
         )}
       </Box>
-      {setEmail && setPassword && (
+      {/* {setEmail && setPassword &&  */}
+      {(pathname === Routes.login || pathname === Routes.register) && (
         <Box
           component={'div'}
           sx={{
@@ -152,10 +158,16 @@ const FormRegistration = ({
           }}
         >
           <FormControlLabel
-            control={<Checkbox size="small" />}
+            control={
+              <Checkbox
+                size="small"
+                checked={checked}
+                onChange={(e) => setChecked && setChecked(e.target.checked)}
+              />
+            }
             label={<Typography variant="caption">Remember me</Typography>}
           />
-          {!setName && (
+          {pathname === Routes.login && (
             <LinkMui component={Link} href={Routes.forgot} underline="none">
               <Typography variant="body1" sx={{ color: main }}>
                 Forgot password?
@@ -164,16 +176,21 @@ const FormRegistration = ({
           )}
         </Box>
       )}
-      <Button variant="contained" disabled={loading && true} sx={{ mt: setEmail && setPassword ? 6 : '20px' }} type="submit">
-
-        {loading ?
+      <Button
+        variant="contained"
+        disabled={loading && true}
+        sx={{ mt: pathname === Routes.login || pathname === Routes.register ? 6 : '20px' }}
+        type="submit"
+      >
+        {loading ? (
           <ButtonLoader />
-          : (setName ?
-            'Sign up'
-            : setEmail && setPassword ?
-              'Sign in'
-              : 'Reset password')
-        }
+        ) : pathname === Routes.register ? (
+          'Sign up'
+        ) : pathname === Routes.login ? (
+          'Sign in'
+        ) : (
+          'Reset password'
+        )}
       </Button>
     </FormMui>
   );
