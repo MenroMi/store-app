@@ -1,31 +1,25 @@
 // mui
 import { Box, Skeleton } from '@mui/material';
+import React, { useContext } from 'react';
 
 // components
 import CardList from '../../Cards/CardList/CardList';
 import FiltersList from '../../Filters/FiltersList/FiltersList';
 
+// context
+import { FiltersContext } from '@/context/filtersContext';
+
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
 
 // interface
-import { IFiltersAndCardsProps } from '@/types/filterListTypes';
 
 // FUNCTIONAL COMPONENT
-const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({
-  hide,
-  isFetched,
-  isError,
-  isLoading,
-  error,
-  filters,
-}): JSX.Element => {
-  if (isFetched) {
-    console.log(filters);
-  }
+const FiltersAndCards: React.FC = (): JSX.Element => {
+  const context = useContext(FiltersContext);
 
-  if (isError) {
-    return <h2>{(error as Error).message}</h2>;
+  if (context?.isError) {
+    return <h2>{(context?.error as Error).message}</h2>;
   }
 
   return (
@@ -36,10 +30,10 @@ const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({
         zIndex: 1,
       }}
     >
-      {!hide ? (
+      {!context?.hide ? (
         <CustomAside>
-          {isFetched && !isLoading ? (
-            <FiltersList filters={filters} />
+          {context?.isFetched && !context?.isLoading ? (
+            <FiltersList />
           ) : (
             [...new Array(5).fill(null)].map((_, id) => {
               return (
@@ -59,12 +53,12 @@ const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({
       <Box
         component="main"
         sx={{
-          maxWidth: `${hide ? '1920px' : '1580px'}`,
+          maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
           width: '100%',
           height: '100%',
         }}
       >
-        <CardList hide={hide} />
+        <CardList hide={context?.hide} />
       </Box>
     </Box>
   );

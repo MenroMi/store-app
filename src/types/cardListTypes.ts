@@ -1,5 +1,4 @@
 export interface ICardListProps {
-  hide?: boolean;
   products?: any[];
 }
 

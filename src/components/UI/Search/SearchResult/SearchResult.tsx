@@ -1,10 +1,14 @@
 // basic
 import Image from 'next/image';
+import React, { useContext } from 'react';
 
 // mui
 import { Box, Divider, Grid } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
+// context
+import { FiltersContext } from '@/context/filtersContext';
 
 // image
 import hideFilterIcon from '@/assets/icons/filter.svg';
@@ -15,25 +19,21 @@ import SearchPath from '@/components/UI/Search/SearchPath/SearchPath';
 // styled components
 import { CustomTypographyH2, CustomHideFilterBtn, CustomGridContainer } from './SearchResultStyles';
 
-// interface
-interface ISearchResultProps {
-  hide: boolean;
-  onHide: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
 // FUNCTIONAL COMPONENT
-const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
+const SearchResult: React.FC = () => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
+  const context = useContext(FiltersContext);
+
   return (
     <Box sx={{ alignSelf: 'flex-end', flex: 2 }}>
-      {!queryUpMd || hide ? (
+      {!queryUpMd || context?.hide ? (
         <>
           <CustomTypographyH2
             variant="h2"
             sx={{
-              p: `${hide && queryUpMd && '0'}`,
+              p: `${context?.hide && queryUpMd && '0'}`,
             }}
           >
             Search results
@@ -44,8 +44,8 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
 
       <CustomGridContainer container p={`${!queryUpMd && '0 20px'}`}>
         <Grid item>
-          {!queryUpMd || hide ? (
-            <SearchPath hide={hide} />
+          {!queryUpMd || context?.hide ? (
+            <SearchPath />
           ) : (
             <CustomTypographyH2
               variant="h2"
@@ -61,7 +61,7 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
 
         <Grid item>
           <CustomHideFilterBtn
-            onClick={onHide}
+            onClick={context?.onHide}
             variant="text"
             endIcon={
               <Box
@@ -77,7 +77,7 @@ const SearchResult: React.FC<ISearchResultProps> = ({ onHide, hide }) => {
               fontSize: { lg: '24px', md: '24px', sm: '16px', xs: '15px' },
             }}
           >
-            {hide ? 'Filters' : 'Hide Filters'}
+            {context?.hide ? 'Filters' : 'Hide Filters'}
           </CustomHideFilterBtn>
         </Grid>
       </CustomGridContainer>

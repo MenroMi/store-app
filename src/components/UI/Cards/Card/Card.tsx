@@ -1,11 +1,7 @@
-// basic
-import Image from 'next/image';
-
 // mui
 import { Typography, Box } from '@mui/material';
 
 // image
-import singInImg from '@/assets/singInBg.png';
 
 // styled components
 import {
@@ -17,6 +13,9 @@ import {
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
+
+const keyStr =
+  'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
 
 // FUNCTIONAL COMPONENT
 const Card: React.FC<ICardProps> = ({
@@ -30,7 +29,14 @@ const Card: React.FC<ICardProps> = ({
   return (
     <CustomCardWrapper marginRight={marginRight}>
       <Box>
-        <CustomImage src={productImageSrc} alt="product template" width={320} height={380} />
+        <CustomImage
+          src={productImageSrc}
+          alt="product template"
+          width={320}
+          height={380}
+          placeholder="blur"
+          blurDataURL={keyStr}
+        />
       </Box>
       {children}
       <CustomTypographyWrapper>

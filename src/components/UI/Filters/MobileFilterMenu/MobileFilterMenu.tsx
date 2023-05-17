@@ -1,11 +1,14 @@
 // basic
-import { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Image from 'next/image';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import { Box, Slide } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
+// context
+import { FiltersContext } from '@/context/filtersContext';
 
 // image
 import deleteIcon from '@/assets/icons/close.svg';
@@ -17,20 +20,12 @@ import FiltersList from '@/components/UI/Filters/FiltersList/FiltersList';
 import { CustomOverlay } from './MobileFilterMenuStyles';
 
 // interface
-import { IMobileFilterMenuProps } from '@/types/filterListTypes';
 
 // FUNCTIONAL COMPONENT
-const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({
-  hide,
-  onHide,
-  isFetched,
-  isError,
-  isLoading,
-  error,
-  filters,
-}): JSX.Element => {
+const MobileFilterMenu: React.FC = (): JSX.Element => {
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const context = useContext(FiltersContext);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -54,7 +49,7 @@ const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({
         }}
       >
         <Box
-          onClick={onHide}
+          onClick={context?.onHide}
           component={Image}
           src={deleteIcon}
           alt="cross for close filter menu"
@@ -66,7 +61,7 @@ const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({
           }}
         />
       </Box>
-      <FiltersList filters={filters} />
+      <FiltersList />
     </CustomOverlay>
   );
 };
