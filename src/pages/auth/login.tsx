@@ -1,6 +1,8 @@
 // basic
 import { useState } from 'react';
 import Link from 'next/link';
+import { useMutation } from '@tanstack/react-query';
+import { login } from '@/services/authService';
 
 // mui
 import Typography from '@mui/material/Typography';
@@ -17,6 +19,7 @@ const Authorization = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const {mutate, isLoading, isError, error} = useMutation(login)
   const {
     palette: {
       primary: { main },
@@ -26,11 +29,16 @@ const Authorization = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (email && password) {
-      console.log(email, password);
       setLoading(true);
-      setEmail('');
-      setPassword('');
-      setTimeout(() => setLoading(false), 3000);
+      
+      console.log(email, password);
+      mutate({identifier: email, password})
+      // setEmail('');
+      // setPassword('');
+      setTimeout(() => {
+  
+        setLoading(false);
+      }, 3000);
     }
   };
 

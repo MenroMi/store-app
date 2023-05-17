@@ -18,7 +18,7 @@ interface IProvidersProps {
 const ReactQueryDevtoolsProduction = dynamic(
 	() =>
 		import('@tanstack/react-query-devtools/build/lib/index.prod.js').then((d) => ({
-			default: d.ReactQueryDevtools,
+	default: d.ReactQueryDevtools,
 		})),
 	{ suspense: true }
 );
