@@ -1,14 +1,22 @@
 // basic
 import Image from 'next/image';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
+import { useContext } from 'react';
+
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Box, Grid, Skeleton, Typography } from '@mui/material';
+import { Grid, Box, Typography } from '@mui/material';
+
 // react-query
 import { useQuery } from '@tanstack/react-query';
-// service
+
+// service and context
 import { getProducts } from '@/services/searchApi';
+import { FiltersContext } from '@/context/filtersContext';
+
+// utils
+import { dataFromActiveFilters } from '@/utils/getActiveProducts';
 
 // image
 import singInImg from '@/assets/singInBg.png';
@@ -28,14 +36,14 @@ import { uploadImageURL } from '@/constants';
 
 // FUNCTIONAL COMPONENT
 const CardList: React.FC<ICardListProps> = ({
-  hide,
   products = [...new Array(8).fill(ONE_MOCKED_PRODUCT)],
 }): JSX.Element | null => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
+  const context = useContext(FiltersContext);
 
   // react query fetch
-  const { isLoading, isFetching, isFetched, isError, data } = useQuery({
+  const { isLoading, isFetched, isError, data } = useQuery({
     queryKey: ['all'],
     queryFn: getProducts,
     refetchOnWindowFocus: false,
@@ -43,20 +51,75 @@ const CardList: React.FC<ICardListProps> = ({
 
   const isVisible = (elem: JSX.Element, id: number) => {
     return (
-      <Grid key={id} xl={hide ? 2.3 : 3} lg={hide ? 3 : 4} md={hide ? 4 : 6} sm={5} xs={5.7} item>
+      <Grid
+        key={id}
+        xl={context?.hide ? 2.3 : 3}
+        lg={context?.hide ? 3 : 4}
+        md={context?.hide ? 4 : 6}
+        sm={5}
+        xs={5.7}
+        item
+      >
         {elem}
       </Grid>
     );
   };
 
-  if (isFetched) {
-    console.log(data);
+  if (isLoading) {
+    return <h1>Loading...</h1>;
   }
 
   if (isError) {
     Router.push('/404');
     return null;
   }
+
+  const checkData = () => {
+    let products = dataFromActiveFilters(context?.activeFilters!, context?.data, data);
+
+    if (Array.isArray(products)) {
+      return products.map(({ id, attributes }: AttrFromData) => {
+        const { name, price, images, gender } = attributes;
+        let url;
+
+        if (images?.data === null) {
+          url = singInImg;
+        } else {
+          url = uploadImageURL + images?.data?.[0]?.attributes?.url;
+        }
+
+        return isVisible(
+          <Card
+            productCategory={gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
+            productImageSrc={url}
+            productName={name}
+            productPrice={price}
+          >
+            <DropDownMenu />
+          </Card>,
+          id
+        );
+      });
+    }
+
+    return (
+      <CatalogIsEmptyContainer>
+        <Box
+          component={Image}
+          src={emptyIcon}
+          alt="catalog is empty"
+          width={200}
+          height={200}
+          sx={{
+            opacity: '0.1',
+          }}
+        />
+        <Typography variant="h2" sx={{ opacity: '0.5' }}>
+          Catalog is empty.
+        </Typography>
+      </CatalogIsEmptyContainer>
+    );
+  };
 
   return (
     <CardsGridContainer
@@ -69,53 +132,10 @@ const CardList: React.FC<ICardListProps> = ({
       sx={{
         padding: `${!queryUpMd && '0 20px'}`,
         rowGap: { md: '32px', xs: '16px' },
-        justifyContent: `${hide ? 'flex-start' : 'space-between'}`,
+        justifyContent: `${context?.hide ? 'flex-start' : 'space-between'}`,
       }}
     >
-      {isFetching && isLoading ? (
-        products.map((_, id) => {
-          return isVisible(<Skeleton width={320} height={443} variant="rectangular" />, id);
-        })
-      ) : isFetched && !isError && !isLoading && data ? (
-        data?.map(({ id, attributes }: AttrFromData) => {
-          const { name, price, images, gender } = attributes;
-          let url;
-
-          if (images?.data === null) {
-            url = singInImg;
-          } else {
-            url = uploadImageURL + images?.data?.[0]?.attributes?.url;
-          }
-
-          return isVisible(
-            <Card
-              productCategory={gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
-              productImageSrc={url}
-              productName={name}
-              productPrice={price}
-            >
-              <DropDownMenu />
-            </Card>,
-            id
-          );
-        })
-      ) : (
-        <CatalogIsEmptyContainer>
-          <Box
-            component={Image}
-            src={emptyIcon}
-            alt="catalog is empty"
-            width={200}
-            height={200}
-            sx={{
-              opacity: '0.1',
-            }}
-          />
-          <Typography variant="h2" sx={{ opacity: '0.5' }}>
-            Catalog is empty.
-          </Typography>
-        </CatalogIsEmptyContainer>
-      )}
+      {isFetched && data && checkData()}
     </CardsGridContainer>
   );
 };

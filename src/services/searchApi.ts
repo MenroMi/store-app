@@ -33,12 +33,16 @@ export const getFilters = async () => {
     let data;
 
     if (promise.status === 'fulfilled') {
+      let filters = promise?.value?.data?.data?.map(({ id, attributes }: AttrFromData) => {
+        return { id, attributes };
+      });
+
       switch (id) {
         case 0:
-          data = { label: 'gender', name: 'Gender', values: promise?.value?.data?.data };
+          data = { label: 'gender', name: 'Gender', values: filters };
           break;
         case 1:
-          data = { label: 'brand', name: 'Brand', values: promise?.value?.data?.data };
+          data = { label: 'brand', name: 'Brand', values: filters };
           break;
         default:
           data = { label: 'nothing', name: 'Nothing', values: [] };
