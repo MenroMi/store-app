@@ -14,24 +14,28 @@ import FilterCheckbox from '@/components/UI/Filters/FilterCheckbox/FilterCheckbo
 // interface
 import { InputsData } from '@/types/filterListTypes';
 import FilterBrand from '../FilterBrand/FilterBrand';
+import FilterPrice from '../FilterPrice/FilterPrice';
 
 // FUNCTION COMPONENT
 const FiltersList: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
 
   const isInputs = (inputs: object[], label: string) => {
-    if (label === 'brand') {
-      return inputs && <FilterBrand label={label} inputs={inputs} />;
+    switch (label) {
+      case 'brand':
+        return inputs && <FilterBrand label={label} inputs={inputs} />;
+      case 'price':
+        return inputs && <FilterPrice />;
+      default:
+        return (
+          inputs &&
+          inputs.map((input) => {
+            const { id, attributes } = input as InputsData;
+
+            return <FilterCheckbox label={label} key={id} id={id} attributes={attributes} />;
+          })
+        );
     }
-
-    return (
-      inputs &&
-      inputs.map((input) => {
-        const { id, attributes } = input as InputsData;
-
-        return <FilterCheckbox label={label} key={id} id={id} attributes={attributes} />;
-      })
-    );
   };
 
   const isFilter = (values: object[], label: string): JSX.Element | undefined | JSX.Element[] => {

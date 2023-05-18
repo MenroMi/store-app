@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // react-query
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
 import { getFilters } from '@/services/searchApi';
-import { FilterListRender } from '@/types/filterListTypes';
+import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
 import { useParamsURL } from '@/components/hooks/useParamsURL';
 
 // interface
@@ -28,13 +28,6 @@ export interface IFiltersContext {
 export interface AllFilterTypes {
   label: string;
   values: object[];
-}
-
-export interface ActiveFiltersTypes {
-  label: string;
-  id: number;
-  name: string;
-  checked: boolean;
 }
 
 // context

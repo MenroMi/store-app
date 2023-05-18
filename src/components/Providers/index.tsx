@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 // context
 import FiltersProvider from '@/context/filtersContext';
+import ProductsProvider from '@/context/productsContext';
 
 // react query
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -45,7 +46,9 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
           </Suspense>
         )}
         <ThemeProvider theme={theme}>
-          <FiltersProvider>{children}</FiltersProvider>
+          <FiltersProvider>
+            <ProductsProvider>{children}</ProductsProvider>
+          </FiltersProvider>
         </ThemeProvider>
       </Hydrate>
     </QueryClientProvider>

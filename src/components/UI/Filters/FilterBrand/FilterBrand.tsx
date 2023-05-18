@@ -9,7 +9,7 @@ import {
   Box,
   CheckboxProps,
 } from '@mui/material';
-import React, { useState, useContext, Fragment, InputHTMLAttributes } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 
 // images
 import searchIcon from '@/assets/icons/search.svg';

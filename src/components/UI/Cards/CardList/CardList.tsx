@@ -8,12 +8,9 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Grid, Box, Typography } from '@mui/material';
 
-// react-query
-import { useQuery } from '@tanstack/react-query';
-
-// service and context
-import { getProducts } from '@/services/searchApi';
+// context
 import { FiltersContext } from '@/context/filtersContext';
+import { ProductsContext } from '@/context/productsContext';
 
 // utils
 import { dataFromActiveFilters } from '@/utils/filters/activeProducts';
@@ -40,22 +37,16 @@ const CardList: React.FC<ICardListProps> = ({
 }): JSX.Element | null => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
-  const context = useContext(FiltersContext);
-
-  // react query fetch
-  const { isLoading, isFetched, isError, data } = useQuery({
-    queryKey: ['all'],
-    queryFn: getProducts,
-    refetchOnWindowFocus: false,
-  });
+  const contextFilter = useContext(FiltersContext);
+  const contextProducts = useContext(ProductsContext);
 
   const isVisible = (elem: JSX.Element, id: number) => {
     return (
       <Grid
         key={id}
-        xl={context?.hide ? 2.3 : 3}
-        lg={context?.hide ? 3 : 4}
-        md={context?.hide ? 4 : 6}
+        xl={contextFilter?.hide ? 2.3 : 3}
+        lg={contextFilter?.hide ? 3 : 4}
+        md={contextFilter?.hide ? 4 : 6}
         sm={5}
         xs={5.7}
         item
@@ -65,17 +56,21 @@ const CardList: React.FC<ICardListProps> = ({
     );
   };
 
-  if (isLoading) {
+  if (contextProducts?.isLoading) {
     return <h1>Loading...</h1>;
   }
 
-  if (isError) {
+  if (contextProducts?.isError) {
     Router.push('/404');
     return null;
   }
 
   const checkData = () => {
-    let products = dataFromActiveFilters(context?.activeFilters!, context?.data, data);
+    let products = dataFromActiveFilters(
+      contextFilter?.activeFilters!,
+      contextFilter?.data,
+      contextProducts?.data
+    );
 
     if (Array.isArray(products)) {
       return products.map(({ id, attributes }: AttrFromData) => {
@@ -132,10 +127,10 @@ const CardList: React.FC<ICardListProps> = ({
       sx={{
         padding: `${!queryUpMd && '0 20px'}`,
         rowGap: { md: '32px', xs: '16px' },
-        justifyContent: `${context?.hide ? 'flex-start' : 'space-between'}`,
+        justifyContent: `${contextFilter?.hide ? 'flex-start' : 'space-between'}`,
       }}
     >
-      {isFetched && data && context?.data && checkData()}
+      {contextProducts?.isFetched && contextProducts?.data && contextFilter?.data && checkData()}
     </CardsGridContainer>
   );
 };

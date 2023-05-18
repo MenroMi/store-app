@@ -1,4 +1,9 @@
-import { ActiveFiltersTypes } from '@/context/filtersContext';
+export interface ActiveFiltersTypes {
+  label: string;
+  id: number;
+  name: string;
+  checked: boolean;
+}
 
 export interface FilterListRender {
   label: string;
@@ -8,6 +13,7 @@ export interface FilterListRender {
 
 export interface AttrTypes {
   name?: string;
+  price?: number;
   createdAt?: string;
   updateAt?: string;
   publishedAt?: string;
