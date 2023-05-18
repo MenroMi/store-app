@@ -8,16 +8,25 @@ import { Typography, useTheme, Box, Theme, useMediaQuery } from '@mui/material';
 import DeleteIcon from '@/assets/icons/delete.svg';
 import { CustomButton } from './styles';
 
+// context
+import { BagContext } from '@/contexts/bag/BagContext';
+import { useContext } from 'react';
+import { CardBagContextType } from '@/types/productCardBag';
+
 // interface
 interface IBagDeleteButtonProps {
-  deleteProduct: () => void;
+  id: number;
+  deleteProduct: (id: number) => void;
 }
 
-const BagDeleteButton = ({ deleteProduct }: IBagDeleteButtonProps) => {
+const BagDeleteButton: React.FC<IBagDeleteButtonProps> = ({ id }) => {
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const context = useContext(BagContext) as CardBagContextType;
+
   return (
-    <CustomButton onClick={deleteProduct}>
+    <CustomButton onClick={() => context.deleteProduct(id)}>
       <Box
         component={Image}
         src={DeleteIcon}

@@ -11,8 +11,7 @@ export interface ICardBagProps {
 }
 
 export type CardBagContextType = {
-  // products: ICardBagProps[];
-  // changeQuantity: (id: number, quantity: number) => void;
-  // deleteProduct: (e: React.MouseEvent<HTMLElement>) => void;
-  // deleteProduct: (id: number) => void;
+  products: ICardBagProps[];
+  changeQuantity: (id: number, quantity: number) => void;
+  deleteProduct: (id: number) => void;
 };

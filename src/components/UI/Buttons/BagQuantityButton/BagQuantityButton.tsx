@@ -14,12 +14,17 @@ import { CustomButtonWrapper, CustomFabButton } from './styles';
 
 // interface
 interface IBagQuantityButtonProps {
+  id: number;
   quantity: number;
-  addProduct: (e: React.MouseEvent<HTMLElement>) => void;
-  removeProduct: (e: React.MouseEvent<HTMLElement>) => void;
+  addProduct: () => void;
+  removeProduct: () => void;
 }
 
-const BagQuantityButton = ({ quantity, addProduct, removeProduct }: IBagQuantityButtonProps) => {
+const BagQuantityButton: React.FC<IBagQuantityButtonProps> = ({
+  quantity,
+  addProduct,
+  removeProduct,
+}) => {
   const {
     palette: {
       text: { caption },
@@ -39,7 +44,7 @@ const BagQuantityButton = ({ quantity, addProduct, removeProduct }: IBagQuantity
         Quantity:
       </Typography>
       <CustomFabButton
-        onClick={removeProduct}
+        onClick={() => removeProduct()}
         aria-label="remove"
         sx={{
           width: queryUpSm ? 'auto' : '20px',
@@ -61,7 +66,7 @@ const BagQuantityButton = ({ quantity, addProduct, removeProduct }: IBagQuantity
         {quantity}
       </Typography>
       <CustomFabButton
-        onClick={addProduct}
+        onClick={() => addProduct()}
         aria-label="add"
         sx={{
           width: queryUpSm ? 'auto' : '20px',

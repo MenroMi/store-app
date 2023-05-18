@@ -1,5 +1,5 @@
 // basic
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 
 // mui
@@ -12,54 +12,38 @@ import BagDeleteButton from '@/components/UI/Buttons/BagDeleteButton/BagDeleteBu
 // styled components
 import { CustomBagWrapper, CustomBox } from './styles';
 
+// context
+import { BagContext } from '@/contexts/bag/BagContext';
+
 // interface
-import { ICardBagProps } from '@/types/productCardBag';
+import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
 interface IProductBagProps {
-  id: number;
-  productImageSrc: string | StaticImageData;
-  productName: string;
-  productPrice: number;
-  productCategory: string;
-  inStock: boolean;
-  changeQuantity: (id: number, quantity: number) => void;
+  product: ICardBagProps;
   deleteProduct: (id: number) => void;
+  changeQuantity: (id: number, quantity: number) => void;
 }
 
-const ProductCardBag = ({
-  id,
-  productImageSrc,
-  productName,
-  productPrice,
-  productCategory,
-  inStock,
-  // initialQuantity,
-  // addProduct,
-  // removeProduct,
-  changeQuantity,
-  deleteProduct,
-}: IProductBagProps) => {
+const ProductCardBag: React.FC<IProductBagProps> = ({ product }) => {
+  const context = useContext(BagContext) as CardBagContextType;
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const [quantity, setQuantity] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number>(product.quantity);
 
   const addProduct = () => {
     setQuantity(quantity + 1);
   };
 
   const removeProduct = () => {
-    setQuantity(quantity - 1);
-  };
-
-  const handleChangeQuantity = (id: number) => {
     if (quantity <= 1) {
       setQuantity(1);
+    } else {
+      setQuantity(quantity - 1);
     }
-    changeQuantity(id, quantity);
   };
 
   useEffect(() => {
-    handleChangeQuantity(id);
+    context.changeQuantity(product.id, quantity);
   }, [quantity]);
 
   return (
@@ -81,7 +65,7 @@ const ProductCardBag = ({
         >
           <Box
             component={Image}
-            src={productImageSrc}
+            src={product.productImageSrc!}
             alt="Product"
             sx={{
               borderRadius: '6px',
@@ -102,19 +86,19 @@ const ProductCardBag = ({
                 width: '100%',
               }}
             >
-              <Typography variant="h3">{productName}</Typography>
-              <Typography variant="h5">{productCategory}</Typography>
+              <Typography variant="h3">{product.productName}</Typography>
+              <Typography variant="h5">{product.productCategory}</Typography>
               <Typography
                 variant="h4Warning"
                 sx={{
                   marginTop: '10px',
                 }}
               >
-                {inStock ? 'In Stock' : 'Not available'}
+                {product.inStock ? 'In Stock' : 'Not available'}
               </Typography>
             </Box>
             <Box>
-              <Typography variant="h3">${productPrice}</Typography>
+              <Typography variant="h3">${product.productPrice}</Typography>
             </Box>
           </CustomBox>
           <CustomBox
@@ -123,11 +107,12 @@ const ProductCardBag = ({
             }}
           >
             <BagQuantityButton
-              quantity={quantity}
+              id={product.id}
+              quantity={product.quantity}
               addProduct={addProduct}
               removeProduct={removeProduct}
             />
-            <BagDeleteButton deleteProduct={() => deleteProduct(id)} />
+            <BagDeleteButton id={product.id} deleteProduct={context.deleteProduct} />
           </CustomBox>
         </CustomBox>
       </CustomBagWrapper>

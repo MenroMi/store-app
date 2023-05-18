@@ -8,7 +8,7 @@ type BagContextProviderProps = {
 
 export const BagContext = createContext<CardBagContextType | null>(null);
 
-export const ThemeContextProvider = ({ children }: BagContextProviderProps) => {
+export const BagContextProvider: React.FC<BagContextProviderProps> = ({ children }) => {
   const [products, setProducts] = useState<ICardBagProps[]>([
     {
       id: 1,
@@ -48,14 +48,21 @@ export const ThemeContextProvider = ({ children }: BagContextProviderProps) => {
     },
   ]);
 
-  // const deleteProduct = (id: number) => {
-  //   const newArray: any = products.filter((product) => product.id !== id);
-  //   setProducts(newArray);
-  // };
-
-  const deleteProduct = () => {
-    setProducts(products);
+  const deleteProduct = (id: number) => {
+    const newArray: ICardBagProps[] = products.filter((product) => product.id !== id);
+    setProducts(newArray);
   };
 
-  return <BagContext.Provider value={{ products, deleteProduct }}>{children}</BagContext.Provider>;
+  const changeQuantity = (id: number, quantity: number) => {
+    const newProductsList: ICardBagProps[] = products.map((product) =>
+      product.id === id ? { ...product, quantity } : product
+    );
+    setProducts(newProductsList);
+  };
+
+  return (
+    <BagContext.Provider value={{ products, deleteProduct, changeQuantity }}>
+      {children}
+    </BagContext.Provider>
+  );
 };
