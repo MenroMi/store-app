@@ -58,7 +58,7 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
           height: '100%',
         }}
       >
-        <CardList hide={context?.hide} />
+        <CardList />
       </Box>
     </Box>
   );
