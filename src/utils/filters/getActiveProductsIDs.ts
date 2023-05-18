@@ -1,4 +1,4 @@
-import { ActiveFiltersTypes } from '@/context/filtersContext';
+import { ActiveFiltersTypes } from '@/types/filterListTypes';
 import { IFilters, IOtherActiveFilters } from '@/types/filterListTypes';
 
 const getActiveProductsIDs: IOtherActiveFilters = (activeFilters, allFilters) => {
