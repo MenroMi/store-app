@@ -10,7 +10,7 @@ import { CustomButton } from './styles';
 
 // interface
 interface IBagDeleteButtonProps {
-  deleteProduct: (e: React.MouseEvent<HTMLElement>) => void;
+  deleteProduct: () => void;
 }
 
 const BagDeleteButton = ({ deleteProduct }: IBagDeleteButtonProps) => {

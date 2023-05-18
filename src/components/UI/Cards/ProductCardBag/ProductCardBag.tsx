@@ -1,5 +1,6 @@
 // basic
 import Image, { StaticImageData } from 'next/image';
+import { useContext, useEffect, useState } from 'react';
 
 // mui
 import { Box, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
@@ -13,8 +14,6 @@ import { CustomBagWrapper, CustomBox } from './styles';
 
 // interface
 import { ICardBagProps } from '@/types/productCardBag';
-import { useState } from 'react';
-
 interface IProductBagProps {
   id: number;
   productImageSrc: string | StaticImageData;
@@ -22,10 +21,8 @@ interface IProductBagProps {
   productPrice: number;
   productCategory: string;
   inStock: boolean;
-  initialQuantity: number;
-  addProduct: () => void;
-  removeProduct: () => void;
-  deleteProduct: (e: React.MouseEvent<HTMLElement>) => void;
+  changeQuantity: (id: number, quantity: number) => void;
+  deleteProduct: (id: number) => void;
 }
 
 const ProductCardBag = ({
@@ -35,15 +32,35 @@ const ProductCardBag = ({
   productPrice,
   productCategory,
   inStock,
-  initialQuantity,
-  addProduct,
-  removeProduct,
+  // initialQuantity,
+  // addProduct,
+  // removeProduct,
+  changeQuantity,
   deleteProduct,
 }: IProductBagProps) => {
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const [quantity, setQuantity] = useState<number>(initialQuantity);
+  const [quantity, setQuantity] = useState<number>(1);
+
+  const addProduct = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const removeProduct = () => {
+    setQuantity(quantity - 1);
+  };
+
+  const handleChangeQuantity = (id: number) => {
+    if (quantity <= 1) {
+      setQuantity(1);
+    }
+    changeQuantity(id, quantity);
+  };
+
+  useEffect(() => {
+    handleChangeQuantity(id);
+  }, [quantity]);
 
   return (
     <>
@@ -106,11 +123,11 @@ const ProductCardBag = ({
             }}
           >
             <BagQuantityButton
-              initialQuantity={initialQuantity}
+              quantity={quantity}
               addProduct={addProduct}
               removeProduct={removeProduct}
             />
-            <BagDeleteButton deleteProduct={deleteProduct} />
+            <BagDeleteButton deleteProduct={() => deleteProduct(id)} />
           </CustomBox>
         </CustomBox>
       </CustomBagWrapper>

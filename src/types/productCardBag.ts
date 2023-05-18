@@ -9,3 +9,10 @@ export interface ICardBagProps {
   inStock: boolean;
   quantity: number;
 }
+
+export type CardBagContextType = {
+  // products: ICardBagProps[];
+  // changeQuantity: (id: number, quantity: number) => void;
+  // deleteProduct: (e: React.MouseEvent<HTMLElement>) => void;
+  // deleteProduct: (id: number) => void;
+};

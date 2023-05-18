@@ -14,16 +14,12 @@ import { CustomButtonWrapper, CustomFabButton } from './styles';
 
 // interface
 interface IBagQuantityButtonProps {
-  initialQuantity: number;
+  quantity: number;
   addProduct: (e: React.MouseEvent<HTMLElement>) => void;
   removeProduct: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const BagQuantityButton = ({
-  initialQuantity,
-  addProduct,
-  removeProduct,
-}: IBagQuantityButtonProps) => {
+const BagQuantityButton = ({ quantity, addProduct, removeProduct }: IBagQuantityButtonProps) => {
   const {
     palette: {
       text: { caption },
@@ -62,7 +58,7 @@ const BagQuantityButton = ({
         ></Box>
       </CustomFabButton>
       <Typography variant="btnIconText" color={caption}>
-        {initialQuantity}
+        {quantity}
       </Typography>
       <CustomFabButton
         onClick={addProduct}

@@ -15,6 +15,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import theme from '@/utils/mui/theme';
+import { reducePrice } from '@/utils/reducePrice';
 
 // images
 import productImage from '@/assets/singInBg.png';
@@ -35,6 +36,8 @@ import {
   CustomTotalSummaryWrapper,
   CustomBagBtnsWrapper,
 } from '@/styles/pageStyles/BagStyles';
+
+// interface
 import { ICardBagProps } from '@/types/productCardBag';
 
 // data
@@ -82,69 +85,30 @@ const Bag = () => {
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   const [subTotal, setSubTotal] = useState<number>(0);
-  const [shipping, setShipping] = useState<number>(0);
-  const [tax, setTax] = useState<number>(0);
-  const [total, setTotal] = useState<number>(0);
-  const [quantity, setQuantity] = useState<number>(1);
   const [products, setProducts] = useState<ICardBagProps[]>(MOCKED_PRODUCTS);
+  const shipping: number = subTotal === 0 ? 0 : 10;
   const {
     palette: {
       text: { caption },
     },
   } = useTheme<Theme>();
 
-  const countSubTotal = () => {
-    const priceArray: number[] = MOCKED_PRODUCTS.map(({ productPrice }) => productPrice * quantity);
-    const countSubTotal: number = priceArray.reduce((value, acc) => value + acc);
-    setSubTotal(countSubTotal);
+  const changeQuantity = (id: number, quantity: number) => {
+    const newProductsList: ICardBagProps[] = products.map((product) =>
+      product.id === id ? { ...product, quantity } : product
+    );
+    setProducts(newProductsList);
+    setSubTotal(reducePrice(newProductsList));
   };
 
-  const countShipping = () => {
-    const currentShipping: number = MOCKED_PRODUCTS.length < 4 ? MOCKED_PRODUCTS.length * 5 : 20;
-    setShipping(currentShipping);
-  };
-
-  const countTax = () => {
-    const currentTax: number = subTotal * 0.2;
-    setTax(currentTax);
-  };
-
-  const countTotal = () => {
-    const totalPrice: number = subTotal + shipping + tax;
-    setTotal(totalPrice);
-  };
-
-  const addProduct = () => {
-    setQuantity((quantity) => quantity + 1);
-  };
-
-  const removeProduct = () => {
-    setQuantity((quantity) => quantity - 1);
-    if (quantity <= 1) {
-      setQuantity(1);
-    }
-  };
-
-  const deleteProduct = () => {
-    const newArray: any = products.pop();
+  const deleteProduct = (id: number) => {
+    const newArray: any = products.filter((product) => product.id !== id);
     setProducts(newArray);
   };
 
   useEffect(() => {
-    countSubTotal();
+    setSubTotal(reducePrice(products));
   }, [products]);
-
-  useEffect(() => {
-    countShipping();
-  }, []);
-
-  useEffect(() => {
-    countTax();
-  }, []);
-
-  useEffect(() => {
-    countTotal();
-  }, []);
 
   return (
     <Layout title="Bag ">
@@ -171,7 +135,7 @@ const Bag = () => {
               </Typography>
               <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
                 <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
-                  {products.map((product: any) => (
+                  {products.map((product: ICardBagProps) => (
                     <ProductCardBag
                       productCategory={product.productCategory}
                       productImageSrc={product.productImageSrc}
@@ -179,12 +143,9 @@ const Bag = () => {
                       productPrice={product.productPrice}
                       key={product.id}
                       inStock={true}
-                      // quantity={quantity}
-                      addProduct={addProduct}
-                      removeProduct={removeProduct}
-                      deleteProduct={deleteProduct}
                       id={product.id}
-                      initialQuantity={1}
+                      deleteProduct={deleteProduct}
+                      changeQuantity={changeQuantity}
                     />
                   ))}
                 </Stack>
@@ -243,13 +204,18 @@ const Bag = () => {
                   >
                     <CountBagComponent CountCategory={'Subtotal'} PriceValue={subTotal} />
                     <CountBagComponent CountCategory={'Shipping'} PriceValue={shipping} />
-                    <CountBagComponent CountCategory={'Tax'} PriceValue={tax} />
+                    <CountBagComponent
+                      CountCategory={'Tax'}
+                      PriceValue={subTotal === 0 ? 0 : Math.floor(subTotal * 0.13)}
+                    />
                   </Box>
                   <CustomTotalSummaryWrapper>
                     <Typography variant="h3Bold">Total</Typography>
                     <Box sx={{ display: 'flex' }}>
                       <Typography variant="h3">$</Typography>
-                      <Typography variant="h3">{total}</Typography>
+                      <Typography variant="h3">
+                        {subTotal === 0 ? 0 : subTotal + shipping + Math.floor(subTotal * 0.13)}
+                      </Typography>
                     </Box>
                   </CustomTotalSummaryWrapper>
                   <CustomBagBtnsWrapper>
