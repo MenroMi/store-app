@@ -14,7 +14,7 @@ interface IFiltersProvider {
 
 export interface IFiltersContext {
   hide: boolean;
-  onHide: (() => void) | (() => void);
+  onHide: () => void;
   isFetched: boolean;
   isLoading: boolean;
   isError: boolean;
