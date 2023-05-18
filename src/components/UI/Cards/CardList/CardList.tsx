@@ -77,7 +77,7 @@ const CardList: React.FC<ICardListProps> = ({
         const { name, price, images, gender } = attributes;
         let url;
 
-        if (images?.data === null) {
+        if (images?.data === null || typeof images === 'undefined') {
           url = singInImg;
         } else {
           url = uploadImageURL + images?.data?.[0]?.attributes?.url;

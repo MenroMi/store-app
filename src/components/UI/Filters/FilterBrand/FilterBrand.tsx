@@ -39,6 +39,14 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
     );
   };
 
+  const getAmounProducts = (brand: any) => {
+    let res = brand?.products?.data?.filter(
+      (product: { attributes: { teamName: string } }) => product?.attributes?.teamName === 'ea-team'
+    );
+
+    return res?.length > 100 ? '+' + res?.length : res?.length;
+  };
+
   return (
     <Box id={label} mt="20px">
       <CustomTextField
@@ -57,6 +65,7 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
       />
       {visibleBrandFilters(inputs).map((input: any) => {
         const { id, attributes } = input;
+
         return (
           <Fragment key={id}>
             <Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }}>
@@ -82,7 +91,7 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
                 }
               />
               <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
-                (+{100})
+                ({getAmounProducts(attributes)})
               </Box>
             </Box>
           </Fragment>

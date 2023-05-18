@@ -2,6 +2,7 @@
 import { Typography, Box } from '@mui/material';
 
 // image
+import signIcon from '@/assets/singInBg.png';
 
 // styled components
 import {
@@ -13,6 +14,7 @@ import {
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
+import { StaticImageData } from 'next/image';
 
 const keyStr =
   'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';

@@ -16,23 +16,28 @@ interface IProductsProvider {
 }
 
 export interface IProductsContext {
-  data: AttrFromData[];
+  data: AttrFromData[] | undefined;
   isFetched: boolean;
   isLoading: boolean;
   isError: boolean;
   error: Error | unknown;
-  takeOnlyPrice: () => number[];
+  takeOnlyPrice: () => number[] | any[];
 }
 
 // fc
 const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
+  const [page, setPage] = useState<number>(0);
+
   const { isLoading, isFetched, isError, error, data } = useQuery({
-    queryKey: ['all'],
-    queryFn: getProducts,
+    queryKey: ['all', page],
+    queryFn: () => getProducts(page),
     refetchOnWindowFocus: false,
   });
 
   const takeOnlyPrice = () => {
+    if (typeof data === 'undefined') {
+      return [];
+    }
     return data?.map((product: InputsData) => product?.attributes?.price);
   };
 
