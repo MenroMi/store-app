@@ -1,3 +1,5 @@
+import { ActiveFiltersTypes } from '@/context/filtersContext';
+
 export interface FilterListRender {
   label: string;
   name: string;
@@ -37,4 +39,45 @@ export interface IMobileFilterMenuProps {
   isError: boolean;
   error: Error | unknown;
   filters: FilterListRender[] | any[] | undefined;
+}
+
+// =====================
+
+export interface IActiveFilters {
+  (
+    activeFilters: ActiveFiltersTypes[],
+    allFilters: FilterListRender[] | any[] | undefined,
+    allProducts: any
+  ): any[];
+}
+
+export interface IOtherActiveFilters {
+  (activeFilters: ActiveFiltersTypes[], allFilters: FilterListRender[] | any[] | undefined): any[];
+}
+
+export interface IActualProducts {
+  (
+    brands: {
+      [x: string]: number[];
+    }[],
+    filters: {
+      [x: string]: number[];
+    },
+    products: any
+  ): any[];
+}
+
+export interface IFilters {
+  id: number;
+  attributes: {
+    name?: string;
+    products?: {
+      data?: {
+        id?: number;
+        attributes: {
+          teamName: string;
+        };
+      }[];
+    };
+  };
 }

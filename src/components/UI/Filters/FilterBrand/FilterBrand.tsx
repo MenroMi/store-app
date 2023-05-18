@@ -7,8 +7,9 @@ import {
   Theme,
   InputAdornment,
   Box,
+  CheckboxProps,
 } from '@mui/material';
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, useContext, Fragment, InputHTMLAttributes } from 'react';
 
 // images
 import searchIcon from '@/assets/icons/search.svg';
@@ -21,7 +22,7 @@ import { CustomTextField } from './styles';
 
 // interface
 interface IFilterBrand {
-  label?: string;
+  label: string;
   inputs: object[];
 }
 
@@ -70,6 +71,10 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
                 }
                 control={
                   <Checkbox
+                    id={`${id}`}
+                    inputProps={{
+                      datatype: label,
+                    }}
                     name={attributes?.name}
                     sx={{ mr: '12px' }}
                     onClick={(e) => context?.isChecked(e)}

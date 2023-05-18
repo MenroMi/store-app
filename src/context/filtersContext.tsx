@@ -19,7 +19,7 @@ export interface IFiltersContext {
   isLoading: boolean;
   isError: boolean;
   error: Error | unknown;
-  data: FilterListRender[] | any[] | undefined;
+  data: FilterListRender[] | undefined;
   onHideFilters: any;
   isChecked: any;
   activeFilters: ActiveFiltersTypes[];
@@ -31,6 +31,8 @@ export interface AllFilterTypes {
 }
 
 export interface ActiveFiltersTypes {
+  label: string;
+  id: number;
   name: string;
   checked: boolean;
 }
@@ -62,6 +64,8 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const isChecked = (e: any) => {
     let name = e.target.name;
     let checked = e.target.checked;
+    let id = +e.target.id;
+    let label = e.target.getAttribute('datatype');
 
     if (checked === false) {
       setActiveFilters((prev) => [...prev.filter((filter) => filter.name !== name)]);
@@ -70,7 +74,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     }
 
     // handleFiltersURL(data?.label, data?.values);
-    setActiveFilters((prev) => [...prev, { name, checked }]);
+    setActiveFilters((prev) => [...prev, { label, id, name, checked }]);
   };
 
   return (

@@ -16,7 +16,7 @@ import { getProducts } from '@/services/searchApi';
 import { FiltersContext } from '@/context/filtersContext';
 
 // utils
-import { dataFromActiveFilters } from '@/utils/getActiveProducts';
+import { dataFromActiveFilters } from '@/utils/filters/activeProducts';
 
 // image
 import singInImg from '@/assets/singInBg.png';
@@ -135,7 +135,7 @@ const CardList: React.FC<ICardListProps> = ({
         justifyContent: `${context?.hide ? 'flex-start' : 'space-between'}`,
       }}
     >
-      {isFetched && data && checkData()}
+      {isFetched && data && context?.data && checkData()}
     </CardsGridContainer>
   );
 };

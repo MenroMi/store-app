@@ -29,7 +29,7 @@ const FiltersList: React.FC = (): JSX.Element => {
       inputs.map((input) => {
         const { id, attributes } = input as InputsData;
 
-        return <FilterCheckbox key={id} id={id} attributes={attributes} />;
+        return <FilterCheckbox label={label} key={id} id={id} attributes={attributes} />;
       })
     );
   };
