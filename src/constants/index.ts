@@ -18,10 +18,23 @@ import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
 import productImage from '@/assets/singInBg.png';
 
+export enum Routes {
+  register = '/auth/register',
+  login = '/auth/login',
+  forgot = '/auth/forgot',
+  reset = '/auth/reset',
+  sign = '/auth/mobile-login',
+  error404 = '/404',
+  error500 = '/500',
+  bag = '/profile/bag/',
+  home = '/profile/home',
+  addProduct = '/profile/products/add',
+}
+
 export const NAV_LINKS = [
   {
     name: 'Home',
-    to: '/profile/home',
+    to: Routes.home,
   },
   {
     name: 'For women',
@@ -37,27 +50,27 @@ export const NAV_BURGER_LINKS = [
   {
     icon: leftBurgerSetting,
     name: 'Home',
-    to: '/home',
+    to: Routes.home,
   },
   {
     icon: bonusAccountIcon,
-    name: 'Products',
-    to: '/',
+    name: 'Add Product',
+    to: Routes.addProduct,
   },
   {
     icon: bag,
     name: 'Bag',
-    to: '/',
+    to: Routes.bag,
   },
   {
     icon: profileIcon,
     name: 'My profile',
-    to: '/',
+    to: Routes.home,
   },
   {
     icon: logoutIcon,
     name: 'Log In',
-    to: '/',
+    to: Routes.login,
   },
 ];
 
@@ -94,19 +107,6 @@ export const ASIDE_MENU_LINKS = [
     to: '/auth/login',
   },
 ];
-
-export enum Routes {
-  register = '/auth/register',
-  login = '/auth/login',
-  forgot = '/auth/forgot',
-  reset = '/auth/reset',
-  sign = '/auth/mobile-login',
-  error404 = '/404',
-  error500 = '/500',
-  bag = '/profile/bag/',
-  home = '/profile/home',
-  addProduct = '/profile/products/add',
-}
 
 export const comments: IComment[] = [
   {
