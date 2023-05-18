@@ -6,8 +6,9 @@ import Image from 'next/image';
 // assets
 import imageIcon from '@/assets/icons/gallery.svg';
 import { CustomUploadWrapper } from './styles';
+import { IAddProductUploadImageProps } from '@/types/addProductTypes';
 
-export default function AddProductUploadImage() {
+export default function AddProductUploadImage({ handleChooseImage }: IAddProductUploadImageProps) {
   return (
     <CustomUploadWrapper>
       <Image src={imageIcon} alt="Image" />
@@ -23,10 +24,11 @@ export default function AddProductUploadImage() {
       </Typography>
       <Input
         type="file"
-        onChange={(e) => console.log(e.target.value)}
+        onChange={handleChooseImage}
         style={{ display: 'none' }}
         required
         id="images"
+        name="images"
       />
     </CustomUploadWrapper>
   );

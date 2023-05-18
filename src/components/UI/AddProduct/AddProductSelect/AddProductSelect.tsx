@@ -7,15 +7,7 @@ import React from 'react';
 import downArrow from '@/assets/icons/down.svg';
 
 // interfaces
-import { IBrandsData, IGendersData } from '@/types/addProductTypes';
-
-interface IAddProductSelect {
-  id: string;
-  label: string;
-  selectedValue: string;
-  handleChangeValue: (value: string) => void;
-  options: IBrandsData[] | IGendersData[];
-}
+import { IAddProductSelect } from '@/types/addProductTypes';
 
 export default function AddProductSelect({
   id,
@@ -23,9 +15,12 @@ export default function AddProductSelect({
   selectedValue,
   handleChangeValue,
   options,
+  selectName,
+  width = '100%',
+  marginRight = 0,
 }: IAddProductSelect) {
   return (
-    <FormControl sx={{ mr: 2, width: '210px' }}>
+    <FormControl sx={{ mr: marginRight, width: width }}>
       <FormLabel htmlFor={id}>
         <Typography variant="caption">{label}</Typography>
       </FormLabel>
@@ -34,6 +29,7 @@ export default function AddProductSelect({
         required
         id={id}
         value={selectedValue}
+        name={selectName}
         onChange={(e) => handleChangeValue(e.target.value)}
         sx={{ mt: 1.5 }}
       >

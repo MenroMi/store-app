@@ -106,6 +106,7 @@ export enum Routes {
   bag = '/profile/bag/',
   home = '/profile/home',
   addProduct = '/profile/products/add',
+  myProducts = '/profile/products'
 }
 
 export const comments: IComment[] = [
@@ -209,4 +210,4 @@ export const ONE_MOCKED_PRODUCT = {
   productCategory: "Women's shoes",
 };
 
-export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
+export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api';
