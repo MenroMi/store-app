@@ -17,15 +17,17 @@ import FormRegistration from '@/components/Forms/FormRegistration/FormRegistrati
 // constants
 import { Routes } from '@/constants';
 import { AuthUserContext } from '@/components/Providers/auth';
+import { IFormData } from '@/types/formDataTypes';
 
 const Authorization = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [checked, setChecked] = useState<boolean>(false);
+  const [formData, setFormData] = useState<IFormData>({
+    email: '',
+    password: '',
+    checked: false,
+  });
   const { setUserToken } = useContext(AuthUserContext);
-  const { push } = useRouter();
   const { mutate, isLoading, isError } = useMutation(login);
-
+  const { push } = useRouter();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const {
     palette: {
@@ -35,6 +37,7 @@ const Authorization = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const { email, password, checked } = formData;
     if (email && password) {
       mutate(
         { identifier: email, password },
@@ -53,7 +56,6 @@ const Authorization = () => {
       );
     }
   };
-  console.log(checked);
 
   return (
     <SplitLayout title="Login">
@@ -78,12 +80,8 @@ const Authorization = () => {
       <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
         <FormRegistration
           handleSubmit={handleSubmit}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          checked={checked}
-          setChecked={setChecked}
+          formData={formData}
+          setFormData={setFormData}
           loading={isLoading}
         />
         <Box

@@ -1,16 +1,9 @@
-import { Dispatch, FormEventHandler, SetStateAction } from 'react';
+import { Dispatch, FormEventHandler } from 'react';
+import { IFormData } from './formDataTypes';
 
 export interface IFormProps {
   handleSubmit: FormEventHandler<HTMLFormElement>;
-  email?: string;
-  setEmail?: Dispatch<SetStateAction<string>>;
-  password?: string;
-  setPassword?: Dispatch<SetStateAction<string>>;
-  name?: string;
-  setName?: Dispatch<SetStateAction<string>>;
-  confirm?: string;
-  setConfirm?: Dispatch<SetStateAction<string>>;
-  checked?: boolean;
-  setChecked?: Dispatch<SetStateAction<boolean>>
   loading?: boolean;
+  formData: IFormData;
+  setFormData: Dispatch<React.SetStateAction<IFormData>>;
 }

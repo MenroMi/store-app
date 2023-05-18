@@ -6,11 +6,15 @@ export const CustomBoxComments = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   top: '48.5%',
+  zIndex: '1001',
 }));
 
 export const CustomComments = styled('section')(() => ({
+  minWidth: '100%',
   backdropFilter: 'blur(12px)',
   border: '2px solid rgba(255, 255, 255, 0.3)',
+  borderRadius: '4px',
+  padding:'6px 7px',
   display: 'flex',
   gap: '4px',
 }));

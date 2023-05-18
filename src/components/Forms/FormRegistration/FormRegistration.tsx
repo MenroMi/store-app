@@ -31,20 +31,7 @@ const FormMui = styled('form')({
   flexDirection: 'column',
 });
 
-const FormRegistration = ({
-  handleSubmit,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  name,
-  setName,
-  confirm,
-  setConfirm,
-  checked,
-  setChecked,
-  loading,
-}: IFormProps) => {
+const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }: IFormProps) => {
   const { pathname } = useRouter();
   const {
     palette: {
@@ -52,10 +39,17 @@ const FormRegistration = ({
     },
   } = useTheme<Theme>();
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.id]: e.target.id === 'checked' ? e.target.checked : e.target.value,
+    }));
+  };
+
   return (
     <FormMui action="" onSubmit={handleSubmit}>
       <Box component={'div'} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        {setName && (
+        {Object.keys(formData).includes('name') && (
           <FormControl>
             <FormLabel htmlFor="name">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -71,12 +65,12 @@ const FormRegistration = ({
               placeholder="Hayman Andrews"
               required
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
             />
           </FormControl>
         )}
-        {setEmail && (
+        {Object.keys(formData).includes('email') && (
           <FormControl>
             <FormLabel htmlFor="email">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -92,12 +86,12 @@ const FormRegistration = ({
               placeholder="example@mail.com"
               required
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
             />
           </FormControl>
         )}
-        {setPassword && (
+        {Object.keys(formData).includes('password') && (
           <FormControl>
             <FormLabel htmlFor="password">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -114,12 +108,12 @@ const FormRegistration = ({
               placeholder="at least 8 characters"
               type="password"
               inputProps={{ minLength: 8 }}
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
+              value={formData.password}
+              onChange={handleChange}
             />
           </FormControl>
         )}
-        {setConfirm && (
+        {Object.keys(formData).includes('confirm') && (
           <FormControl>
             <FormLabel htmlFor="confirm">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -138,15 +132,14 @@ const FormRegistration = ({
               inputProps={{
                 minLength: 8,
                 title: `passwords don't match`,
-                pattern: `${password}`,
+                pattern: `${formData.password}`,
               }}
-              onChange={(e) => setConfirm(e.target.value)}
-              value={confirm}
+              value={formData.confirm}
+              onChange={handleChange}
             />
           </FormControl>
         )}
       </Box>
-      {/* {setEmail && setPassword &&  */}
       {(pathname === Routes.login || pathname === Routes.register) && (
         <Box
           component={'div'}
@@ -160,9 +153,10 @@ const FormRegistration = ({
           <FormControlLabel
             control={
               <Checkbox
+                id="checked"
                 size="small"
-                checked={checked}
-                onChange={(e) => setChecked && setChecked(e.target.checked)}
+                checked={formData.checked}
+                onChange={handleChange}
               />
             }
             label={<Typography variant="caption">Remember me</Typography>}
