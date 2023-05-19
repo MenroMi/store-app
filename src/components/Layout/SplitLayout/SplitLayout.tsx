@@ -32,9 +32,9 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
         <LayoutSignErrorPages>
           <Grid container sx={{ height: 1 }}>
             {pathname === Routes.login ||
-              pathname === Routes.register ||
-              pathname === Routes.forgot ||
-              pathname === Routes.reset ? (
+            pathname === Routes.register ||
+            pathname === Routes.forgot ||
+            pathname === Routes.reset ? (
               <Image
                 src={logo}
                 alt={'logoIcon'}
@@ -42,7 +42,7 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
                   position: 'absolute',
                   top: queryDownMd ? 18 : 50,
                   left: queryDownMd ? 20 : 40,
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
                 width={queryDownMd ? 35.31 : 40}
                 height={queryDownMd ? 26.52 : 30}

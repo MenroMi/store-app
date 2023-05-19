@@ -1,5 +1,6 @@
 // basic
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 // mui
 import styled from '@emotion/styled';
@@ -23,34 +24,32 @@ import { Routes } from '@/constants';
 // interface
 import { IFormProps } from '@/types/formTypes';
 import ButtonLoader from '@/components/UI/ButtonLoader/ButtonLoader';
+import { ChangeEvent } from 'react';
 
 const FormMui = styled('form')({
   display: 'flex',
   flexDirection: 'column',
 });
 
-const FormRegistration = ({
-  handleSubmit,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  name,
-  setName,
-  confirm,
-  setConfirm,
-  loading
-}: IFormProps) => {
+const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }: IFormProps) => {
+  const { pathname } = useRouter();
   const {
     palette: {
       primary: { main },
     },
   } = useTheme<Theme>();
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.id]: e.target.id === 'checked' ? e.target.checked : e.target.value,
+    }));
+  };
+
   return (
     <FormMui action="" onSubmit={handleSubmit}>
       <Box component={'div'} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        {setName && (
+        {Object.keys(formData).includes('name') && (
           <FormControl>
             <FormLabel htmlFor="name">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -66,12 +65,12 @@ const FormRegistration = ({
               placeholder="Hayman Andrews"
               required
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
             />
           </FormControl>
         )}
-        {setEmail && (
+        {Object.keys(formData).includes('email') && (
           <FormControl>
             <FormLabel htmlFor="email">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -87,12 +86,12 @@ const FormRegistration = ({
               placeholder="example@mail.com"
               required
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
             />
           </FormControl>
         )}
-        {setPassword && (
+        {Object.keys(formData).includes('password') && (
           <FormControl>
             <FormLabel htmlFor="password">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -109,12 +108,12 @@ const FormRegistration = ({
               placeholder="at least 8 characters"
               type="password"
               inputProps={{ minLength: 8 }}
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
+              value={formData.password}
+              onChange={handleChange}
             />
           </FormControl>
         )}
-        {setConfirm && (
+        {Object.keys(formData).includes('confirm') && (
           <FormControl>
             <FormLabel htmlFor="confirm">
               <Typography variant="caption" sx={{ display: 'inline' }}>
@@ -133,15 +132,15 @@ const FormRegistration = ({
               inputProps={{
                 minLength: 8,
                 title: `passwords don't match`,
-                pattern: `${password}`,
+                pattern: `${formData.password}`,
               }}
-              onChange={(e) => setConfirm(e.target.value)}
-              value={confirm}
+              value={formData.confirm}
+              onChange={handleChange}
             />
           </FormControl>
         )}
       </Box>
-      {setEmail && setPassword && (
+      {(pathname === Routes.login || pathname === Routes.register) && (
         <Box
           component={'div'}
           sx={{
@@ -152,10 +151,17 @@ const FormRegistration = ({
           }}
         >
           <FormControlLabel
-            control={<Checkbox size="small" />}
+            control={
+              <Checkbox
+                id="checked"
+                size="small"
+                checked={formData.checked}
+                onChange={handleChange}
+              />
+            }
             label={<Typography variant="caption">Remember me</Typography>}
           />
-          {!setName && (
+          {pathname === Routes.login && (
             <LinkMui component={Link} href={Routes.forgot} underline="none">
               <Typography variant="body1" sx={{ color: main }}>
                 Forgot password?
@@ -164,16 +170,21 @@ const FormRegistration = ({
           )}
         </Box>
       )}
-      <Button variant="contained" disabled={loading && true} sx={{ mt: setEmail && setPassword ? 6 : '20px' }} type="submit">
-
-        {loading ?
+      <Button
+        variant="contained"
+        disabled={loading && true}
+        sx={{ mt: pathname === Routes.login || pathname === Routes.register ? 6 : '20px' }}
+        type="submit"
+      >
+        {loading ? (
           <ButtonLoader />
-          : (setName ?
-            'Sign up'
-            : setEmail && setPassword ?
-              'Sign in'
-              : 'Reset password')
-        }
+        ) : pathname === Routes.register ? (
+          'Sign up'
+        ) : pathname === Routes.login ? (
+          'Sign in'
+        ) : (
+          'Reset password'
+        )}
       </Button>
     </FormMui>
   );

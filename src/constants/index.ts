@@ -99,7 +99,7 @@ export enum Routes {
   register = '/auth/register',
   login = '/auth/login',
   forgot = '/auth/forgot',
-  reset = '/auth/reset',
+  reset = '/auth/reset-password',
   sign = '/auth/mobile-login',
   error404 = '/404',
   error500 = '/500',
