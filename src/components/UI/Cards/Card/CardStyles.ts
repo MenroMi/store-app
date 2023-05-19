@@ -1,5 +1,6 @@
 import { ICustomCardWrapperProps } from '@/types/cardTypes';
-import { styled } from '@mui/material/styles';
+import { styled, Typography } from '@mui/material';
+
 import Image from 'next/image';
 
 export const CustomCardWrapper = styled('div')<ICustomCardWrapperProps>(({ marginRight }) => ({
@@ -20,3 +21,31 @@ export const CustomTypographyWrapper = styled('div')(() => ({
   justifyContent: 'space-between',
   alignItems: 'center',
 }));
+
+export const CustomImage = styled(Image)(({ theme }) => ({
+  width: '100%',
+  height: '380px',
+  objectFit: 'cover',
+  objectPosition: 'center',
+
+  [theme.breakpoints.between('md', 'lg')]: {
+    height: '300px',
+  },
+
+  [theme.breakpoints.between('sm', 'md')]: {
+    height: '280px',
+  },
+
+  [theme.breakpoints.between('xs', 'sm')]: {
+    height: '200px',
+  },
+}));
+
+export const CustomTypographyName = styled(Typography)({
+  display: '-webkit-box',
+  lineHeight: '1.3',
+  WebkitLineClamp: '1',
+  WebkitBoxOrient: 'vertical',
+  lineClamp: 1,
+  overflow: 'hidden',
+});

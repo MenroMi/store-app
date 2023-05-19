@@ -1,14 +1,23 @@
-// basic
-import Image from 'next/image';
-
 // mui
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+
+// image
+import signIcon from '@/assets/singInBg.png';
 
 // styled components
-import { CustomCardWrapper, CustomTypographyWrapper } from './CardStyles';
+import {
+  CustomCardWrapper,
+  CustomTypographyWrapper,
+  CustomImage,
+  CustomTypographyName,
+} from './CardStyles';
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
+import { StaticImageData } from 'next/image';
+
+const keyStr =
+  'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
 
 // FUNCTIONAL COMPONENT
 const Card: React.FC<ICardProps> = ({
@@ -21,15 +30,19 @@ const Card: React.FC<ICardProps> = ({
 }): JSX.Element => {
   return (
     <CustomCardWrapper marginRight={marginRight}>
-      <Image
-        style={{ maxWidth: '100%', height: '100%' }}
-        src={productImageSrc}
-        alt="product template"
-        placeholder="blur"
-      />
+      <Box>
+        <CustomImage
+          src={productImageSrc}
+          alt="product template"
+          width={320}
+          height={380}
+          placeholder="blur"
+          blurDataURL={keyStr}
+        />
+      </Box>
       {children}
       <CustomTypographyWrapper>
-        <Typography variant="subtitle1">{productName}</Typography>
+        <CustomTypographyName variant="subtitle1">{productName}</CustomTypographyName>
         <Typography variant="subtitle1">{`$` + productPrice}</Typography>
       </CustomTypographyWrapper>
       <Typography variant="subtitle2Small">{productCategory}</Typography>

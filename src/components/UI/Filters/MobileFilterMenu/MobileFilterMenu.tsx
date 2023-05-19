@@ -1,11 +1,14 @@
 // basic
-import { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Image from 'next/image';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import { Box, Slide } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
+// context
+import { FiltersContext } from '@/context/filtersContext';
 
 // image
 import deleteIcon from '@/assets/icons/close.svg';
@@ -17,15 +20,12 @@ import FiltersList from '@/components/UI/Filters/FiltersList/FiltersList';
 import { CustomOverlay } from './MobileFilterMenuStyles';
 
 // interface
-interface IMobileFilterMenuProps {
-  hide: boolean;
-  onHide: (event: React.MouseEvent<HTMLImageElement>) => void;
-}
 
 // FUNCTIONAL COMPONENT
-const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({ hide, onHide }): JSX.Element => {
+const MobileFilterMenu: React.FC = (): JSX.Element => {
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const context = useContext(FiltersContext);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -35,37 +35,38 @@ const MobileFilterMenu: React.FC<IMobileFilterMenuProps> = ({ hide, onHide }): J
   }, []);
 
   return (
-    <Slide in={!hide} direction="left">
-      <CustomOverlay
+    <CustomOverlay
+      sx={{
+        display: `${queryDownMd ? 'block' : 'none'}`,
+        boxShadow: `${queryDownMd && '3px -11px 24px 0px rgba(0, 0, 0, 0.4);'}`,
+      }}
+    >
+      <Box
         sx={{
-          display: `${queryDownMd ? 'block' : 'none'}`,
-          boxShadow: `${queryDownMd && '3px -11px 24px 0px rgba(0, 0, 0, 0.4);'}`,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
         }}
       >
         <Box
+          onClick={context?.onHide}
+          component={Image}
+          src={deleteIcon}
+          alt="cross for close filter menu"
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            width: '100%',
+            width: '10px',
+            height: '10px',
+            m: '20px 33px 30px 0',
+            cursor: 'pointer',
           }}
-        >
-          <Box
-            onClick={onHide}
-            component={Image}
-            src={deleteIcon}
-            alt="cross for close filter menu"
-            sx={{
-              width: '10px',
-              height: '10px',
-              m: '20px 33px 30px 0',
-              cursor: 'pointer',
-            }}
-          />
-        </Box>
-        <FiltersList />
-      </CustomOverlay>
-    </Slide>
+        />
+      </Box>
+      <FiltersList />
+    </CustomOverlay>
   );
 };
 
 export default MobileFilterMenu;
+
+/* <Slide in={!hide} direction="left"> */
+// </Slide>

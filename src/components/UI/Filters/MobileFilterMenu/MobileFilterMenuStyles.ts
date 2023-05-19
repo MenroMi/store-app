@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 
 export const CustomOverlay = styled(Box)(() => ({
   position: 'fixed',
-  zIndex: '1000',
+  zIndex: '10001',
   overflowY: 'auto',
   bottom: '0',
   right: '0',

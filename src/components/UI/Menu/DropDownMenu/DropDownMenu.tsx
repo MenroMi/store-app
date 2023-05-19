@@ -16,7 +16,7 @@ import { CustomDotsBtn, CustomDropDownMenu } from './styles';
 import { MenuItemParams } from '@/types';
 
 // constants
-import { homeItems, othersItems } from '@/constants';
+import { Routes, homeItems, othersItems } from '@/constants';
 
 const DropDownMenu: React.FC = (): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
@@ -60,7 +60,7 @@ const DropDownMenu: React.FC = (): JSX.Element => {
           horizontal: 'left',
         }}
       >
-        {pathname === '/home' ? setMenuItems(homeItems!) : setMenuItems(othersItems!)}
+        {pathname === Routes.home ? setMenuItems(homeItems!) : setMenuItems(othersItems!)}
       </CustomDropDownMenu>
     </>
   );

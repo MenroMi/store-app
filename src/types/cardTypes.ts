@@ -5,7 +5,7 @@ export interface ICustomCardWrapperProps {
 
 export interface ICardProps {
   productCategory: string;
-  productImageSrc: StaticImageData;
+  productImageSrc: StaticImageData | string;
   productName: string;
   productPrice: number;
   marginRight?: string | number;

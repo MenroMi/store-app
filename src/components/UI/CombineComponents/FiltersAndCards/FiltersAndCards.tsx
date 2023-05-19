@@ -1,20 +1,32 @@
 // mui
-import { Box } from '@mui/material';
+import { Box, Pagination, Skeleton, Stack } from '@mui/material';
+import React, { useContext } from 'react';
 
 // components
 import CardList from '../../Cards/CardList/CardList';
 import FiltersList from '../../Filters/FiltersList/FiltersList';
 
+// context
+import { FiltersContext } from '@/context/filtersContext';
+import { ProductsContext } from '@/context/productsContext';
+
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
+import { useRouter } from 'next/router';
 
 // interface
-interface IFiltersAndCardsProps {
-  hide: boolean;
-}
 
 // FUNCTIONAL COMPONENT
-const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({ hide }): JSX.Element => {
+const FiltersAndCards: React.FC = (): JSX.Element => {
+  const context = useContext(FiltersContext);
+  const contextProducts = useContext(ProductsContext);
+  const router = useRouter();
+  // +router.asPath[router.asPath.search(/\d/)] ||
+
+  if (context?.isError) {
+    return <h2>{(context?.error as Error).message}</h2>;
+  }
+
   return (
     <Box
       sx={{
@@ -23,18 +35,51 @@ const FiltersAndCards: React.FC<IFiltersAndCardsProps> = ({ hide }): JSX.Element
         zIndex: 1,
       }}
     >
-      {!hide ? (
+      {!context?.hide ? (
         <CustomAside>
-          <FiltersList />
+          {context?.isFetched && !context?.isLoading ? (
+            <FiltersList />
+          ) : (
+            [...new Array(5).fill(null)].map((_, id) => {
+              return (
+                <Skeleton
+                  key={id}
+                  width={320}
+                  height={42}
+                  variant="rectangular"
+                  sx={{ mt: '20px', borderRadius: '8px' }}
+                />
+              );
+            })
+          )}
         </CustomAside>
       ) : null}
+
       <Box
         component="main"
         sx={{
-          maxWidth: `${hide ? '1920px' : '1580px'}`,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          rowGap: '50px',
+          maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
+          width: '100%',
+          height: '100%',
+          pb: '30px',
         }}
       >
-        <CardList hide={hide} />
+        <CardList />
+        <Pagination
+          showFirstButton
+          showLastButton
+          page={contextProducts?.page}
+          onChange={contextProducts?.onChangePage}
+          count={4}
+          shape="rounded"
+          color="primary"
+          size="large"
+        />
       </Box>
     </Box>
   );

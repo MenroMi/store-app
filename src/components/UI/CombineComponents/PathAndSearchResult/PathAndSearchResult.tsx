@@ -1,37 +1,37 @@
+// basic
+import React, { useContext } from 'react';
+
 // mui
 import { Box } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
+// context
+import { FiltersContext } from '@/context/filtersContext';
+
 // components
 import SearchPath from '../../Search/SearchPath/SearchPath';
 import SearchResult from '../../Search/SearchResult/SearchResult';
 
-// interface
-interface IPathAndSearchResultProps {
-  hide: boolean;
-  onHide: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
 // FUNCTIONAL COMPONENT
-const PathAndSearchResult: React.FC<IPathAndSearchResultProps> = ({
-  onHide,
-  hide,
-}): JSX.Element => {
+const PathAndSearchResult: React.FC = (): JSX.Element => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
+
+  const context = useContext(FiltersContext);
+
   return (
     <Box
       display="flex"
-      mt="44px"
+      mt="13px"
       sx={{
-        gap: { lg: `${!hide ? '59px' : '52px'}`, md: '16px' },
+        gap: { lg: `${!context?.hide ? '59px' : '52px'}`, md: '16px' },
         position: 'relative',
         zIndex: 1,
       }}
     >
-      {!queryUpMd || hide ? null : <SearchPath hide={hide} />}
-      <SearchResult hide={hide} onHide={onHide} />
+      {!queryUpMd || context?.hide ? null : <SearchPath />}
+      <SearchResult />
     </Box>
   );
 };

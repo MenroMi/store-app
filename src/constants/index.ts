@@ -202,6 +202,9 @@ export const othersItems: MenuItemParams[] = [
   { id: 3, label: 'Add to Cart', method: () => {} },
 ];
 
+export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
+export const uploadImageURL = 'https://shoes-shop-strapi.herokuapp.com';
+
 export const ONE_MOCKED_PRODUCT = {
   id: 3,
   productImageSrc: productImage,
@@ -209,5 +212,3 @@ export const ONE_MOCKED_PRODUCT = {
   productPrice: 160,
   productCategory: "Women's shoes",
 };
-
-export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api';
