@@ -12,6 +12,7 @@ import { ProductsContext } from '@/context/productsContext';
 
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
+import { useRouter } from 'next/router';
 
 // interface
 
@@ -19,6 +20,7 @@ import { CustomAside } from './FiltersAndCardsStyles';
 const FiltersAndCards: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
   const contextProducts = useContext(ProductsContext);
+  const router = useRouter();
 
   if (context?.isError) {
     return <h2>{(context?.error as Error).message}</h2>;
@@ -63,15 +65,16 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
           maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
           width: '100%',
           height: '100%',
+          pb: '30px',
         }}
       >
         <CardList />
         <Pagination
           showFirstButton
           showLastButton
-          page={contextProducts?.page}
+          page={+router.asPath[router.asPath.search(/\d/)] || contextProducts?.page}
           onChange={contextProducts?.onChangePage}
-          count={3}
+          count={4}
           shape="rounded"
           color="primary"
           size="large"
