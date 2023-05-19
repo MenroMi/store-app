@@ -27,7 +27,6 @@ export const NavList = styled('ul')<INavProps>`
   ${(props) =>
     props.burger
       ? `
-      display: flex;
       flex-direction: column;
       position: absolute;
       top: -30px;

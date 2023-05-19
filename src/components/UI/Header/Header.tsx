@@ -29,7 +29,8 @@ export default function Header() {
           burger={false}
           sx={{
             display: {
-              ms: 'none',
+              md: 'flex',
+              xs: 'none',
             },
           }}
         >
