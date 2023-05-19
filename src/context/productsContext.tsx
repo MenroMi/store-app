@@ -1,6 +1,6 @@
 // basic
-import React, { useEffect, useState } from 'react';
-import { NextRouter, useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 // react-query
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
