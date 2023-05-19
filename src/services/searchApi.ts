@@ -62,14 +62,6 @@ export const getFilters = async () => {
   });
 
   res.push({
-    label: 'kids',
-    name: 'Kids',
-    values: [
-      { id: 1, attributes: { name: 'Boys' } },
-      { id: 2, attributes: { name: 'Girls' } },
-    ],
-  });
-  res.push({
     label: 'price',
     name: 'Price',
     values: [{ id: 1, attributes: { name: 'Price undefined' } }],

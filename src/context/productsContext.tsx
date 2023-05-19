@@ -1,6 +1,6 @@
 // basic
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { NextRouter, useRouter } from 'next/router';
 
 // react-query
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
@@ -29,14 +29,28 @@ export interface IProductsContext {
 
 // fc
 const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
-  const [page, setPage] = useState<number>(1);
   const router = useRouter();
+  const { page } = router.query;
+  let currentPage: number;
+
+  if (typeof page === 'undefined') {
+    currentPage = 1;
+  } else if (Array.isArray(page)) {
+    currentPage = 1;
+  } else {
+    currentPage = parseInt(page);
+  }
 
   const { isLoading, isFetched, isError, error, data } = useQuery({
-    queryKey: ['all', page],
-    queryFn: () => getProducts(page),
-    refetchOnWindowFocus: false,
+    queryKey: ['all', currentPage],
+    queryFn: () => getProducts(currentPage),
   });
+
+  useEffect(() => {
+    if (currentPage === 1 && router.asPath.search(/\d/) === -1) {
+      router.push(`?page=1`);
+    }
+  }, []);
 
   const takeOnlyPrice = () => {
     if (typeof data === 'undefined') {
@@ -46,8 +60,7 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
   };
 
   const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-    router.push(`?/page=${value}`);
+    router.push(`?page=${value}`);
   };
 
   return (
@@ -60,7 +73,7 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
         isError,
         error,
         data,
-        page,
+        page: currentPage,
       }}
     >
       {children}
