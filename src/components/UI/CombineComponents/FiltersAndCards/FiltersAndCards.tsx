@@ -1,5 +1,5 @@
 // mui
-import { Box, Skeleton } from '@mui/material';
+import { Box, Pagination, Skeleton, Stack } from '@mui/material';
 import React, { useContext } from 'react';
 
 // components
@@ -8,6 +8,7 @@ import FiltersList from '../../Filters/FiltersList/FiltersList';
 
 // context
 import { FiltersContext } from '@/context/filtersContext';
+import { ProductsContext } from '@/context/productsContext';
 
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
@@ -17,6 +18,7 @@ import { CustomAside } from './FiltersAndCardsStyles';
 // FUNCTIONAL COMPONENT
 const FiltersAndCards: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
+  const contextProducts = useContext(ProductsContext);
 
   if (context?.isError) {
     return <h2>{(context?.error as Error).message}</h2>;
@@ -53,12 +55,27 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
       <Box
         component="main"
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          rowGap: '50px',
           maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
           width: '100%',
           height: '100%',
         }}
       >
         <CardList />
+        <Pagination
+          showFirstButton
+          showLastButton
+          page={contextProducts?.page}
+          onChange={contextProducts?.onChangePage}
+          count={3}
+          shape="rounded"
+          color="primary"
+          size="large"
+        />
       </Box>
     </Box>
   );

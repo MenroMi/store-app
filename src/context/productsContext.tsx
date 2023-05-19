@@ -1,5 +1,6 @@
 // basic
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 // react-query
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
@@ -21,12 +22,15 @@ export interface IProductsContext {
   isLoading: boolean;
   isError: boolean;
   error: Error | unknown;
+  page: number;
   takeOnlyPrice: () => number[] | any[];
+  onChangePage: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
 // fc
 const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const router = useRouter();
 
   const { isLoading, isFetched, isError, error, data } = useQuery({
     queryKey: ['all', page],
@@ -41,15 +45,22 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
     return data?.map((product: InputsData) => product?.attributes?.price);
   };
 
+  const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    router.push(`?/page=${value}`);
+  };
+
   return (
     <ProductsContext.Provider
       value={{
         takeOnlyPrice,
+        onChangePage,
         isLoading,
         isFetched,
         isError,
         error,
         data,
+        page,
       }}
     >
       {children}

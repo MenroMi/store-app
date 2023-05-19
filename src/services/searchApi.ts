@@ -13,8 +13,6 @@ export const getProducts = async (page: number) => {
     return results.map((result: any) => result?.value?.data?.data);
   });
 
-  console.log(products);
-
   const productsEA = products.map(({ id, attributes }: AttrFromData) => {
     const { name, images, price, gender, teamName } = attributes;
 
