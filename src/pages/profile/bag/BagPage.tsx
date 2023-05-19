@@ -55,8 +55,8 @@ const BagPage = () => {
   } = useTheme<Theme>();
 
   useEffect(() => {
-    setSubTotal(reducePrice(context.products));
-  }, [context.products]);
+    setSubTotal(reducePrice(context?.products));
+  }, [context?.products]);
 
   return (
     <Layout title="Bag ">
@@ -83,7 +83,7 @@ const BagPage = () => {
               </Typography>
               <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
                 <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
-                  {context.products.map((product: ICardBagProps) => (
+                  {context?.products.map((product: ICardBagProps) => (
                     <ProductCardBag
                       key={product.id}
                       product={product}
