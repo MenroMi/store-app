@@ -30,6 +30,8 @@ export enum Routes {
   home = '/profile/home',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
+  search = '/catalog/search',
+  settings = '/profile/settings/',
 }
 
 export const NAV_LINKS = [
@@ -39,11 +41,11 @@ export const NAV_LINKS = [
   },
   {
     name: 'For women',
-    to: '/##',
+    to: Routes.search,
   },
   {
     name: 'For men',
-    to: '/##',
+    to: Routes.search,
   },
 ];
 
@@ -80,7 +82,7 @@ export const ASIDE_MENU_LINKS = [
     id: 1,
     icon: profileIcon,
     name: 'My profile',
-    to: '/profile/products/',
+    to: Routes.myProducts,
   },
   {
     id: 2,
@@ -99,13 +101,13 @@ export const ASIDE_MENU_LINKS = [
     id: 4,
     icon: settingsIcon,
     name: 'Settings',
-    to: '/profile/settings/',
+    to: Routes.settings,
   },
   {
     id: 5,
     icon: logoutIcon,
     name: 'Log out',
-    to: '/auth/login',
+    to: Routes.search,
   },
 ];
 
