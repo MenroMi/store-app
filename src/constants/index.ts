@@ -22,7 +22,7 @@ export enum Routes {
   register = '/auth/register',
   login = '/auth/login',
   forgot = '/auth/forgot',
-  reset = '/auth/reset',
+  reset = '/auth/reset-password',
   sign = '/auth/mobile-login',
   error404 = '/404',
   error500 = '/500',
@@ -35,7 +35,7 @@ export enum Routes {
 export const NAV_LINKS = [
   {
     name: 'Home',
-    to: '/profile/home',
+    to: Routes.home,
   },
   {
     name: 'For women',
@@ -51,27 +51,27 @@ export const NAV_BURGER_LINKS = [
   {
     icon: leftBurgerSetting,
     name: 'Home',
-    to: '/home',
+    to: Routes.home,
   },
   {
     icon: bonusAccountIcon,
-    name: 'Products',
-    to: '/',
+    name: 'Add Product',
+    to: Routes.addProduct,
   },
   {
     icon: bag,
     name: 'Bag',
-    to: '/',
+    to: Routes.bag,
   },
   {
     icon: profileIcon,
     name: 'My profile',
-    to: '/',
+    to: Routes.home,
   },
   {
     icon: logoutIcon,
     name: 'Log In',
-    to: '/',
+    to: Routes.login,
   },
 ];
 
@@ -212,3 +212,5 @@ export const ONE_MOCKED_PRODUCT = {
   productPrice: 160,
   productCategory: "Women's shoes",
 };
+
+export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api';

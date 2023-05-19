@@ -1,234 +1,150 @@
 // basic
-import Head from 'next/head';
 import { useState } from 'react';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 
 // mui
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Grid,
-  OutlinedInput,
-  TextField,
-  Theme,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-
-// image
-import productImageExample from '@/assets/forgotResetBg.png';
+import { Box } from '@mui/material';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
 
 // components
-import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
-import AddProductUploadImage from '@/components/UI/AddProduct/AddProductUploadImage/AddProductUploadImage';
-import AddProductSelect from '@/components/UI/AddProduct/AddProductSelect/AddProductSelect';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
+import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
 
 // constants
-import { BRANDS, GENDERS, SHOE_SIZES } from '@/constants';
+import { Routes } from '@/constants';
+
+// services
+import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
+import { IProductData } from '@/types/addProductTypes';
 
 export default function AddProduct() {
+  const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
+  const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
+  const { data: categoriesData } = useQuery(['categories'], () => getDataWithField('categories'));
+  const { data: sizesData } = useQuery(['sizes'], () => getDataWithField('sizes', 'value'));
+  const { data: id } = useQuery(['id'], () => getUserID(token));
+
   const [productName, setProductName] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
   const [category, setCategory] = useState<string>('');
-  const [gender, setGender] = useState<string>('male');
+  const [gender, setGender] = useState<string>('');
   const [brand, setBrand] = useState<string>('');
   const [selectedSize, setSelectedSize] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
 
-  const theme = useTheme<Theme>();
-  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  // urls of images. used to show the image on the screen
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  // files that will be sent to the server
+  const [imagesToPost, setImagesToPost] = useState<File[]>([]);
 
-  const handleSelectSize = (size: string) => {
-    setSelectedSize(size);
+  // hardcoded token, later will be replaced with token from the server
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMwLCJpYXQiOjE2ODMyMTYyMDUsImV4cCI6MTY4NTgwODIwNX0.1XQ60Efb97NerIhgLLgX-HU5Lnb7z6Rr9YH-M2JJNDQ';
+
+  const router = useRouter();
+
+  // submit the form
+  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images));
+
+  // executes when we add an image
+  const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const image = e.currentTarget?.files?.[0];
+    if (image && selectedImages.length < 4) {
+      // create url of the image to show the image on the screen
+      setSelectedImages((prevState) => [...prevState, URL.createObjectURL(image)]);
+      setImagesToPost((prevState) => [...prevState, image]);
+    }
   };
 
+  const handlePostProduct = async (images: File[]) => {
+    // promises to upload all images to server
+    const uploadPromises = images.map((image: File) => uploadImage(image));
+
+    try {
+      // upload all images
+      const responses = await Promise.all(uploadPromises);
+
+      // get image ids returned from server
+      const imageIds = responses.map((response) => response.data[0].id);
+
+      const productData: IProductData = {
+        data: {
+          description: description,
+          images: imageIds,
+          name: productName,
+          categories: category,
+          price: +price,
+          brand: brand,
+          gender: gender,
+          teamName: 'ea-team',
+          uniqueID: Date.now(),
+          size: selectedSize,
+          userID: id?.data.id,
+        },
+      };
+
+      return postProduct(productData, token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = () => {
+    mutate(imagesToPost, {
+      onSuccess: () => router.push(Routes.myProducts),
+      onError: () => router.push(Routes.error500),
+    });
+  };
   return (
     <Layout title="Add Product">
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
-        <Box sx={{ mt: '38px', maxWidth: '1480px', width: '100%' }}>
-          <form>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4.5 }}>
-              <Typography variant="h2">Add product</Typography>
-              {!queryDownLg && (
-                <Box sx={{ display: 'flex' }}>
-                  <Button variant="outlined" sx={{ padding: '10px 40px', mr: 2.5 }}>
-                    Schedule
-                  </Button>
-                  <Button variant="contained" type="submit" sx={{ padding: '10px 60px' }}>
-                    Save
-                  </Button>
-                </Box>
-              )}
-            </Box>
-
-            <Typography variant="body1" sx={{ maxWidth: '890px' }}>
-              Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out
-              print, graphic or web designs. The passage is attributed to an unknown typesetter in
-              the 15th century who is thought to have scrambled parts of Cicero&apos;s De Finibus
-              Bonorum et Malorum for use in a type specimen book. It usually begins with:
-            </Typography>
-
-            <Box
-              sx={{
-                display: 'flex',
-                mt: 6,
-                justifyContent: 'space-between',
-                flexDirection: queryDownLg ? 'column' : 'row',
-              }}
-            >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  maxWidth: {
-                    xl: '436px',
-                    lg: '350px',
-                  },
-                }}
-              >
-                <FormControl sx={{ mb: 3 }}>
-                  <FormLabel htmlFor="product-name">
-                    <Typography variant="caption">Product name</Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    sx={{ mt: 1 }}
-                    id="product-name"
-                    placeholder="Nike Air Max 90"
-                    required
-                    type="text"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
-                  />
-                </FormControl>
-
-                <FormControl sx={{ mb: 3 }}>
-                  <FormLabel htmlFor="category">
-                    <Typography variant="caption">Category</Typography>
-                  </FormLabel>
-                  <OutlinedInput
-                    sx={{ mt: 1.5 }}
-                    id="category"
-                    placeholder="Sport"
-                    required
-                    type="text"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                  />
-                </FormControl>
-
-                <Box sx={{ display: 'flex', mb: 3, width: '100%' }}>
-                  <AddProductSelect
-                    id="gender"
-                    label="Gender"
-                    options={GENDERS}
-                    selectedValue={gender}
-                    handleChangeValue={setGender}
-                  />
-
-                  <AddProductSelect
-                    id="brand"
-                    label="Brand"
-                    options={BRANDS}
-                    selectedValue={brand}
-                    handleChangeValue={setBrand}
-                  />
-                </Box>
-
-                <FormControl>
-                  <FormLabel htmlFor="description">
-                    <Typography variant="caption">Description</Typography>
-                  </FormLabel>
-                  <TextField
-                    sx={{ mt: 1 }}
-                    id="description"
-                    placeholder="Do not exceed 300 characters"
-                    multiline
-                    required
-                    rows={11}
-                    inputProps={{ maxLength: 300 }}
-                  />
-                </FormControl>
-
-                <AddProductRadioGroup
-                  handleSelectSize={handleSelectSize}
-                  sizes={SHOE_SIZES}
-                  selectedSize={selectedSize}
-                />
-              </Box>
-
-              <Box>
-                <Typography
-                  variant="caption"
-                  sx={{ mb: 2.5, display: 'block', marginTop: queryDownLg ? '24px' : 0 }}
-                >
-                  Product images
-                </Typography>
-                {queryDownMd ? (
-                  <input type="file" name="images" multiple={true} />
-                ) : (
-                  <Grid
-                    container
-                    sx={{
-                      maxWidth: {
-                        xl: '692px',
-                        lg: '500px',
-                      },
-                    }}
-                    spacing={{
-                      xl: 6.5,
-                      lg: 4,
-                      md: 2,
-                    }}
-                  >
-                    <Grid item xs={6} sx={{ maxWidth: '320px', maxHeight: '380px' }}>
-                      <AddProductUploadImage />
-                    </Grid>
-
-                    {Array(3)
-                      .fill({
-                        productImageSrc: productImageExample,
-                      })
-                      .map((productImage, index) => (
-                        <Grid
-                          key={index}
-                          item
-                          xs={6}
-                          sx={{
-                            maxWidth: '320px',
-                            maxHeight: '380px',
-                          }}
-                        >
-                          <Image
-                            src={productImage.productImageSrc}
-                            alt="Product image"
-                            style={{ maxWidth: '100%', height: '100%' }}
-                          />
-                        </Grid>
-                      ))}
-                  </Grid>
-                )}
-              </Box>
-              {queryDownLg && (
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-                  <Button variant="outlined" sx={{ padding: '10px 40px', mr: 2.5 }}>
-                    Schedule
-                  </Button>
-                  <Button variant="contained" type="submit" sx={{ padding: '10px 60px' }}>
-                    Save
-                  </Button>
-                </Box>
-              )}
-            </Box>
-          </form>
-        </Box>
+        <FormAddProduct
+          isLoading={isLoading}
+          sizes={sizesData}
+          productName={productName}
+          price={price}
+          brand={brand}
+          category={category}
+          gender={gender}
+          description={description}
+          selectedImages={selectedImages}
+          selectedSize={selectedSize}
+          brandsOptions={brandsData}
+          gendersOptions={gendersData}
+          handleChooseImage={handleChooseImage}
+          handleSelectSize={setSelectedSize}
+          handleSubmit={handleSubmit}
+          setSize={setSelectedSize}
+          setBrand={setBrand}
+          setPrice={setPrice}
+          setCategory={setCategory}
+          setDescription={setDescription}
+          setGender={setGender}
+          setProductName={setProductName}
+          categoryOptions={categoriesData}
+        />
       </Box>
     </Layout>
   );
+}
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery(['brands'], () => getDataWithField('brands')),
+    queryClient.prefetchQuery(['genders'], () => getDataWithField('genders')),
+    queryClient.prefetchQuery(['categories'], () => getDataWithField('categories')),
+    queryClient.prefetchQuery(['sizes'], () => getDataWithField('sizes', 'value')),
+  ]);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 }

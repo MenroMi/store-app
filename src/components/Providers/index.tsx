@@ -1,11 +1,17 @@
-// basik
-import dynamic from 'next/dynamic';
-import { useState, useEffect, ReactNode, Suspense } from 'react';
-
 // theme
 import theme from '@/utils/mui/theme';
-import { ThemeProvider } from '@mui/material/styles';
 
+import { DehydratedState } from '@tanstack/react-query';
+import { ReactNode } from 'react';
+
+// providers
+import { ThemeProvider } from '@mui/material/styles';
+import AuthProvider from './auth';
+import ReactQueryProvider from './queryClient';
+
+export interface IProvidersProps {
+    children: ReactNode;
+    dehydrateState: DehydratedState;
 // context
 import FiltersProvider from '@/context/filtersContext';
 import ProductsProvider from '@/context/productsContext';
@@ -19,15 +25,16 @@ interface IProvidersProps {
   dehydrateState: DehydratedState;
 }
 
-const ReactQueryDevtoolsProduction = dynamic(
-  () =>
-    import('@tanstack/react-query-devtools/build/lib/index.prod.js').then((d) => ({
-      default: d.ReactQueryDevtools,
-    })),
-  { suspense: true }
-);
-
 export default function Providers({ children, dehydrateState }: IProvidersProps) {
+    return (
+        <ReactQueryProvider dehydrateState={dehydrateState}>
+            <AuthProvider>
+                <ThemeProvider theme={theme}>
+                    {children}
+                </ThemeProvider>
+            </AuthProvider>
+        </ReactQueryProvider>
+    );
   const [queryClient] = useState(() => new QueryClient());
   const [showDevtools, setShowDevtools] = useState(false);
 
