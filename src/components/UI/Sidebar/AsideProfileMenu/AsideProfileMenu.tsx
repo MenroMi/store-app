@@ -13,9 +13,12 @@ import { CustomCircleNotification } from './styles';
 
 // constants
 import { ASIDE_MENU_LINKS } from '@/constants';
+import { useContext } from 'react';
+import { AuthUserContext } from '@/components/Providers/auth';
 
 const AsideProfileMenu: React.FC = (): JSX.Element => {
   const { palette } = useTheme<Theme>();
+  const {setUserToken} = useContext(AuthUserContext)
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '320px' }}>
@@ -39,6 +42,11 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
                     '&:hover': {
                       textDecoration: 'underline',
                     },
+                  }}
+                  onClick={() => {
+                    setUserToken('guest')
+                    localStorage.removeItem('token')
+                    sessionStorage.removeItem('token')
                   }}
                 >
                   <Typography variant="h6">{name}</Typography>
