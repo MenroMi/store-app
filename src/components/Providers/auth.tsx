@@ -11,7 +11,7 @@ export type IAuthProviderProps = {
   children: ReactNode;
 };
 export type IAuthUserContext = {
-  userToken: string;
+  userToken: string | null;
   setUserToken: Dispatch<SetStateAction<string | null>>;
 };
 
