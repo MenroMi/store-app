@@ -132,7 +132,7 @@ export default function AddProduct() {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   await Promise.all([
