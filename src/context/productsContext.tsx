@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 
 // react-query
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
-import { getProducts } from '@/services/searchApi';
+import { getPaginationData, getProducts } from '@/services/searchApi';
 import { AttrFromData } from '@/types/cardListTypes';
 import { InputsData } from '@/types/filterListTypes';
+import { Routes } from '@/constants';
 
 // context
 export const ProductsContext = React.createContext<IProductsContext | null>(null);
@@ -23,6 +24,7 @@ export interface IProductsContext {
   isError: boolean;
   error: Error | unknown;
   page: number;
+  maxPage: number;
   takeOnlyPrice: () => number[] | any[];
   onChangePage: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
@@ -46,8 +48,17 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
     queryFn: () => getProducts(currentPage),
   });
 
+  const paginationQuery = useQuery({
+    queryKey: ['pagination'],
+    queryFn: () => getPaginationData(),
+  });
+
   useEffect(() => {
-    if (currentPage === 1 && router.asPath.search(/\d/) === -1) {
+    if (
+      currentPage === 1 &&
+      router.asPath.search(/\d/) === -1 &&
+      router.pathname === Routes.search
+    ) {
       router.push(`?page=1`);
     }
   }, []);
@@ -74,6 +85,7 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
         error,
         data,
         page: currentPage,
+        maxPage: paginationQuery?.data?.pageCount,
       }}
     >
       {children}

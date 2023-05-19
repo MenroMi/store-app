@@ -4,7 +4,7 @@ import { AttrFromData } from '@/types/cardListTypes';
 export const getProducts = async (page: number) => {
   const pagination = await getDataFromServer(
     `/products`,
-    `pagination[page]=${page}&pagination[pageSize]=16`
+    `pagination[page]=${page}&pagination[pageSize]=25`
   ).then((res) => res?.data?.data);
 
   const products = await Promise.allSettled(
@@ -73,4 +73,10 @@ export const getFilters = async () => {
   });
 
   return res;
+};
+
+export const getPaginationData = async () => {
+  const paginationData = await getDataFromServer('/products');
+
+  return paginationData?.data?.meta?.pagination;
 };
