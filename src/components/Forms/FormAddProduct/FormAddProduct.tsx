@@ -193,72 +193,21 @@ export default function FormAddProduct({
           </Box>
 
           <Box sx={{ width: queryDownLg ? '100%' : '50%' }}>
-            <Typography
-              variant="caption"
-              sx={{ mb: 2.5, display: 'block', marginTop: queryDownLg ? '24px' : 0 }}
-            >
-              Product images
-            </Typography>
-            {queryDownMd ? (
-              <input type="file" name="images" multiple={true} />
-            ) : (
-              <Grid
-                container
-                sx={{
-                  maxWidth: {
-                    xl: '692px',
-                    lg: '500px',
-                  },
-                }}
-                spacing={{
-                  xl: 6.5,
-                  lg: 4,
-                  md: 2,
-                }}
-              >
-                <Grid
-                  item
-                  xs={6}
-                  sx={{
-                    width: queryDownLg ? '190px' : '320px',
-                    height: queryDownLg ? '250px' : '380px',
-                  }}
-                >
-                  <AddProductUploadImage handleChooseImage={handleChooseImage} />
-                </Grid>
-
-                {selectedImages?.map((productImage, index) => (
-                  <Grid
-                    key={index}
-                    item
-                    xs={6}
-                    sx={{
-                      maxWidth: queryDownLg ? '190px' : '320px',
-                      maxHeight: queryDownLg ? '250px' : '380px',
-                    }}
-                  >
-                    <Image
-                      src={productImage}
-                      alt="Product image"
-                      style={{ width: '100%', height: '100%' }}
-                      width={queryDownLg ? 190 : 320}
-                      height={queryDownLg ? 250 : 380}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            )}
+            <AddProductUploadImage
+              handleChooseImage={handleChooseImage}
+              selectedImages={selectedImages}
+            />
           </Box>
 
           {queryDownLg && (
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
               <Button
-                variant={isLoading ? 'outlined' : 'contained'}
+                variant="contained"
                 type="submit"
                 disabled={isLoading}
                 sx={{ padding: '10px 60px' }}
               >
-                Save
+                {isLoading ? <ButtonLoader /> : 'Save'}
               </Button>
             </Box>
           )}

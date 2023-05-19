@@ -14,6 +14,7 @@ export interface ISizesOptionsData {
 
 export interface IAddProductUploadImageProps {
   handleChooseImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  selectedImages: string[];
 }
 
 export interface IAddProductRadioGroup {
