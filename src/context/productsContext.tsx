@@ -35,22 +35,25 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
   const { page } = router.query;
   let currentPage: number;
 
+  const paginationQuery = useQuery({
+    queryKey: ['pagination'],
+    queryFn: () => getPaginationData(),
+  });
+
   if (typeof page === 'undefined') {
     currentPage = 1;
   } else if (Array.isArray(page)) {
     currentPage = 1;
+  } else if (paginationQuery?.data?.pageCount < parseInt(page) || parseInt(page) <= 0) {
+    currentPage = 1;
+    router.push(`?page=1`);
   } else {
     currentPage = parseInt(page);
   }
 
-  const { isLoading, isFetched, isError, error, data } = useQuery({
+  const productsQuery = useQuery({
     queryKey: ['all', currentPage],
     queryFn: () => getProducts(currentPage),
-  });
-
-  const paginationQuery = useQuery({
-    queryKey: ['pagination'],
-    queryFn: () => getPaginationData(),
   });
 
   useEffect(() => {
@@ -64,10 +67,10 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
   }, []);
 
   const takeOnlyPrice = () => {
-    if (typeof data === 'undefined') {
+    if (typeof productsQuery?.data === 'undefined') {
       return [];
     }
-    return data?.map((product: InputsData) => product?.attributes?.price);
+    return productsQuery?.data?.map((product: InputsData) => product?.attributes?.price);
   };
 
   const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -79,11 +82,11 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
       value={{
         takeOnlyPrice,
         onChangePage,
-        isLoading,
-        isFetched,
-        isError,
-        error,
-        data,
+        isLoading: productsQuery?.isLoading,
+        isFetched: productsQuery?.isFetched,
+        isError: productsQuery?.isError,
+        error: productsQuery?.error,
+        data: productsQuery?.data,
         page: currentPage,
         maxPage: paginationQuery?.data?.pageCount,
       }}
