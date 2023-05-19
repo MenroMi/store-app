@@ -24,7 +24,7 @@ import AddProductUploadImage from '@/components/UI/AddProduct/AddProductUploadIm
 
 // interfaces
 import { IFormAddProductProps } from '@/types/addProductTypes';
-import ButtonLoader from '@/components/UI/ButtonLoader/ButtonLoader';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 export default function FormAddProduct({
   productName,

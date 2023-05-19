@@ -9,7 +9,7 @@ import DeleteIcon from '@/assets/icons/delete.svg';
 import { CustomButton } from './styles';
 
 // context
-import { BagContext } from '@/contexts/bag/BagContext';
+import { BagContext } from '@/context/BagContext';
 import { useContext } from 'react';
 import { CardBagContextType } from '@/types/productCardBag';
 

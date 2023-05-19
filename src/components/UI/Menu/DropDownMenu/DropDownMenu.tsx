@@ -60,7 +60,7 @@ const DropDownMenu: React.FC = (): JSX.Element => {
           horizontal: 'left',
         }}
       >
-        {pathname === Routes.home ? setMenuItems(homeItems!) : setMenuItems(othersItems!)}
+        {pathname === Routes.myProducts ? setMenuItems(homeItems!) : setMenuItems(othersItems!)}
       </CustomDropDownMenu>
     </>
   );

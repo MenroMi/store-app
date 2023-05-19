@@ -38,7 +38,7 @@ import {
 
 // interface
 import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
-import { BagContext } from '@/contexts/bag/BagContext';
+import { BagContext } from '@/context/BagContext';
 
 const BagPage = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));

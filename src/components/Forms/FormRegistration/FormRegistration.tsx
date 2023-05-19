@@ -23,7 +23,7 @@ import { Routes } from '@/constants';
 
 // interface
 import { IFormProps } from '@/types/formTypes';
-import ButtonLoader from '@/components/UI/ButtonLoader/ButtonLoader';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 import { ChangeEvent } from 'react';
 
 const FormMui = styled('form')({

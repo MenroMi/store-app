@@ -2,10 +2,9 @@
 import BagPage from './BagPage';
 
 // interface
-import { BagContextProvider } from '@/contexts/bag/BagContext';
+import { BagContextProvider } from '@/context/BagContext';
 
 const Bag = () => {
-
   return (
     <BagContextProvider>
       <BagPage />

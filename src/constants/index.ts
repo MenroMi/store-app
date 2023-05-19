@@ -88,14 +88,7 @@ export const ASIDE_MENU_LINKS = [
     id: 2,
     icon: bagIcon,
     name: 'My orders',
-    to: '#',
-    // to: '/history/orders/',
-  },
-  {
-    id: 3,
-    icon: wishListIcon,
-    name: 'Wish list',
-    to: '/#',
+    to: '/profile/bag/',
   },
   {
     id: 4,
@@ -197,11 +190,14 @@ export const BRANDS: string[] = ['Nike', 'Adidas', 'Puma', 'Reebok'];
 
 export const GENDERS: string[] = ['Male', 'Feemale'];
 
-export const homeItems: MenuItemParams[] = [{ id: 1, label: 'Delete', method: () => {} }];
+export const homeItems: MenuItemParams[] = [
+  { id: 1, label: 'View', method: () => {} },
+  { id: 2, label: 'Edit', method: () => {} },
+  { id: 3, label: 'Delete', method: () => {} },
+];
 export const othersItems: MenuItemParams[] = [
   { id: 1, label: 'View', method: () => {} },
-  { id: 2, label: 'Add to Wish List', method: () => {} },
-  { id: 3, label: 'Add to Cart', method: () => {} },
+  { id: 2, label: 'Add to Cart', method: () => {} },
 ];
 
 export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
