@@ -29,6 +29,7 @@ export enum Routes {
   bag = '/profile/bag/',
   home = '/profile/home',
   addProduct = '/profile/products/add',
+  myProducts = '/profile/products',
 }
 
 export const NAV_LINKS = [
@@ -208,3 +209,5 @@ export const ONE_MOCKED_PRODUCT = {
   productPrice: 160,
   productCategory: "Women's shoes",
 };
+
+export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api';

@@ -6,13 +6,8 @@ import React from 'react';
 // assets
 import downArrow from '@/assets/icons/down.svg';
 
-interface IAddProductSelect {
-  id: string;
-  label: string;
-  selectedValue: string;
-  handleChangeValue: (value: string) => void;
-  options: string[];
-}
+// interfaces
+import { IAddProductSelect } from '@/types/addProductTypes';
 
 export default function AddProductSelect({
   id,
@@ -20,9 +15,12 @@ export default function AddProductSelect({
   selectedValue,
   handleChangeValue,
   options,
+  selectName,
+  width = '100%',
+  marginRight = 0,
 }: IAddProductSelect) {
   return (
-    <FormControl sx={{ mr: 2, width: '210px' }}>
+    <FormControl sx={{ mr: marginRight, width: width }}>
       <FormLabel htmlFor={id}>
         <Typography variant="caption">{label}</Typography>
       </FormLabel>
@@ -31,13 +29,13 @@ export default function AddProductSelect({
         required
         id={id}
         value={selectedValue}
+        name={selectName}
         onChange={(e) => handleChangeValue(e.target.value)}
         sx={{ mt: 1.5 }}
       >
-        {options.map((gender, index) => (
-          // fix key in the future, index is bad practice
-          <MenuItem key={index} value={gender}>
-            <Typography variant="body1">{gender}</Typography>
+        {options?.map((option) => (
+          <MenuItem key={option.id} value={option.id}>
+            <Typography variant="body1">{option.attributes.name}</Typography>
           </MenuItem>
         ))}
       </Select>

@@ -25,7 +25,6 @@ import Layout from '@/components/Layout/MainLayout';
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import CardList from '@/components/UI/Cards/CardList/CardList';
-import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 import { Routes } from '@/constants';
 
@@ -89,7 +88,7 @@ export default function Home() {
             >
               <Typography variant="h2">My products</Typography>
               {!queryDownMd && (
-                <LinkMui component={Link} href="/add-product" underline="none">
+                <LinkMui component={Link} href={Routes.addProduct} underline="none">
                   <Button variant="contained" sx={{ padding: '10px 26px' }}>
                     Add product
                   </Button>

@@ -1,4 +1,5 @@
 // libs
+import { IAddProductRadioGroup } from '@/types/addProductTypes';
 import {
   FormControl,
   FormLabel,
@@ -10,12 +11,6 @@ import {
   useTheme,
   Theme,
 } from '@mui/material';
-
-interface IAddProductRadioGroup {
-  selectedSize: string;
-  handleSelectSize: (size: string) => void;
-  sizes: string[];
-}
 
 export default function AddProductRadioGroup({
   selectedSize,
@@ -36,34 +31,40 @@ export default function AddProductRadioGroup({
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-between',
           width: '100%',
           mt: 1,
+          mb: 4,
         }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSelectSize(e.target.value)}
       >
-        {sizes.map((size) => (
+        {sizes?.map((size) => (
           <FormControlLabel
-            key={size}
-            value={size}
+            key={size.id}
+            value={size.id}
             sx={{ m: 0 }}
             control={<Radio style={{ display: 'none' }} />}
             label={
               <Box
-                onClick={() => handleSelectSize(size)}
+                onClick={() => {
+                  handleSelectSize(size.id.toString());
+                  console.log(size.id);
+                }}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: 2,
+                  margin: '8px 8px 8px 0',
                   border: '1px solid #494949',
                   borderRadius: 1,
                   cursor: 'pointer',
                   userSelect: 'none',
-                  borderColor: `${selectedSize === size ? theme.palette.primary.main : '#494949'}`,
+                  borderColor: `${
+                    selectedSize === size.id.toString() ? theme.palette.primary.main : '#494949'
+                  }`,
                 }}
               >
-                <Typography variant="body1">{size}</Typography>
+                <Typography variant="body1">EU-{size.attributes.value}</Typography>
               </Box>
             }
           />
