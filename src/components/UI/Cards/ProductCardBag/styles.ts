@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const CustomBagWrapper = styled('div')(() => ({
@@ -12,10 +11,4 @@ export const CustomBox = styled('div')(() => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
-}));
-
-export const CustomButton = styled(Button)(() => ({
-  padding: '0',
-  justifyContent: 'flex-end',
-  minHeight: '28px',
 }));

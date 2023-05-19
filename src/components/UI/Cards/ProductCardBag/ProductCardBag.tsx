@@ -1,30 +1,50 @@
 // basic
 import Image from 'next/image';
+import { useContext, useEffect, useState } from 'react';
 
 // mui
 import { Box, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
 
-// images
-import DeleteIcon from '@/assets/icons/delete.svg';
-
 // components
-import BagParameterButton from '@/components/UI/Buttons/BagParameterButton/BagParameterButton';
+import BagQuantityButton from '@/components/UI/Buttons/BagQuantityButton/BagQuantityButton';
+import BagDeleteButton from '@/components/UI/Buttons/BagDeleteButton/BagDeleteButton';
 
 // styled components
-import { CustomBagWrapper, CustomBox, CustomButton } from './styles';
+import { CustomBagWrapper, CustomBox } from './styles';
+
+// context
+import { BagContext } from '@/contexts/bag/BagContext';
 
 // interface
-import { ICardBagProps } from '@/types/productCardBag';
+import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
+interface IProductBagProps {
+  product: ICardBagProps;
+  deleteProduct: (id: number) => void;
+  changeQuantity: (id: number, quantity: number) => void;
+}
 
-const ProductCardBag = ({
-  productImageSrc,
-  productName,
-  productPrice,
-  productCategory,
-  inStock,
-}: ICardBagProps) => {
+const ProductCardBag: React.FC<IProductBagProps> = ({ product }) => {
+  const context = useContext(BagContext) as CardBagContextType;
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const [quantity, setQuantity] = useState<number>(product.quantity);
+
+  const addProduct = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const removeProduct = () => {
+    if (quantity <= 1) {
+      setQuantity(1);
+    } else {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  useEffect(() => {
+    context.changeQuantity(product.id, quantity);
+  }, [quantity]);
 
   return (
     <>
@@ -45,7 +65,7 @@ const ProductCardBag = ({
         >
           <Box
             component={Image}
-            src={productImageSrc}
+            src={product.productImageSrc!}
             alt="Product"
             sx={{
               borderRadius: '6px',
@@ -66,42 +86,33 @@ const ProductCardBag = ({
                 width: '100%',
               }}
             >
-              <Typography variant="h3">{productName}</Typography>
-              <Typography variant="h5">{productCategory}</Typography>
+              <Typography variant="h3">{product.productName}</Typography>
+              <Typography variant="h5">{product.productCategory}</Typography>
               <Typography
                 variant="h4Warning"
                 sx={{
                   marginTop: '10px',
                 }}
               >
-                {inStock ? 'In Stock' : 'Not available'}
+                {product.inStock ? 'In Stock' : 'Not available'}
               </Typography>
             </Box>
             <Box>
-              <Typography variant="h3">${productPrice}</Typography>
+              <Typography variant="h3">${product.productPrice}</Typography>
             </Box>
           </CustomBox>
           <CustomBox
             sx={{
-              minHeight: { lg: '28px', md: 'auto' },
+              maxHeight: { sm: '28px', xs: '20px' },
             }}
           >
-            <BagParameterButton ButtonValue={'Quantity'} />
-            <CustomButton>
-              <Box
-                component={Image}
-                src={DeleteIcon}
-                alt="delete"
-                sx={{
-                  position: 'relative',
-                  right: '7px',
-                  width: queryUpSm ? 'auto' : '15px',
-                }}
-              ></Box>
-              <Typography variant="btnIconText" color={theme?.palette?.text?.iconLight}>
-                Delete
-              </Typography>
-            </CustomButton>
+            <BagQuantityButton
+              id={product.id}
+              quantity={product.quantity}
+              addProduct={addProduct}
+              removeProduct={removeProduct}
+            />
+            <BagDeleteButton id={product.id} deleteProduct={context.deleteProduct} />
           </CustomBox>
         </CustomBox>
       </CustomBagWrapper>
