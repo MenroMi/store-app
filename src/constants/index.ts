@@ -18,6 +18,20 @@ import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
 import productImage from '@/assets/singInBg.png';
 
+export enum Routes {
+  register = '/auth/register',
+  login = '/auth/login',
+  forgot = '/auth/forgot',
+  reset = '/auth/reset',
+  sign = '/auth/mobile-login',
+  error404 = '/404',
+  error500 = '/500',
+  bag = '/profile/bag/',
+  home = '/profile/home',
+  addProduct = '/profile/products/add',
+  myProducts = '/profile/products',
+}
+
 export const NAV_LINKS = [
   {
     name: 'Home',
@@ -94,19 +108,6 @@ export const ASIDE_MENU_LINKS = [
     to: '/auth/login',
   },
 ];
-
-export enum Routes {
-  register = '/auth/register',
-  login = '/auth/login',
-  forgot = '/auth/forgot',
-  reset = '/auth/reset',
-  sign = '/auth/mobile-login',
-  error404 = '/404',
-  error500 = '/500',
-  bag = '/profile/bag/',
-  home = '/profile/home',
-  addProduct = '/profile/products/add',
-}
 
 export const comments: IComment[] = [
   {
