@@ -1,10 +1,12 @@
 // basic
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useMutation } from '@tanstack/react-query';
 
 // mui
 import Typography from '@mui/material/Typography';
-import { Link as LinkMui, Box, useTheme } from '@mui/material';
+import { Link as LinkMui, Box, useTheme, useMediaQuery } from '@mui/material';
+import theme from '@/utils/mui/theme';
 
 // components
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
@@ -12,14 +14,21 @@ import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 
 // constants
 import { Routes } from '@/constants';
+import { registration } from '@/services/authService';
+import { IFormData } from '@/types/formDataTypes';
+import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
 
 const Registration = () => {
-  const [email, setEmail] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirm, setConfirm] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<IFormData>({
+    name: '',
+    email: '',
+    password: '',
+    confirm: '',
+    checked: false,
+  });
 
+  const { mutate, isLoading, isError, isSuccess } = useMutation(registration);
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const {
     palette: {
       primary: { main },
@@ -28,57 +37,64 @@ const Registration = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true);
+    const { email, name, confirm, password } = formData;
     if (email && password && name && confirm && password === confirm) {
       console.log(email, password, name, confirm);
+      mutate({ username: name, email, password });
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
   };
+
   return (
     <SplitLayout title="Registration">
-      <Typography variant="h2">Create an account</Typography>
-      <Typography
-        variant="body1"
-        sx={{
-          mt: 2,
-          mb: 6,
-        }}
-      >
-        Create an account to get an easy access to your dream shopping.
-      </Typography>
-      <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
-        <FormRegistration
-          handleSubmit={handleSubmit}
-          name={name}
-          setName={setName}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          confirm={confirm}
-          setConfirm={setConfirm}
-          loading={loading}
-        />
-        <Box
-          component={'div'}
-          sx={{
-            width: '436px',
-            textAlign: 'center',
-            mt: 2,
-          }}
-        >
-          <Typography variant="caption" sx={{ display: 'inline' }}>
-            Already have an account?{' '}
+      {isSuccess ? (
+        <InfoComment email={formData.email} />
+      ) : (
+        <>
+          <Typography variant="h2">Create an account</Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              mt: 2,
+              mb: isError ? 0 : 6,
+            }}
+          >
+            Create an account to get an easy access to your dream shopping.
           </Typography>
-          <LinkMui component={Link} href={Routes.login} underline="none">
-            <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
-              Log in
+          {isError && (
+            <Typography
+              variant="h4Bold"
+              sx={{ pb: 2, pt: queryDownMd ? '7.3px' : '1.14px', color: main }}
+            >
+              This name or email is taken
             </Typography>
-          </LinkMui>
-        </Box>
-      </Box>
+          )}
+          <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+            <FormRegistration
+              handleSubmit={handleSubmit}
+              loading={isLoading}
+              formData={formData}
+              setFormData={setFormData}
+            />
+            <Box
+              component={'div'}
+              sx={{
+                width: '436px',
+                textAlign: 'center',
+                mt: 2,
+              }}
+            >
+              <Typography variant="caption" sx={{ display: 'inline' }}>
+                Already have an account?{' '}
+              </Typography>
+              <LinkMui component={Link} href={Routes.login} underline="none">
+                <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
+                  Log in
+                </Typography>
+              </LinkMui>
+            </Box>
+          </Box>
+        </>
+      )}
     </SplitLayout>
   );
 };

@@ -13,13 +13,21 @@ import FormRegistration from '@/components/Forms/FormRegistration/FormRegistrati
 
 // constants
 import { Routes } from '@/constants';
+import { IFormData } from '@/types/formDataTypes';
+import { useMutation } from '@tanstack/react-query';
+import { reset } from '@/services/authService';
 
 const Reset = () => {
-  const [password, setPassword] = useState<string>('');
-  const [confirm, setConfirm] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<IFormData>({
+    password: '',
+    confirm: '',
+  });
+  const { mutate, isLoading, isSuccess } = useMutation(reset);
 
-  const router = useRouter();
+  const {
+    query: { code = '' },
+    push,
+  } = useRouter();
   const {
     palette: {
       primary: { main },
@@ -28,13 +36,10 @@ const Reset = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const { password, confirm } = formData;
     if (password && confirm && password === confirm) {
-      setLoading(true);
-      setTimeout(() => {
-        console.log(password, confirm);
-        router.push(Routes.login);
-        setLoading(false);
-      }, 3000);
+      mutate({ password, passwordConfirmation: confirm, code });
+      push(Routes.login);
     }
   };
   return (
@@ -52,11 +57,9 @@ const Reset = () => {
       <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
         <FormRegistration
           handleSubmit={handleSubmit}
-          password={password}
-          setPassword={setPassword}
-          confirm={confirm}
-          setConfirm={setConfirm}
-          loading={loading}
+          formData={formData}
+          setFormData={setFormData}
+          loading={isLoading}
         />
         <LinkMui
           component={Link}

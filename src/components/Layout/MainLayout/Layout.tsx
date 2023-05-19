@@ -8,6 +8,7 @@ interface ILayoutProps {
 }
 
 export default function Layout({ title, children }: ILayoutProps) {
+
   return (
     <>
       <Head>
