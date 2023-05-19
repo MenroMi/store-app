@@ -11,17 +11,17 @@ export type IAuthProviderProps = {
   children: ReactNode;
 };
 export type IAuthUserContext = {
-  userToken: null | string;
-  setUserToken: Dispatch<SetStateAction<string | null>>;
+  userToken: string;
+  setUserToken: Dispatch<SetStateAction<string>>;
 };
 
 export const AuthUserContext = createContext<IAuthUserContext>({
-  userToken: null,
+  userToken: '',
   setUserToken: () => {},
 });
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
-  const [userToken, setUserToken] = useState<string | null>('guest');
+  const [userToken, setUserToken] = useState<string>('guest');
   useEffect(() => {
     const localToken = localStorage.getItem('token');
     const sessionToken = sessionStorage.getItem('token');

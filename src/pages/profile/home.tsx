@@ -53,14 +53,12 @@ export default function Profile() {
   ];
 
   const theme = useTheme<Theme>();
-  const {userToken} = useContext(AuthUserContext)
   return (
     <Layout title="Profile">
 
       <Box sx={{ maxWidth: '1920px', display: 'flex', mt: '38px', gap: '60px' }}>
         <AsideProfileMenu />
         <Box>
-        <div>{userToken.slice(0,10)}</div>
           <UserProfile
             avatarSrc={avatarExample}
             profileTopBgSrc={profileTopBg}
