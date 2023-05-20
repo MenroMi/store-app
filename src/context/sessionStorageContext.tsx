@@ -33,7 +33,7 @@ const StorageProvider: React.FC<IStorageProvider> = ({ children }) => {
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!№;%:?*()_+=-@#$^~';
     let set = '';
 
-    while (set.length < 5) {
+    while (set.length < 10) {
       const randomIndex = Math.floor(Math.random() * characters.length);
       const randomCharacter = characters.charAt(randomIndex);
       if (!set.includes(randomCharacter)) {
