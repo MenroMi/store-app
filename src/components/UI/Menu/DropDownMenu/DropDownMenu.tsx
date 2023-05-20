@@ -39,19 +39,16 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
 
   const setMenuItems = (items: MenuItemParams[]) => {
     return items.map(({ id, label, method }): JSX.Element => {
-      if (typeof method === 'undefined') {
+      if (label === 'Add to Cart') {
         return (
-          <MenuItem key={id} onClick={() => method}>
+          <MenuItem key={id} onClick={() => contextStorage?.addUniqueID(productName, productID)}>
             {label}
           </MenuItem>
         );
       }
 
       return (
-        <MenuItem
-          key={id}
-          onClick={() => method(productID, productName, contextStorage?.setNewLengthFromStorage)}
-        >
+        <MenuItem key={id} onClick={() => method}>
           {label}
         </MenuItem>
       );

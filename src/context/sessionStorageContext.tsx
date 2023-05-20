@@ -9,6 +9,7 @@ interface IStorageProvider {
 export interface IStorageContext {
   storageLength: number;
   setNewLengthFromStorage: () => void;
+  addUniqueID: (x: string, y: number) => void;
 }
 
 // context
@@ -27,11 +28,30 @@ const StorageProvider: React.FC<IStorageProvider> = ({ children }) => {
     setStorageLength(sessionStorage.length);
   };
 
+  const addUniqueID = (label: string, id: number): void => {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!№;%:?*()_+=-@#$^~';
+    let set = '';
+
+    while (set.length < 5) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      const randomCharacter = characters.charAt(randomIndex);
+      if (!set.includes(randomCharacter)) {
+        set += randomCharacter;
+      }
+    }
+
+    sessionStorage.setItem(label + `_${set}`, `${id}`);
+    setNewLengthFromStorage();
+    return;
+  };
+
   return (
     <StorageContext.Provider
       value={{
         storageLength,
         setNewLengthFromStorage,
+        addUniqueID,
       }}
     >
       {children}
