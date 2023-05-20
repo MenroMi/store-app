@@ -101,7 +101,7 @@ export default ProductsProvider;
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(['filters', getProducts]);
+  await queryClient.prefetchQuery(['all', getProducts]);
 
   return {
     props: {

@@ -31,20 +31,10 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
   const [searchingBrand, setSearchingBrand] = useState<string>('');
   const context = useContext(FiltersContext);
 
-  // { id: number; attributes: { name: string } }[]
-
   const visibleBrandFilters = (inputs: any) => {
     return inputs.filter((input: any) =>
       input?.attributes?.name.toLowerCase().startsWith(searchingBrand.toLowerCase())
     );
-  };
-
-  const getAmounProducts = (brand: any) => {
-    let res = brand?.products?.data?.filter(
-      (product: { attributes: { teamName: string } }) => product?.attributes?.teamName === 'ea-team'
-    );
-
-    return res?.length > 100 ? '+' + res?.length : res?.length;
   };
 
   return (
@@ -65,6 +55,13 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
       />
       {visibleBrandFilters(inputs).map((input: any) => {
         const { id, attributes } = input;
+        const {
+          products: { data },
+        } = attributes;
+
+        if (data?.length <= 0) {
+          return;
+        }
 
         return (
           <Fragment key={id}>
@@ -91,7 +88,7 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
                 }
               />
               <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
-                ({getAmounProducts(attributes)})
+                ({data?.length > 100 ? '+100' : data?.length})
               </Box>
             </Box>
           </Fragment>
