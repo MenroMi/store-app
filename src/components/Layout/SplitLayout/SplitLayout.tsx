@@ -6,7 +6,7 @@ import { Routes, getImage } from '@/constants';
 import SignComments from '@/components/UI/Comments/SignComments/SignComments';
 import Head from 'next/head';
 
-const LayoutSignErrorPages = styled('div')`
+const LayoutAuthPages = styled('div')`
   max-width: 1920px;
   width: 100%;
   height: 100%;
@@ -23,18 +23,15 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
   const { pathname, push } = useRouter();
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
       <main>
-        <LayoutSignErrorPages>
-          <Grid container sx={{ height: 1 }}>
-            {pathname === Routes.login ||
-            pathname === Routes.register ||
-            pathname === Routes.forgot ||
-            pathname === Routes.reset ? (
+        <LayoutAuthPages>
+          <Grid container sx={{ height: 1}}>
               <Image
                 src={logo}
                 alt={'logoIcon'}
@@ -48,8 +45,7 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
                 height={queryDownMd ? 26.52 : 30}
                 onClick={() => push(Routes.home)}
               />
-            ) : null}
-            <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0 }}>
+            <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0, width:1}}>
               <Grid
                 container
                 sx={{
@@ -76,7 +72,7 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
               {pathname === Routes.register && <SignComments />}
             </Grid>
           </Grid>
-        </LayoutSignErrorPages>
+        </LayoutAuthPages>
       </main>
     </>
   );

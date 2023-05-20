@@ -57,7 +57,7 @@ const Sign = () => {
           >
             Sign in
           </Button>
-          <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', maxWidth: '436px' }}>
             <Typography variant="caption">Don’t have an account?</Typography>
             <LinkMui
               component={Link}
