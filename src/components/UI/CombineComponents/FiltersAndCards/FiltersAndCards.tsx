@@ -62,11 +62,10 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          rowGap: '50px',
+          rowGap: '16px',
           maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
           width: '100%',
           height: '100%',
-          pb: '30px',
         }}
       >
         <CardList />
