@@ -1,7 +1,7 @@
 export interface MenuItemParams {
   id: number;
   label: string;
-  method?: ((id: number, label: string) => void) | undefined;
+  method?: ((id: number, label: string, x?: () => void) => void) | undefined;
 }
 
 export interface IComment {

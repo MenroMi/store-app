@@ -201,8 +201,10 @@ export const othersItems: MenuItemParams[] = [
   {
     id: 2,
     label: 'Add to Cart',
-    method: (id, label) => {
-      return sessionStorage.setItem(label, `${id}`);
+    method: (id, label, checkStorage = () => {}) => {
+      sessionStorage.setItem(label, `${id}`);
+      checkStorage();
+      return;
     },
   },
 ];

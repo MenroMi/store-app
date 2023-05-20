@@ -1,28 +1,39 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import * as styles from './styles';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, Icon, InputAdornment, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, InputAdornment, Typography, useTheme, Theme } from '@mui/material';
 import { Routes } from '@/constants';
 
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 import CartIcon from '@/assets/icons/bag.svg';
-import Profile from '@/assets/icons/profile.svg'
+import Profile from '@/assets/icons/profile.svg';
 
 import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
 import { useRouter } from 'next/router';
 import { AuthUserContext } from '@/components/Providers/auth';
+import { StorageContext } from '@/context/sessionStorageContext';
 
 export default function Header() {
   const [isSearchClicled, setIsSearchClicked] = useState(false);
   const [isBurgerClicled, setIsBurgerClicked] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const {userToken} = useContext(AuthUserContext)
-  const {push} = useRouter()
+  const { userToken } = useContext(AuthUserContext);
+  const contextStorage = useContext(StorageContext);
+  const { push } = useRouter();
+  const {
+    palette: {
+      primary: { main },
+    },
+  } = useTheme<Theme>();
+
+  useEffect(() => {
+    contextStorage?.setNewLengthFromStorage();
+  }, []);
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
@@ -95,7 +106,32 @@ export default function Header() {
         />
         <styles.Cart>
           <Link href={Routes.bag}>
-            <Image width={22} src={CartIcon} alt="cart-icon" />
+            <Box sx={{ position: 'relative' }}>
+              <Image width={22} src={CartIcon} alt="cart-icon" />
+              <Box
+                bgcolor={main}
+                sx={{
+                  display: `${contextStorage?.storageLength === 0 ? 'none' : 'block'}`,
+                  position: 'absolute',
+                  top: '-5px',
+                  right: '-10px',
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                }}
+              >
+                <Box
+                  sx={{
+                    color: 'white',
+                    position: 'absolute',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                  }}
+                >
+                  {contextStorage?.storageLength}
+                </Box>
+              </Box>
+            </Box>
           </Link>
         </styles.Cart>
 
@@ -138,21 +174,24 @@ export default function Header() {
             </styles.NavList>
           )}
         </styles.Burger>
-        {!userToken || userToken === 'guest' &&
-        <Button
-          variant="text"
-          sx={{
-            display: {
-              md: 'flex',
-              xs: 'none',
-            },
-          }}
-          onClick={() => push(Routes.login)}
-        >
-          <Image src={Profile} alt={'LogIn'} width={23} height={23}/>
-          <Typography variant='subtitle2' sx={{pl:'4px'}}>Log in</Typography>
-        </Button>
-        }
+        {!userToken ||
+          (userToken === 'guest' && (
+            <Button
+              variant="text"
+              sx={{
+                display: {
+                  md: 'flex',
+                  xs: 'none',
+                },
+              }}
+              onClick={() => push(Routes.login)}
+            >
+              <Image src={Profile} alt={'LogIn'} width={23} height={23} />
+              <Typography variant="subtitle2" sx={{ pl: '4px' }}>
+                Log in
+              </Typography>
+            </Button>
+          ))}
       </styles.Options>
     </styles.Header>
   );

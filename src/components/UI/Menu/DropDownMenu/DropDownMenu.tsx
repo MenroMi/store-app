@@ -1,10 +1,13 @@
 // basic
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 // mui
 import { MenuItem, Box } from '@mui/material';
+
+// context
+import { StorageContext } from '@/context/sessionStorageContext';
 
 // images
 import dotsBtn from '@/assets/icons/dots.svg';
@@ -26,6 +29,7 @@ interface IDropDownMenuProps {
 
 const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
+  const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
 
@@ -44,7 +48,10 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
       }
 
       return (
-        <MenuItem key={id} onClick={() => method(productID, productName)}>
+        <MenuItem
+          key={id}
+          onClick={() => method(productID, productName, contextStorage?.setNewLengthFromStorage)}
+        >
           {label}
         </MenuItem>
       );
