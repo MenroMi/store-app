@@ -90,7 +90,7 @@ const CardList: React.FC<ICardListProps> = ({
             productName={name}
             productPrice={price}
           >
-            <DropDownMenu />
+            <DropDownMenu productName={name} productID={id} />
           </Card>,
           id
         );

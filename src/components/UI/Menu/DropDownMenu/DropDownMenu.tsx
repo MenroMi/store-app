@@ -1,5 +1,5 @@
 // basic
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -18,9 +18,15 @@ import { MenuItemParams } from '@/types';
 // constants
 import { Routes, homeItems, othersItems } from '@/constants';
 
-const DropDownMenu: React.FC = (): JSX.Element => {
+// interface
+interface IDropDownMenuProps {
+  productID: number;
+  productName: string;
+}
+
+const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
-  const { pathname } = useRouter();
+  const router = useRouter();
   const open = Boolean(anchorElement);
 
   const openDropDownMenu = (e: React.MouseEvent<HTMLElement>) => {
@@ -29,8 +35,16 @@ const DropDownMenu: React.FC = (): JSX.Element => {
 
   const setMenuItems = (items: MenuItemParams[]) => {
     return items.map(({ id, label, method }): JSX.Element => {
+      if (typeof method === 'undefined') {
+        return (
+          <MenuItem key={id} onClick={() => method}>
+            {label}
+          </MenuItem>
+        );
+      }
+
       return (
-        <MenuItem key={id} onClick={method}>
+        <MenuItem key={id} onClick={() => method(productID, productName)}>
           {label}
         </MenuItem>
       );
@@ -60,7 +74,9 @@ const DropDownMenu: React.FC = (): JSX.Element => {
           horizontal: 'left',
         }}
       >
-        {pathname === Routes.myProducts ? setMenuItems(homeItems!) : setMenuItems(othersItems!)}
+        {router.pathname === Routes.myProducts
+          ? setMenuItems(homeItems!)
+          : setMenuItems(othersItems!)}
       </CustomDropDownMenu>
     </>
   );
