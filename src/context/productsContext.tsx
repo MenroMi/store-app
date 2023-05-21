@@ -1,12 +1,13 @@
 // basic
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 // react-query
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
-import { getProducts } from '@/services/searchApi';
+import { getPaginationData, getProducts } from '@/services/searchApi';
 import { AttrFromData } from '@/types/cardListTypes';
 import { InputsData } from '@/types/filterListTypes';
+import { Routes } from '@/constants';
 
 // context
 export const ProductsContext = React.createContext<IProductsContext | null>(null);
@@ -23,31 +24,57 @@ export interface IProductsContext {
   isError: boolean;
   error: Error | unknown;
   page: number;
+  maxPage: number;
   takeOnlyPrice: () => number[] | any[];
   onChangePage: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
 // fc
 const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
-  const [page, setPage] = useState<number>(1);
   const router = useRouter();
+  const { page } = router.query;
+  let currentPage: number;
 
-  const { isLoading, isFetched, isError, error, data } = useQuery({
-    queryKey: ['all', page],
-    queryFn: () => getProducts(page),
-    refetchOnWindowFocus: false,
+  const paginationQuery = useQuery({
+    queryKey: ['pagination'],
+    queryFn: () => getPaginationData(),
   });
 
+  if (typeof page === 'undefined') {
+    currentPage = 1;
+  } else if (Array.isArray(page)) {
+    currentPage = 1;
+  } else if (paginationQuery?.data?.pageCount < parseInt(page) || parseInt(page) <= 0) {
+    currentPage = 1;
+    router.push(`?page=1`);
+  } else {
+    currentPage = parseInt(page);
+  }
+
+  const productsQuery = useQuery({
+    queryKey: ['all', currentPage],
+    queryFn: () => getProducts(currentPage),
+  });
+
+  useEffect(() => {
+    if (
+      currentPage === 1 &&
+      router.asPath.search(/\d/) === -1 &&
+      router.pathname === Routes.search
+    ) {
+      router.push(`?page=1`);
+    }
+  }, []);
+
   const takeOnlyPrice = () => {
-    if (typeof data === 'undefined') {
+    if (typeof productsQuery?.data === 'undefined') {
       return [];
     }
-    return data?.map((product: InputsData) => product?.attributes?.price);
+    return productsQuery?.data?.map((product: InputsData) => product?.attributes?.price);
   };
 
   const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-    router.push(`?/page=${value}`);
+    router.push(`?page=${value}`);
   };
 
   return (
@@ -55,12 +82,13 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
       value={{
         takeOnlyPrice,
         onChangePage,
-        isLoading,
-        isFetched,
-        isError,
-        error,
-        data,
-        page,
+        isLoading: productsQuery?.isLoading,
+        isFetched: productsQuery?.isFetched,
+        isError: productsQuery?.isError,
+        error: productsQuery?.error,
+        data: productsQuery?.data,
+        page: currentPage,
+        maxPage: paginationQuery?.data?.pageCount,
       }}
     >
       {children}
@@ -73,7 +101,7 @@ export default ProductsProvider;
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(['filters', getProducts]);
+  await queryClient.prefetchQuery(['all', getProducts]);
 
   return {
     props: {

@@ -21,7 +21,6 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
   const contextProducts = useContext(ProductsContext);
   const router = useRouter();
-  // +router.asPath[router.asPath.search(/\d/)] ||
 
   if (context?.isError) {
     return <h2>{(context?.error as Error).message}</h2>;
@@ -75,7 +74,7 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
           showLastButton
           page={contextProducts?.page}
           onChange={contextProducts?.onChangePage}
-          count={4}
+          count={contextProducts?.maxPage}
           shape="rounded"
           color="primary"
           size="large"
