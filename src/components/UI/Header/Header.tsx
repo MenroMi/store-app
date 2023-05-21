@@ -3,31 +3,74 @@ import * as styles from './styles';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, Icon, InputAdornment, SvgIcon, Typography } from '@mui/material';
+import { Button, InputAdornment, Typography } from '@mui/material';
 import { Routes } from '@/constants';
 
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 import CartIcon from '@/assets/icons/bag.svg';
-import Profile from '@/assets/icons/profile.svg'
+import Profile from '@/assets/icons/profile.svg';
 
 import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
 import { useRouter } from 'next/router';
 import { AuthUserContext } from '@/components/Providers/auth';
+import { INavItem } from '@/types/INavItem';
+import AsideProfile from '../Sidebar/AsideProfile/AsideProfile';
 
 export default function Header() {
   const [isSearchClicled, setIsSearchClicked] = useState(false);
   const [isBurgerClicled, setIsBurgerClicked] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
-  const {userToken} = useContext(AuthUserContext)
-  const {push} = useRouter()
+  const { userToken, setUserToken } = useContext(AuthUserContext);
+  const { push } = useRouter();
+  const isAuth = () => {
+    return userToken && userToken !== 'guest';
+  };
+  const nav_burger_links = isAuth() ? NAV_BURGER_LINKS.slice(3) : NAV_BURGER_LINKS.slice(0, 3);
+
+  const logOut = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.currentTarget.textContent === 'Log Out') {
+      setUserToken('guest');
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+    }
+  };
+  /**
+   *
+   * @param item navigation item
+   * @param itemToChech dynamic navigation item
+   * @param unAuthItem item value if auth
+   * @param authItem item value if not auth
+   * @param type type of item field
+   * @returns
+   */
+
+  const dynamicParams = (
+    item: INavItem,
+    itemToCheck: string,
+    unAuthItem: string,
+    authItem: string,
+    type: string
+  ) => {
+    if (type === 'name') {
+      return item.name === itemToCheck
+        ? item.name === itemToCheck && isAuth()
+          ? unAuthItem
+          : authItem
+        : item.name;
+    } else if (type === 'link')
+      return item.name === itemToCheck
+        ? item.to === itemToCheck && isAuth()
+          ? unAuthItem
+          : authItem
+        : item.to;
+  };
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
       <styles.Nav>
-        <Link href={Routes.home}>
+        <Link href={isAuth() ? Routes.home : Routes.search}>
           <Image src={Logo} alt="logo" />
         </Link>
         <styles.NavList
@@ -41,7 +84,11 @@ export default function Header() {
         >
           {NAV_LINKS.map((item, index) => (
             <styles.NavListItem key={index}>
-              <styles.NavListLink href={item.to}>{item.name}</styles.NavListLink>
+              <styles.NavListLink
+                href={dynamicParams(item, 'Home', Routes.home, Routes.search, 'link')!}
+              >
+                {item.name}
+              </styles.NavListLink>
             </styles.NavListItem>
           ))}
         </styles.NavList>
@@ -123,36 +170,47 @@ export default function Header() {
               }}
               burger
             >
-              {NAV_BURGER_LINKS.map((item, index) => (
-                <styles.NavListItem key={index}>
+              <AsideProfile />
+              {nav_burger_links.map((item, index) => (
+                <styles.NavListItem key={index} onClick={logOut}>
                   <styles.NavListItemIcon src={item.icon} alt="menu-icon" />
-                  <styles.NavListLink href={item.to} onClick={() => setIsBurgerClicked(true)}>
-                    {item.name === 'Log In'
-                      ? item.name === 'Log In' && isAuth
-                        ? 'Log Out'
-                        : 'Log In'
-                      : item.name}
+                  <styles.NavListLink
+                    href={
+                      dynamicParams(
+                        item,
+                        'Home',
+                        Routes.home,
+                        isAuth() ? Routes.home : Routes.search,
+                        'link'
+                      )!
+                    }
+                    onClick={() => setIsBurgerClicked(true)}
+                  >
+                    {dynamicParams(item, 'Log In', 'Log Out', 'Log In', 'name')}
                   </styles.NavListLink>
                 </styles.NavListItem>
               ))}
             </styles.NavList>
           )}
         </styles.Burger>
-        {!userToken || userToken === 'guest' &&
-        <Button
-          variant="text"
-          sx={{
-            display: {
-              md: 'flex',
-              xs: 'none',
-            },
-          }}
-          onClick={() => push(Routes.login)}
-        >
-          <Image src={Profile} alt={'LogIn'} width={23} height={23}/>
-          <Typography variant='subtitle2' sx={{pl:'4px'}}>Log in</Typography>
-        </Button>
-        }
+        {!userToken ||
+          (userToken === 'guest' && (
+            <Button
+              variant="text"
+              sx={{
+                display: {
+                  md: 'flex',
+                  xs: 'none',
+                },
+              }}
+              onClick={() => push(Routes.login)}
+            >
+              <Image src={Profile} alt={'LogIn'} width={23} height={23} />
+              <Typography variant="subtitle2" sx={{ pl: '4px' }}>
+                Log in
+              </Typography>
+            </Button>
+          ))}
       </styles.Options>
     </styles.Header>
   );
