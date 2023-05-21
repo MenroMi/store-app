@@ -4,7 +4,7 @@ export const CustomAside = styled('aside')(({ theme }) => ({
   height: '550px',
   width: '100%',
   maxWidth: '340px',
-  margin: '0 60px 0 0',
+  margin: '0 40px 0 0',
   overflowY: 'scroll',
   overflowX: 'hidden',
 
