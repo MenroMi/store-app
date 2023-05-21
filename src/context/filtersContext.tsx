@@ -35,7 +35,7 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
-  const [hide, setHide] = useState<boolean>(false);
+  const [hide, setHide] = useState<boolean>(true);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes[]>([]);
   const { handleFiltersURL } = useParamsURL();
 

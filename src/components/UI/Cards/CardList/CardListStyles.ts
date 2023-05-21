@@ -1,5 +1,25 @@
 import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
+import theme from '@/utils/mui/theme';
+
+export const CustomSearchOverlay = styled('div')({
+  // maxHeight: '65vh',
+  maxHeight: '550px',
+  overflowY: 'scroll',
+  overflowX: 'hidden',
+
+  '&::-webkit-scrollbar': {
+    width: '20px',
+  },
+  '&::-webkit-scrollbar-track': {
+    marginTop: '30px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: theme?.palette?.primary?.main,
+    borderRadius: '10px',
+    border: '7px solid white',
+  },
+});
 
 export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   '&.MuiGrid-root': {
