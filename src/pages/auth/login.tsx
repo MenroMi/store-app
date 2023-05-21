@@ -16,8 +16,8 @@ import FormRegistration from '@/components/Forms/FormRegistration/FormRegistrati
 
 // constants
 import { Routes } from '@/constants';
-import { AuthUserContext } from '@/components/Providers/auth';
 import { IFormData } from '@/types/formDataTypes';
+import { UserContext } from '@/components/Providers/user';
 
 const Authorization = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -25,7 +25,7 @@ const Authorization = () => {
     password: '',
     checked: false,
   });
-  const { setUserToken } = useContext(AuthUserContext);
+  const { setUser } = useContext(UserContext);
   const { mutate, isLoading, isError } = useMutation(login);
   const { push } = useRouter();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -45,10 +45,10 @@ const Authorization = () => {
           onSuccess: (data) => {
             if (checked) {
               localStorage.setItem('token', data.jwt);
-              setUserToken(localStorage.getItem('token'));
+              setUser(data.user);
             } else {
               sessionStorage.setItem('token', data.jwt);
-              setUserToken(sessionStorage.getItem('token'));
+              setUser(data.user);
             }
             push(Routes.home);
           },

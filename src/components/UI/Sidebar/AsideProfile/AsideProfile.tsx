@@ -6,8 +6,11 @@ import { Box, Typography } from '@mui/material';
 
 // image
 import avatarExample from '@/assets/avatarExample.png';
+import { useContext } from 'react';
+import { UserContext } from '@/components/Providers/user';
 
 const AsideProfile: React.FC = (): JSX.Element => {
+  const {user} = useContext(UserContext)
   return (
     <Box
       sx={{
@@ -23,7 +26,7 @@ const AsideProfile: React.FC = (): JSX.Element => {
         <Typography variant="body2" sx={{ color: '#98A2B3' }}>
           Welcome
         </Typography>
-        <Typography variant="h6">Jane Meldrum</Typography>
+        <Typography variant="h6">{user?.username}</Typography>
       </Box>
     </Box>
   );
