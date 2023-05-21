@@ -22,24 +22,11 @@ export const CustomTypographyWrapper = styled('div')(() => ({
   alignItems: 'center',
 }));
 
-export const CustomImage = styled(Image)(({ theme }) => ({
+export const CustomImage = styled(Image)({
   width: '100%',
-  height: '380px',
-  objectFit: 'cover',
-  objectPosition: 'center',
-
-  [theme.breakpoints.between('md', 'lg')]: {
-    height: '300px',
-  },
-
-  [theme.breakpoints.between('sm', 'md')]: {
-    height: '280px',
-  },
-
-  [theme.breakpoints.between('xs', 'sm')]: {
-    height: '200px',
-  },
-}));
+  height: '100%',
+  objectFit: 'contain',
+});
 
 export const CustomTypographyName = styled(Typography)({
   display: '-webkit-box',

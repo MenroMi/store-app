@@ -18,6 +18,7 @@ import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
 import productImage from '@/assets/singInBg.png';
 import { INavItem } from '@/types/INavItem';
+import { NextRouter } from 'next/router';
 
 export enum Routes {
   register = '/auth/register',
@@ -220,7 +221,10 @@ export const homeItems: MenuItemParams[] = [
 ];
 export const othersItems: MenuItemParams[] = [
   { id: 1, label: 'View', method: () => {} },
-  { id: 2, label: 'Add to Cart', method: () => {} },
+  {
+    id: 2,
+    label: 'Add to Cart',
+  },
 ];
 
 export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';

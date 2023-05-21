@@ -51,19 +51,22 @@ const Forgot = () => {
               setFormData={setFormData}
               loading={isLoading}
             />
-            <LinkMui
-              component={Link}
-              href={Routes.login}
-              underline="none"
+            <Box
+              component={'div'}
               sx={{
-                display: 'block',
+                maxWidth: '436px',
                 textAlign: 'center',
-                width: '436px',
                 mt: 2,
               }}
             >
-              <Typography variant="caption">Back to log in</Typography>
-            </LinkMui>
+              <LinkMui
+                component={Link}
+                href={Routes.login}
+                underline="none"
+              >
+                  <Typography variant="caption" sx={{ display: 'inline' }}>Back to log in</Typography>
+              </LinkMui>
+            </Box>
           </Box>
         </>
       )}

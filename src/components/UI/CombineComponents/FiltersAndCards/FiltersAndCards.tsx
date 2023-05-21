@@ -1,5 +1,5 @@
 // mui
-import { Box, Pagination, Skeleton, Stack } from '@mui/material';
+import { Box, Pagination, Skeleton, Theme, useMediaQuery, useTheme } from '@mui/material';
 import React, { useContext } from 'react';
 
 // components
@@ -21,7 +21,8 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
   const contextProducts = useContext(ProductsContext);
   const router = useRouter();
-  // +router.asPath[router.asPath.search(/\d/)] ||
+  const theme = useTheme<Theme>();
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   if (context?.isError) {
     return <h2>{(context?.error as Error).message}</h2>;
@@ -60,13 +61,12 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           alignItems: 'center',
-          rowGap: '50px',
+          rowGap: '16px',
           maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
+          p: `${queryUpMd && context?.hide ? '0 40px' : !queryUpMd ? '0' : '0 40px 0 0'}`,
           width: '100%',
           height: '100%',
-          pb: '30px',
         }}
       >
         <CardList />
@@ -75,7 +75,7 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
           showLastButton
           page={contextProducts?.page}
           onChange={contextProducts?.onChangePage}
-          count={4}
+          count={contextProducts?.maxPage}
           shape="rounded"
           color="primary"
           size="large"

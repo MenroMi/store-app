@@ -4,7 +4,7 @@ import { AttrFromData } from '@/types/cardListTypes';
 export const getProducts = async (page: number) => {
   const pagination = await getDataFromServer(
     `/products`,
-    `pagination[page]=${page}&pagination[pageSize]=16`
+    `pagination[page]=${page}&pagination[pageSize]=25`
   ).then((res) => res?.data?.data);
 
   const products = await Promise.allSettled(
@@ -62,14 +62,6 @@ export const getFilters = async () => {
   });
 
   res.push({
-    label: 'kids',
-    name: 'Kids',
-    values: [
-      { id: 1, attributes: { name: 'Boys' } },
-      { id: 2, attributes: { name: 'Girls' } },
-    ],
-  });
-  res.push({
     label: 'price',
     name: 'Price',
     values: [{ id: 1, attributes: { name: 'Price undefined' } }],
@@ -81,4 +73,10 @@ export const getFilters = async () => {
   });
 
   return res;
+};
+
+export const getPaginationData = async () => {
+  const paginationData = await getDataFromServer('/products');
+
+  return paginationData?.data?.meta?.pagination;
 };

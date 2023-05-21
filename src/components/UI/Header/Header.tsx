@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as styles from './styles';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, InputAdornment, Typography } from '@mui/material';
+import { Box, Button, InputAdornment, Typography, useTheme, Theme } from '@mui/material';
+
 import { Routes } from '@/constants';
 
 import Logo from '@/assets/icons/logo.svg';
@@ -18,11 +19,13 @@ import { useRouter } from 'next/router';
 import { AuthUserContext } from '@/components/Providers/auth';
 import { INavItem } from '@/types/INavItem';
 import AsideProfile from '../Sidebar/AsideProfile/AsideProfile';
+import { StorageContext } from '@/context/sessionStorageContext';
 
 export default function Header() {
   const [isSearchClicled, setIsSearchClicked] = useState(false);
   const [isBurgerClicled, setIsBurgerClicked] = useState(false);
   const { userToken, setUserToken } = useContext(AuthUserContext);
+  const contextStorage = useContext(StorageContext);
   const { push } = useRouter();
   const isAuth = () => {
     return userToken && userToken !== 'guest';
@@ -66,6 +69,16 @@ export default function Header() {
           : authItem
         : item.to;
   };
+
+  const {
+    palette: {
+      primary: { main },
+    },
+  } = useTheme<Theme>();
+
+  useEffect(() => {
+    contextStorage?.setNewLengthFromStorage();
+  }, [contextStorage]);
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
@@ -142,7 +155,32 @@ export default function Header() {
         />
         <styles.Cart>
           <Link href={Routes.bag}>
-            <Image width={22} src={CartIcon} alt="cart-icon" />
+            <Box sx={{ position: 'relative' }}>
+              <Image width={22} src={CartIcon} alt="cart-icon" />
+              <Box
+                bgcolor={main}
+                sx={{
+                  display: `${contextStorage?.storageLength === 0 ? 'none' : 'block'}`,
+                  position: 'absolute',
+                  top: '-5px',
+                  right: '-10px',
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                }}
+              >
+                <Box
+                  sx={{
+                    color: 'white',
+                    position: 'absolute',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                  }}
+                >
+                  {contextStorage?.storageLength}
+                </Box>
+              </Box>
+            </Box>
           </Link>
         </styles.Cart>
 

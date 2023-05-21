@@ -24,7 +24,7 @@ import Card from '@/components/UI/Cards/Card/Card';
 import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
-import { CardsGridContainer, CatalogIsEmptyContainer } from './CardListStyles';
+import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
 import { ONE_MOCKED_PRODUCT } from '@/constants';
 
 // interface
@@ -56,10 +56,6 @@ const CardList: React.FC<ICardListProps> = ({
     );
   };
 
-  if (contextProducts?.isLoading) {
-    return <h1>Loading...</h1>;
-  }
-
   if (contextProducts?.isError) {
     Router.push('/404');
     return null;
@@ -90,7 +86,7 @@ const CardList: React.FC<ICardListProps> = ({
             productName={name}
             productPrice={price}
           >
-            <DropDownMenu />
+            <DropDownMenu productName={name} productID={id} />
           </Card>,
           id
         );
@@ -117,21 +113,31 @@ const CardList: React.FC<ICardListProps> = ({
   };
 
   return (
-    <CardsGridContainer
-      container
-      columnSpacing={{
-        md: 5,
-        lg: 5,
-        xl: 7,
-      }}
-      sx={{
-        padding: `${!queryUpMd && '0 20px'}`,
-        rowGap: { md: '32px', xs: '16px' },
-        justifyContent: `${contextFilter?.hide ? 'flex-start' : 'space-between'}`,
-      }}
-    >
-      {contextProducts?.isFetched && contextProducts?.data && contextFilter?.data && checkData()}
-    </CardsGridContainer>
+    <CustomSearchOverlay>
+      {contextProducts?.isLoading ? (
+        <Box>Loading...</Box>
+      ) : (
+        <CardsGridContainer
+          container
+          columnSpacing={{
+            md: 5,
+            lg: 5,
+            xl: 7,
+          }}
+          sx={{
+            padding: `${!queryUpMd && '0 0 0 20px'}`,
+            columnGap: contextFilter?.hide && queryUpMd ? { xl: '13px' } : '',
+            rowGap: { md: '32px', xs: '16px' },
+            justifyContent: 'flex-start',
+          }}
+        >
+          {contextProducts?.isFetched &&
+            contextProducts?.data &&
+            contextFilter?.data &&
+            checkData()}
+        </CardsGridContainer>
+      )}
+    </CustomSearchOverlay>
   );
 };
 

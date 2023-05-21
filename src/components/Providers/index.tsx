@@ -8,6 +8,7 @@ import { ReactNode } from 'react';
 // context
 import FiltersProvider from '@/context/filtersContext';
 import ProductsProvider from '@/context/productsContext';
+import StorageProvider from '@/context/sessionStorageContext';
 import AuthProvider from './auth';
 
 // providers
@@ -23,11 +24,13 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
   return (
     <ReactQueryProvider dehydrateState={dehydrateState}>
       <AuthProvider>
-        <FiltersProvider>
-          <ProductsProvider>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </ProductsProvider>
-        </FiltersProvider>
+        <StorageProvider>
+          <FiltersProvider>
+            <ProductsProvider>
+              <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            </ProductsProvider>
+          </FiltersProvider>
+        </StorageProvider>
       </AuthProvider>
     </ReactQueryProvider>
   );

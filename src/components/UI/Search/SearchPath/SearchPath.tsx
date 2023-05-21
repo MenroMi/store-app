@@ -27,7 +27,7 @@ const SearchPath: React.FC = (): JSX.Element => {
         sx={{
           fontWeight: '300',
           lineHeight: '18px',
-          pl: `${queryUpMd && context?.hide ? '0' : !queryUpMd ? '0' : '40px'}`,
+          pl: `${queryUpMd && context?.hide ? '40px' : !queryUpMd ? '0' : '40px'}`,
           '&.MuiTypography-root': {
             fontSize: '15px',
           },
@@ -41,7 +41,7 @@ const SearchPath: React.FC = (): JSX.Element => {
           marginTop: `${queryUpMd && '8px'}`,
           marginRight: `${queryDownLg && '40px'}`,
           borderBottom: `${queryUpMd && !context?.hide && '1px solid #eaecf0'}`,
-          pl: `${queryUpMd && context?.hide ? '0' : !queryUpMd ? '0' : '40px'}`,
+          pl: `${queryUpMd && context?.hide ? '40px' : !queryUpMd ? '0' : '40px'}`,
           pb: `${queryUpMd && !context?.hide && '16px'}`,
         }}
       >
