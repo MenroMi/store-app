@@ -16,13 +16,14 @@ import { Routes } from '@/constants';
 import { IFormData } from '@/types/formDataTypes';
 import { useMutation } from '@tanstack/react-query';
 import { reset } from '@/services/authService';
+import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
 
 const Reset = () => {
   const [formData, setFormData] = useState<IFormData>({
     password: '',
     confirm: '',
   });
-  const { mutate, isLoading, isSuccess } = useMutation(reset);
+  const { mutate, isLoading, isError } = useMutation(reset);
 
   const {
     query: { code = '' },
@@ -38,43 +39,55 @@ const Reset = () => {
     event.preventDefault();
     const { password, confirm } = formData;
     if (password && confirm && password === confirm) {
-      mutate({ password, passwordConfirmation: confirm, code });
-      push(Routes.login);
+      mutate(
+        { password, passwordConfirmation: confirm, code },
+        {
+          onSuccess: () => {
+            push(Routes.login);
+          },
+        }
+      );
     }
   };
   return (
     <SplitLayout title="Reset Password">
-      <Typography variant="h2">Reset password</Typography>
-      <Typography
-        variant="body1"
-        sx={{
-          mt: 2,
-          mb: 6,
-        }}
-      >
-        Please create new password here.
-      </Typography>
-      <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
-        <FormRegistration
-          handleSubmit={handleSubmit}
-          formData={formData}
-          setFormData={setFormData}
-          loading={isLoading}
-        />
-        <LinkMui
-          component={Link}
-          href={Routes.login}
-          underline="none"
-          sx={{
-            display: 'block',
-            textAlign: 'center',
-            width: '436px',
-            mt: 2,
-          }}
-        >
-          <Typography variant="caption">Back to log in</Typography>
-        </LinkMui>
-      </Box>
+      {isError ? (
+        <InfoComment/>
+      ) : (
+        <>
+          <Typography variant="h2">Reset password</Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              mt: 2,
+              mb: 6,
+            }}
+          >
+            Please create new password here.
+          </Typography>
+          <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
+            <FormRegistration
+              handleSubmit={handleSubmit}
+              formData={formData}
+              setFormData={setFormData}
+              loading={isLoading}
+            />
+            <LinkMui
+              component={Link}
+              href={Routes.login}
+              underline="none"
+              sx={{
+                display: 'block',
+                textAlign: 'center',
+                maxWidth: '436px',
+                mt: 2,
+              }}
+            >
+              <Typography variant="caption">Back to log in</Typography>
+            </LinkMui>
+          </Box>
+        </>
+      )}
     </SplitLayout>
   );
 };

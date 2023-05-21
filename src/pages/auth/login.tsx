@@ -87,7 +87,7 @@ const Authorization = () => {
         <Box
           component={'div'}
           sx={{
-            width: '436px',
+            maxWidth: '436px',
             textAlign: 'center',
             mt: 2,
           }}

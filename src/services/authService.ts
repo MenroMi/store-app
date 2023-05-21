@@ -1,8 +1,5 @@
+import { baseURL } from '@/constants';
 import axios from 'axios';
-
-// const api = axios.create({
-//   baseURL: 'https://shoes-shop-strapi.herokuapp.com/api',
-// });
 
 interface LoginProps {
   identifier: string;
@@ -27,7 +24,7 @@ interface RegistrationProps {
 
 export const login = async (params: LoginProps) => {
   const response = await axios.post(
-    'https://shoes-shop-strapi.herokuapp.com/api/auth/local',
+    `${baseURL}auth/local`,
     params
   );
   console.log(response.data)
@@ -36,7 +33,7 @@ export const login = async (params: LoginProps) => {
 
 export const registration = async (params: RegistrationProps) => {
   const response = await axios.post(
-    'https://shoes-shop-strapi.herokuapp.com/api/auth/local/register',
+    `${baseURL}auth/local/register`,
     params
   );
   console.log(response.data);
@@ -45,7 +42,7 @@ export const registration = async (params: RegistrationProps) => {
 
 export const forgot = async (params:ForgotProps) => {
   const response = await axios.post(
-    'https://shoes-shop-strapi.herokuapp.com/api/auth/forgot-password',
+    `${baseURL}auth/forgot-password`,
     params
   );
   console.log(response.data);
@@ -53,10 +50,7 @@ export const forgot = async (params:ForgotProps) => {
 };
 
 export const reset = async (params:ResetProps) => {
-  const response = await axios.post(
-    'https://shoes-shop-strapi.herokuapp.com/api/auth/reset-password',
-    params
-  );
+  const response = await axios.post(`${baseURL}auth/reset-password`, params);
   console.log(response.data);
   return response.data;
 };

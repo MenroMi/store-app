@@ -18,11 +18,12 @@ const InfoComment = ({ email }: IInfoCommentProps) => {
   return (
     <Box sx={{ maxWidth: '550px', height: '40%' }}>
       <Typography variant="h2" sx={{ color: main }}>
-        Good!
+        {pathname === Routes.reset ? 'Uh...Something is wrong' : ' Good!'}
       </Typography>
       <Typography variant="h3Bold" sx={{ mt: 1 }}>
-        Please, visit your email to complete your{' '}
-        {pathname === Routes.register ? 'registration' : 'password reset'}.
+        {pathname === Routes.reset ? 'Maybe, you changed the original link, please try again.' :
+        `Please, visit your email to complete your{' '}
+        ${pathname === Routes.register ? 'registration' : 'password reset'}.`}
       </Typography>
       {email && (
         <LinkMui component={Link} href={`https://${email}`} underline="none" target="_blank">

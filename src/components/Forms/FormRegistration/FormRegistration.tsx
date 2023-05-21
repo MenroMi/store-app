@@ -60,7 +60,7 @@ const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }:
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ maxWidth: '436px', mt: 1 }}
+              sx={{ mt: 1 }}
               id="name"
               placeholder="Hayman Andrews"
               required
@@ -81,15 +81,17 @@ const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }:
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ maxWidth: '436px', mt: 1 }}
+              sx={{ mt: 1 }}
               id="email"
               placeholder="example@mail.com"
               required
               type="email"
               value={formData.email}
               onChange={handleChange}
+              
             />
           </FormControl>
+          
         )}
         {Object.keys(formData).includes('password') && (
           <FormControl>
@@ -102,7 +104,7 @@ const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }:
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ maxWidth: '436px', mt: 1 }}
+              sx={{ mt: 1 }}
               id="password"
               required
               placeholder="at least 8 characters"
@@ -124,7 +126,7 @@ const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }:
               </Typography>
             </FormLabel>
             <OutlinedInput
-              sx={{ maxWidth: '436px', mt: 1 }}
+              sx={{  mt: 1 }}
               id="confirm"
               required
               placeholder="at least 8 characters"
