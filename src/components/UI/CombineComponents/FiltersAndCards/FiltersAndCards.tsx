@@ -76,7 +76,7 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
           showLastButton
           page={contextProducts?.page}
           onChange={contextProducts?.onChangePage}
-          count={4}
+          count={contextProducts?.maxPage}
           shape="rounded"
           color="primary"
           size="large"
