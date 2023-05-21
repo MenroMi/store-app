@@ -18,6 +18,11 @@ export const CustomAside = styled('aside')(({ theme }) => ({
     border: '7px solid white',
   },
 
+  [theme.breakpoints.down('lg')]: {
+    maxWidth: '310px',
+    margin: '0 30px 0 0',
+  },
+
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
