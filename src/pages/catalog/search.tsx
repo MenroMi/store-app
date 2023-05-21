@@ -32,14 +32,13 @@ export default function SearchResultPage(): JSX.Element {
   }, []);
 
   return (
-    <Layout>
+    <Layout title="Search page">
       <Box
         maxWidth="1920px"
         m="0 auto"
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        sx={{ p: { md: `${hide ? '0 60px' : '0'}` } }}
       >
         <PathAndSearchResult />
       </Box>
@@ -58,11 +57,7 @@ export default function SearchResultPage(): JSX.Element {
         }}
         data-overlay="overlay"
       />
-      {!queryUpMd && !hide && (
-        <Box>
-          <MobileFilterMenu />
-        </Box>
-      )}
+      {!queryUpMd && !hide && <MobileFilterMenu />}
     </Layout>
   );
 }

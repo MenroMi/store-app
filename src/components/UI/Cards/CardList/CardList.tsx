@@ -44,7 +44,7 @@ const CardList: React.FC<ICardListProps> = ({
     return (
       <Grid
         key={id}
-        xl={contextFilter?.hide ? 2.7 : 3}
+        xl={contextFilter?.hide ? 2.3 : 3}
         lg={contextFilter?.hide ? 3 : 4}
         md={contextFilter?.hide ? 4 : 6}
         sm={5}
@@ -125,7 +125,7 @@ const CardList: React.FC<ICardListProps> = ({
             xl: 7,
           }}
           sx={{
-            padding: `${!queryUpMd && '0 20px'}`,
+            padding: `${!queryUpMd && '0 0 0 20px'}`,
             columnGap: '0',
             rowGap: { md: '32px', xs: '16px' },
             justifyContent: 'space-between',

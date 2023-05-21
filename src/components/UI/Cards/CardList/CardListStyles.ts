@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 export const CustomSearchOverlay = styled('div')({
+  // maxHeight: '65vh',
   maxHeight: '550px',
   overflowY: 'scroll',
   overflowX: 'hidden',

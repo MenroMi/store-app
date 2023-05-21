@@ -33,7 +33,7 @@ const SearchResult: React.FC = () => {
           <CustomTypographyH2
             variant="h2"
             sx={{
-              p: `${context?.hide && queryUpMd && '0'}`,
+              p: `${context?.hide && queryUpMd && '0 60px 0 40px'}`,
             }}
           >
             Search results
@@ -50,7 +50,7 @@ const SearchResult: React.FC = () => {
             <CustomTypographyH2
               variant="h2"
               sx={{
-                padding: '0',
+                p: '0',
                 fontSize: { xl: 45, md: 35, xs: 40 },
               }}
             >
@@ -59,7 +59,12 @@ const SearchResult: React.FC = () => {
           )}
         </Grid>
 
-        <Grid item>
+        <Grid
+          item
+          sx={{
+            pr: `${queryUpMd && '40px'}`,
+          }}
+        >
           <CustomHideFilterBtn
             onClick={context?.onHide}
             variant="text"
