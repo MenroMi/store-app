@@ -61,7 +61,6 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           alignItems: 'center',
           rowGap: '16px',
           maxWidth: `${context?.hide ? '1920px' : '1580px'}`,

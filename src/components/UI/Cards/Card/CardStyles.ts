@@ -25,6 +25,7 @@ export const CustomTypographyWrapper = styled('div')(() => ({
 export const CustomImage = styled(Image)({
   width: '100%',
   height: '100%',
+  objectFit: 'contain',
 });
 
 export const CustomTypographyName = styled(Typography)({

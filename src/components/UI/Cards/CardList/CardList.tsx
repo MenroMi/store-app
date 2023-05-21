@@ -126,9 +126,9 @@ const CardList: React.FC<ICardListProps> = ({
           }}
           sx={{
             padding: `${!queryUpMd && '0 0 0 20px'}`,
-            columnGap: '0',
+            columnGap: contextFilter?.hide && queryUpMd ? { xl: '13px' } : '',
             rowGap: { md: '32px', xs: '16px' },
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
           }}
         >
           {contextProducts?.isFetched &&
