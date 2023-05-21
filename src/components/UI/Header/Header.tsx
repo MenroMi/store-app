@@ -208,7 +208,7 @@ export default function Header() {
               }}
               burger
             >
-              <AsideProfile />
+              {isAuth() && <AsideProfile />}
               {nav_burger_links.map((item, index) => (
                 <styles.NavListItem key={index} onClick={logOut}>
                   <styles.NavListItemIcon src={item.icon} alt="menu-icon" />
