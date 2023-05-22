@@ -50,7 +50,7 @@ const Authorization = () => {
               sessionStorage.setItem('token', data.jwt);
               setUser(data.user);
             }
-            push(Routes.home);
+            push(Routes.myProducts);
           },
         }
       );
