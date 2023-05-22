@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 // mui
-import { Link as LinkMui, Button, Box, useTheme, Theme, Typography } from '@mui/material';
+import { Link as LinkMui, Button, Box, useTheme, Theme, Typography, useMediaQuery } from '@mui/material';
 
 // components
 import AsideProfile from '../AsideProfile/AsideProfile';
@@ -16,6 +16,7 @@ import { ASIDE_MENU_LINKS } from '@/constants';
 import { useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';
+import theme from '@/utils/mui/theme';
 
 const AsideProfileMenu: React.FC = (): JSX.Element => {
   const {
@@ -25,8 +26,9 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
   } = useTheme<Theme>();
   const { user, setUser } = useContext(UserContext);
   const {push, pathname} = useRouter()
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
-  return (
+  return ( queryDownMd ? <></> : 
     <Box
       sx={{
         display: 'flex',
@@ -73,7 +75,7 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
         )}
       </Box>
     </Box>
-  );
+)
 };
 
 export default AsideProfileMenu;
