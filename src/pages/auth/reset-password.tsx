@@ -57,7 +57,7 @@ const Reset = () => {
   return (
     <SplitLayout title="Reset Password">
       {isError ? (
-        <InfoComment/>
+        <InfoComment />
       ) : (
         <>
           <Typography variant="h2">Reset password</Typography>

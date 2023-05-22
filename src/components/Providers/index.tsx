@@ -9,11 +9,11 @@ import { ReactNode } from 'react';
 import FiltersProvider from '@/context/filtersContext';
 import ProductsProvider from '@/context/productsContext';
 import StorageProvider from '@/context/sessionStorageContext';
-import AuthProvider from './auth';
 
 // providers
 import { ThemeProvider } from '@mui/material/styles';
 import ReactQueryProvider from './queryClient';
+import UserProvider from './user';
 
 export interface IProvidersProps {
   children: ReactNode;
@@ -24,7 +24,7 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
   return (
     <ThemeProvider theme={theme}>
       <ReactQueryProvider dehydrateState={dehydrateState}>
-        <AuthProvider>
+        <UserProvider>
           <StorageProvider>
             <FiltersProvider>
               <ProductsProvider>
@@ -32,7 +32,7 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
               </ProductsProvider>
             </FiltersProvider>
           </StorageProvider>
-        </AuthProvider>
+        </UserProvider>
       </ReactQueryProvider>
     </ThemeProvider>
   );

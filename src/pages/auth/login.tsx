@@ -17,8 +17,9 @@ import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
-import { AuthUserContext } from '@/components/Providers/auth';
 import { IFormData } from '@/types/formDataTypes';
+import { UserContext } from '@/components/Providers/user';
+import { getUser } from '@/services/userService';
 
 const Authorization = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -26,8 +27,10 @@ const Authorization = () => {
     password: '',
     checked: false,
   });
-  const { setUserToken } = useContext(AuthUserContext);
+  const { setUser } = useContext(UserContext);
   const { mutate, isLoading, isError } = useMutation(login);
+  const { mutate:userMutate } = useMutation(getUser);
+
   const { push } = useRouter();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const {
@@ -48,14 +51,16 @@ const Authorization = () => {
         { identifier: email, password },
         {
           onSuccess: (data) => {
-            if (checked) {
-              localStorage.setItem('token', data.jwt);
-              setUserToken(localStorage.getItem('token'));
-            } else {
-              sessionStorage.setItem('token', data.jwt);
-              setUserToken(sessionStorage.getItem('token'));
-            }
-            push(Routes.home);
+            checked
+              ? localStorage.setItem('token', data.jwt)
+              : sessionStorage.setItem('token', data.jwt);
+
+            userMutate(data.jwt, {
+              onSuccess: (data) => {
+                setUser(data);
+                push(Routes.myProducts);
+              },
+            });
           },
         }
       );
