@@ -18,7 +18,6 @@ import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import CardList from '@/components/UI/Cards/CardList/CardList';
-import { AuthUserContext } from '@/components/Providers/auth';
 
 export default function Profile() {
   const MOCKED_PRODUCTS = [
