@@ -86,13 +86,6 @@ export const ASIDE_MENU_LINKS = [
     to: Routes.myProducts,
   },
   {
-    id: 2,
-    role: 'guest user',
-    icon: bagIcon,
-    name: 'My orders',
-    to: Routes.bag,
-  },
-  {
     id: 3,
     role: 'guest',
     icon: loginIcon,
