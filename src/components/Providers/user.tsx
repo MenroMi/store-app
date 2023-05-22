@@ -15,6 +15,11 @@ interface IUser{
   blocked:boolean
   createdAt:string
   updatedAt:string
+  phoneNumber: null | number,
+  firstName: null | string,
+  lastName: null | string,
+  products: [],
+  avatar: null | string
 }
 
 interface IUserContext{
