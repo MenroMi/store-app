@@ -10,6 +10,7 @@ import { Link as LinkMui, Box, useTheme } from '@mui/material';
 // components
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
@@ -34,6 +35,10 @@ const Reset = () => {
       primary: { main },
     },
   } = useTheme();
+
+  if (isLoading) return (
+    <FullScreenLoader />
+  )
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

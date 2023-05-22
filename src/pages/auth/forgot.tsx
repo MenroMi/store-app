@@ -16,12 +16,17 @@ import { IFormData } from '@/types/formDataTypes';
 import { forgot } from '@/services/authService';
 import { useMutation } from '@tanstack/react-query';
 import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 const Forgot = () => {
   const [formData, setFormData] = useState<IFormData>({
     email: '',
   });
   const { mutate, isLoading, isSuccess } = useMutation(forgot);
+
+  if (isLoading) return (
+    <FullScreenLoader />
+  )
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

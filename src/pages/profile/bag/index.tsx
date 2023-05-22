@@ -2,7 +2,7 @@
 import BagPage from './BagPage';
 
 // interface
-import { BagContextProvider } from '@/context/BagContext';
+import { BagContextProvider } from '@/context/bagContext';
 
 const Bag = () => {
   return (

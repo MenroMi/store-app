@@ -22,16 +22,18 @@ export interface IProvidersProps {
 
 export default function Providers({ children, dehydrateState }: IProvidersProps) {
   return (
-    <ReactQueryProvider dehydrateState={dehydrateState}>
-      <AuthProvider>
-        <StorageProvider>
-          <FiltersProvider>
-            <ProductsProvider>
-              <ThemeProvider theme={theme}>{children}</ThemeProvider>
-            </ProductsProvider>
-          </FiltersProvider>
-        </StorageProvider>
-      </AuthProvider>
-    </ReactQueryProvider>
+    <ThemeProvider theme={theme}>
+      <ReactQueryProvider dehydrateState={dehydrateState}>
+        <AuthProvider>
+          <StorageProvider>
+            <FiltersProvider>
+              <ProductsProvider>
+                {children}
+              </ProductsProvider>
+            </FiltersProvider>
+          </StorageProvider>
+        </AuthProvider>
+      </ReactQueryProvider>
+    </ThemeProvider>
   );
 }
