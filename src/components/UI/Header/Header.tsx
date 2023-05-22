@@ -15,14 +15,14 @@ import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
 import { useRouter } from 'next/router';
-import { AuthUserContext } from '@/components/Providers/auth';
 import { StorageContext } from '@/context/sessionStorageContext';
+import { UserContext } from '@/components/Providers/user';
 
 export default function Header() {
   const [isSearchClicled, setIsSearchClicked] = useState(false);
   const [isBurgerClicled, setIsBurgerClicked] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const { userToken } = useContext(AuthUserContext);
+  const { user } = useContext(UserContext);
   const contextStorage = useContext(StorageContext);
   const { push } = useRouter();
   const {
@@ -34,6 +34,7 @@ export default function Header() {
   useEffect(() => {
     contextStorage?.setNewLengthFromStorage();
   }, []);
+  
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
@@ -164,7 +165,7 @@ export default function Header() {
                   <styles.NavListItemIcon src={item.icon} alt="menu-icon" />
                   <styles.NavListLink href={item.to} onClick={() => setIsBurgerClicked(true)}>
                     {item.name === 'Log In'
-                      ? item.name === 'Log In' && isAuth
+                      ? item.name === 'Log In' && user
                         ? 'Log Out'
                         : 'Log In'
                       : item.name}
@@ -174,24 +175,23 @@ export default function Header() {
             </styles.NavList>
           )}
         </styles.Burger>
-        {!userToken ||
-          (userToken === 'guest' && (
-            <Button
-              variant="text"
-              sx={{
-                display: {
-                  md: 'flex',
-                  xs: 'none',
-                },
-              }}
-              onClick={() => push(Routes.login)}
-            >
-              <Image src={Profile} alt={'LogIn'} width={23} height={23} />
-              <Typography variant="subtitle2" sx={{ pl: '4px' }}>
-                Log in
-              </Typography>
-            </Button>
-          ))}
+        {!user && (
+          <Button
+            variant="text"
+            sx={{
+              display: {
+                md: 'flex',
+                xs: 'none',
+              },
+            }}
+            onClick={() => push(Routes.login)}
+          >
+            <Image src={Profile} alt={'LogIn'} width={23} height={23} />
+            <Typography variant="subtitle2" sx={{ pl: '4px' }}>
+              Log in
+            </Typography>
+          </Button>
+        )}
       </styles.Options>
     </styles.Header>
   );

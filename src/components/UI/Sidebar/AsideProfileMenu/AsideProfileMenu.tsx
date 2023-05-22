@@ -14,62 +14,63 @@ import { CustomCircleNotification } from './styles';
 // constants
 import { ASIDE_MENU_LINKS } from '@/constants';
 import { useContext } from 'react';
-import { AuthUserContext } from '@/components/Providers/auth';
+import { UserContext } from '@/components/Providers/user';
+import { useRouter } from 'next/router';
 
 const AsideProfileMenu: React.FC = (): JSX.Element => {
-  const { palette } = useTheme<Theme>();
-  const {setUserToken} = useContext(AuthUserContext)
+  const {
+    palette: {
+      text: { secondary },
+    },
+  } = useTheme<Theme>();
+  const { user, setUser } = useContext(UserContext);
+  const {push, pathname} = useRouter()
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '320px' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        maxWidth: '320px',
+      }}
+    >
       <AsideProfile />
       <Box
-        component={'ul'}
-        sx={{ width: '100%', maxWidth: '320px', listStyle: 'none', pt: '23px' }}
+        component={'nav'}
+        sx={{pt: '23px',width:'100%', maxWidth:'320px'}}
       >
-        {ASIDE_MENU_LINKS.map(({ id, icon, name, to }) => {
-          return (
-            <Box component={'li'} key={id} sx={{ width: '100%', mt: '10px' }}>
-              <LinkMui component={Link} href={to} underline="hover" sx={{ width: '100%' }}>
+        {ASIDE_MENU_LINKS.filter((el) => el.role.includes(user ? 'user' : 'guest')).map(
+          ({ id, icon, name, to }) => {
+            return (
+              <>
                 <Button
-                  startIcon={<Box component={Image} src={icon} alt={name} width={20} height={20} />}
+                  startIcon={<Box component={Image} src={icon} alt={name} width={20} height={20} 
+          />}
                   disableRipple
+                  key={id}
                   sx={{
-                    color: palette?.text?.secondary,
-                    width: '100%',
+                    background:`${pathname === to ?'rgba(	254,100,94,0.05)' : 'transparent'}`,
+                    width: 1,
+                    // maxWidth:80,
                     paddingLeft: '40px',
                     justifyContent: 'flex-start',
-                    '&:hover': {
-                      textDecoration: 'underline',
-                    },
                   }}
                   onClick={() => {
-                    setUserToken('guest')
-                    localStorage.removeItem('token')
-                    sessionStorage.removeItem('token')
+                    push(to)
+                    if (name === 'Log out') {
+                      setUser(null);
+                      localStorage.removeItem('token');
+                      sessionStorage.removeItem('token');
+                    }
                   }}
                 >
-                  <Typography variant="h6">{name}</Typography>
-                  {name === 'Wish list' && (
-                    <CustomCircleNotification>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          position: 'absolute',
-                          left: '50%',
-                          top: '50%',
-                          transform: 'translateY(-50%) translateX(-50%)',
-                        }}
-                      >
-                        4
-                      </Typography>
-                    </CustomCircleNotification>
-                  )}
+                  <Typography variant="h6" sx={{ color: secondary}}>{name}</Typography>
                 </Button>
-              </LinkMui>
-            </Box>
-          );
-        })}
+                </>
+            );
+          }
+        )}
       </Box>
     </Box>
   );

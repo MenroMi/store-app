@@ -67,6 +67,7 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
                 src={getImage(pathname)}
                 alt={`${pathname.slice(1)}Bg`}
                 fill
+                priority={true}
                 style={{ objectFit: 'cover', zIndex: 1000 }}
               />
               {pathname === Routes.register && <SignComments />}
