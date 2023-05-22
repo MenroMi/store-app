@@ -59,12 +59,10 @@ const Forgot = () => {
                 mt: 2,
               }}
             >
-              <LinkMui
-                component={Link}
-                href={Routes.login}
-                underline="none"
-              >
-                  <Typography variant="caption" sx={{ display: 'inline' }}>Back to log in</Typography>
+              <LinkMui component={Link} href={Routes.login} underline="none">
+                <Typography variant="caption" sx={{ display: 'inline' }}>
+                  Back to log in
+                </Typography>
               </LinkMui>
             </Box>
           </Box>
