@@ -1,18 +1,19 @@
 // basic
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
 // react-query
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
 import { getPaginationData, getProducts } from '@/services/searchApi';
-import { AttrFromData } from '@/types/cardListTypes';
-import { InputsData } from '@/types/filterListTypes';
-import { Routes } from '@/constants';
 
 // context
 export const ProductsContext = React.createContext<IProductsContext | null>(null);
 
 // interface
+import { AttrFromData } from '@/types/cardListTypes';
+import { InputsData } from '@/types/filterListTypes';
+import { GetServerSidePropsContext } from 'next';
+
 interface IProductsProvider {
   children: React.ReactNode;
 }
@@ -46,7 +47,6 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
     currentPage = 1;
   } else if (paginationQuery?.data?.pageCount < parseInt(page) || parseInt(page) <= 0) {
     currentPage = 1;
-    router.push(`?page=1`);
   } else {
     currentPage = parseInt(page);
   }
@@ -55,16 +55,6 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
     queryKey: ['all', currentPage],
     queryFn: () => getProducts(currentPage),
   });
-
-  useEffect(() => {
-    if (
-      currentPage === 1 &&
-      router.asPath.search(/\d/) === -1 &&
-      router.pathname === Routes.search
-    ) {
-      router.push(`?page=1`);
-    }
-  }, []);
 
   const takeOnlyPrice = () => {
     if (typeof productsQuery?.data === 'undefined') {
@@ -98,14 +88,14 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
 
 export default ProductsProvider;
 
-export const getStaticProps = async () => {
-  const queryClient = new QueryClient();
+// export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+//   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(['all', getProducts]);
+//   await queryClient.prefetchQuery(['all'], getProducts);
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// };

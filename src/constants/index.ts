@@ -17,7 +17,6 @@ import logoutIcon from '@/assets/icons/logout.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
 import productImage from '@/assets/singInBg.png';
-import { NextRouter } from 'next/router';
 
 export enum Routes {
   register = '/auth/register',
@@ -31,7 +30,7 @@ export enum Routes {
   home = '/profile/home',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
-  search = '/catalog/search',
+  search = '/catalog/search/',
   settings = '/profile/settings/',
 }
 
@@ -204,8 +203,8 @@ export const othersItems: MenuItemParams[] = [
   },
 ];
 
-export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
-export const uploadImageURL = 'https://shoes-shop-strapi.herokuapp.com';
+export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api';
+// export const uploadImageURL = 'https//res.cloudinary.com';
 
 export const ONE_MOCKED_PRODUCT = {
   id: 3,

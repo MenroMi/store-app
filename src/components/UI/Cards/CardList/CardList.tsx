@@ -1,6 +1,6 @@
 // basic
-import Image from 'next/image';
-import Router, { useRouter } from 'next/router';
+import Image, { StaticImageData } from 'next/image';
+import Router from 'next/router';
 import { useContext } from 'react';
 
 // mui
@@ -11,9 +11,6 @@ import { Grid, Box, Typography } from '@mui/material';
 // context
 import { FiltersContext } from '@/context/filtersContext';
 import { ProductsContext } from '@/context/productsContext';
-
-// utils
-import { dataFromActiveFilters } from '@/utils/filters/activeProducts';
 
 // image
 import singInImg from '@/assets/singInBg.png';
@@ -29,7 +26,6 @@ import { ONE_MOCKED_PRODUCT } from '@/constants';
 
 // interface
 import { ICardListProps, AttrFromData } from '@/types/cardListTypes';
-import { uploadImageURL } from '@/constants';
 
 // FUNCTIONAL COMPONENT
 const CardList: React.FC<ICardListProps> = ({
@@ -62,21 +58,19 @@ const CardList: React.FC<ICardListProps> = ({
   }
 
   const checkData = () => {
-    let products = dataFromActiveFilters(
-      contextFilter?.activeFilters!,
-      contextFilter?.data,
-      contextProducts?.data
-    );
-
-    if (Array.isArray(products)) {
-      return products.map(({ id, attributes }: AttrFromData) => {
+    if (Array.isArray(contextProducts?.data)) {
+      return contextProducts?.data.map(({ id, attributes }: AttrFromData) => {
         const { name, price, images, gender } = attributes;
-        let url;
+        let url: string | StaticImageData;
 
         if (images?.data === null || typeof images === 'undefined') {
           url = singInImg;
         } else {
-          url = uploadImageURL + images?.data?.[0]?.attributes?.url;
+          if (typeof images?.data?.[0]?.attributes?.url === 'undefined') {
+            url = singInImg;
+          } else {
+            url = images?.data?.[0]?.attributes?.url;
+          }
         }
 
         return isVisible(

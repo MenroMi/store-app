@@ -1,11 +1,12 @@
 // basic
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // react-query
-import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
-import { getFilters } from '@/services/searchApi';
+import { useQuery, dehydrate, QueryClient, DehydratedState } from '@tanstack/react-query';
+import { getFilteredData, getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
-import { useParamsURL } from '@/components/hooks/useParamsURL';
 
 // interface
 interface IFiltersProvider {
@@ -22,7 +23,7 @@ export interface IFiltersContext {
   data: FilterListRender[] | undefined;
   onHideFilters: any;
   isChecked: any;
-  activeFilters: ActiveFiltersTypes[];
+  activeFilters: ActiveFiltersTypes;
 }
 
 export interface AllFilterTypes {
@@ -35,11 +36,16 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
+  const router = useRouter();
   const [hide, setHide] = useState<boolean>(true);
-  const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes[]>([]);
-  const { handleFiltersURL } = useParamsURL();
+  const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
 
-  const { isFetched, isLoading, isError, error, data } = useQuery({
+  useEffect(() => {
+    getParamsURL(router, activeFilters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilters]);
+
+  const contextFilters = useQuery({
     queryKey: ['filters'],
     queryFn: getFilters,
     refetchOnWindowFocus: false,
@@ -55,29 +61,29 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   };
 
   const isChecked = (e: any) => {
-    let name = e.target.name;
     let checked = e.target.checked;
-    let id = +e.target.id;
-    let label = e.target.getAttribute('datatype');
+    let name: string = e.target.name;
+    let label: string = e.target.getAttribute('datatype');
 
-    if (checked === false) {
-      setActiveFilters((prev) => [...prev.filter((filter) => filter.name !== name)]);
-      // handleFiltersURL(data?., data?.values);
-      return;
-    }
+    setActiveFilters((prev) => {
+      if (label in prev) {
+        return checked === true
+          ? { ...prev, [label]: [...prev[label], name] }
+          : { ...prev, [label]: prev[label].filter((item) => item !== name) };
+      }
 
-    // handleFiltersURL(data?.label, data?.values);
-    setActiveFilters((prev) => [...prev, { label, id, name, checked }]);
+      return { ...prev, [label]: [name] };
+    });
   };
 
   return (
     <FiltersContext.Provider
       value={{
-        isFetched,
-        isLoading,
-        isError,
-        error,
-        data,
+        isFetched: contextFilters?.isFetched,
+        isLoading: contextFilters?.isLoading,
+        isError: contextFilters?.isError,
+        error: contextFilters?.error,
+        data: contextFilters?.data,
         hide,
         onHide,
         onHideFilters,
@@ -91,15 +97,3 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
 };
 
 export default FiltersProvider;
-
-export const getStaticProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(['filters', getFilters]);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
