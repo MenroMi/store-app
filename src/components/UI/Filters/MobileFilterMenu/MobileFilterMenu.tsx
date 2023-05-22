@@ -8,7 +8,7 @@ import { Box, Slide } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // image
 import deleteIcon from '@/assets/icons/close.svg';

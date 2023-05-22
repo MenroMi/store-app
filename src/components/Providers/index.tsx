@@ -6,9 +6,9 @@ import { DehydratedState } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 
 // context
-import FiltersProvider from '@/context/filtersContext';
-import ProductsProvider from '@/context/productsContext';
-import StorageProvider from '@/context/sessionStorageContext';
+import FiltersProvider from '@/contexts/filtersContext';
+import ProductsProvider from '@/contexts/productsContext';
+import StorageProvider from '@/contexts/sessionStorageContext';
 
 // providers
 import { ThemeProvider } from '@mui/material/styles';

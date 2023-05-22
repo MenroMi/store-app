@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { useTheme, Theme } from '@mui/material';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // components
 import Filter from '@/components/UI/Filters/Filter/Filter';

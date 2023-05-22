@@ -15,7 +15,7 @@ import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
 import { useRouter } from 'next/router';
-import { StorageContext } from '@/context/sessionStorageContext';
+import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
 
 export default function Header() {

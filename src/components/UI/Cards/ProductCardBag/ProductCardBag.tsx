@@ -13,7 +13,7 @@ import BagDeleteButton from '@/components/UI/Buttons/BagDeleteButton/BagDeleteBu
 import { CustomBagWrapper, CustomBox } from './styles';
 
 // context
-import { BagContext } from '@/context/bagContext';
+import { BagContext } from '@/contexts/bagContext';
 
 // interface
 import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';

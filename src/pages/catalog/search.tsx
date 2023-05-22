@@ -7,8 +7,8 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // context Provider
-import FiltersProvider, { IFiltersContext } from '@/context/filtersContext';
-import { FiltersContext } from '@/context/filtersContext';
+import FiltersProvider, { IFiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // components
 import FiltersAndCards from '@/components/UI/CombineComponents/FiltersAndCards/FiltersAndCards';

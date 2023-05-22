@@ -7,7 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Typography } from '@mui/material';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // styled component
 import { CustomFlexWrapper } from './SearchPathStyles';

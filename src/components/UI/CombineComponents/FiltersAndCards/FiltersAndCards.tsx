@@ -7,8 +7,8 @@ import CardList from '../../Cards/CardList/CardList';
 import FiltersList from '../../Filters/FiltersList/FiltersList';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
-import { ProductsContext } from '@/context/productsContext';
+import { FiltersContext } from '@/contexts/filtersContext';
+import { ProductsContext } from '@/contexts/productsContext';
 
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
