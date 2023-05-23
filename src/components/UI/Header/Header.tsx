@@ -18,7 +18,7 @@ import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
 import { useRouter } from 'next/router';
 
 import { INavItem } from '@/types/INavItem';
-import AsideProfile from '../Sidebar/AsideProfile/AsideProfile';
+import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
 import { StorageContext } from '@/context/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
