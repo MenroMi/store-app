@@ -1,67 +1,70 @@
 import React, { createContext, useState } from 'react';
 import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
 import productImage from '@/assets/singInBg.png';
+import { useSessionStorage } from '@/hooks/useSessionStorage/useSessionStorage';
 
 type BagContextProviderProps = {
   children: React.ReactNode;
 };
 
-export const BagContext = createContext<CardBagContextType | null>(null);
+export const BagContext = createContext({} as CardBagContextType);
 
 export const BagContextProvider: React.FC<BagContextProviderProps> = ({ children }) => {
-  const [products, setProducts] = useState<ICardBagProps[]>([
-    {
-      id: 1,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-      inStock: true,
-      quantity: 1,
-    },
-    {
-      id: 2,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-      inStock: true,
-      quantity: 1,
-    },
-    {
-      id: 3,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-      inStock: true,
-      quantity: 1,
-    },
-    {
-      id: 4,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-      inStock: true,
-      quantity: 1,
-    },
-  ]);
+  
+  const [products, setProducts] = useSessionStorage<ICardBagProps[]>('shopping card', []);
 
-  const deleteProduct = (id: number) => {
-    const newArray: ICardBagProps[] = products.filter((product) => product.id !== id);
-    setProducts(newArray);
-  };
+  function getItemQuantity(id: number) {
+    return products.find((item) => item.id === id)?.quantity || 0;
+  }
 
-  const changeQuantity = (id: number, quantity: number) => {
-    const newProductsList: ICardBagProps[] = products.map((product) =>
-      product.id === id ? { ...product, quantity } : product
-    );
-    setProducts(newProductsList);
-  };
+  function increaseCartQuantity(id: number) {
+    setProducts((products) => {
+      if (products.find((item) => item.id === id) == null) {
+        return [...products, { id, quantity: 1 }];
+      } else {
+        return products.map((item) => {
+          if (item.id === id) {
+            return { ...item, quantity: item.quantity + 1 };
+          } else {
+            return item;
+          }
+        });
+      }
+    });
+  }
+
+  function decreaseCartQuantity(id: number) {
+    setProducts((currItems) => {
+      if (currItems.find((item) => item.id === id)?.quantity === 1) {
+        return currItems.filter((item) => item.id !== id);
+      } else {
+        return currItems.map((item) => {
+          if (item.id === id) {
+            return { ...item, quantity: item.quantity - 1 };
+          } else {
+            return item;
+          }
+        });
+      }
+    });
+  }
+
+  function removeFromCart(id: number) {
+    setProducts((currItems) => {
+      return currItems.filter((item) => item.id !== id);
+    });
+  }
 
   return (
-    <BagContext.Provider value={{ products, deleteProduct, changeQuantity }}>
+    <BagContext.Provider
+      value={{
+        products,
+        getItemQuantity,
+        increaseCartQuantity,
+        decreaseCartQuantity,
+        removeFromCart,
+      }}
+    >
       {children}
     </BagContext.Provider>
   );

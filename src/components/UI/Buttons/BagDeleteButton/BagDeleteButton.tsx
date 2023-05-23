@@ -16,7 +16,6 @@ import { CardBagContextType } from '@/types/productCardBag';
 // interface
 interface IBagDeleteButtonProps {
   id: number;
-  deleteProduct: (id: number) => void;
 }
 
 const BagDeleteButton: React.FC<IBagDeleteButtonProps> = ({ id }) => {
@@ -26,7 +25,7 @@ const BagDeleteButton: React.FC<IBagDeleteButtonProps> = ({ id }) => {
   const context = useContext(BagContext) as CardBagContextType;
 
   return (
-    <CustomButton onClick={() => context.deleteProduct(id)}>
+    <CustomButton onClick={() => context.removeFromCart(id)}>
       <Box
         component={Image}
         src={DeleteIcon}

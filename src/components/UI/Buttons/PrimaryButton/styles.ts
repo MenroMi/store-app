@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-export const CustomPrimaryButton = styled(Button)(() => ({
+export const CustomPrimaryButton = styled(Button)(({onClick}) => ({
   color: 'white',
   height: '40px',
   textTransform: 'none',

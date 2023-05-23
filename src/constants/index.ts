@@ -33,6 +33,7 @@ export enum Routes {
   myProducts = '/profile/products',
   search = '/catalog/search',
   settings = '/profile/settings/',
+  checkout = '/profile/checkout/',
 }
 
 export const NAV_LINKS = [

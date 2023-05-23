@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "productImageSrc": "@src/assets/singInBg.png",
+    "productName": "Nike Air Max 270",
+    "productPrice": 160,
+    "productCategory": "Women's shoes",
+    "inStock": true
+  },
+  {
+    "id": 2,
+    "productImageSrc": "@src/assets/singInBg.png",
+    "productName": "Nike Air Max 270",
+    "productPrice": 160,
+    "productCategory": "Women's shoes",
+    "inStock": true
+  },
+  {
+    "id": 3,
+    "productImageSrc": "@src/assets/singInBg.png",
+    "productName": "Nike Air Max 270",
+    "productPrice": 160,
+    "productCategory": "Women's shoes",
+    "inStock": true
+  },
+  {
+    "id": 4,
+    "productImageSrc": "@src/assets/singInBg.png",
+    "productName": "Nike Air Max 270",
+    "productPrice": 160,
+    "productCategory": "Women's shoes",
+    "inStock": true
+  }
+]
