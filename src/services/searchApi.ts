@@ -84,15 +84,14 @@ export const getPaginationData = async () => {
 };
 
 export const getFilteredData = async (query: any) => {
-  let url: string = `/products?`;
+  let url: string = `/products?populate=*&`;
   let { total } = await getPaginationData();
   let parsingQuery: any = qs.parse(query);
 
   if (typeof parsingQuery !== 'undefined') {
     for (let prop in parsingQuery) {
       if (!Array.isArray(parsingQuery[prop])) {
-        url += `populate[${prop}][filters][name][$eq]=${parsingQuery[prop]}&`;
-        continue;
+        parsingQuery[prop] = parsingQuery[prop].split(',');
       }
 
       if (parsingQuery[prop].length <= 0) {
@@ -100,12 +99,15 @@ export const getFilteredData = async (query: any) => {
       }
 
       for (let key of parsingQuery[prop]) {
-        url += `populate[${prop}][filters][name][$eq]=${key}&`;
+        url += `filters[${prop}][name][$contains]=${key.slice(0, 1).toUpperCase()}${key.slice(1)}&`;
       }
     }
   }
 
-  const products = await getDataFromServer(url, `pagination[page]=1&pagination[pageSize]=${total}`);
+  const products = await getDataFromServer(
+    url,
+    `pagination[page]=$1&pagination[pageSize]=${total}`
+  );
 
-  return onFilterData(products?.data?.data, 0, parsingQuery, products?.data?.data);
+  return products?.data?.data;
 };

@@ -87,15 +87,3 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
 };
 
 export default ProductsProvider;
-
-// export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-//   const queryClient = new QueryClient();
-
-//   await queryClient.prefetchQuery(['all'], getProducts);
-
-//   return {
-//     props: {
-//       dehydratedState: dehydrate(queryClient),
-//     },
-//   };
-// };

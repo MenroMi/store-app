@@ -44,8 +44,10 @@ export default function SearchResultPage({
     refetchOnWindowFocus: false,
   });
 
-  // now is unusable
-  const memoizedData = useMemo(() => contextFilteredData?.data, [contextFilteredData?.data]);
+  // // now is unusable
+  // const memoizedData = useMemo(() => contextFilteredData?.data, [contextFilteredData?.data]);
+
+  console.log(dehydratedState.queries[0].state.data);
 
   useEffect(() => {
     setMobileVer(true);

@@ -227,7 +227,6 @@ export const othersItems: MenuItemParams[] = [
 ];
 
 export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api';
-// export const uploadImageURL = 'https//res.cloudinary.com';
 
 export const ONE_MOCKED_PRODUCT = {
   id: 3,
