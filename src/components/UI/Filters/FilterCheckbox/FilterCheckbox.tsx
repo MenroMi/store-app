@@ -3,7 +3,7 @@ import { FormControlLabel, Typography, Checkbox, useTheme, Theme } from '@mui/ma
 import { useContext } from 'react';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // interface
 interface IFilterCheckbox {
