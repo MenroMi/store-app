@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import { INavItem } from '@/types/INavItem';
 import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
-import { StorageContext } from '@/context/sessionStorageContext';
+import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
 
 export default function Header() {

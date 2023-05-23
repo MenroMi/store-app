@@ -7,6 +7,7 @@ import { getParamsURL } from '@/utils/filters/getParamsURL';
 import { useQuery, dehydrate, QueryClient, DehydratedState } from '@tanstack/react-query';
 import { getFilteredData, getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // interface
 interface IFiltersProvider {
@@ -60,6 +61,9 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     return;
   };
 
+  if (contextFilters?.isLoading || contextFilters?.isFetching) {
+    return <FullScreenLoader />;
+  }
   const isChecked = (e: any) => {
     let checked = e.target.checked;
     let name: string = e.target.name;

@@ -8,7 +8,7 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // image
 import hideFilterIcon from '@/assets/icons/filter.svg';

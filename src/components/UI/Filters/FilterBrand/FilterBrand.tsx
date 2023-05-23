@@ -15,7 +15,7 @@ import React, { useState, useContext, Fragment } from 'react';
 import searchIcon from '@/assets/icons/search.svg';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // styled component
 import { CustomTextField } from './styles';

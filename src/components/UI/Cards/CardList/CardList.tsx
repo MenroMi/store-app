@@ -9,8 +9,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Grid, Box, Typography } from '@mui/material';
 
 // context
-import { FiltersContext } from '@/context/filtersContext';
-import { ProductsContext } from '@/context/productsContext';
+import { FiltersContext } from '@/contexts/filtersContext';
+import { ProductsContext } from '@/contexts/productsContext';
 
 // image
 import singInImg from '@/assets/singInBg.png';
