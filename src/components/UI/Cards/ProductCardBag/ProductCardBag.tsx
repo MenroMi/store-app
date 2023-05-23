@@ -15,7 +15,9 @@ import { CustomBagWrapper, CustomBox } from './styles';
 // context
 import { BagContext } from '@/context/BagContext';
 
-import storeItems from "../../../../context/items.json"
+// import storeItems from "../../../../context/items.json"
+
+const storeItems = [{ id: 1}, {id: 2}];
 
 // interface
 import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
