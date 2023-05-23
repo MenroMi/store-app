@@ -85,11 +85,6 @@ export const NAV_BURGER_LINKS: INavItem[] = [
     to: Routes.addProduct,
   },
   {
-    icon: bonusAccountIcon,
-    name: 'My Orders',
-    to: Routes.bag,
-  },
-  {
     icon: settingsIcon,
     name: 'Settings',
     to: Routes.settings,
