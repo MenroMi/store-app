@@ -8,7 +8,6 @@ interface ILayoutProps {
 }
 
 export default function Layout({ title, children }: ILayoutProps) {
-
   return (
     <>
       <Head>
@@ -19,16 +18,7 @@ export default function Layout({ title, children }: ILayoutProps) {
 
       <styles.Layout>
         <Header />
-        <styles.Main
-          sx={{
-            padding: {
-              xl: '0 60px 0 40px',
-              xs: '0',
-            },
-          }}
-        >
-          {children}
-        </styles.Main>
+        <styles.Main>{children}</styles.Main>
       </styles.Layout>
     </>
   );

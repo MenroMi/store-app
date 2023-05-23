@@ -29,10 +29,10 @@ export const NavList = styled('ul')<INavProps>`
       ? `
       flex-direction: column;
       position: absolute;
-      top: -30px;
-      right: -30px;
+      top: -10px;
+      right: -20px;
       width: 270px;
-      min-height: 100vh;
+      height: 100vh;
       padding: 80px 20px;
       list-style-type: none;
       background-color: green;
