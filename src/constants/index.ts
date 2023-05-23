@@ -200,7 +200,7 @@ export const UPDATE_PROFILE_INPUTS: IUpdateProfileInput[] = [
   },
 
   {
-    id: 'phonenumber',
+    id: 'phone',
     placeholder: '(949) 354-2574',
     label: 'Phone number',
     type: 'tel',

@@ -4,4 +4,6 @@ export interface IFormData {
   password?: string;
   confirm?: string;
   checked?: boolean;
+  surname?: string
+  phone?: string
 }
