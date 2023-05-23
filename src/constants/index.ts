@@ -11,9 +11,9 @@ import { StaticImageData } from 'next/image';
 import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 import bagIcon from '@/assets/icons/bagSideMenu.svg';
 import profileIcon from '@/assets/icons/profile.svg';
-import wishListIcon from '@/assets/icons/wishListPreferences.svg';
 import bonusAccountIcon from '@/assets/icons/bonusAcc.svg';
 import logoutIcon from '@/assets/icons/logout.svg';
+import loginIcon from '@/assets/icons/login.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
 import productImage from '@/assets/singInBg.png';
@@ -28,12 +28,12 @@ export enum Routes {
   sign = '/auth/mobile-login',
   error404 = '/404',
   error500 = '/500',
-  bag = '/profile/bag/',
+  bag = '/profile/bag',
   home = '/profile/home',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
   search = '/catalog/search',
-  settings = '/profile/settings/',
+  settings = '/profile/settings',
 }
 
 export const NAV_LINKS = [
@@ -104,24 +104,28 @@ export const NAV_BURGER_LINKS: INavItem[] = [
 export const ASIDE_MENU_LINKS = [
   {
     id: 1,
+    role: 'user',
     icon: profileIcon,
     name: 'My profile',
     to: Routes.myProducts,
   },
   {
-    id: 2,
-    icon: bagIcon,
-    name: 'My orders',
-    to: '/profile/bag/',
+    id: 3,
+    role: 'guest',
+    icon: loginIcon,
+    name: 'Log in',
+    to: Routes.login,
   },
   {
     id: 4,
+    role: 'user',
     icon: settingsIcon,
     name: 'Settings',
     to: Routes.settings,
   },
   {
     id: 5,
+    role: 'user',
     icon: logoutIcon,
     name: 'Log out',
     to: Routes.search,
