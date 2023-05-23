@@ -40,6 +40,7 @@ const ProductsProvider: React.FC<IProductsProvider> = ({ children }) => {
     queryFn: () => getPaginationData(),
   });
 
+
   if (typeof page === 'undefined') {
     currentPage = 1;
   } else if (Array.isArray(page)) {

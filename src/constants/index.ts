@@ -17,6 +17,8 @@ import loginIcon from '@/assets/icons/login.svg';
 import settingsIcon from '@/assets/icons/settings.svg';
 import { MenuItemParams, IComment } from '@/types';
 import productImage from '@/assets/singInBg.png';
+import { INavItem } from '@/types/INavItem';
+import { NextRouter } from 'next/router';
 
 export enum Routes {
   register = '/auth/register',
@@ -49,16 +51,12 @@ export const NAV_LINKS = [
   },
 ];
 
-export const NAV_BURGER_LINKS = [
+export const NAV_BURGER_LINKS: INavItem[] = [
+  // for unauth users
   {
     icon: leftBurgerSetting,
     name: 'Home',
     to: Routes.home,
-  },
-  {
-    icon: bonusAccountIcon,
-    name: 'Add Product',
-    to: Routes.addProduct,
   },
   {
     icon: bag,
@@ -66,14 +64,35 @@ export const NAV_BURGER_LINKS = [
     to: Routes.bag,
   },
   {
-    icon: profileIcon,
-    name: 'My profile',
+    icon: logoutIcon,
+    name: 'Log In',
+    to: Routes.login,
+  },
+  // for auth users
+  {
+    icon: leftBurgerSetting,
+    name: 'Home',
     to: Routes.home,
+  },
+  {
+    icon: bag,
+    name: 'Bag',
+    to: Routes.bag,
+  },
+  {
+    icon: bonusAccountIcon,
+    name: 'Add Product',
+    to: Routes.addProduct,
+  },
+  {
+    icon: settingsIcon,
+    name: 'Settings',
+    to: Routes.settings,
   },
   {
     icon: logoutIcon,
     name: 'Log In',
-    to: Routes.login,
+    to: Routes.search,
   },
 ];
 

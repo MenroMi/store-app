@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
 import { getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
-import { useParamsURL } from '@/components/hooks/useParamsURL';
+import { useParamsURL } from '@/utils/hooks/useParamsURL';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // interface
 interface IFiltersProvider {
@@ -39,7 +40,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes[]>([]);
   const { handleFiltersURL } = useParamsURL();
 
-  const { isFetched, isLoading, isError, error, data } = useQuery({
+  const { isFetched, isFetching, isLoading, isError, error, data } = useQuery({
     queryKey: ['filters'],
     queryFn: getFilters,
     refetchOnWindowFocus: false,
@@ -53,6 +54,12 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     }
     return;
   };
+
+  if (isLoading || isFetching) {
+    return (
+      <FullScreenLoader />
+    )
+  }
 
   const isChecked = (e: any) => {
     let name = e.target.name;

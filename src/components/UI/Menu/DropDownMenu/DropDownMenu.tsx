@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { StorageContext } from '@/context/sessionStorageContext';
+import { StorageContext } from '@/contexts/sessionStorageContext';
 
 // images
 import dotsBtn from '@/assets/icons/dots.svg';
