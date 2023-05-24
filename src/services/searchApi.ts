@@ -1,37 +1,6 @@
 import { getDataFromServer } from './apiClient';
 import { AttrFromData } from '@/types/cardListTypes';
-import onFilterData from '@/utils/filters/getFilteredDataRecursion';
 import qs, { ParsedQs } from 'qs';
-
-export const getProducts = async (page: number, size: number = 25) => {
-  const pagination = await getDataFromServer(
-    `/products`,
-    `pagination[page]=${page}&pagination[pageSize]=${size}`
-  ).then((res) => res?.data?.data);
-
-  const products = await Promise.allSettled(
-    pagination.map((product: { id: number }) => getDataFromServer(`/products/${product?.id}`))
-  ).then((results) => {
-    return results.map((result: any) => result?.value?.data?.data);
-  });
-
-  const productsEA = products.map(({ id, attributes }: AttrFromData) => {
-    const { name, images, price, gender, teamName } = attributes;
-
-    return {
-      id,
-      attributes: {
-        name,
-        images,
-        price,
-        gender,
-        teamName,
-      },
-    };
-  });
-
-  return productsEA;
-};
 
 export const getFilters = async () => {
   const endpoints = ['/genders', '/brands'];
@@ -77,37 +46,31 @@ export const getFilters = async () => {
   return res;
 };
 
-export const getPaginationData = async () => {
-  const paginationData = await getDataFromServer('/products');
-
-  return paginationData?.data?.meta?.pagination;
-};
-
 export const getFilteredData = async (query: any) => {
   let url: string = `/products?populate=*&`;
-  let { total } = await getPaginationData();
-  let parsingQuery: any = qs.parse(query);
+  let page: number = 1;
 
-  if (typeof parsingQuery !== 'undefined') {
-    for (let prop in parsingQuery) {
-      if (!Array.isArray(parsingQuery[prop])) {
-        parsingQuery[prop] = parsingQuery[prop].split(',');
+  if (typeof query !== 'undefined') {
+    for (let prop in query) {
+      if (!Array.isArray(query[prop])) {
+        query[prop] = query[prop].split(',');
       }
 
-      if (parsingQuery[prop].length <= 0) {
+      if (prop === 'page') {
+        page = query[prop].join();
         continue;
       }
 
-      for (let key of parsingQuery[prop]) {
+      if (query[prop].length <= 0) {
+        continue;
+      }
+
+      for (let key of query[prop]) {
         url += `filters[${prop}][name][$contains]=${key.slice(0, 1).toUpperCase()}${key.slice(1)}&`;
       }
     }
   }
+  const products = await getDataFromServer(url, `pagination[page]=${page}&pagination[pageSize]=25`);
 
-  const products = await getDataFromServer(
-    url,
-    `pagination[page]=$1&pagination[pageSize]=${total}`
-  );
-
-  return products?.data?.data;
+  return products?.data;
 };

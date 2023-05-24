@@ -16,7 +16,17 @@ const ReactQueryDevtoolsProduction = dynamic(
 );
 
 export default function ReactQueryProvider({ children, dehydrateState }: IProvidersProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            staleTime: Infinity,
+          },
+        },
+      })
+  );
   const [showDevtools, setShowDevtools] = useState(false);
 
   useEffect(() => {

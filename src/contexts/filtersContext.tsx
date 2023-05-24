@@ -5,7 +5,7 @@ import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // react-query
 import { useQuery, dehydrate, QueryClient, DehydratedState } from '@tanstack/react-query';
-import { getFilteredData, getFilters } from '@/services/searchApi';
+import { getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
 import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
@@ -25,6 +25,8 @@ export interface IFiltersContext {
   onHideFilters: any;
   isChecked: any;
   activeFilters: ActiveFiltersTypes;
+  // onChangePage: (e: React.MouseEvent<HTMLElement>) => void;
+  // setPage: () => void;
 }
 
 export interface AllFilterTypes {
@@ -38,13 +40,18 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const router = useRouter();
+
+  // const [page, setPage] = useState<number>(1);
   const [hide, setHide] = useState<boolean>(true);
+  const [price, setPrice] = useState<number>(0);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
 
   useEffect(() => {
     getParamsURL(router, activeFilters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
+
+  useEffect(() => {}, []);
 
   const contextFilters = useQuery({
     queryKey: ['filters'],
@@ -61,12 +68,12 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     return;
   };
 
-  if (contextFilters?.isLoading || contextFilters?.isFetching) {
-    return <FullScreenLoader />;
-  }
+  // if (contextFilters?.isLoading || contextFilters?.isFetching) {
+  //   return <FullScreenLoader />;
+  // }
   const isChecked = (e: any) => {
     let checked = e.target.checked;
-    let name: string = e.target.name;
+    let name: string = e.target.name.toLowerCase();
     let label: string = e.target.getAttribute('datatype');
 
     setActiveFilters((prev) => {
@@ -80,6 +87,24 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     });
   };
 
+  // const onChangePage = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  //   let target = e.target as HTMLElement;
+
+  //   if (target?.tagName === 'svg') {
+  //     return target.dataset.testid === 'NavigateNextIcon'
+  //       ? setPage((prev) => prev + 1)
+  //       : setPage((prev) => prev - 1);
+  //   }
+
+  //   if (target?.tagName === 'BUTTON') {
+  //     if (target.textContent) {
+  //       return setPage(!+target?.textContent ? 1 : +target.textContent);
+  //     }
+
+  //     return;
+  //   }
+  // };
+
   return (
     <FiltersContext.Provider
       value={{
@@ -92,6 +117,8 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         onHide,
         onHideFilters,
         isChecked,
+        // onChangePage: (e) => onChangePage(e),
+        // setPage: () => setPage(1),
         activeFilters,
       }}
     >

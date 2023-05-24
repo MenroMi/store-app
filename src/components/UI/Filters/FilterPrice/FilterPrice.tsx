@@ -2,9 +2,6 @@ import { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
-import { FiltersContext } from '@/contexts/filtersContext';
-import { ProductsContext } from '@/contexts/productsContext';
-
 function valuetext(value: number) {
   return `${value}°C`;
 }
@@ -12,24 +9,23 @@ function valuetext(value: number) {
 const FilterPrice: React.FC = (): JSX.Element => {
   const [value, setValue] = useState<number[]>([150, 350]);
 
-  const contextFilters = useContext(FiltersContext);
-  const contextProducts = useContext(ProductsContext);
+  // const contextProducts = useContext(ProductsContext);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
 
-  const maxNumber = () => {
-    let maxN: number;
+  // const maxNumber = () => {
+  //   let maxN: number;
 
-    try {
-      maxN = Math.max(...contextProducts?.takeOnlyPrice()!);
-    } catch {
-      maxN = 400;
-    }
+  //   try {
+  //     maxN = Math.max(...contextProducts?.takeOnlyPrice()!);
+  //   } catch {
+  //     maxN = 400;
+  //   }
 
-    return maxN;
-  };
+  //   return maxN;
+  // };
 
   return (
     <Box sx={{ width: '95%', mt: '20px' }}>
@@ -41,7 +37,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
         getAriaValueText={valuetext}
         disableSwap
         min={0}
-        max={maxNumber()}
+        max={450}
       />
     </Box>
   );

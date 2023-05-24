@@ -7,13 +7,13 @@ import { ReactNode } from 'react';
 
 // context
 import FiltersProvider from '@/contexts/filtersContext';
-import ProductsProvider from '@/contexts/productsContext';
 import StorageProvider from '@/contexts/sessionStorageContext';
 
 // providers
 import { ThemeProvider } from '@mui/material/styles';
 import ReactQueryProvider from './queryClient';
 import UserProvider from './user';
+import ProductsProvider from '@/context/productsContext';
 
 export interface IProvidersProps {
   children: ReactNode;
@@ -26,11 +26,7 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
       <ReactQueryProvider dehydrateState={dehydrateState}>
         <UserProvider>
           <StorageProvider>
-            <FiltersProvider>
-              <ProductsProvider>
-                {children}
-              </ProductsProvider>
-            </FiltersProvider>
+            <FiltersProvider>{children}</FiltersProvider>
           </StorageProvider>
         </UserProvider>
       </ReactQueryProvider>

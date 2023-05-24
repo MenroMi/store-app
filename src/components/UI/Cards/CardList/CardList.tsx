@@ -1,7 +1,8 @@
 // basic
 import Image, { StaticImageData } from 'next/image';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useContext } from 'react';
+import { hydrate } from '@tanstack/react-query';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
@@ -10,7 +11,6 @@ import { Grid, Box, Typography } from '@mui/material';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
-import { ProductsContext } from '@/contexts/productsContext';
 
 // image
 import singInImg from '@/assets/singInBg.png';
@@ -22,19 +22,24 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
-import { ONE_MOCKED_PRODUCT } from '@/constants';
 
 // interface
-import { ICardListProps, AttrFromData } from '@/types/cardListTypes';
+import { AttrFromData } from '@/types/cardListTypes';
+import { getFilteredData } from '@/services/searchApi';
+import { useQuery } from '@tanstack/react-query';
 
 // FUNCTIONAL COMPONENT
-const CardList: React.FC<ICardListProps> = ({
-  products = [...new Array(8).fill(ONE_MOCKED_PRODUCT)],
-}): JSX.Element | null => {
+const CardList: React.FC = (): JSX.Element | null => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
   const contextFilter = useContext(FiltersContext);
-  const contextProducts = useContext(ProductsContext);
+  const router = useRouter();
+
+  const { data, isFetched, isError, error, isLoading } = useQuery({
+    queryKey: ['filteredData', router.query],
+    queryFn: () => getFilteredData(router.query),
+    keepPreviousData: true,
+  });
 
   const isVisible = (elem: JSX.Element, id: number) => {
     return (
@@ -51,15 +56,14 @@ const CardList: React.FC<ICardListProps> = ({
       </Grid>
     );
   };
-
-  if (contextProducts?.isError) {
+  if (isError) {
     Router.push('/404');
     return null;
   }
 
   const checkData = () => {
-    if (Array.isArray(contextProducts?.data)) {
-      return contextProducts?.data.map(({ id, attributes }: AttrFromData) => {
+    if (Array.isArray(data?.data) && data?.data.length > 0) {
+      return data?.data.map(({ id, attributes }: AttrFromData) => {
         const { name, price, images, gender } = attributes;
         let url: string | StaticImageData;
 
@@ -86,7 +90,6 @@ const CardList: React.FC<ICardListProps> = ({
         );
       });
     }
-
     return (
       <CatalogIsEmptyContainer>
         <Box
@@ -108,29 +111,22 @@ const CardList: React.FC<ICardListProps> = ({
 
   return (
     <CustomSearchOverlay>
-      {contextProducts?.isLoading ? (
-        <Box>Loading...</Box>
-      ) : (
-        <CardsGridContainer
-          container
-          columnSpacing={{
-            md: 5,
-            lg: 5,
-            xl: 7,
-          }}
-          sx={{
-            padding: `${!queryUpMd && '0 0 0 20px'}`,
-            columnGap: contextFilter?.hide && queryUpMd ? { xl: '13px' } : '',
-            rowGap: { md: '32px', xs: '16px' },
-            justifyContent: 'flex-start',
-          }}
-        >
-          {contextProducts?.isFetched &&
-            contextProducts?.data &&
-            contextFilter?.data &&
-            checkData()}
-        </CardsGridContainer>
-      )}
+      <CardsGridContainer
+        container
+        columnSpacing={{
+          md: 5,
+          lg: 5,
+          xl: 7,
+        }}
+        sx={{
+          padding: `${!queryUpMd && '0 0 0 20px'}`,
+          columnGap: contextFilter?.hide && queryUpMd ? { xl: '13px' } : '',
+          rowGap: { md: '32px', xs: '16px' },
+          justifyContent: 'flex-start',
+        }}
+      >
+        {isLoading && !isFetched ? <h1>Loading...</h1> : checkData()}
+      </CardsGridContainer>
     </CustomSearchOverlay>
   );
 };

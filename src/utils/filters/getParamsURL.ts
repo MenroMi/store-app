@@ -1,6 +1,5 @@
 import { ActiveFiltersTypes } from '@/types/filterListTypes';
 import { NextRouter } from 'next/router';
-
 export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes) => {
   const searchParams = new URLSearchParams(
     router.query as string | string[][] | Record<string, string> | URLSearchParams | undefined
@@ -24,10 +23,19 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes) =>
   }
 
   if (searchParams.size === 0) {
+    console.log(filters);
+    // searchParams.append('page', `${page}`);
     router.push(`${router.pathname}`);
   }
 
-  if (searchParams.size >= 0 && searchParams.size !== 0) {
+  if (searchParams.size > 0) {
+    // searchParams.delete('page');
+    // searchParams.append(
+    //   'page',
+    //   `${typeof router.query.page === 'undefined' ? page : router.query.page}`
+    // );
+
+    console.log('he is not empty');
     router.push(`${router.pathname}?${searchParams.toString()}`);
   }
 };

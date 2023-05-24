@@ -9,7 +9,7 @@ import {
   Box,
   CheckboxProps,
 } from '@mui/material';
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, useContext, Fragment, useEffect } from 'react';
 
 // images
 import searchIcon from '@/assets/icons/search.svg';
@@ -19,6 +19,7 @@ import { FiltersContext } from '@/contexts/filtersContext';
 
 // styled component
 import { CustomTextField } from './styles';
+import { useRouter } from 'next/router';
 
 // interface
 interface IFilterBrand {
@@ -28,6 +29,7 @@ interface IFilterBrand {
 
 const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
   const theme = useTheme<Theme>();
+  const router = useRouter();
   const [searchingBrand, setSearchingBrand] = useState<string>('');
   const context = useContext(FiltersContext);
 
@@ -81,6 +83,11 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
                     inputProps={{
                       datatype: label,
                     }}
+                    checked={
+                      typeof router.query.brand === 'undefined'
+                        ? false
+                        : router.query.brand?.includes(attributes?.name.toLowerCase())
+                    }
                     name={attributes?.name}
                     sx={{ mr: '12px' }}
                     onClick={(e) => context?.isChecked(e)}

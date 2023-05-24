@@ -4,6 +4,7 @@ import { useContext } from 'react';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
+import { useRouter } from 'next/router';
 
 // interface
 interface IFilterCheckbox {
@@ -14,6 +15,7 @@ interface IFilterCheckbox {
 
 const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label }) => {
   const theme = useTheme<Theme>();
+  const router = useRouter();
   const context = useContext(FiltersContext);
 
   return (
@@ -28,6 +30,11 @@ const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label }) =>
           inputProps={{ datatype: label }}
           name={attributes?.name}
           id={`${id}`}
+          checked={
+            typeof router.query.gender === 'undefined'
+              ? false
+              : router.query.gender?.includes(attributes?.name!.toLowerCase())
+          }
           onClick={(e) => context?.isChecked(e)}
         />
       }
