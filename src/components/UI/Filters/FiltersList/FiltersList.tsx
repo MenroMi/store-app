@@ -1,9 +1,6 @@
 // basic
 import { useContext } from 'react';
 
-// mui
-import { useTheme, Theme } from '@mui/material';
-
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
 
