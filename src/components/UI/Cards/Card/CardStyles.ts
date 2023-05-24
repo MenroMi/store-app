@@ -11,6 +11,11 @@ export const CustomCardWrapper = styled('div')<ICustomCardWrapperProps>(
     width: '320px',
     height: '443px',
 
+    [theme.breakpoints.down('sm')]: {
+      width: '152px',
+      height: '210px',
+    },
+
     '&:not(:last-child)': {
       marginRight: marginRight || 0,
     },
@@ -30,8 +35,8 @@ export const CustomTypographyWrapper = styled('div')(() => ({
 }));
 
 export const CustomImage = styled(Image)({
-   objectFit: 'cover', 
-   zIndex: 10
+  objectFit: 'cover',
+  zIndex: 10,
 });
 
 export const CustomTypographyName = styled(Typography)({

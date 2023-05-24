@@ -28,6 +28,6 @@ export const CustomHideFilterBtn = styled(Button)(({ theme }) => ({
 
 export const CustomGridContainer = styled(Grid)(() => ({
   justifyContent: 'space-between',
-  alignItems: 'flex-end',
+  alignItems: 'center',
   backgroundColor: theme?.palette?.primary?.contrastText,
 }));

@@ -3,11 +3,16 @@ import { Grid } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 export const CustomSearchOverlay = styled('div')({
-  // maxHeight: '65vh',
-  maxHeight: '550px',
+  maxHeight: 'calc(100vh - 350px)',
   width: '100%',
   overflowY: 'scroll',
   overflowX: 'hidden',
+  [theme.breakpoints.down('md')]: {
+    maxHeight: 'calc(100vh - 290px)',
+  },
+  [theme.breakpoints.down('sm')]: {
+    maxHeight: 'calc(100vh - 260px)',
+  },
 
   '&::-webkit-scrollbar': {
     width: '20px',
@@ -27,17 +32,22 @@ export const CardsGridContainer = styled(Grid)(({ theme }) => ({
     marginTop: '2.25em',
   },
   position: 'relative',
-  margin: '0 auto',
-  minHeight: '400px',
+  width: '100%',
+  justifySelf: 'center',
+  justifyContent: 'center',
+  alignContent: 'start',
+  columnGap: '54px',
+  rowGap: '40px',
   height: '100%',
 
-  [theme.breakpoints.down('md')]: {
-    justifyContent: 'space-between',
-  },
   [theme.breakpoints.down('sm')]: {
     '&.MuiGrid-root': {
       marginTop: '1em',
     },
+    columnGap: '16px',
+    rowGap: '20px',
+    justifyContent: 'space-around',
+    padding:'0 4px 0 20px'
   },
 }));
 

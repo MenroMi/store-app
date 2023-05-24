@@ -30,11 +30,13 @@ const Card: React.FC<ICardProps> = ({
 }): JSX.Element => {
   return (
     <CustomCardWrapper marginRight={marginRight}>
-      <Box 
-      sx={{ 
-          height: { sm: '380px', xs: '250px' }, overflow: 'hidden', 
-        position:'relative' 
-        }}>
+      <Box
+        sx={{
+          height: { sm: '380px', xs: '250px' },
+          overflow: 'hidden',
+          position: 'relative',
+        }}
+      >
         <CustomImage
           src={productImageSrc}
           alt="product template"
@@ -43,7 +45,7 @@ const Card: React.FC<ICardProps> = ({
           placeholder="blur"
           blurDataURL={keyStr}
         />
-      {children}
+        {children}
       </Box>
       <CustomTypographyWrapper>
         <CustomTypographyName variant="subtitle1">{productName}</CustomTypographyName>
