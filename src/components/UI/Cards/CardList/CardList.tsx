@@ -23,12 +23,17 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
 
 // interface
-import { AttrFromData } from '@/types/cardListTypes';
+import { AttrFromData, ICardListProps } from '@/types/cardListTypes';
 import { getFilteredData } from '@/services/searchApi';
 import { useQuery } from '@tanstack/react-query';
+import { ONE_MOCKED_PRODUCT } from '@/constants';
+
+// interface
 
 // FUNCTIONAL COMPONENT
-const CardList: React.FC = (): JSX.Element | null => {
+const CardList: React.FC<ICardListProps> = ({
+  products = [...new Array(8).fill(ONE_MOCKED_PRODUCT)],
+}): JSX.Element | null => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
   const contextFilter = useContext(FiltersContext);
