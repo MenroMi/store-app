@@ -48,6 +48,26 @@ export default function AddProductUploadImage({
             md: 2,
           }}
         >
+          {selectedImages?.map((productImage, index) => (
+            <Grid
+              key={index}
+              item
+              xs={6}
+              sx={{
+                maxWidth: queryDownLg ? '160px' : '320px',
+                maxHeight: queryDownLg ? '190px' : '380px',
+              }}
+            >
+              <Image
+                src={productImage}
+                alt="Product image"
+                style={{ width: '100%', height: '100%' }}
+                width={queryDownLg ? 160 : 320}
+                height={queryDownLg ? 190 : 380}
+              />
+            </Grid>
+          ))}
+
           <Grid
             item
             xs={6}
@@ -78,26 +98,6 @@ export default function AddProductUploadImage({
               />
             </CustomUploadWrapper>
           </Grid>
-
-          {selectedImages?.map((productImage, index) => (
-            <Grid
-              key={index}
-              item
-              xs={6}
-              sx={{
-                maxWidth: queryDownLg ? '160px' : '320px',
-                maxHeight: queryDownLg ? '190px' : '380px',
-              }}
-            >
-              <Image
-                src={productImage}
-                alt="Product image"
-                style={{ width: '100%', height: '100%' }}
-                width={queryDownLg ? 160 : 320}
-                height={queryDownLg ? 190 : 380}
-              />
-            </Grid>
-          ))}
         </Grid>
       ) : (
         <p>asdasd</p>
