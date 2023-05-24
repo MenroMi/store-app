@@ -23,7 +23,6 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes) =>
   }
 
   if (searchParams.size === 0) {
-    console.log(filters);
     // searchParams.append('page', `${page}`);
     router.push(`${router.pathname}`);
   }
@@ -35,7 +34,6 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes) =>
     //   `${typeof router.query.page === 'undefined' ? page : router.query.page}`
     // );
 
-    console.log('he is not empty');
     router.push(`${router.pathname}?${searchParams.toString()}`);
   }
 };

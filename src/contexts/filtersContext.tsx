@@ -47,7 +47,6 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
 
   useEffect(() => {
-    console.log(activeFilters);
     getParamsURL(router, activeFilters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
@@ -140,9 +139,6 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   //     return;
   //   }
   // };
-
-  console.log(router.query);
-  console.log(activeFilters);
 
   return (
     <FiltersContext.Provider
