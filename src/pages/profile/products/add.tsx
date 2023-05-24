@@ -12,6 +12,7 @@ import Layout from '@/components/Layout/MainLayout';
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
@@ -50,6 +51,10 @@ export default function AddProduct() {
 
   // submit the form
   const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images));
+
+  if (isLoading) return (
+    <FullScreenLoader />
+  )
 
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {

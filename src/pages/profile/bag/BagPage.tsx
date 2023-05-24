@@ -15,7 +15,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import theme from '@/utils/mui/theme';
-import { reducePrice } from '@/utils/reducePrice';
+import { reducePrice } from '@/utils/price/reducePrice';
 
 // images
 import DownIcon from '@/assets/icons/down.svg';
@@ -38,7 +38,7 @@ import {
 
 // interface
 import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
-import { BagContext } from '@/context/BagContext';
+import { BagContext } from '@/contexts/bagContext';
 
 const BagPage = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));

@@ -13,6 +13,7 @@ import theme from '@/utils/mui/theme';
 // components
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
@@ -37,6 +38,10 @@ const Authorization = () => {
       primary: { main },
     },
   } = useTheme();
+
+  if (isLoading) return (
+    <FullScreenLoader />
+  )
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

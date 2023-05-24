@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
-import { FiltersContext } from '@/context/filtersContext';
-import { ProductsContext } from '@/context/productsContext';
+import { FiltersContext } from '@/contexts/filtersContext';
+import { ProductsContext } from '@/contexts/productsContext';
 
 function valuetext(value: number) {
   return `${value}°C`;
