@@ -3,7 +3,7 @@ import axios from 'axios';
 // services
 import { getDataFromServer } from './apiClient';
 // constants
-import { baseURL } from '@/constants';
+import { baseURL } from '@/constants/urls';
 // interfaces
 import { IProductData } from '@/types/addProductTypes';
 

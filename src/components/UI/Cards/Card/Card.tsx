@@ -1,9 +1,6 @@
 // mui
 import { Typography, Box } from '@mui/material';
 
-// image
-import signIcon from '@/assets/singInBg.png';
-
 // styled components
 import {
   CustomCardWrapper,
@@ -14,10 +11,7 @@ import {
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
-import { StaticImageData } from 'next/image';
-
-const keyStr =
-  'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
+import { blurDataURL } from '@/constants/urls';
 
 // FUNCTIONAL COMPONENT
 const Card: React.FC<ICardProps> = ({
@@ -37,7 +31,7 @@ const Card: React.FC<ICardProps> = ({
           width={320}
           height={380}
           placeholder="blur"
-          blurDataURL={keyStr}
+          blurDataURL={blurDataURL}
         />
       </Box>
       {children}

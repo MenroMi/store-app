@@ -13,7 +13,7 @@ import FormRegistration from '@/components/Forms/FormRegistration/FormRegistrati
 import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import { IFormData } from '@/types/formDataTypes';
 import { useMutation } from '@tanstack/react-query';
 import { reset } from '@/services/authService';

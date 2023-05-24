@@ -12,7 +12,7 @@ import AsideProfile from '../AsideProfile/AsideProfile';
 import { CustomCircleNotification } from './styles';
 
 // constants
-import { ASIDE_MENU_LINKS } from '@/constants';
+import { ASIDE_MENU_LINKS } from '@/constants/routes';
 import { useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';

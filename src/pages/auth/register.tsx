@@ -14,7 +14,7 @@ import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import { registration } from '@/services/authService';
 import { IFormData } from '@/types/formDataTypes';
 import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';

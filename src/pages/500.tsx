@@ -1,6 +1,6 @@
 // basic
 import { useRouter } from 'next/router';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 // mui
 import { Grid, Typography } from '@mui/material';
@@ -20,11 +20,6 @@ import {
   ContentContainer,
 } from '@/styles/pageStyles/Error500Styles';
 
-// mock data
-const mockData = {
-  title: 'Oh snap!',
-  description: 'We’re not quite sure what went wrong. You can go back home...',
-};
 
 export default function Error500() {
   const router = useRouter();
@@ -44,8 +39,8 @@ export default function Error500() {
             flexWrap="wrap"
           >
             <ErrorMessage justifyContent="center" flexWrap="wrap">
-              <Typography variant="h2">{mockData.title}</Typography>
-              <Description variant="h5Gray">{mockData.description}</Description>
+              <Typography variant="h2">Oh snap!</Typography>
+              <Description variant="h5Gray">We’re not quite sure what went wrong. You can go back home...</Description>
             </ErrorMessage>
             <CustomButton variant="contained" onClick={handleGoHome}>
               Back home

@@ -25,11 +25,11 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
-import { ONE_MOCKED_PRODUCT } from '@/constants';
+import { ONE_MOCKED_PRODUCT } from '@/constants/mockedData';
 
 // interface
 import { ICardListProps, AttrFromData } from '@/types/cardListTypes';
-import { uploadImageURL } from '@/constants';
+import { uploadImageURL } from '@/constants/urls';
 
 // FUNCTIONAL COMPONENT
 const CardList: React.FC<ICardListProps> = ({

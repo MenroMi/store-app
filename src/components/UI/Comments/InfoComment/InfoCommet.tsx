@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Link as LinkMui, Box, useTheme, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 interface IInfoCommentProps {
   email?: string;

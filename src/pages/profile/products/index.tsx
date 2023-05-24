@@ -26,7 +26,7 @@ import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import CardList from '@/components/UI/Cards/CardList/CardList';
 
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 export default function Home() {
   // mocked data to test, will be removed when we'll start to work with server

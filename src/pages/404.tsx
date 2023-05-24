@@ -1,6 +1,6 @@
 // basic
 import { useRouter } from 'next/router';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 // mui
 import { Grid, Box, Typography } from '@mui/material';

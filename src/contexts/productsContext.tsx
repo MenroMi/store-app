@@ -7,7 +7,7 @@ import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
 import { getPaginationData, getProducts } from '@/services/searchApi';
 import { AttrFromData } from '@/types/cardListTypes';
 import { InputsData } from '@/types/filterListTypes';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 // context
 export const ProductsContext = React.createContext<IProductsContext | null>(null);

@@ -1,4 +1,4 @@
-import { baseURL } from "@/constants";
+import { baseURL } from "@/constants/urls";
 import axios from "axios";
 
 export const getUser = async (token:string | null) => {

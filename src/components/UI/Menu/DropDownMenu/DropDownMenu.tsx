@@ -19,7 +19,9 @@ import { CustomDotsBtn, CustomDropDownMenu } from './styles';
 import { MenuItemParams } from '@/types';
 
 // constants
-import { Routes, homeItems, othersItems } from '@/constants';
+import { Routes } from '@/constants/routes';
+import { homeItems, othersItems } from '@/constants/ui';
+
 
 // interface
 interface IDropDownMenuProps {

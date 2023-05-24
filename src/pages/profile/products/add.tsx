@@ -15,7 +15,7 @@ import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
 import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 // services
 import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';

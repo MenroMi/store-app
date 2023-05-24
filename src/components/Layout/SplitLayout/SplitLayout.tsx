@@ -2,7 +2,7 @@ import { Grid, styled, Theme, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import logo from '@/assets/icons/logo.svg';
 import { useRouter } from 'next/router';
-import { Routes, getImage } from '@/constants';
+import { Routes, getImage } from '@/constants/routes';
 import SignComments from '@/components/UI/Comments/SignComments/SignComments';
 import Head from 'next/head';
 

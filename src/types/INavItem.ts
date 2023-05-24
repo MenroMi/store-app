@@ -1,4 +1,4 @@
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 export interface INavItem {
   icon?: any;
