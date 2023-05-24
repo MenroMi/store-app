@@ -27,6 +27,8 @@ export default function AddProduct() {
   const { data: sizesData } = useQuery(['sizes'], () => getDataWithField('sizes', 'value'));
   const { data: id } = useQuery(['id'], () => getUserID(token));
 
+  console.log(id);
+
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [category, setCategory] = useState<string>('');
@@ -42,7 +44,7 @@ export default function AddProduct() {
 
   // hardcoded token, later will be replaced with token from the server
   const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMwLCJpYXQiOjE2ODMyMTYyMDUsImV4cCI6MTY4NTgwODIwNX0.1XQ60Efb97NerIhgLLgX-HU5Lnb7z6Rr9YH-M2JJNDQ';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQ5LCJpYXQiOjE2ODQ3MzgzNjcsImV4cCI6MTY4NzMzMDM2N30.n_6FxaIwkrg4gDIYDDXIOw9UMhahW9JFNaM1xiuJVZg';
 
   const router = useRouter();
 

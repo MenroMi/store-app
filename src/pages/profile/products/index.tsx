@@ -1,6 +1,7 @@
 // basic
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
 // mui
 import {
@@ -15,8 +16,7 @@ import {
 
 // images
 import profileTopBg from '@/assets/profileTopBg.png';
-import avatarExample from '@/assets/avatarExample.png';
-import productImage from '@/assets/singInBg.png';
+import defaultAvatar from '@/assets/defaultAvatar.png';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -24,89 +24,71 @@ import Layout from '@/components/Layout/MainLayout';
 // components
 import UserProfile from '@/components/UI/User/UserProfile/UserProfile';
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
-import CardList from '@/components/UI/Cards/CardList/CardList';
+import { CardsSlider } from '@/components/UI/Slider/CardsSlider/CardsSlider';
 
+// constants
 import { Routes } from '@/constants';
 
-export default function Home() {
-  // mocked data to test, will be removed when we'll start to work with server
-  const MOCKED_PRODUCTS = [
-    {
-      id: 1,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-    {
-      id: 2,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-    {
-      id: 3,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-    {
-      id: 4,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-  ];
+// services
+import { getUserProducts } from '@/services/myProfileApi';
+import { UserContext } from '@/components/Providers/user';
 
+export default function Home() {
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
+  const { user } = useContext(UserContext);
+
+  const { data: userProducts, isLoading } = useQuery(['userProducts'], () =>
+    getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
+  );
 
   return (
     <Layout title="Home">
-      <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
+      <Box sx={{ display: 'flex', gap: '60px' }}>
         <AsideProfileMenu />
-        <Box sx={{ maxWidth: '1480px' }}>
-          <UserProfile
-            avatarSrc={avatarExample}
-            profileTopBgSrc={profileTopBg}
-            userBonusPoints="1 374"
-            username="Jane Meldrum"
-          />
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                mt: queryDownSm ? 6 : 15,
-                mb: 4.5,
-              }}
-            >
-              <Typography variant="h2">My products</Typography>
-              {!queryDownMd && (
+        {isLoading ? (
+          <Box>Loading</Box>
+        ) : (
+          <Box sx={{ maxWidth: '1480px', m: '38px' }}>
+            <UserProfile
+              avatarSrc={user?.avatar || defaultAvatar}
+              profileTopBgSrc={profileTopBg}
+              userBonusPoints="1 374"
+              username={user?.username || 'Guest'}
+            />
+            <Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mt: queryDownSm ? 10 : 15,
+                  mb: 4.5,
+                }}
+              >
+                <Typography variant="h2">My products</Typography>
+                {!queryDownMd && userProducts?.data?.products?.length > 0 && (
+                  <LinkMui component={Link} href={Routes.addProduct} underline="none">
+                    <Button variant="contained" sx={{ padding: '10px 26px' }}>
+                      Add product
+                    </Button>
+                  </LinkMui>  
+                )}
+              </Box>
+
+              <CardsSlider products={userProducts?.data?.products} />
+
+              {queryDownMd && userProducts?.data?.products?.length > 0 && (
                 <LinkMui component={Link} href={Routes.addProduct} underline="none">
-                  <Button variant="contained" sx={{ padding: '10px 26px' }}>
+                  <Button variant="contained" sx={{ padding: '5px 13px', mt: 2.5 }}>
                     Add product
                   </Button>
                 </LinkMui>
               )}
             </Box>
-
-            <CardList products={MOCKED_PRODUCTS} />
-
-            {queryDownMd && (
-              <LinkMui component={Link} href={Routes.addProduct} underline="none">
-                <Button variant="contained" sx={{ padding: '5px 13px', mt: 2.5 }}>
-                  Add product
-                </Button>
-              </LinkMui>
-            )}
           </Box>
-        </Box>
+        )}
       </Box>
     </Layout>
   );
