@@ -2,7 +2,6 @@
 import Image, { StaticImageData } from 'next/image';
 import Router, { useRouter } from 'next/router';
 import { useContext } from 'react';
-import { hydrate } from '@tanstack/react-query';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';

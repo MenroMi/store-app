@@ -13,7 +13,6 @@ import StorageProvider from '@/contexts/sessionStorageContext';
 import { ThemeProvider } from '@mui/material/styles';
 import ReactQueryProvider from './queryClient';
 import UserProvider from './user';
-import ProductsProvider from '@/context/productsContext';
 
 export interface IProvidersProps {
   children: ReactNode;
