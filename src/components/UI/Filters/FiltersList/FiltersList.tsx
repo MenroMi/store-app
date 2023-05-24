@@ -35,9 +35,9 @@ const FiltersList: React.FC = (): JSX.Element => {
             const { id, attributes } = input as InputsData;
 
             let checked =
-              typeof router.query.gender === 'undefined'
+              typeof router.query[label] === 'undefined'
                 ? false
-                : router.query.gender?.includes(attributes?.name!.toLowerCase());
+                : router.query[label]?.includes(attributes?.name!.toLowerCase());
 
             return (
               <FilterCheckbox
@@ -45,7 +45,7 @@ const FiltersList: React.FC = (): JSX.Element => {
                 key={id}
                 id={id}
                 attributes={attributes}
-                checked={checked}
+                checked={checked!}
               />
             );
           })

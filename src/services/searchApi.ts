@@ -3,7 +3,7 @@ import { AttrFromData } from '@/types/cardListTypes';
 import qs, { ParsedQs } from 'qs';
 
 export const getFilters = async () => {
-  const endpoints = ['/genders', '/brands'];
+  const endpoints = ['/genders', '/brands', '/colors'];
   const filters = await Promise.allSettled(endpoints.map((ep) => getDataFromServer(ep)));
 
   const res = filters.map((promise, id) => {
@@ -21,6 +21,9 @@ export const getFilters = async () => {
         case 1:
           data = { label: 'brand', name: 'Brand', values: filters };
           break;
+        case 2:
+          data = { label: 'color', name: 'Color', values: filters };
+          break;
         default:
           data = { label: 'nothing', name: 'Nothing', values: [] };
           break;
@@ -36,11 +39,6 @@ export const getFilters = async () => {
     label: 'price',
     name: 'Price',
     values: [{ id: 1, attributes: { name: 'Price undefined' } }],
-  });
-  res.push({
-    label: 'color',
-    name: 'Color',
-    values: [{ id: 1, attributes: { name: 'Color undefined' } }],
   });
 
   return res;
