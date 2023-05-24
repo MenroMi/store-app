@@ -11,11 +11,11 @@ interface IFilterCheckbox {
   label: string;
   id: number;
   attributes: AttrTypes;
+  checked: boolean;
 }
 
-const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label }) => {
+const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label, checked }) => {
   const theme = useTheme<Theme>();
-  const router = useRouter();
   const context = useContext(FiltersContext);
 
   return (
@@ -30,11 +30,7 @@ const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label }) =>
           inputProps={{ datatype: label }}
           name={attributes?.name}
           id={`${id}`}
-          checked={
-            typeof router.query.gender === 'undefined'
-              ? false
-              : router.query.gender?.includes(attributes?.name!.toLowerCase())
-          }
+          checked={checked}
           onClick={(e) => context?.isChecked(e)}
         />
       }

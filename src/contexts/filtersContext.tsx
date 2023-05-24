@@ -47,11 +47,32 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
 
   useEffect(() => {
+    console.log(activeFilters);
     getParamsURL(router, activeFilters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters]);
 
-  useEffect(() => {}, []);
+  // useEffect(() => {
+  //   if (typeof router.query === 'undefined') {
+  //     return;
+  //   } else {
+  //     for (let key in router.query) {
+  //       if (typeof router.query[key] === 'undefined') {
+  //         continue;
+  //       } else {
+  //         setActiveFilters((prev: any) => {
+  //           return {
+  //             ...prev,
+  //             [key]: Array.isArray(router.query[key])
+  //               ? router.query[key]
+  //               : (router.query[key] as string).split(','),
+  //           };
+  //         });
+  //         continue;
+  //       }
+  //     }
+  //   }
+  // }, []);
 
   const contextFilters = useQuery({
     queryKey: ['filters'],
@@ -104,6 +125,9 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   //     return;
   //   }
   // };
+
+  console.log(router.query);
+  console.log(activeFilters);
 
   return (
     <FiltersContext.Provider
