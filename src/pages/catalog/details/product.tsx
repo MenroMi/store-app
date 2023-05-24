@@ -28,23 +28,23 @@ export default function SingleProductPage() {
 
     return (
         <Layout title="Product">
-            <Grid container paddingTop={12.5} paddingLeft={38}>
-                <Grid container xs={6} spacing={1.75}>
-                    <Grid item container xs={2} maxHeight={630} sx={{overflow: 'hidden'}} >
+            <Grid container paddingTop={12.5} paddingLeft={38} paddingRight={38} spacing={1.75}>
+                <Grid container xs={6} maxHeight={628}>
+                    <Grid item container xs={2} overflow='hidden' flexDirection='column' justifyContent='space-between'>
                         {products.slice(1).map((product, index) => (
-                            <Grid item xs={12} key={index}>
-                                <CustomImage src={product.productImageSrc} alt={`Image ${index}`} height={76} width={76} blurDataURL={blurDataURL}/>
+                            <Grid item key={index} maxHeight={76}>
+                                <CustomImage src={product.productImageSrc} alt={`Image ${index}`} blurDataURL={blurDataURL}/>
                             </Grid>
                         ))}
                     </Grid>
                     <Grid item xs={10}>
-                        <CustomImage src={products[mainImageIndex].productImageSrc} alt="Main Image" blurDataURL={blurDataURL}/>
-                        <Button onClick={handlePreviousImage} disabled={mainImageIndex === 0}>
+                        <CustomImage src={products[mainImageIndex].productImageSrc} alt="Main Image" width={588} blurDataURL={blurDataURL}/>
+                        {/* <Button onClick={handlePreviousImage} disabled={mainImageIndex === 0}>
                             Назад
                         </Button>
                         <Button onClick={handleNextImage} disabled={mainImageIndex === products.length - 1}>
                             Вперёд
-                        </Button>
+                        </Button> */}
                     </Grid>
                 </Grid>
                 <Grid container xs={6}>
