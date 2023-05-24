@@ -56,6 +56,11 @@ export const getFilteredData = async (query: any) => {
         query[prop] = query[prop].split(',');
       }
 
+      if (prop === 'price') {
+        url += `filters[price][$between]=0&filters[price][$between]=${query[prop][0]}&`;
+        continue;
+      }
+
       if (prop === 'page') {
         page = query[prop].join();
         continue;

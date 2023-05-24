@@ -93,9 +93,24 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   //   return <FullScreenLoader />;
   // }
   const isChecked = (e: any) => {
-    let checked = e.target.checked;
-    let name: string = e.target.name.toLowerCase();
-    let label: string = e.target.getAttribute('datatype');
+    let checked: boolean;
+    let name: string;
+    let label: string;
+    let valuePrice: number;
+
+    if (e.target.name === 'price') {
+      name = e.target.name;
+      valuePrice = e.target.value;
+
+      setActiveFilters((prev) => {
+        return { ...prev, [name]: [`${valuePrice}`] };
+      });
+      return null;
+    } else {
+      checked = e.target.checked;
+      name = e.target.name.toLowerCase();
+      label = e.target.getAttribute('datatype');
+    }
 
     setActiveFilters((prev) => {
       if (label in prev) {
