@@ -26,7 +26,7 @@ export default function Error404() {
   };
 
   const handleGoHome = (): void => {
-    router.push(Routes.home);
+    router.push(Routes.search);
   };
   return (
     <Layout title="Page not found...">

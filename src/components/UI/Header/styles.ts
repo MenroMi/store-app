@@ -52,8 +52,6 @@ export const NavListItem = styled('li')`
   line-height: 30px;
 `;
 
-export const NavListItemIcon = styled(Image)``;
-
 export const NavListLink = styled(Link)`
   text-decoration: none;
   color: inherit;

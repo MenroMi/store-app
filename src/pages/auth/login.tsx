@@ -13,7 +13,6 @@ import theme from '@/utils/mui/theme';
 // components
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
@@ -28,8 +27,9 @@ const Authorization = () => {
     checked: false,
   });
   const { setUser } = useContext(UserContext);
-  const { mutate, isLoading, isError } = useMutation(login);
+  const { mutate, isError } = useMutation(login);
   const { mutate:userMutate } = useMutation(getUser);
+  const [loading, setLoading] = useState<boolean>(false)
 
   const { push } = useRouter();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -39,17 +39,15 @@ const Authorization = () => {
     },
   } = useTheme();
 
-  if (isLoading) return (
-    <FullScreenLoader />
-  )
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { email, password, checked } = formData;
     if (email && password) {
+      setLoading(true)
       mutate(
         { identifier: email, password },
-        {
+        { 
+          onError: () => setLoading(false),
           onSuccess: (data) => {
             checked
               ? localStorage.setItem('token', data.jwt)
@@ -92,7 +90,7 @@ const Authorization = () => {
           handleSubmit={handleSubmit}
           formData={formData}
           setFormData={setFormData}
-          loading={isLoading}
+          loading={loading}
         />
         <Box
           component={'div'}
