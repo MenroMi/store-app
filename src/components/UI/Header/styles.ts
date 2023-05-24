@@ -18,6 +18,8 @@ export const Header = styled('header')`
 
 export const Nav = styled('nav')`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   column-gap: 44px;
 `;
 
@@ -63,7 +65,7 @@ export const NavListLink = styled(Link)`
 
 export const Options = styled('section')`
   display: flex;
-  column-gap: 26px;
+  align-items: center;
 `;
 
 export const OptionsImage = styled(Image)`
@@ -81,6 +83,7 @@ export const Cart = styled('section')`
   [&.fieldset]: border-radius: 42px;
   display: flex;
   align-items: center;
+    column-gap: 18px;
 `;
 
 export const Burger = styled('section')`
