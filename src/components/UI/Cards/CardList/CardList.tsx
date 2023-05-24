@@ -76,18 +76,20 @@ const CardList: React.FC<ICardListProps> = ({
         if (images?.data === null || typeof images === 'undefined') {
           url = singInImg;
         } else {
-          url = uploadImageURL + images?.data?.[0]?.attributes?.url;
+          url = images?.data?.[0]?.attributes?.url;
         }
 
         return isVisible(
+          <Grid item xs={12} sm={6} md={3}>
           <Card
             productCategory={gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
-            productImageSrc={url}
+            productImageSrc={url ? url : ''}
             productName={name}
             productPrice={price}
           >
             <DropDownMenu productName={name} productID={id} />
-          </Card>,
+            </Card>
+            </Grid>,
           id
         );
       });
@@ -131,6 +133,8 @@ const CardList: React.FC<ICardListProps> = ({
             justifyContent: 'flex-start',
           }}
         >
+
+
           {contextProducts?.isFetched &&
             contextProducts?.data &&
             contextFilter?.data &&

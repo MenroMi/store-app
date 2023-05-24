@@ -4,18 +4,18 @@ import theme from '@/utils/mui/theme';
 export const CustomDotsBtn = styled(Button)({
   position: 'absolute',
   top: '20px',
-  right: '16px',
+  right: '24px',
   cursor: 'pointer',
-  backgroundColor: 'white',
+  zIndex: '1100',
+  [theme.breakpoints.down('sm')]: {
+    top: '10px',
+    right: '14px',
+  },
 
   '&.MuiButtonBase-root': {
     minWidth: '20px',
     minHeight: '20px',
     padding: '3px 5px',
-  },
-
-  '&:hover': {
-    backgroundColor: theme?.palette?.primary?.main,
   },
 
   '&:active': {

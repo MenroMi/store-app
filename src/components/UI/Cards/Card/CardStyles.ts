@@ -3,17 +3,24 @@ import { styled, Typography } from '@mui/material';
 
 import Image from 'next/image';
 
-export const CustomCardWrapper = styled('div')<ICustomCardWrapperProps>(({ marginRight }) => ({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  maxWidth: '320px',
-  maxHeight: '443px',
+export const CustomCardWrapper = styled('div')<ICustomCardWrapperProps>(
+  ({ marginRight, theme }) => ({
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '320px',
+    height: '443px',
 
-  '&:not(:last-child)': {
-    marginRight: marginRight || 0,
-  },
-}));
+    '&:not(:last-child)': {
+      marginRight: marginRight || 0,
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      width: '152px',
+      height: '210px',
+    },
+  })
+);
 
 export const CustomTypographyWrapper = styled('div')(() => ({
   marginTop: '12px',
@@ -23,9 +30,8 @@ export const CustomTypographyWrapper = styled('div')(() => ({
 }));
 
 export const CustomImage = styled(Image)({
-  width: '100%',
-  height: '100%',
-  objectFit: 'contain',
+   objectFit: 'cover', 
+   zIndex: 10
 });
 
 export const CustomTypographyName = styled(Typography)({
