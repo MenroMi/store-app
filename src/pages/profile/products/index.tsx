@@ -16,7 +16,7 @@ import {
 
 // images
 import profileTopBg from '@/assets/profileTopBg.png';
-import defaultAvatar from '@/assets/defaultAvatar.png';
+import noAvatar from '@/assets/noAvatar.png';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -52,7 +52,7 @@ export default function Home() {
         ) : (
           <Box sx={{ maxWidth: '1480px', m: '38px' }}>
             <UserProfile
-              avatarSrc={user?.avatar || defaultAvatar}
+              avatarSrc={user?.avatar || noAvatar}
               profileTopBgSrc={profileTopBg}
               userBonusPoints="1 374"
               username={user?.username || 'Guest'}

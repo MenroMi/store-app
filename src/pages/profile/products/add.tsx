@@ -28,8 +28,6 @@ export default function AddProduct() {
   const { data: sizesData } = useQuery(['sizes'], () => getDataWithField('sizes', 'value'));
   const { data: id } = useQuery(['id'], () => getUserID(token));
 
-  console.log(id);
-
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [category, setCategory] = useState<string>('');
