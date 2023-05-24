@@ -1,25 +1,10 @@
 import React, { Dispatch, FC, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
 import { useMutation } from '@tanstack/react-query';
 import { getUser } from '@/services/userService';
+import { IUser } from '@/types/userTypes';
 
 interface IUserProvider{
   children: ReactNode;
-}
-
-interface IUser{
-  id:number
-  username:string
-  email:string
-  provider:string
-  confirmed: boolean
-  blocked:boolean
-  createdAt:string
-  updatedAt:string
-  phoneNumber: null | number,
-  firstName: null | string,
-  lastName: null | string,
-  products: [],
-  avatar: null | string
 }
 
 interface IUserContext{
@@ -44,7 +29,6 @@ const UserProvider = ({ children }:IUserProvider) => {
       const token = localToken ? localToken : sessionToken
     mutate(token,{
       onSuccess: (data) => {
-        console.log(data);
         setUser(data)
       }
     })}

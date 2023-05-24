@@ -24,7 +24,7 @@ const Sign = () => {
 
   return (
     <LayoutSignPage>
-      <Image src={singMobBg} alt={`singMobBg`} fill style={{ objectFit: 'cover', zIndex: 1000 }} />
+      <Image src={singMobBg} alt={`singMobBg`} fill style={{ objectFit: 'cover', zIndex: 1000 }} priority={true}/>
       <Box
         component={'div'}
         sx={{
@@ -42,9 +42,10 @@ const Sign = () => {
         <Image
           src={logo}
           alt={'logoIcon'}
+          priority={true}
           width={48}
           height={36}
-          onClick={() => push(Routes.home)}
+          onClick={() => push(Routes.search)}
         />
         <Box component={'div'} sx={{ maxWidth: '320px', width: 1, textAlign: 'center' }}>
           <Typography variant="h4Bold" sx={{ maxWidth: '110px', textAlign: 'start' }}>
