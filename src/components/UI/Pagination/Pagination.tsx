@@ -5,6 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
+// utils
+import makeArray from '@/utils/filters/makeRouterQueryArray';
+
 const PaginationMui: React.FC = () => {
   const router = useRouter();
   const [page, setPage] = useState<number>(1);
@@ -12,8 +15,8 @@ const PaginationMui: React.FC = () => {
   const context = useContext(FiltersContext);
 
   const { data, isFetched } = useQuery({
-    queryKey: ['filteredData', router.query],
-    queryFn: () => getFilteredData(router.query),
+    queryKey: ['filteredData', makeArray(router.query)],
+    queryFn: () => getFilteredData(makeArray(router.query)),
     keepPreviousData: true,
   });
 

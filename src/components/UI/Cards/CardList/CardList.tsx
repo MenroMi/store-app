@@ -7,6 +7,9 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box, Grid, Typography } from '@mui/material';
 
+// utils
+import makeArray from '@/utils/filters/makeRouterQueryArray';
+
 // image
 import singInImg from '@/assets/singInBg.png';
 import emptyIcon from '@/assets/icons/empty.svg';
@@ -30,8 +33,8 @@ const CardList = () => {
   const router = useRouter();
 
   const { data, isFetching, isError, isLoading } = useQuery({
-    queryKey: ['filteredData', router.query],
-    queryFn: () => getFilteredData(router.query),
+    queryKey: ['filteredData', makeArray(router.query)],
+    queryFn: () => getFilteredData(makeArray(router.query)),
     keepPreviousData: true,
   });
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -42,12 +45,25 @@ const CardList = () => {
 
   return (
     <CustomSearchOverlay
-      sx={
-        {
-          // overflowY: `${isFetching && !isLoading ? 'clip' : 'scroll'}`,
-        }
-      }
+      sx={{
+        overflowY: `${isFetching && !isLoading ? 'clip' : 'scroll'}`,
+      }}
     >
+      <Box
+        sx={{
+          display: `${isFetching && !isLoading ? 'block' : 'none'}`,
+          height: '100%',
+          width: '100%',
+          backgroundColor: 'rgba(255,255, 255, 0.5)',
+          backdropFilter: 'blur(5px)',
+          position: 'absolute',
+          zIndex: '5000',
+          top: '0',
+          transition: '0.3s ease-in',
+        }}
+      >
+        <FullScreenLoader />
+      </Box>
       <>
         {Array.isArray(data?.data) && data?.data.length !== 0 ? (
           <CardsGridContainer container>

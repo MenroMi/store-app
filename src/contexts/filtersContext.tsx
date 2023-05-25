@@ -1,6 +1,6 @@
 // basic
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // react-query
@@ -38,8 +38,8 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const router = useRouter();
-  const firstRenderPage = typeof router.query.page === 'undefined' ? 1 : +router.query.page;
 
+  const firstRenderPage = typeof router.query.page === 'undefined' ? 1 : +router.query.page;
   const [page, setPage] = useState<number>(firstRenderPage);
   const [hide, setHide] = useState<boolean>(true);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
