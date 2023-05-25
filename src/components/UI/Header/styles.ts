@@ -83,7 +83,7 @@ export const Cart = styled('section')`
   [&.fieldset]: border-radius: 42px;
   display: flex;
   align-items: center;
-    column-gap: 18px;
+  gap:18px;
 `;
 
 export const Burger = styled('section')`
