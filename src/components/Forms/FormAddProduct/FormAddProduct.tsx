@@ -93,10 +93,7 @@ export default function FormAddProduct({
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              maxWidth: {
-                xl: '436px',
-                lg: '350px',
-              },
+              maxWidth: queryDownXl ? '350px' : '436px',
             }}
           >
             <FormControl sx={{ mb: 3 }}>
