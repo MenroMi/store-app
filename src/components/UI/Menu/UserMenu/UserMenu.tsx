@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import {Button,Menu,Box, MenuItem} from '@mui/material';
 import Image from 'next/image';
 import { getProfilePfoto } from '@/utils/profile/profilePhoto';
 import { useContext } from 'react';
@@ -23,16 +21,16 @@ export default function UserMenu() {
   };
 
   return (
-    <div>
+    <Box>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{ borderRadius: '50%' }}
+        sx={{ borderRadius: '50%', p:'0px', maxWidth:'35px' }}
       >
-        <Image src={getProfilePfoto(user)} alt=" " width={40} height={40} priority={true} />
+        <Image src={getProfilePfoto(user)} alt="userAavatar" width={35} height={35} priority={true} />
       </Button>
       <CustomDropDownMenu
         id="basic-menu"
@@ -55,6 +53,6 @@ export default function UserMenu() {
           Log out
         </MenuItem>
       </CustomDropDownMenu>
-    </div>
+    </Box>
   );
 }
