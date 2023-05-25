@@ -1,10 +1,10 @@
 // basic
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // react-query
-import { useQuery, dehydrate, QueryClient, DehydratedState } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
 import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
@@ -96,30 +96,38 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     let name: string;
     let label: string;
     let valuePrice: number;
-
-    if (e.target.name === 'price') {
-      name = e.target.name;
-      valuePrice = e.target.value;
+    const onCheckedPrice = (value: string) => {
+      name = 'price';
+      valuePrice = isNaN(+value) ? 0 : +value;
 
       setActiveFilters((prev) => {
         return { ...prev, [name]: [`${valuePrice}`] };
       });
-      return null;
-    } else {
-      checked = e.target.checked;
-      name = e.target.name.toLowerCase();
-      label = e.target.getAttribute('datatype');
-    }
+      return;
+    };
 
-    setActiveFilters((prev) => {
-      if (label in prev) {
-        return checked === true
-          ? { ...prev, [label]: [...prev[label], name] }
-          : { ...prev, [label]: prev[label].filter((item) => item !== name) };
+    switch (e.type) {
+      case 'mouseup': {
+        return onCheckedPrice(e.target.textContent);
       }
+      case 'keydown': {
+        return e.code === 'Enter' ? onCheckedPrice(e.target.value) : null;
+      }
+      default:
+        checked = e.target.checked;
+        name = e.target.name.toLowerCase();
+        label = e.target.getAttribute('datatype');
+        setActiveFilters((prev) => {
+          if (label in prev) {
+            return checked === true
+              ? { ...prev, [label]: [...prev[label], name] }
+              : { ...prev, [label]: prev[label].filter((item) => item !== name) };
+          }
 
-      return { ...prev, [label]: [name] };
-    });
+          return { ...prev, [label]: [name] };
+        });
+        return;
+    }
   };
 
   // const onChangePage = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {

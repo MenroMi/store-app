@@ -43,6 +43,11 @@ const FiltersList: React.FC = (): JSX.Element => {
                 id={id}
                 attributes={attributes}
                 checked={checked!}
+                styles={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  mt: '15px',
+                }}
               />
             );
           })
