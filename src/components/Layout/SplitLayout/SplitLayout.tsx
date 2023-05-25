@@ -23,7 +23,6 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
   const { pathname, push } = useRouter();
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
-  const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   return (
     <>
       <Head>

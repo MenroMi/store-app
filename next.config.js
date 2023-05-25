@@ -5,9 +5,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'shoes-shop-strapi.herokuapp.com',
+        hostname: '**.cloudinary.com',
         port: '',
-        pathname: '/uploads/**',
+        pathname: '/devc11z9p/image/upload/**',
       },
     ],
   },
