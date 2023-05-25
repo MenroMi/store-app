@@ -69,7 +69,7 @@ export const NAV_BURGER_LINKS: INavItem[] = [
   {
     icon: loginIcon,
     role: 'guest',
-    name: 'Log in',
+    name: 'Sign in',
     to: Routes.sign,
   },
   {
@@ -92,7 +92,7 @@ export const ASIDE_MENU_LINKS = [
     id: 3,
     role: 'guest',
     icon: loginIcon,
-    name: 'Log in',
+    name: 'Sign in',
     to: Routes.login,
   },
   {

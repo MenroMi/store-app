@@ -23,6 +23,7 @@ import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
 import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
+import UserMenu from '../Menu/UserMenu/UserMenu';
 
 export default function Header() {
   const [isSearchClicled, setIsSearchClicked] = useState(false);
@@ -88,8 +89,8 @@ export default function Header() {
         <Link href={user ? Routes.myProducts : Routes.search}>
           <Image src={Logo} alt="logo" priority={true} width={40} height={30} />
         </Link>
-        <styles.NavList
-          burger={false}
+        <styles.NavListLink
+          href={user ? Routes.myProducts : Routes.search}
           sx={{
             display: {
               md: 'flex',
@@ -97,25 +98,31 @@ export default function Header() {
             },
           }}
         >
-          {NAV_LINKS.map((item, index) => (
-            <styles.NavListItem key={index}>
-              <styles.NavListLink
-                href={dynamicParams(item, 'Home', Routes.myProducts, Routes.search, 'link')!}
-              >
-                {item.name}
-              </styles.NavListLink>
-            </styles.NavListItem>
-          ))}
-        </styles.NavList>
+          <Typography variant="h6">Products</Typography>
+        </styles.NavListLink>
       </styles.Nav>
       <styles.Options
         sx={{
-          columnGap: {
-            md: '26px',
-            xs: '22px',
-          },
+          columnGap: { md: '40px', xs: 3 },
         }}
       >
+        {!user && (
+          <Button
+            variant="outlined"
+            sx={{
+              maxWidth: '145px',
+              width: 1,
+              height: '48px',
+              display: {
+                md: 'flex',
+                xs: 'none',
+              },
+            }}
+            onClick={() => push(Routes.login)}
+          >
+            Sign in
+          </Button>
+        )}
         <styles.SearchBar
           sx={{
             '& fieldset': {
@@ -157,7 +164,7 @@ export default function Header() {
         />
         <styles.Cart>
           <Link href={Routes.bag}>
-            <Box sx={{ position: 'relative' }}>
+            <Box sx={{ position: 'relative', pt: '2px' }}>
               <Image width={22} height={24} priority={true} src={CartIcon} alt="cart-icon" />
               <Box
                 bgcolor={main}
@@ -184,8 +191,8 @@ export default function Header() {
               </Box>
             </Box>
           </Link>
+          {user && <UserMenu/>}
         </styles.Cart>
-
         <styles.Burger
           sx={{
             display: {
@@ -240,23 +247,6 @@ export default function Header() {
             </styles.NavList>
           )}
         </styles.Burger>
-        {!user && (
-          <Button
-            variant="text"
-            sx={{
-              display: {
-                md: 'flex',
-                xs: 'none',
-              },
-            }}
-            onClick={() => push(Routes.login)}
-          >
-            <Image src={Profile} alt={'LogIn'} priority={true} width={24} height={24} />
-            <Typography variant="subtitle2" sx={{ pl: '4px' }}>
-              Log in
-            </Typography>
-          </Button>
-        )}
       </styles.Options>
     </styles.Header>
   );
