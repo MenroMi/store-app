@@ -22,7 +22,7 @@ const InfoComment = ({ email }: IInfoCommentProps) => {
       </Typography>
       <Typography variant="h3Bold" sx={{ mt: 1 }}>
         {pathname === Routes.reset ? 'Maybe, you changed the original link, please try again.' :
-        `Please, visit your email to complete your{' '}
+        `Please, visit your email to complete your
         ${pathname === Routes.register ? 'registration' : 'password reset'}.`}
       </Typography>
       {email && (

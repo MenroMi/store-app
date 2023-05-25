@@ -23,7 +23,6 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
   const { pathname, push } = useRouter();
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
-  const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   return (
     <>
       <Head>
@@ -41,9 +40,10 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
                   left: queryDownMd ? 20 : 40,
                   cursor: 'pointer',
                 }}
+                priority={true}
                 width={queryDownMd ? 35.31 : 40}
                 height={queryDownMd ? 26.52 : 30}
-                onClick={() => push(Routes.home)}
+                onClick={() => push(Routes.search)}
               />
             <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0, width:1}}>
               <Grid

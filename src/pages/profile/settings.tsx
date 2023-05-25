@@ -105,7 +105,7 @@ export default function UpdateProfile() {
 
   return (
     <Layout title="Settings">
-      <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
+      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 : '38px' }}>
         <AsideProfileMenu />
         <Box
           sx={{

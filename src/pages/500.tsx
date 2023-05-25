@@ -30,7 +30,7 @@ export default function Error500() {
   const router = useRouter();
 
   const handleGoHome = (): void => {
-    router.push(Routes.home);
+    router.push(Routes.search);
   };
   return (
     <Layout title="Page not found...">
