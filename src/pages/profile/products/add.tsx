@@ -31,13 +31,15 @@ export default function AddProduct() {
   const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
   const { data: categoriesData } = useQuery(['categories'], () => getDataWithField('categories'));
   const { data: sizesData } = useQuery(['sizes'], () => getDataWithField('sizes', 'value'));
-  const { data: id } = useQuery(['id'], () => getUserID(token));
+  const { data: id } = useQuery(['id'], () =>
+    getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
+  );
 
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [gender, setGender] = useState<string>('');
-  const [brand, setBrand] = useState<string>('');
+  const [category, setCategory] = useState<string>('5');
+  const [gender, setGender] = useState<string>('3');
+  const [brand, setBrand] = useState<string>('9');
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
@@ -47,8 +49,8 @@ export default function AddProduct() {
   const [imagesToPost, setImagesToPost] = useState<File[]>([]);
 
   // hardcoded token, later will be replaced with token from the server
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMwLCJpYXQiOjE2ODMyMTYyMDUsImV4cCI6MTY4NTgwODIwNX0.1XQ60Efb97NerIhgLLgX-HU5Lnb7z6Rr9YH-M2JJNDQ';
+  // const token =
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMwLCJpYXQiOjE2ODMyMTYyMDUsImV4cCI6MTY4NTgwODIwNX0.1XQ60Efb97NerIhgLLgX-HU5Lnb7z6Rr9YH-M2JJNDQ';
 
   const router = useRouter();
 
@@ -99,7 +101,10 @@ export default function AddProduct() {
         },
       };
 
-      return postProduct(productData, token);
+      return postProduct(
+        productData,
+        localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
+      );
     } catch (err) {
       console.log(err);
     }
