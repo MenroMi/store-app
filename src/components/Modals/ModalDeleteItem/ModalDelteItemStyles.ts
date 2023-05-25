@@ -25,5 +25,6 @@ export const CustomModalBox = styled(Box)(() => ({
   justifyContent: 'start',
   backgroundColor: '#fff',
   maxWidth: '656px',
-  p: 4,
+  padding: '32px',
+  borderRadius: '8px',
 }));
