@@ -76,13 +76,13 @@ const CardList: React.FC<ICardListProps> = ({
         if (images?.data === null || typeof images === 'undefined') {
           url = singInImg;
         } else {
-          url = uploadImageURL + images?.data?.[0]?.attributes?.url;
+          url = images?.data?.[0]?.attributes?.url;
         }
 
         return isVisible(
           <Card
             productCategory={gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
-            productImageSrc={url}
+            productImageSrc={url ? url : ''}
             productName={name}
             productPrice={price}
           >
