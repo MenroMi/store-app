@@ -6,7 +6,7 @@ interface ICustomModalWrapperProps {
 }
 
 export const CustomModalWrapper = styled.div(({ display }: ICustomModalWrapperProps) => ({
-  position: 'absolute',
+  position: 'fixed',
   width: '100vw',
   height: '100vh',
   backgroundColor: 'rgba(51, 51, 51, 0.09)',
@@ -15,6 +15,7 @@ export const CustomModalWrapper = styled.div(({ display }: ICustomModalWrapperPr
   display: display,
   justifyContent: 'center',
   alignItems: 'center',
+  margin: 'auto',
   top: 0,
   left: 0,
 }));

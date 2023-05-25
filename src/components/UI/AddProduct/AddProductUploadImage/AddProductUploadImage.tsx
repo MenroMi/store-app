@@ -33,6 +33,9 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
 
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
 
+  const handleDeleteImage = (id: number) =>
+    setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+
   return (
     <>
       <Typography
@@ -63,11 +66,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
 
               <ModalDeleteItem
                 deleteMessage="Are you sure to delete product image?"
-                deleteHandler={() =>
-                  setSelectedImages((prevImages) =>
-                    prevImages.filter((image) => image.id !== productImage.id)
-                  )
-                }
+                deleteHandler={() => handleDeleteImage(productImage.id)}
               />
             </Grid>
           ))}

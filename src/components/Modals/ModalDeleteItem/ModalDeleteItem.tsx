@@ -23,7 +23,10 @@ interface IModalDeleteItemProps {
 export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModalDeleteItemProps) {
   const { isOpen, setIsOpen } = useContext(ModalContext);
   const modalRef = useRef<HTMLDivElement | null>();
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => {
+    document.body.style.overflow = 'scroll';
+    setIsOpen(false);
+  };
 
   const handleDelete = () => {
     deleteHandler();

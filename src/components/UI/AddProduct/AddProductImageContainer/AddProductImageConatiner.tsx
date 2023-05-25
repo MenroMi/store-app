@@ -34,9 +34,8 @@ export default function AddProductImageConatiner({ src, id }: IAddProductImageCo
         <DeleteIconContainer
           display={isHovered ? 'block' : 'none'}
           onClick={() => {
-            console.log(id);
+            document.body.style.overflow = 'hidden';
             setIsOpen(true);
-            console.log(isOpen);
           }}
         >
           <Image src={deleteIcon} alt="Delete" width={80} height={80} />
