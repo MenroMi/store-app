@@ -1,5 +1,4 @@
 // basic
-import Image from 'next/image';
 import React from 'react';
 
 // mui
@@ -11,7 +10,6 @@ import {
   FormLabel,
   OutlinedInput,
   TextField,
-  Grid,
   Theme,
   useMediaQuery,
   useTheme,
@@ -35,7 +33,6 @@ export default function FormAddProduct({
   brand,
   description,
   selectedSize,
-  selectedImages,
   categoryOptions,
   price,
   sizes,
@@ -52,7 +49,6 @@ export default function FormAddProduct({
 }: IFormAddProductProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
   return (
     <Box sx={{ m: '38px', maxWidth: '1480px', width: '100%' }}>
@@ -193,10 +189,7 @@ export default function FormAddProduct({
           </Box>
 
           <Box sx={{ width: queryDownLg ? '100%' : '50%' }}>
-            <AddProductUploadImage
-              handleChooseImage={handleChooseImage}
-              selectedImages={selectedImages}
-            />
+            <AddProductUploadImage handleChooseImage={handleChooseImage} />
           </Box>
 
           {queryDownLg && (

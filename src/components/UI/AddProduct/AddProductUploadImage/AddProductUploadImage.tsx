@@ -1,5 +1,5 @@
 // basic
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 // mui
 
@@ -23,16 +23,16 @@ import { CustomUploadWrapper } from './AddProductUploadImageStyles';
 // interfaces
 import { IAddProductUploadImageProps } from '@/types/addProductTypes';
 import AddProductImageConatiner from '../AddProductImageContainer/AddProductImageConatiner';
+import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
+import { ImagesContext } from '@/components/Providers/images';
 
-export default function AddProductUploadImage({
-  handleChooseImage,
-  selectedImages,
-}: IAddProductUploadImageProps) {
+export default function AddProductUploadImage({ handleChooseImage }: IAddProductUploadImageProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
-  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+
   return (
     <>
       <Typography
@@ -48,7 +48,7 @@ export default function AddProductUploadImage({
           sx={{
             maxWidth: {
               lg: '500px',
-              xl: '692px',  
+              xl: '692px',
             },
           }}
           spacing={{
@@ -60,6 +60,15 @@ export default function AddProductUploadImage({
           {selectedImages?.map((productImage) => (
             <Grid key={productImage?.id} item xs={6}>
               <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
+
+              <ModalDeleteItem
+                deleteMessage="Are you sure to delete product image?"
+                deleteHandler={() =>
+                  setSelectedImages((prevImages) =>
+                    prevImages.filter((image) => image.id !== productImage.id)
+                  )
+                }
+              />
             </Grid>
           ))}
           <Grid item xs={6}>

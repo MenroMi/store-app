@@ -1,10 +1,10 @@
 // basic
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 
 // mui
-import { Box } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -19,7 +19,12 @@ import { Routes } from '@/constants';
 
 // services
 import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
+
+// interfaces
 import { IProductData, ISelectedImage } from '@/types/addProductTypes';
+
+// context
+import { ImagesContext } from '@/components/Providers/images';
 
 export default function AddProduct() {
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
@@ -37,7 +42,7 @@ export default function AddProduct() {
   const [description, setDescription] = useState<string>('');
 
   // urls of images. used to show the image on the screen
-  const [selectedImages, setSelectedImages] = useState<ISelectedImage[]>([]);
+  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
   // files that will be sent to the server
   const [imagesToPost, setImagesToPost] = useState<File[]>([]);
 
@@ -55,14 +60,15 @@ export default function AddProduct() {
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const image = e.currentTarget?.files?.[0];
-
-    if (image && selectedImages.length < 4) {
-      // create url of the image to show the image on the screen
-      setSelectedImages((prevState) => [
-        ...prevState,
-        { id: image.lastModified, url: URL.createObjectURL(image) },
-      ]);
-      setImagesToPost((prevState) => [...prevState, image]);
+    if (selectedImages) {
+      if (image && selectedImages?.length < 4) {
+        // create url of the image to show the image on the screen
+        setSelectedImages((prevState) => [
+          ...prevState,
+          { id: image.lastModified, url: URL.createObjectURL(image) },
+        ]);
+        setImagesToPost((prevState) => [...prevState, image]);
+      }
     }
   };
 
@@ -118,7 +124,6 @@ export default function AddProduct() {
           category={category}
           gender={gender}
           description={description}
-          selectedImages={selectedImages}
           selectedSize={selectedSize}
           brandsOptions={brandsData}
           gendersOptions={gendersData}
