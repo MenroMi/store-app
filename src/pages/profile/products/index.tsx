@@ -29,37 +29,6 @@ import CardList from '@/components/UI/Cards/CardList/CardList';
 import { Routes } from '@/constants';
 
 export default function Home() {
-  // mocked data to test, will be removed when we'll start to work with server
-  const MOCKED_PRODUCTS = [
-    {
-      id: 1,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-    {
-      id: 2,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-    {
-      id: 3,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-    {
-      id: 4,
-      productImageSrc: productImage,
-      productName: 'Nike Air Max 270',
-      productPrice: 160,
-      productCategory: "Women's shoes",
-    },
-  ];
 
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -67,7 +36,7 @@ export default function Home() {
 
   return (
     <Layout title="Home">
-      <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
+      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 :  '38px' }}>
         <AsideProfileMenu />
         <Box sx={{ maxWidth: '1480px' }}>
           <UserProfile
@@ -96,7 +65,7 @@ export default function Home() {
               )}
             </Box>
 
-            <CardList products={MOCKED_PRODUCTS} />
+            <CardList />
 
             {queryDownMd && (
               <LinkMui component={Link} href={Routes.addProduct} underline="none">
