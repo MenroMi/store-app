@@ -11,6 +11,7 @@ import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 import CartIcon from '@/assets/icons/bag.svg';
 import Profile from '@/assets/icons/profile.svg';
+import leftBurgerSetting from '@/assets/icons/leftBurgerSetting.svg';
 
 import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
@@ -22,6 +23,7 @@ import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
 import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
+import UserMenu from '../Menu/UserMenu/UserMenu';
 
 export default function Header() {
   const [isSearchClicled, setIsSearchClicked] = useState(false);
@@ -30,9 +32,7 @@ export default function Header() {
   const { user, setUser } = useContext(UserContext);
 
   const contextStorage = useContext(StorageContext);
-  const { push } = useRouter();
-
-  const nav_burger_links = user ? NAV_BURGER_LINKS.slice(3) : NAV_BURGER_LINKS.slice(0, 3);
+  const { push, pathname } = useRouter();
 
   const logOut = (e: React.MouseEvent<HTMLElement>) => {
     if (e.currentTarget.textContent === 'Log Out') {
@@ -41,6 +41,7 @@ export default function Header() {
       sessionStorage.removeItem('token');
     }
   };
+
   /**
    *
    * @param item navigation item
@@ -85,11 +86,11 @@ export default function Header() {
   return (
     <styles.Header sx={styles.Header_Adaptive}>
       <styles.Nav>
-        <Link href={user ? Routes.home : Routes.search}>
-          <Image src={Logo} alt="logo" />
+        <Link href={user ? Routes.myProducts : Routes.search}>
+          <Image src={Logo} alt="logo" priority={true} width={40} height={30} />
         </Link>
-        <styles.NavList
-          burger={false}
+        <styles.NavListLink
+          href={user ? Routes.myProducts : Routes.search}
           sx={{
             display: {
               md: 'flex',
@@ -97,25 +98,31 @@ export default function Header() {
             },
           }}
         >
-          {NAV_LINKS.map((item, index) => (
-            <styles.NavListItem key={index}>
-              <styles.NavListLink
-                href={dynamicParams(item, 'Home', Routes.home, Routes.search, 'link')!}
-              >
-                {item.name}
-              </styles.NavListLink>
-            </styles.NavListItem>
-          ))}
-        </styles.NavList>
+          <Typography variant="h6">Products</Typography>
+        </styles.NavListLink>
       </styles.Nav>
       <styles.Options
         sx={{
-          columnGap: {
-            md: '26px',
-            xs: '22px',
-          },
+          columnGap: { md: '40px', xs: 3 },
         }}
       >
+        {!user && (
+          <Button
+            variant="outlined"
+            sx={{
+              maxWidth: '145px',
+              width: 1,
+              height: '48px',
+              display: {
+                md: 'flex',
+                xs: 'none',
+              },
+            }}
+            onClick={() => push(Routes.login)}
+          >
+            Sign in
+          </Button>
+        )}
         <styles.SearchBar
           sx={{
             '& fieldset': {
@@ -157,8 +164,8 @@ export default function Header() {
         />
         <styles.Cart>
           <Link href={Routes.bag}>
-            <Box sx={{ position: 'relative' }}>
-              <Image width={22} src={CartIcon} alt="cart-icon" />
+            <Box sx={{ position: 'relative', pt: '2px' }}>
+              <Image width={22} height={24} priority={true} src={CartIcon} alt="cart-icon" />
               <Box
                 bgcolor={main}
                 sx={{
@@ -184,8 +191,8 @@ export default function Header() {
               </Box>
             </Box>
           </Link>
+          {user && <UserMenu/>}
         </styles.Cart>
-
         <styles.Burger
           sx={{
             display: {
@@ -199,6 +206,7 @@ export default function Header() {
             width={22}
             src={isBurgerClicled ? CloseIcon : BurgerIcon}
             alt="burger-icon"
+            priority={true}
           />
           {isBurgerClicled && (
             <styles.NavList
@@ -210,46 +218,35 @@ export default function Header() {
               }}
               burger
             >
-              {user && <AsideProfile />}
-              {nav_burger_links.map((item, index) => (
-                <styles.NavListItem key={index} onClick={logOut}>
-                  <styles.NavListItemIcon src={item.icon} alt="menu-icon" />
-                  <styles.NavListLink
-                    href={
-                      dynamicParams(
-                        item,
-                        'Home',
-                        Routes.home,
-                        user ? Routes.home : Routes.search,
-                        'link'
-                      )!
+              <AsideProfile />
+              {NAV_BURGER_LINKS.filter(
+                (el) => el.role && el.role.includes(user ? 'user' : 'guest')
+              ).map(({ icon, role, name, to }) => (
+                <styles.NavListItem
+                  key={name}
+                  onClick={async () => {
+                    await push(to);
+                    setIsBurgerClicked(false);
+                    if (name === 'Log out') {
+                      setUser(null);
+                      localStorage.removeItem('token');
+                      sessionStorage.removeItem('token');
                     }
-                    onClick={() => setIsBurgerClicked(true)}
-                  >
-                    {dynamicParams(item, 'Log In', 'Log Out', 'Log In', 'name')}
-                  </styles.NavListLink>
+                  }}
+                >
+                  <Image
+                    src={pathname === to || (!user && name === 'Home') ? leftBurgerSetting : icon}
+                    alt="menu-icon"
+                    width={20}
+                    height={20}
+                    priority={true}
+                  />
+                  <Typography variant="h6">{name}</Typography>
                 </styles.NavListItem>
               ))}
             </styles.NavList>
           )}
         </styles.Burger>
-        {!user && (
-          <Button
-            variant="text"
-            sx={{
-              display: {
-                md: 'flex',
-                xs: 'none',
-              },
-            }}
-            onClick={() => push(Routes.login)}
-          >
-            <Image src={Profile} alt={'LogIn'} width={23} height={23} />
-            <Typography variant="subtitle2" sx={{ pl: '4px' }}>
-              Log in
-            </Typography>
-          </Button>
-        )}
       </styles.Options>
     </styles.Header>
   );

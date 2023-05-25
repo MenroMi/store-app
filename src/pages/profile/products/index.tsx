@@ -45,7 +45,7 @@ export default function Home() {
 
   return (
     <Layout title="Home">
-      <Box sx={{ display: 'flex', gap: '60px' }}>
+      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 :  '38px' }}>
         <AsideProfileMenu />
         {isLoading ? (
           <Box>Loading</Box>

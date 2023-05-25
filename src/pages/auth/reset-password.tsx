@@ -10,7 +10,6 @@ import { Link as LinkMui, Box, useTheme } from '@mui/material';
 // components
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
@@ -24,7 +23,9 @@ const Reset = () => {
     password: '',
     confirm: '',
   });
-  const { mutate, isLoading, isError } = useMutation(reset);
+  const { mutate, isError } = useMutation(reset);
+  const [loading, setLoading] = useState<boolean>(false)
+
 
   const {
     query: { code = '' },
@@ -36,17 +37,15 @@ const Reset = () => {
     },
   } = useTheme();
 
-  if (isLoading) return (
-    <FullScreenLoader />
-  )
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { password, confirm } = formData;
     if (password && confirm && password === confirm) {
+                  setLoading(true)
       mutate(
         { password, passwordConfirmation: confirm, code },
         {
+          onError: () => setLoading(false),
           onSuccess: () => {
             push(Routes.login);
           },
@@ -75,7 +74,7 @@ const Reset = () => {
               handleSubmit={handleSubmit}
               formData={formData}
               setFormData={setFormData}
-              loading={isLoading}
+              loading={loading}
             />
             <LinkMui
               component={Link}
