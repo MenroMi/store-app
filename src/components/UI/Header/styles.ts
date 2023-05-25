@@ -31,7 +31,7 @@ export const NavList = styled('ul')<INavProps>`
       ? `
       flex-direction: column;
       position: absolute;
-      top: -10px;
+      top: -20px;
       right: -20px;
       width: 270px;
       height: 100vh;

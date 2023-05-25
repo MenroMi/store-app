@@ -3,16 +3,17 @@ import { Grid } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 export const CustomSearchOverlay = styled('div')({
-  maxHeight: 'calc(100vh - 350px)',
+  height: 'calc(100vh - 350px)',
   width: '100%',
   overflowY: 'scroll',
   overflowX: 'hidden',
   [theme.breakpoints.down('md')]: {
-    maxHeight: 'calc(100vh - 290px)',
+    height: 'calc(100vh - 306px)',
   },
   [theme.breakpoints.down('sm')]: {
-    maxHeight: 'calc(100vh - 260px)',
+    height: 'calc(100vh - 306px)',
   },
+
 
   '&::-webkit-scrollbar': {
     width: '20px',
@@ -47,17 +48,6 @@ export const CardsGridContainer = styled(Grid)(({ theme }) => ({
     columnGap: '16px',
     rowGap: '20px',
     justifyContent: 'space-around',
-    padding:'0 4px 0 20px'
+    padding: '0 4px 0 20px',
   },
 }));
-
-export const CatalogIsEmptyContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  transform: 'translateX(-50%) translateY(-50%)',
-  gap: '20px',
-});

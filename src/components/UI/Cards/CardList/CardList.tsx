@@ -22,7 +22,7 @@ import Card from '@/components/UI/Cards/Card/Card';
 import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
-import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
+import { CardsGridContainer, CustomSearchOverlay } from './CardListStyles';
 
 // interface
 import { AttrFromData } from '@/types/cardListTypes';
