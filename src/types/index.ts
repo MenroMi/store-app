@@ -16,4 +16,5 @@ export interface ISettings {
   firstName: string;
   lastName: string;
   phoneNumber: number | string;
+  avatar?: string;
 }
