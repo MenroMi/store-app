@@ -17,6 +17,7 @@ import PathAndSearchResult from '@/components/UI/CombineComponents/PathAndSearch
 import Layout from '@/components/Layout/MainLayout';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getFilteredData } from '@/services/searchApi';
+import makeArray from '@/utils/filters/makeRouterQueryArray';
 
 // FUNCTIONAL COMPONENT
 export default function SearchResultPage(): JSX.Element {
@@ -65,7 +66,7 @@ export default function SearchResultPage(): JSX.Element {
 
 export async function getServerSideProps(context: { query: { [x: string]: string[] | string } }) {
   const queryClient = new QueryClient();
-  let query = context?.query;
+  let query = makeArray(context?.query);
 
   await queryClient.prefetchQuery({
     queryKey: ['filteredData', query],

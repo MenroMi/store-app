@@ -1,6 +1,5 @@
 import { getDataFromServer } from './apiClient';
 import { AttrFromData } from '@/types/cardListTypes';
-import qs, { ParsedQs } from 'qs';
 
 export const getFilters = async () => {
   const endpoints = ['/genders', '/brands', '/colors'];
@@ -47,6 +46,8 @@ export const getFilters = async () => {
 export const getFilteredData = async (query: any) => {
   let url: string = `/products?populate=*&`;
   let page: number = 1;
+
+  // console.log('Search API', query);
 
   if (typeof query !== 'undefined') {
     for (let prop in query) {

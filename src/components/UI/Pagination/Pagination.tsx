@@ -14,9 +14,11 @@ const PaginationMui: React.FC = () => {
   const [maxPage, setMaxPage] = useState<number>(1);
   const context = useContext(FiltersContext);
 
+  const query = makeArray(router.query);
+
   const { data, isFetched } = useQuery({
-    queryKey: ['filteredData', makeArray(router.query)],
-    queryFn: () => getFilteredData(makeArray(router.query)),
+    queryKey: ['filteredData', query],
+    queryFn: () => getFilteredData(query),
     keepPreviousData: true,
   });
 

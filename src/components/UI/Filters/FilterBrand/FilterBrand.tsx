@@ -30,7 +30,7 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
   return (
     <Box id={label} mt="20px">
       <CustomTextField
-        onChange={(e) => setSearchingBrand(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchingBrand(e.target.value)}
         variant="outlined"
         placeholder="Search"
         value={searchingBrand}

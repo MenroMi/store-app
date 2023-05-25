@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { InputsData } from '@/types/filterListTypes';
 import { FiltersContext } from '@/contexts/filtersContext';
 import { FormControl, InputAdornment, InputLabel, OutlinedInput, Typography } from '@mui/material';
+import makeArray from '@/utils/filters/makeRouterQueryArray';
 
 const FilterPrice: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -14,9 +15,11 @@ const FilterPrice: React.FC = (): JSX.Element => {
   const [actualAmount, setActualAmount] = useState<number>(30);
   const contextFilters = useContext(FiltersContext);
 
+  const query = makeArray(router.query);
+
   const { data } = useQuery({
-    queryKey: ['filteredData', router.query],
-    queryFn: () => getFilteredData(router.query),
+    queryKey: ['filteredData', query],
+    queryFn: () => getFilteredData(query),
   });
 
   useEffect(() => {

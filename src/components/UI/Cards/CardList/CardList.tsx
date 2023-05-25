@@ -32,9 +32,11 @@ const CardList = () => {
   const theme = useTheme<Theme>();
   const router = useRouter();
 
+  const query = makeArray(router.query);
+
   const { data, isFetching, isError, isLoading } = useQuery({
-    queryKey: ['filteredData', makeArray(router.query)],
-    queryFn: () => getFilteredData(makeArray(router.query)),
+    queryKey: ['filteredData', query],
+    queryFn: () => getFilteredData(query),
     keepPreviousData: true,
   });
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
