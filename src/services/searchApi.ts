@@ -73,6 +73,7 @@ export const getFilteredData = async (query: any) => {
       }
     }
   }
+
   const products = await getDataFromServer(url, `pagination[page]=${page}&pagination[pageSize]=25`);
 
   return products?.data;

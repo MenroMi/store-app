@@ -1,21 +1,9 @@
 import Image from 'next/image';
-import {
-  FormControlLabel,
-  Typography,
-  Checkbox,
-  useTheme,
-  Theme,
-  InputAdornment,
-  Box,
-  CheckboxProps,
-} from '@mui/material';
-import React, { useState, useContext, Fragment, useEffect } from 'react';
+import { InputAdornment, Box } from '@mui/material';
+import React, { useState, Fragment } from 'react';
 
 // images
 import searchIcon from '@/assets/icons/search.svg';
-
-// context
-import { FiltersContext } from '@/contexts/filtersContext';
 
 // styled component
 import { CustomTextField } from './styles';
@@ -68,7 +56,7 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
         checked =
           typeof router.query.brand === 'undefined'
             ? false
-            : router.query.brand?.includes(attributes?.name.toLowerCase());
+            : router.query.brand?.includes(attributes?.name);
 
         return (
           <Fragment key={id}>

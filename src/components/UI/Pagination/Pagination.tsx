@@ -1,7 +1,7 @@
 import { FiltersContext } from '@/contexts/filtersContext';
 import { getFilteredData } from '@/services/searchApi';
 import { Pagination } from '@mui/material';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
@@ -54,6 +54,12 @@ const PaginationMui: React.FC = () => {
         if (typeof router.query.page === 'undefined' || queryPage === 1) {
           setPage(1);
           context?.setPage(1);
+        } else if (data?.meta?.pagination?.pageCount < page) {
+          setPage(1);
+          context?.setPage(1);
+        } else if (queryPage) {
+          setPage(queryPage);
+          context?.setPage(queryPage);
         }
 
         setMaxPage(data?.meta?.pagination?.pageCount);

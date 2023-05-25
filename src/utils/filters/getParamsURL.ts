@@ -31,8 +31,6 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, pa
 
     searchParams.append('page', `${!searchParams.get('page') ? page : router.query.page}`);
 
-    console.log(searchParams.get('page'));
-
     router.push(`${router.pathname}?${searchParams.toString()}`);
   }
 };

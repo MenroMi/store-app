@@ -34,7 +34,7 @@ const FiltersList: React.FC = (): JSX.Element => {
             let checked =
               typeof router.query[label] === 'undefined'
                 ? false
-                : router.query[label]?.includes(attributes?.name!.toLowerCase());
+                : router.query[label]?.includes(attributes?.name!);
 
             return (
               <FilterCheckbox

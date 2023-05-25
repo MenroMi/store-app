@@ -4,7 +4,6 @@ import { useContext, useState } from 'react';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
-import { useRouter } from 'next/router';
 
 // interface
 interface IFilterCheckbox {

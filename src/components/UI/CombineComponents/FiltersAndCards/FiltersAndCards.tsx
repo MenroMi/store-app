@@ -12,14 +12,13 @@ import { FiltersContext } from '@/contexts/filtersContext';
 
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
-import { useRouter } from 'next/router';
+import FullScreenLoader from '../../Loader/FullScreenLoader';
 
 // interface
 
 // FUNCTIONAL COMPONENT
 const FiltersAndCards: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
-  const router = useRouter();
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 

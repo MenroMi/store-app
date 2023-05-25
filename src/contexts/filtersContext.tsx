@@ -25,7 +25,6 @@ export interface IFiltersContext {
   onHideFilters: any;
   isChecked: any;
   activeFilters: ActiveFiltersTypes;
-  // onChangePage: (e: React.MouseEvent<HTMLElement>) => void;
   setPage: (x: number) => void;
 }
 
@@ -50,31 +49,31 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters, page]);
 
-  // useEffect(() => {
-
-  // }, [page])
-
-  // useEffect(() => {
-  //   if (typeof router.query === 'undefined') {
-  //     return;
-  //   } else {
-  //     for (let key in router.query) {
-  //       if (typeof router.query[key] === 'undefined') {
-  //         continue;
-  //       } else {
-  //         setActiveFilters((prev: any) => {
-  //           return {
-  //             ...prev,
-  //             [key]: Array.isArray(router.query[key])
-  //               ? router.query[key]
-  //               : (router.query[key] as string).split(','),
-  //           };
-  //         });
-  //         continue;
-  //       }
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (typeof router.query === 'undefined') {
+      return;
+    } else {
+      for (let key in router.query) {
+        if (typeof router.query[key] === 'undefined') {
+          continue;
+        } else {
+          setActiveFilters((prev: any) => {
+            return {
+              ...prev,
+              [key]: Array.isArray(router.query[key])
+                ? (router.query[key] as string[])!.map(
+                    (item: string) => `${item.slice(0, 1).toUpperCase()}${item.slice(1)}`
+                  )
+                : (router.query[key] as string)
+                    .split(',')
+                    .map((item) => `${item.slice(0, 1).toUpperCase()}${item.slice(1)}`),
+            };
+          });
+          continue;
+        }
+      }
+    }
+  }, []);
 
   const contextFilters = useQuery({
     queryKey: ['filters'],
@@ -91,9 +90,6 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     return;
   };
 
-  // if (contextFilters?.isLoading || contextFilters?.isFetching) {
-  //   return <FullScreenLoader />;
-  // }
   const isChecked = (e: any) => {
     let checked: boolean;
     let name: string;
@@ -118,8 +114,9 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
       }
       default:
         checked = e.target.checked;
-        name = e.target.name.toLowerCase();
+        name = e.target.name;
         label = e.target.getAttribute('datatype');
+
         setActiveFilters((prev) => {
           if (label in prev) {
             return checked === true
