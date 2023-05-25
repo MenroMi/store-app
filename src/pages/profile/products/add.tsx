@@ -48,10 +48,6 @@ export default function AddProduct() {
   // files that will be sent to the server
   const [imagesToPost, setImagesToPost] = useState<File[]>([]);
 
-  // hardcoded token, later will be replaced with token from the server
-  // const token =
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMwLCJpYXQiOjE2ODMyMTYyMDUsImV4cCI6MTY4NTgwODIwNX0.1XQ60Efb97NerIhgLLgX-HU5Lnb7z6Rr9YH-M2JJNDQ';
-
   const router = useRouter();
 
   // submit the form

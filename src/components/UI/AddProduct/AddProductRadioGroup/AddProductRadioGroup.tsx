@@ -45,10 +45,7 @@ export default function AddProductRadioGroup({
             control={<Radio style={{ display: 'none' }} />}
             label={
               <Box
-                onClick={() => {
-                  handleSelectSize(size.id.toString());
-                  console.log(size.id);
-                }}
+                onClick={() => handleSelectSize(size.id.toString())}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
