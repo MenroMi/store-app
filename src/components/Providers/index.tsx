@@ -28,11 +28,9 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
         <UserProvider>
           <StorageProvider>
             <FiltersProvider>
-              <ProductsProvider>
-                <ImagesProvider>
-                  <ModalProvider>{children}</ModalProvider>
-                </ImagesProvider>
-              </ProductsProvider>
+              <ImagesProvider>
+                <ModalProvider>{children}</ModalProvider>
+              </ImagesProvider>
             </FiltersProvider>
           </StorageProvider>
         </UserProvider>
