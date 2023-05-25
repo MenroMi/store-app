@@ -29,7 +29,7 @@ const CardList = () => {
   const theme = useTheme<Theme>();
   const router = useRouter();
 
-  const { data, isFetched, isFetching, isError, isLoading } = useQuery({
+  const { data, isFetching, isError, isLoading } = useQuery({
     queryKey: ['filteredData', router.query],
     queryFn: () => getFilteredData(router.query),
     keepPreviousData: true,
@@ -42,27 +42,13 @@ const CardList = () => {
 
   return (
     <CustomSearchOverlay
-      sx={{
-        color: `${isFetching && 'rgba(255, 255, 255, 0.8)'}`,
-        overflowY: `${isFetching ? 'clip' : 'scroll'}`,
-      }}
+      sx={
+        {
+          // overflowY: `${isFetching && !isLoading ? 'clip' : 'scroll'}`,
+        }
+      }
     >
       <>
-        <Box
-          sx={{
-            display: `${isFetching ? 'block' : 'none'}`,
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'rgba(255,255, 255, 0.5)',
-            backdropFilter: 'blur(5px)',
-            position: 'absolute',
-            zIndex: '5000',
-            top: '0',
-            transition: '0.3s ease-in',
-          }}
-        >
-          <FullScreenLoader />
-        </Box>
         {Array.isArray(data?.data) && data?.data.length !== 0 ? (
           <CardsGridContainer container>
             {data?.data.map(
@@ -123,3 +109,23 @@ const CardList = () => {
 };
 
 export default CardList;
+
+/***
+ *  loader
+ * 
+ *         <Box
+          sx={{
+            display: `${isFetching && !isLoading ? 'block' : 'none'}`,
+            height: '100%',
+            width: '100%',
+            backgroundColor: 'rgba(255,255, 255, 0.5)',
+            backdropFilter: 'blur(5px)',
+            position: 'absolute',
+            zIndex: '5000',
+            top: '0',
+            transition: '0.3s ease-in',
+          }}
+        >
+          <FullScreenLoader />
+        </Box>
+ */

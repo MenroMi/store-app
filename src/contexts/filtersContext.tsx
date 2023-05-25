@@ -7,7 +7,6 @@ import { getParamsURL } from '@/utils/filters/getParamsURL';
 import { useQuery } from '@tanstack/react-query';
 import { getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // interface
 interface IFiltersProvider {
@@ -39,8 +38,9 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const router = useRouter();
+  const firstRenderPage = typeof router.query.page === 'undefined' ? 1 : +router.query.page;
 
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(firstRenderPage);
   const [hide, setHide] = useState<boolean>(true);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
 

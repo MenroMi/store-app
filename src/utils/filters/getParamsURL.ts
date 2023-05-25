@@ -29,7 +29,7 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, pa
   if (searchParams.size > 0) {
     searchParams.delete('page');
 
-    searchParams.append('page', `${!searchParams.get('page') ? page : router.query.page}`);
+    searchParams.append('page', `${page}`);
 
     router.push(`${router.pathname}?${searchParams.toString()}`);
   }
