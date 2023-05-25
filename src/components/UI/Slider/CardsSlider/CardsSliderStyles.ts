@@ -5,17 +5,18 @@ import Slider from 'react-slick';
 
 export const CustomSlider = styled(Slider)(() => ({
   margin: '50px',
+  maxWidth: '1050px',
 
   [theme.breakpoints.down('lg')]: {
-    maxWidth: '1100px',
-  },
-
-  [theme.breakpoints.down('md')]: {
     maxWidth: '700px',
   },
 
   [theme.breakpoints.down('sm')]: {
-    maxWidth: '350px',
+    maxWidth: '400px',
+  },
+
+  [theme.breakpoints.down(400)]: {
+    maxWidth: '220px',
   },
 }));
 

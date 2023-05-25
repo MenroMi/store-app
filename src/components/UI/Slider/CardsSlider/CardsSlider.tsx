@@ -26,11 +26,12 @@ import noProducts from '@/assets/icons/no-products.svg';
 
 // types
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
+import Slide from '../Slide/Slide';
 
 export const CardsSlider = ({ products }: ICardsSliderProps) => {
   const sliderSettings = {
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     infinite: true,
     dots: true,
     arrows: true,
@@ -41,16 +42,6 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
       {
         breakpoint: 1200,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-          touchMove: true,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
           infinite: true,
@@ -59,7 +50,7 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 400,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -88,7 +79,7 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
     return (
       <Box sx={{ display: 'flex' }}>
         {products?.map((product) => (
-          <Card
+          <Slide
             productCategory={product.categories[0].name}
             productName={product.name}
             productImageSrc={product?.images[0]?.url}
@@ -97,7 +88,7 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
             marginRight="38px"
           >
             <DropDownMenu productID={product.id} productName="nike" />
-          </Card>
+          </Slide>
         ))}
       </Box>
     );
