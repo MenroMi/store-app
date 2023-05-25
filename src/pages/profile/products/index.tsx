@@ -1,5 +1,5 @@
 // basic
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 
 // mui
@@ -27,8 +27,11 @@ import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProf
 import CardList from '@/components/UI/Cards/CardList/CardList';
 
 import { Routes } from '@/constants';
+import { getProfilePhoto } from '@/utils/profile/profilePhoto';
+import { UserContext } from '@/components/Providers/user';
 
 export default function Home() {
+  const { user } = useContext(UserContext);
 
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -36,14 +39,18 @@ export default function Home() {
 
   return (
     <Layout title="Home">
-      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 :  '38px' }}>
+      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 : '38px' }}>
         <AsideProfileMenu />
         <Box sx={{ maxWidth: '1480px' }}>
           <UserProfile
             avatarSrc={avatarExample}
             profileTopBgSrc={profileTopBg}
             userBonusPoints="1 374"
-            username="Jane Meldrum"
+            username={
+              user?.firstName && user?.lastName
+                ? `${user?.firstName} ${user?.lastName}`
+                : `${user?.username}`
+            }
           />
           <Box>
             <Box

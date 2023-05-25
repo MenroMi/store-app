@@ -28,6 +28,7 @@ import { uploadImage } from '@/services/addProductApi';
 export default function UpdateProfile() {
   const { mutate: updateMutate, isLoading: updateIsLoading } = useMutation(updateUser);
   const { mutate: deleteMutate } = useMutation(deleteAvatar);
+  const { mutate: userMutate } = useMutation(getUser);
   const { user, setUser } = useContext(UserContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
@@ -44,7 +45,7 @@ export default function UpdateProfile() {
   });
 
   const [avatarToDisplay, setAvatarToDisplay] = useState(
-    user && user?.avatar?.formats?.thumbnail?.url ? user?.avatar.formats.thumbnail.url : ''
+    user && user?.avatar?.formats?.thumbnail?.url ? user?.avatar.formats?.thumbnail?.url : ''
   );
   const [avatarToPost, setAvatarToPost] = useState<File>();
 
@@ -76,8 +77,11 @@ export default function UpdateProfile() {
       { token, id, dataToUpdate },
       {
         onSuccess: async () => {
-          const updatedUser = await getUser(token);
-          setUser(updatedUser);
+          userMutate(token, {
+            onSuccess: (data) => {
+              setUser(data);
+            },
+          });
           console.log('Form updated successfully');
         },
         onError: (error) => {
@@ -88,18 +92,24 @@ export default function UpdateProfile() {
   };
 
   const deleteAvatarIcon = () => {
-    if (user?.avatar.formats.thumbnail.url) {
-      deleteMutate(
-        { token, id: user.avatar.id },
-        {
-          onSuccess: async () => {
-            const updatedUser = await getUser(token);
-            setUser(updatedUser);
-            setAvatarToDisplay('');
-            console.log('Form updated successfully');
-          },
-        }
-      );
+    if (user?.avatar) {
+      if (user.avatar.formats.thumbnail.url) {
+        deleteMutate(
+          { token, id: user.avatar.id },
+          {
+            onSuccess: async () => {
+              userMutate(token, {
+                onSuccess: (data) => {
+                  setUser(data);
+                  setAvatarToDisplay('');
+                },
+              });
+
+              console.log('Form updated successfully');
+            },
+          }
+        );
+      }
     }
   };
 
