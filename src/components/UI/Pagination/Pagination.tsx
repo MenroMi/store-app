@@ -7,36 +7,66 @@ import { useContext, useEffect, useState } from 'react';
 
 const PaginationMui: React.FC = () => {
   const router = useRouter();
-  // const [page, setPage] = useState(1);
-  // const context = useContext(FiltersContext);
-  // const { data, isFetched, isLoading, isPreviousData } = useQuery({
-  //   queryKey: ['filteredData', router.query],
-  //   queryFn: () => getFilteredData(router.query),
-  //   keepPreviousData: true,
-  // });
+  const [page, setPage] = useState<number>(1);
+  const [maxPage, setMaxPage] = useState<number>(1);
+  const context = useContext(FiltersContext);
 
-  // useEffect(() => {
-  //   const onActualPage = () => {
-  //     if (
-  //       typeof router.query.page !== 'undefined' &&
-  //       router.query.page <= data?.meta?.pagination?.pageCount
-  //     ) {
-  //       setPage(data?.meta?.pagination?.page);
-  //       return;
-  //     } else {
-  //       context?.setPage();
-  //       return;
-  //     }
-  //   };
+  const { data, isFetched } = useQuery({
+    queryKey: ['filteredData', router.query],
+    queryFn: () => getFilteredData(router.query),
+    keepPreviousData: true,
+  });
 
-  //   onActualPage();
-  // }, [data?.data]);
+  const onChangePage = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    let target = e.target as HTMLElement;
+    let actualPage: number;
+
+    if (target?.tagName === 'svg') {
+      if (target.dataset.testid === 'NavigateNextIcon') {
+        actualPage = page + 1;
+
+        setPage((prev) => prev + 1);
+        context?.setPage(actualPage);
+        return;
+      }
+      actualPage = page - 1;
+      setPage((prev) => prev - 1);
+      context?.setPage(actualPage);
+      return;
+    }
+
+    if (target?.tagName === 'BUTTON') {
+      if (target.textContent) {
+        actualPage = +target.textContent;
+        setPage(+target?.textContent);
+        context?.setPage(actualPage);
+      }
+
+      return;
+    }
+  };
+
+  useEffect(() => {
+    if (isFetched) {
+      const onActualPage = () => {
+        const queryPage = parseInt(router.query.page as string);
+
+        if (typeof router.query.page === 'undefined' || queryPage === 1) {
+          setPage(1);
+          context?.setPage(1);
+        }
+
+        setMaxPage(data?.meta?.pagination?.pageCount);
+      };
+      onActualPage();
+    }
+  }, [data?.data]);
 
   return (
     <Pagination
-      page={1}
-      onClick={(e) => e}
-      count={1}
+      page={page}
+      onClick={(e) => onChangePage(e)}
+      count={maxPage}
       shape="rounded"
       color="primary"
       size="large"

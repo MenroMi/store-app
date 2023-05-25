@@ -26,7 +26,7 @@ export interface IFiltersContext {
   isChecked: any;
   activeFilters: ActiveFiltersTypes;
   // onChangePage: (e: React.MouseEvent<HTMLElement>) => void;
-  // setPage: () => void;
+  setPage: (x: number) => void;
 }
 
 export interface AllFilterTypes {
@@ -41,15 +41,18 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const router = useRouter();
 
-  // const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
   const [hide, setHide] = useState<boolean>(true);
-  const [price, setPrice] = useState<number>(0);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
 
   useEffect(() => {
-    getParamsURL(router, activeFilters);
+    getParamsURL(router, activeFilters, page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeFilters]);
+  }, [activeFilters, page]);
+
+  // useEffect(() => {
+
+  // }, [page])
 
   // useEffect(() => {
   //   if (typeof router.query === 'undefined') {
@@ -130,24 +133,6 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     }
   };
 
-  // const onChangePage = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-  //   let target = e.target as HTMLElement;
-
-  //   if (target?.tagName === 'svg') {
-  //     return target.dataset.testid === 'NavigateNextIcon'
-  //       ? setPage((prev) => prev + 1)
-  //       : setPage((prev) => prev - 1);
-  //   }
-
-  //   if (target?.tagName === 'BUTTON') {
-  //     if (target.textContent) {
-  //       return setPage(!+target?.textContent ? 1 : +target.textContent);
-  //     }
-
-  //     return;
-  //   }
-  // };
-
   return (
     <FiltersContext.Provider
       value={{
@@ -160,8 +145,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         onHide,
         onHideFilters,
         isChecked,
-        // onChangePage: (e) => onChangePage(e),
-        // setPage: () => setPage(1),
+        setPage: (value) => setPage(value),
         activeFilters,
       }}
     >
