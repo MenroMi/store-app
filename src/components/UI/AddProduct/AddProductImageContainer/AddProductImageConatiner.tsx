@@ -15,7 +15,7 @@ export default function AddProductImageConatiner({ src, id }: IAddProductImageCo
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
 
-  const { isOpen, setIsOpen } = useContext(ModalContext);
+  const { setIsOpen, setClickedId } = useContext(ModalContext);
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -35,6 +35,7 @@ export default function AddProductImageConatiner({ src, id }: IAddProductImageCo
           display={isHovered ? 'block' : 'none'}
           onClick={() => {
             document.body.style.overflow = 'hidden';
+            setClickedId(id);
             setIsOpen(true);
           }}
         >

@@ -25,6 +25,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
   const modalRef = useRef<HTMLDivElement | null>();
   const closeModal = () => {
     document.body.style.overflow = 'scroll';
+
     setIsOpen(false);
   };
 

@@ -4,11 +4,15 @@ import { Dispatch, SetStateAction, createContext, useState } from 'react';
 interface IModalContext {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  clickedId: number | null;
+  setClickedId: Dispatch<SetStateAction<number | null>>;
 }
 
 export const ModalContext = createContext<IModalContext>({
   isOpen: false,
   setIsOpen: () => {},
+  clickedId: null,
+  setClickedId: () => {},
 });
 
 interface IModalProviderProps {
@@ -18,6 +22,11 @@ interface IModalProviderProps {
 //Context Wrapper
 export function ModalProvider({ children }: IModalProviderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [clickedId, setClickedId] = useState<number | null>(null);
 
-  return <ModalContext.Provider value={{ isOpen, setIsOpen }}>{children}</ModalContext.Provider>;
+  return (
+    <ModalContext.Provider value={{ isOpen, setIsOpen, clickedId, setClickedId }}>
+      {children}
+    </ModalContext.Provider>
+  );
 }

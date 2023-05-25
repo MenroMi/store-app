@@ -65,7 +65,7 @@ export default function AddProduct() {
         // create url of the image to show the image on the screen
         setSelectedImages((prevState) => [
           ...prevState,
-          { id: image.lastModified, url: URL.createObjectURL(image) },
+          { id: Date.now(), url: URL.createObjectURL(image) },
         ]);
         setImagesToPost((prevState) => [...prevState, image]);
       }

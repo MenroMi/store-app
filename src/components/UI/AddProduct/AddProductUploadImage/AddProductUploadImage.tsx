@@ -25,6 +25,7 @@ import { IAddProductUploadImageProps } from '@/types/addProductTypes';
 import AddProductImageConatiner from '../AddProductImageContainer/AddProductImageConatiner';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
 import { ImagesContext } from '@/components/Providers/images';
+import { ModalContext } from '@/components/Providers/modal';
 
 export default function AddProductUploadImage({ handleChooseImage }: IAddProductUploadImageProps) {
   const theme = useTheme<Theme>();
@@ -32,9 +33,10 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+  const { clickedId } = useContext(ModalContext);
 
   const handleDeleteImage = (id: number) =>
-    setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+    setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== clickedId));
 
   return (
     <>
@@ -63,13 +65,13 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
           {selectedImages?.map((productImage) => (
             <Grid key={productImage?.id} item xs={6}>
               <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
-
-              <ModalDeleteItem
-                deleteMessage="Are you sure to delete product image?"
-                deleteHandler={() => handleDeleteImage(productImage.id)}
-              />
             </Grid>
           ))}
+
+          <ModalDeleteItem
+            deleteMessage="Are you sure to delete product image?"
+            deleteHandler={() => clickedId && handleDeleteImage(clickedId)}
+          />
           <Grid item xs={6}>
             <CustomUploadWrapper>
               <Image src={imageIcon} alt="Image" />
