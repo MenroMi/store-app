@@ -1,10 +1,10 @@
 // basic
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 
 // mui
-import { Box } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -19,48 +19,54 @@ import { Routes } from '@/constants';
 
 // services
 import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
+
+// interfaces
 import { IProductData } from '@/types/addProductTypes';
+
+// context
+import { ImagesContext } from '@/components/Providers/images';
 
 export default function AddProduct() {
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
   const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
   const { data: categoriesData } = useQuery(['categories'], () => getDataWithField('categories'));
   const { data: sizesData } = useQuery(['sizes'], () => getDataWithField('sizes', 'value'));
-  const { data: id } = useQuery(['id'], () => getUserID(token));
+  const { data: id } = useQuery(['id'], () =>
+    getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
+  );
 
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [gender, setGender] = useState<string>('');
-  const [brand, setBrand] = useState<string>('');
+  const [category, setCategory] = useState<string>('5');
+  const [gender, setGender] = useState<string>('3');
+  const [brand, setBrand] = useState<string>('9');
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
   // urls of images. used to show the image on the screen
-  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
   // files that will be sent to the server
   const [imagesToPost, setImagesToPost] = useState<File[]>([]);
-
-  // hardcoded token, later will be replaced with token from the server
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMwLCJpYXQiOjE2ODMyMTYyMDUsImV4cCI6MTY4NTgwODIwNX0.1XQ60Efb97NerIhgLLgX-HU5Lnb7z6Rr9YH-M2JJNDQ';
 
   const router = useRouter();
 
   // submit the form
   const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images));
 
-  if (isLoading) return (
-    <FullScreenLoader />
-  )
+  if (isLoading) return <FullScreenLoader />;
 
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const image = e.currentTarget?.files?.[0];
-    if (image && selectedImages.length < 4) {
-      // create url of the image to show the image on the screen
-      setSelectedImages((prevState) => [...prevState, URL.createObjectURL(image)]);
-      setImagesToPost((prevState) => [...prevState, image]);
+    if (selectedImages) {
+      if (image && selectedImages?.length < 4) {
+        // create url of the image to show the image on the screen
+        setSelectedImages((prevState) => [
+          ...prevState,
+          { id: Date.now(), url: URL.createObjectURL(image) },
+        ]);
+        setImagesToPost((prevState) => [...prevState, image]);
+      }
     }
   };
 
@@ -91,7 +97,10 @@ export default function AddProduct() {
         },
       };
 
-      return postProduct(productData, token);
+      return postProduct(
+        productData,
+        localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
+      );
     } catch (err) {
       console.log(err);
     }
@@ -116,7 +125,6 @@ export default function AddProduct() {
           category={category}
           gender={gender}
           description={description}
-          selectedImages={selectedImages}
           selectedSize={selectedSize}
           brandsOptions={brandsData}
           gendersOptions={gendersData}

@@ -13,6 +13,8 @@ import StorageProvider from '@/contexts/sessionStorageContext';
 import { ThemeProvider } from '@mui/material/styles';
 import ReactQueryProvider from './queryClient';
 import UserProvider from './user';
+import { ModalProvider } from './modal';
+import ImagesProvider from './images';
 
 export interface IProvidersProps {
   children: ReactNode;
@@ -25,7 +27,13 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
       <ReactQueryProvider dehydrateState={dehydrateState}>
         <UserProvider>
           <StorageProvider>
-            <FiltersProvider>{children}</FiltersProvider>
+            <FiltersProvider>
+              <ProductsProvider>
+                <ImagesProvider>
+                  <ModalProvider>{children}</ModalProvider>
+                </ImagesProvider>
+              </ProductsProvider>
+            </FiltersProvider>
           </StorageProvider>
         </UserProvider>
       </ReactQueryProvider>
