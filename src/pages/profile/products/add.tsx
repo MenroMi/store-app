@@ -19,7 +19,7 @@ import { Routes } from '@/constants';
 
 // services
 import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
-import { IProductData } from '@/types/addProductTypes';
+import { IProductData, ISelectedImage } from '@/types/addProductTypes';
 
 export default function AddProduct() {
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
@@ -37,7 +37,7 @@ export default function AddProduct() {
   const [description, setDescription] = useState<string>('');
 
   // urls of images. used to show the image on the screen
-  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [selectedImages, setSelectedImages] = useState<ISelectedImage[]>([]);
   // files that will be sent to the server
   const [imagesToPost, setImagesToPost] = useState<File[]>([]);
 
@@ -50,16 +50,18 @@ export default function AddProduct() {
   // submit the form
   const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images));
 
-  if (isLoading) return (
-    <FullScreenLoader />
-  )
+  if (isLoading) return <FullScreenLoader />;
 
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const image = e.currentTarget?.files?.[0];
+
     if (image && selectedImages.length < 4) {
       // create url of the image to show the image on the screen
-      setSelectedImages((prevState) => [...prevState, URL.createObjectURL(image)]);
+      setSelectedImages((prevState) => [
+        ...prevState,
+        { id: image.lastModified, url: URL.createObjectURL(image) },
+      ]);
       setImagesToPost((prevState) => [...prevState, image]);
     }
   };

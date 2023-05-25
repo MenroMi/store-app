@@ -8,5 +8,5 @@ export const CustomUploadWrapper = styled(Box)(() => ({
   alignItems: 'center',
   border: '1px dashed #5C5C5C',
   borderRadius: '8px',
-  height: '100%',
+  padding: '35% 0',
 }));

@@ -1,6 +1,10 @@
-// libs
+// basic
+import React, { useState } from 'react';
+import Image from 'next/image';
+// mui
+
 import {
-  Box,
+  Button,
   FormLabel,
   Grid,
   Input,
@@ -9,13 +13,16 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import React from 'react';
-import Image from 'next/image';
 
 // assets
 import imageIcon from '@/assets/icons/gallery.svg';
-import { CustomUploadWrapper } from './styles';
+
+// styles
+import { CustomUploadWrapper } from './AddProductUploadImageStyles';
+
+// interfaces
 import { IAddProductUploadImageProps } from '@/types/addProductTypes';
+import AddProductImageConatiner from '../AddProductImageContainer/AddProductImageConatiner';
 
 export default function AddProductUploadImage({
   handleChooseImage,
@@ -24,6 +31,8 @@ export default function AddProductUploadImage({
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
+
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
     <>
       <Typography
@@ -38,44 +47,22 @@ export default function AddProductUploadImage({
           container
           sx={{
             maxWidth: {
-              xl: '692px',
               lg: '500px',
+              xl: '692px',  
             },
           }}
           spacing={{
-            xl: 6.5,
-            lg: 4,
             md: 2,
+            lg: 4,
+            xl: 6.5,
           }}
         >
-          {selectedImages?.map((productImage, index) => (
-            <Grid
-              key={index}
-              item
-              xs={6}
-              sx={{
-                maxWidth: queryDownLg ? '160px' : '320px',
-                maxHeight: queryDownLg ? '190px' : '380px',
-              }}
-            >
-              <Image
-                src={productImage}
-                alt="Product image"
-                style={{ width: '100%', height: '100%' }}
-                width={queryDownLg ? 160 : 320}
-                height={queryDownLg ? 190 : 380}
-              />
+          {selectedImages?.map((productImage) => (
+            <Grid key={productImage?.id} item xs={6}>
+              <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
             </Grid>
           ))}
-
-          <Grid
-            item
-            xs={6}
-            sx={{
-              width: queryDownLg ? '160px' : '320px',
-              height: queryDownLg ? '190px' : '380px',
-            }}
-          >
+          <Grid item xs={6}>
             <CustomUploadWrapper>
               <Image src={imageIcon} alt="Image" />
               <Typography variant="body1">Drop your image here</Typography>
@@ -91,7 +78,7 @@ export default function AddProductUploadImage({
               <Input
                 type="file"
                 onChange={handleChooseImage}
-                style={{ display: 'none' }}
+                sx={{ display: 'none' }}
                 required
                 id="images"
                 name="images"
@@ -100,7 +87,19 @@ export default function AddProductUploadImage({
           </Grid>
         </Grid>
       ) : (
-        <p>asdasd</p>
+        <Button variant="outlined">
+          <FormLabel htmlFor="images" sx={{ color: theme.palette.text.primary }}>
+            Choose images
+            <Input
+              type="file"
+              onChange={handleChooseImage}
+              sx={{ display: 'none' }}
+              required
+              id="images"
+              name="images"
+            />
+          </FormLabel>
+        </Button>
       )}
     </>
   );

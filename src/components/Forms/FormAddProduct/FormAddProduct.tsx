@@ -200,7 +200,7 @@ export default function FormAddProduct({
           </Box>
 
           {queryDownLg && (
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3, alignSelf: 'end' }}>
               <Button
                 variant="contained"
                 type="submit"
