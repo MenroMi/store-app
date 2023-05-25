@@ -6,6 +6,7 @@ export const CustomDotsBtn = styled(Button)({
   top: '20px',
   right: '24px',
   cursor: 'pointer',
+  backgroundColor: 'white',
   zIndex: '1100',
   [theme.breakpoints.down('sm')]: {
     top: '10px',
@@ -16,6 +17,9 @@ export const CustomDotsBtn = styled(Button)({
     minWidth: '20px',
     minHeight: '20px',
     padding: '3px 5px',
+  },
+  '&:hover': {
+    backgroundColor: theme?.palette?.primary?.main,
   },
 
   '&:active': {

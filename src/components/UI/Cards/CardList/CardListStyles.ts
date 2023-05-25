@@ -7,6 +7,7 @@ export const CustomSearchOverlay = styled('div')({
   width: '100%',
   overflowY: 'scroll',
   overflowX: 'hidden',
+  position:'relative',
   [theme.breakpoints.down('md')]: {
     height: 'calc(100vh - 306px)',
   },
@@ -45,9 +46,21 @@ export const CardsGridContainer = styled(Grid)(({ theme }) => ({
     '&.MuiGrid-root': {
       marginTop: '1em',
     },
-    columnGap: '16px',
-    rowGap: '20px',
+    columnGap: '20px',
+    rowGap: '16px',
     justifyContent: 'space-around',
     padding: '0 4px 0 20px',
   },
 }));
+
+export const CatalogIsEmptyContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent:'center',
+  position: 'absolute',
+  left: '51%',
+  top: '50%',
+  transform: 'translateX(-49%) translateY(-50%)',
+  gap: '20px',
+});
