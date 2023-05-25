@@ -4,6 +4,7 @@ import Image from 'next/image';
 // mui
 
 import {
+  Box,
   Button,
   FormLabel,
   Grid,
@@ -36,7 +37,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
   const { clickedId } = useContext(ModalContext);
 
   const handleDeleteImage = (id: number) =>
-    setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== clickedId));
+    setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
 
   return (
     <>
@@ -68,10 +69,6 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
             </Grid>
           ))}
 
-          <ModalDeleteItem
-            deleteMessage="Are you sure to delete product image?"
-            deleteHandler={() => clickedId && handleDeleteImage(clickedId)}
-          />
           <Grid item xs={6}>
             <CustomUploadWrapper>
               <Image src={imageIcon} alt="Image" />
@@ -97,20 +94,36 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
           </Grid>
         </Grid>
       ) : (
-        <Button variant="outlined">
-          <FormLabel htmlFor="images" sx={{ color: theme.palette.text.primary }}>
-            Choose images
-            <Input
-              type="file"
-              onChange={handleChooseImage}
-              sx={{ display: 'none' }}
-              required
-              id="images"
-              name="images"
-            />
-          </FormLabel>
-        </Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Button variant="outlined" sx={{ alignSelf: 'start', mb: 3 }}>
+            <FormLabel htmlFor="images" sx={{ color: theme.palette.text.primary }}>
+              Choose images
+              <Input
+                type="file"
+                onChange={handleChooseImage}
+                sx={{ display: 'none' }}
+                required
+                id="images"
+                name="images"
+              />
+            </FormLabel>
+          </Button>
+
+          {selectedImages?.map((productImage) => (
+            <Box
+              key={productImage?.id}
+              sx={{ maxWidth: { xs: '200px',   sm: '300px' }, alignSelf: 'center' }}
+            >
+              <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
+            </Box>
+          ))}
+        </Box>
       )}
+
+      <ModalDeleteItem
+        deleteMessage="Are you sure to delete product image?"
+        deleteHandler={() => clickedId && handleDeleteImage(clickedId)}
+      />
     </>
   );
 }

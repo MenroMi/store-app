@@ -1,3 +1,4 @@
+import theme from '@/utils/mui/theme';
 import { styled } from '@mui/material';
 import { Box } from '@mui/material';
 import Image from 'next/image';
@@ -20,16 +21,18 @@ export const ImageContainer = styled(Box)(() => ({
   width: '100%',
   height: '100%',
 
-  '&:hover': {
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.35)',
-      zIndex: 1,
+  [theme.breakpoints.up('lg')]: {
+    '&:hover': {
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.35)',
+        zIndex: 1,
+      },
     },
   },
 }));
@@ -43,6 +46,6 @@ export const DeleteIconContainer = styled(Box)(({ display }: IDeleteIconContaine
   zIndex: 2,
 
   '& > img': {
-    cursor: 'pointer',  
+    cursor: 'pointer',
   },
 }));

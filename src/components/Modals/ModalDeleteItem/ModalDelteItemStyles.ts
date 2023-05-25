@@ -1,3 +1,4 @@
+import theme from '@/utils/mui/theme';
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 
@@ -28,4 +29,13 @@ export const CustomModalBox = styled(Box)(() => ({
   maxWidth: '656px',
   padding: '32px',
   borderRadius: '8px',
+
+  [theme.breakpoints.down('md')]: {
+    maxWidth: '500px',
+    padding: '20px',
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    maxWidth: '300px',
+  },
 }));

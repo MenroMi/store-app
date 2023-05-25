@@ -21,7 +21,7 @@ import { Routes } from '@/constants';
 import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
 
 // interfaces
-import { IProductData, ISelectedImage } from '@/types/addProductTypes';
+import { IProductData } from '@/types/addProductTypes';
 
 // context
 import { ImagesContext } from '@/components/Providers/images';

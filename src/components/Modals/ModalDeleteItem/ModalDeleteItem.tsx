@@ -65,11 +65,19 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
             mt: 7,
           }}
         >
-          <Button variant="outlined" sx={{ p: '20px 120px' }} onClick={closeModal}>
+          <Button
+            variant="outlined"
+            sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+            onClick={closeModal}
+          >
             Cancel
           </Button>
 
-          <Button variant="contained" sx={{ p: '20px 120px' }} onClick={handleDelete}>
+          <Button
+            variant="contained"
+            sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+            onClick={handleDelete}
+          >
             Delete
           </Button>
         </Box>
