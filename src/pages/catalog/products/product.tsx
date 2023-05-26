@@ -4,7 +4,7 @@ import ImagesGallery from '@/components/UI/Gallery/ImagesGallery/ImagesGallery';
 
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
-import { getDataWithField } from '@/services/addProductApi';
+import { getDataWithField } from '@/services/productApi';
 
 export default function SingleProductPage() {
     const { data: sizesData } = useQuery(['sizes'], () => getDataWithField('sizes', 'value'));

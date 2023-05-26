@@ -18,7 +18,7 @@ import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 import { Routes } from '@/constants/routes';
 
 // services
-import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
+import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/productApi';
 import { IProductData } from '@/types/addProductTypes';
 
 export default function AddProduct() {
