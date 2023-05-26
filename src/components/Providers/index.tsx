@@ -7,7 +7,6 @@ import { ReactNode } from 'react';
 
 // context
 import FiltersProvider from '@/contexts/filtersContext';
-import ProductsProvider from '@/contexts/productsContext';
 import StorageProvider from '@/contexts/sessionStorageContext';
 
 // providers
@@ -29,11 +28,9 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
         <UserProvider>
           <StorageProvider>
             <FiltersProvider>
-              <ProductsProvider>
-                <ImagesProvider>
-                  <ModalProvider>{children}</ModalProvider>
-                </ImagesProvider>
-              </ProductsProvider>
+              <ImagesProvider>
+                <ModalProvider>{children}</ModalProvider>
+              </ImagesProvider>
             </FiltersProvider>
           </StorageProvider>
         </UserProvider>

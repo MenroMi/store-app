@@ -1,5 +1,6 @@
 export interface ICardsSliderProps {
   products: IProduct[];
+  deleteProduct: () => void;
 }
 
 export interface IProduct {
