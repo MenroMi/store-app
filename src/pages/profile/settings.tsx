@@ -1,6 +1,7 @@
 // basic
 import Image from 'next/image';
 import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 
 // mui
 import { Box, Button, FormLabel, Input, Typography, useMediaQuery } from '@mui/material';
@@ -24,6 +25,7 @@ import { UserContext } from '@/components/Providers/user';
 import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
 import { uploadImage } from '@/services/addProductApi';
+import { Routes } from '@/constants';
 
 export default function UpdateProfile() {
   const { mutate: updateMutate, isLoading: updateIsLoading } = useMutation(updateUser);
@@ -32,6 +34,7 @@ export default function UpdateProfile() {
   const { user, setUser } = useContext(UserContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
+  const { push } = useRouter();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const id = Number(user?.id);
@@ -105,7 +108,8 @@ export default function UpdateProfile() {
           {
             onSuccess: async () => {
               userMutate(token, {
-                onSuccess: (data) => {
+                onSuccess: async (data) => {
+                  await push(Routes.myProducts);
                   setUser(data);
                   setAvatarToDisplay('');
                 },
