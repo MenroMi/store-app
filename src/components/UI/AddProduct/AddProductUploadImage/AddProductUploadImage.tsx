@@ -82,13 +82,14 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
                   click to browse
                 </FormLabel>
               </Typography>
-              <Input
+              <input
                 type="file"
                 onChange={handleChooseImage}
-                sx={{ display: 'none' }}
+                style={{ display: 'none' }}
                 required
                 id="images"
                 name="images"
+                accept="image/*"
               />
             </CustomUploadWrapper>
           </Grid>
@@ -98,13 +99,14 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
           <Button variant="outlined" sx={{ alignSelf: 'start', mb: 3 }}>
             <FormLabel htmlFor="images" sx={{ color: theme.palette.text.primary }}>
               Choose images
-              <Input
+              <input
                 type="file"
                 onChange={handleChooseImage}
-                sx={{ display: 'none' }}
+                style={{ display: 'none' }}
                 required
                 id="images"
                 name="images"
+                accept="image/*"
               />
             </FormLabel>
           </Button>
@@ -112,7 +114,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
           {selectedImages?.map((productImage) => (
             <Box
               key={productImage?.id}
-              sx={{ maxWidth: { xs: '200px',   sm: '300px' }, alignSelf: 'center' }}
+              sx={{ maxWidth: { xs: '200px', sm: '300px' }, alignSelf: 'center' }}
             >
               <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
             </Box>
