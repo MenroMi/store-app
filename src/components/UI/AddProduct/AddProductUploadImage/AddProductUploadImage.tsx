@@ -39,6 +39,31 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
   const handleDeleteImage = (id: number) =>
     setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
 
+  const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDraggingOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingOver(false);
+
+    const image = e.dataTransfer?.files?.[0];
+
+    if (image) {
+      setSelectedImages((prevState) => [
+        ...prevState,
+        { id: Date.now(), url: URL.createObjectURL(image), imageFile: image },
+      ]);
+    }
+  };
+
   return (
     <>
       <Typography
@@ -70,7 +95,13 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
           ))}
 
           <Grid item xs={6}>
-            <CustomUploadWrapper>
+            <CustomUploadWrapper
+              onDragEnter={handleDragEnter}
+              onDragOver={(e) => e.preventDefault()}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              borderColor={isDraggingOver ? theme.palette.primary.main : theme.palette.text.primary}
+            >
               <Image src={imageIcon} alt="Image" />
               <Typography variant="body1">Drop your image here</Typography>
               <Typography variant="body1">
