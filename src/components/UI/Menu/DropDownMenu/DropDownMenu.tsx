@@ -1,5 +1,5 @@
 // basic
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { StorageContext } from '@/context/sessionStorageContext';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
 
 // images
 import dotsBtn from '@/assets/icons/dots.svg';
@@ -24,14 +24,13 @@ import { Routes, homeItems, othersItems } from '@/constants';
 // interface
 interface IDropDownMenuProps {
   productID: number;
-  productName: string;
 }
 
-const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }): JSX.Element => {
+const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
-  const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
+  const { increaseCartQuantity } = useShoppingCart();
 
   const openDropDownMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElement(e.currentTarget);
@@ -41,7 +40,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
     return items.map(({ id, label, method }): JSX.Element => {
       if (label === 'Add to Cart') {
         return (
-          <MenuItem key={id} onClick={() => contextStorage?.addUniqueID(productName, productID)}>
+          <MenuItem key={id} onClick={() => increaseCartQuantity(productID!)}>
             {label}
           </MenuItem>
         );

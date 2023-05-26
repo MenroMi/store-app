@@ -16,24 +16,20 @@ import CloseIcon from '@/assets/icons/close.svg';
 import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
 import { useRouter } from 'next/router';
 import { AuthUserContext } from '@/components/Providers/auth';
-import { StorageContext } from '@/context/sessionStorageContext';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
 
 export default function Header() {
   const [isSearchClicled, setIsSearchClicked] = useState(false);
   const [isBurgerClicled, setIsBurgerClicked] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const { userToken } = useContext(AuthUserContext);
-  const contextStorage = useContext(StorageContext);
+    const { cartQuantity, cartItems } = useShoppingCart();
   const { push } = useRouter();
   const {
     palette: {
       primary: { main },
     },
   } = useTheme<Theme>();
-
-  useEffect(() => {
-    contextStorage?.setNewLengthFromStorage();
-  }, []);
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
@@ -111,7 +107,7 @@ export default function Header() {
               <Box
                 bgcolor={main}
                 sx={{
-                  display: `${contextStorage?.storageLength === 0 ? 'none' : 'block'}`,
+                  display: `${cartItems.length === 0 ? 'none' : 'block'}`,
                   position: 'absolute',
                   top: '-5px',
                   right: '-10px',
@@ -128,7 +124,7 @@ export default function Header() {
                     transform: 'translateX(-50%)',
                   }}
                 >
-                  {contextStorage?.storageLength}
+                  {cartQuantity}
                 </Box>
               </Box>
             </Box>

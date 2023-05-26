@@ -9,9 +9,10 @@ import DeleteIcon from '@/assets/icons/delete.svg';
 import { CustomButton } from './styles';
 
 // context
-import { BagContext } from '@/context/BagContext';
+// import { BagContext } from '@/context/bagContext';
 import { useContext } from 'react';
 import { CardBagContextType } from '@/types/productCardBag';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
 
 // interface
 interface IBagDeleteButtonProps {
@@ -22,10 +23,12 @@ const BagDeleteButton: React.FC<IBagDeleteButtonProps> = ({ id }) => {
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const context = useContext(BagContext) as CardBagContextType;
+  // const context = useContext(BagContext) as CardBagContextType;
+
+  const { removeFromCart } = useShoppingCart();
 
   return (
-    <CustomButton onClick={() => context.removeFromCart(id)}>
+    <CustomButton onClick={() => removeFromCart(id)}>
       <Box
         component={Image}
         src={DeleteIcon}

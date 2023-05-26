@@ -1,5 +1,5 @@
 // basic
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 
 // mui
@@ -13,20 +13,32 @@ import BagDeleteButton from '@/components/UI/Buttons/BagDeleteButton/BagDeleteBu
 import { CustomBagWrapper, CustomBox } from './styles';
 
 // context
-import { BagContext } from '@/context/BagContext';
+import { BagContext } from '@/context/bagContext';
 
-// import storeItems from "../../../../context/items.json"
+import storeItems from '@/context/items.json';
 
-const storeItems = [{ id: 1}, {id: 2}];
 
 // interface
-import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
+// import { CardBagContextType, ICardBagProps } from '@/context/bagContext';
 interface IProductBagProps {
   id: number;
-  // quantity: number;
+  // productImageSrc: string | StaticImageData;
+  // productName: string;
+  // productPrice: number;
+  // productCategory: string;
+  // inStock: boolean;
 }
-
-const ProductCardBag: React.FC<IProductBagProps> = ({ id }) => {
+export function useShoppingCart() {
+  return useContext(BagContext);
+}
+const ProductCardBag: React.FC<IProductBagProps> = ({
+  id,
+  // productImageSrc,
+  // productName,
+  // productPrice,
+  // productCategory,
+  // inStock,
+}) => {
   const context = useContext(BagContext) as CardBagContextType;
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -54,7 +66,7 @@ const ProductCardBag: React.FC<IProductBagProps> = ({ id }) => {
         >
           <Box
             component={Image}
-            src={product.productImageSrc!}
+            src={product.productImageSrc}
             alt="Product"
             sx={{
               borderRadius: '6px',
@@ -95,8 +107,8 @@ const ProductCardBag: React.FC<IProductBagProps> = ({ id }) => {
               maxHeight: { sm: '28px', xs: '20px' },
             }}
           >
-            <BagQuantityButton id={product.id} quantity={quantity} />
-            <BagDeleteButton id={product.id} />
+            <BagQuantityButton id={id} quantity={quantity} />
+            <BagDeleteButton id={id} />
           </CustomBox>
         </CustomBox>
       </CustomBagWrapper>

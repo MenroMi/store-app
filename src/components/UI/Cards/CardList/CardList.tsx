@@ -1,6 +1,6 @@
 // basic
 import Image from 'next/image';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useContext } from 'react';
 
 // mui
@@ -29,7 +29,6 @@ import { ONE_MOCKED_PRODUCT } from '@/constants';
 
 // interface
 import { ICardListProps, AttrFromData } from '@/types/cardListTypes';
-import { uploadImageURL } from '@/constants';
 
 // FUNCTIONAL COMPONENT
 const CardList: React.FC<ICardListProps> = ({
@@ -73,10 +72,10 @@ const CardList: React.FC<ICardListProps> = ({
         const { name, price, images, gender } = attributes;
         let url;
 
-        if (images?.data === null || typeof images === 'undefined') {
+        if (images?.data === null) {
           url = singInImg;
         } else {
-          url = uploadImageURL + images?.data?.[0]?.attributes?.url;
+          url = images.data?.[0]?.attributes?.url;
         }
 
         return isVisible(
@@ -85,8 +84,9 @@ const CardList: React.FC<ICardListProps> = ({
             productImageSrc={url}
             productName={name}
             productPrice={price}
+            id={id}
           >
-            <DropDownMenu productName={name} productID={id} />
+            <DropDownMenu productID={id} />
           </Card>,
           id
         );

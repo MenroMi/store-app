@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 
 export function useSessionStorage<T>(key: string, initialValue: T | (() => T)) {
   const [value, setValue] = useState<T>(() => {
-    if (typeof sessionStorage === 'undefined') {
-      return;
-    }
-    const jsonValue = sessionStorage.getItem(key);
+    const jsonValue = typeof window !== 'undefined' ? sessionStorage.getItem(key) : null;
     if (jsonValue != null) return JSON.parse(jsonValue);
 
     if (typeof initialValue === 'function') {

@@ -4,6 +4,7 @@ export interface ICustomCardWrapperProps {
 }
 
 export interface ICardProps {
+  id?: number;
   productCategory: string;
   productImageSrc: StaticImageData | string;
   productName: string;

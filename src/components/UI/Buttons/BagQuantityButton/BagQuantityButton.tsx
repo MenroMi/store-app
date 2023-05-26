@@ -12,19 +12,17 @@ import RemoveIcon from 'src/assets/icons/remove.svg';
 // styles
 import { CustomButtonWrapper, CustomFabButton } from './styles';
 import { useContext } from 'react';
-import { BagContext } from '@/context/BagContext';
+// import { BagContext } from '@/context/BagContext';
 import { CardBagContextType } from '@/types/productCardBag';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
 
 // interface
 interface IBagQuantityButtonProps {
   id: number;
-  quantity: number;
+  // quantity: number;
 }
 
-const BagQuantityButton: React.FC<IBagQuantityButtonProps> = ({
-  id,
-  quantity,
-}) => {
+const BagQuantityButton: React.FC<IBagQuantityButtonProps> = ({ id }) => {
   const {
     palette: {
       text: { caption },
@@ -32,7 +30,9 @@ const BagQuantityButton: React.FC<IBagQuantityButtonProps> = ({
   } = useTheme();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const context = useContext(BagContext) as CardBagContextType;
+  const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
+
+  const quantity = getItemQuantity(id);
 
   return (
     <CustomButtonWrapper>
@@ -46,7 +46,7 @@ const BagQuantityButton: React.FC<IBagQuantityButtonProps> = ({
         Quantity:
       </Typography>
       <CustomFabButton
-        onClick={() => context.decreaseCartQuantity(id)}
+        onClick={() => decreaseCartQuantity(id)}
         aria-label="remove"
         sx={{
           width: queryUpSm ? 'auto' : '20px',
@@ -68,7 +68,7 @@ const BagQuantityButton: React.FC<IBagQuantityButtonProps> = ({
         {quantity}
       </Typography>
       <CustomFabButton
-        onClick={() => context.increaseCartQuantity(id)}
+        onClick={() => increaseCartQuantity(id)}
         aria-label="add"
         sx={{
           width: queryUpSm ? 'auto' : '20px',
