@@ -13,6 +13,8 @@ import { Button, Typography, Link as LinkMui, Box } from '@mui/material';
 // components
 import Card from '../../Cards/Card/Card';
 import DropDownMenu from '../../Menu/DropDownMenu/DropDownMenu';
+import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
+import Slide from '../Slide/Slide';
 
 // styled components
 import { CustomEmptyStateWrapper, CustomSlider } from './CardsSliderStyles';
@@ -26,9 +28,8 @@ import noProducts from '@/assets/icons/no-products.svg';
 
 // types
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
-import Slide from '../Slide/Slide';
 
-export const CardsSlider = ({ products }: ICardsSliderProps) => {
+export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   const sliderSettings = {
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -59,9 +60,32 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
     ],
   };
 
-  if (products?.length > 4) {
+  if (products?.length > 3) {
     return (
-      <CustomSlider {...sliderSettings}>
+      <>
+        <CustomSlider {...sliderSettings}>
+          {products?.map((product) => (
+            <Slide
+              productCategory={product.categories[0].name}
+              productName={product.name}
+              productImageSrc={product?.images[0]?.url}
+              productPrice={product.price}
+              key={product.id}
+            >
+              <DropDownMenu productID={product.id} productName={product.name} />
+            </Slide>
+          ))}
+        </CustomSlider>
+
+        <ModalDeleteItem
+          deleteMessage="Are you sure to delete selected item?"
+          deleteHandler={deleteProduct}
+        />
+      </>
+    );
+  } else if (products?.length > 0) {
+    return (
+      <Box sx={{ display: 'flex' }}>
         {products?.map((product) => (
           <Card
             productCategory={product.categories[0].name}
@@ -69,27 +93,15 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
             productImageSrc={product?.images[0]?.url}
             productPrice={product.price}
             key={product.id}
-          >
-            <DropDownMenu productID={product.id} productName="nike" />
-          </Card>
-        ))}
-      </CustomSlider>
-    );
-  } else if (products?.length > 0) {
-    return (
-      <Box sx={{ display: 'flex' }}>
-        {products?.map((product) => (
-          <Slide
-            productCategory={product.categories[0].name}
-            productName={product.name}
-            productImageSrc={product?.images[0]?.url}
-            productPrice={product.price}
-            key={product.id}
             marginRight="38px"
           >
-            <DropDownMenu productID={product.id} productName="nike" />
-          </Slide>
+            <DropDownMenu productID={product.id} productName={product.name} />
+          </Card>
         ))}
+        <ModalDeleteItem
+          deleteMessage="Are you sure to delete selected item?"
+          deleteHandler={deleteProduct}
+        />
       </Box>
     );
   } else {

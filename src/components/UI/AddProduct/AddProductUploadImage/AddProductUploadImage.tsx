@@ -1,5 +1,5 @@
 // basic
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image';
 // mui
 
@@ -112,7 +112,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
           {selectedImages?.map((productImage) => (
             <Box
               key={productImage?.id}
-              sx={{ maxWidth: { xs: '200px',   sm: '300px' }, alignSelf: 'center' }}
+              sx={{ maxWidth: { xs: '200px', sm: '300px' }, alignSelf: 'center' }}
             >
               <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
             </Box>

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 
 // mui
-import { Box, Modal } from '@mui/material';
+import { Box } from '@mui/material';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -25,6 +25,7 @@ import { IProductData } from '@/types/addProductTypes';
 
 // context
 import { ImagesContext } from '@/components/Providers/images';
+import { ModalContext } from '@/components/Providers/modal';
 
 export default function AddProduct() {
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
@@ -34,6 +35,7 @@ export default function AddProduct() {
   const { data: id } = useQuery(['id'], () =>
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
+  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images));
 
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
@@ -43,6 +45,8 @@ export default function AddProduct() {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
+  const { setClickedId } = useContext(ModalContext);
+
   // urls of images. used to show the image on the screen
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
   // files that will be sent to the server
@@ -51,7 +55,6 @@ export default function AddProduct() {
   const router = useRouter();
 
   // submit the form
-  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images));
 
   if (isLoading) return <FullScreenLoader />;
 
@@ -108,7 +111,11 @@ export default function AddProduct() {
 
   const handleSubmit = () => {
     mutate(imagesToPost, {
-      onSuccess: () => router.push(Routes.myProducts),
+      onSuccess: () => {
+        setClickedId(null);
+        setSelectedImages([]);
+        router.push(Routes.myProducts);
+      },
       onError: () => router.push(Routes.error500),
     });
   };
