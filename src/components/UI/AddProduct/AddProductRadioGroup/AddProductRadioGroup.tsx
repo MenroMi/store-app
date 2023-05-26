@@ -16,14 +16,15 @@ export default function AddProductRadioGroup({
   selectedSize,
   handleSelectSize,
   sizes,
+  isAddPage
 }: IAddProductRadioGroup) {
   const theme = useTheme<Theme>();
 
   return (
     <FormControl>
-      <FormLabel htmlFor="size" sx={{ mt: 3 }}>
+      {isAddPage && <FormLabel htmlFor="size" sx={{ mt: 3 }}>
         <Typography variant="caption">Add size</Typography>
-      </FormLabel>
+      </FormLabel>}
       <RadioGroup
         value={selectedSize}
         id="size"
@@ -47,7 +48,6 @@ export default function AddProductRadioGroup({
               <Box
                 onClick={() => {
                   handleSelectSize(size.id.toString());
-                  console.log(size.id);
                 }}
                 sx={{
                   display: 'flex',

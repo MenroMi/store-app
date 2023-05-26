@@ -21,6 +21,7 @@ export interface IAddProductRadioGroup {
   selectedSize: string | number;
   handleSelectSize: (size: string) => void;
   sizes: ISizesOptionsData[];
+  isAddPage: boolean;
 }
 
 export interface IAddProductSelect {

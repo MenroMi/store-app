@@ -189,6 +189,7 @@ export default function FormAddProduct({
               handleSelectSize={handleSelectSize}
               sizes={sizes}
               selectedSize={selectedSize}
+              isAddPage={true}
             />
           </Box>
 

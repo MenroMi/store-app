@@ -1,32 +1,28 @@
 // basic
-import Link from 'next/link';
 import Image from 'next/image';
 
 // mui
-import { Link as LinkMui, Button, Box, useTheme, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Button, Box, useTheme, Theme, Typography, useMediaQuery } from '@mui/material';
 
 // components
 import AsideProfile from '../AsideProfile/AsideProfile';
-
-// styled components
-import { CustomCircleNotification } from './styles';
 
 // constants
 import { ASIDE_MENU_LINKS } from '@/constants/routes';
 import { useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';
-import theme from '@/utils/mui/theme';
 
 const AsideProfileMenu: React.FC = (): JSX.Element => {
   const {
     palette: {
       text: { secondary },
     },
+    breakpoints
   } = useTheme<Theme>();
   const { user, setUser } = useContext(UserContext);
   const {push, pathname} = useRouter()
-  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const queryDownMd = useMediaQuery<unknown>(breakpoints.down('md'));
 
   return ( queryDownMd ? <></> : 
     <Box
@@ -48,14 +44,13 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
               <>
                 <Button
                   startIcon={<Box component={Image} src={icon} alt={name} width={20} height={20} 
-          />}
+                  />}
                   disableRipple
                   key={id}
                   sx={{
                     background:`${pathname === to ?'rgba(	254,100,94,0.05)' : 'transparent'}`,
                     width: 1,
-                    // maxWidth:80,
-                    paddingLeft: '40px',
+                    pl: '40px',
                     justifyContent: 'flex-start',
                   }}
                   onClick={() => {
@@ -69,7 +64,7 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
                 >
                   <Typography variant="h6" sx={{ color: secondary}}>{name}</Typography>
                 </Button>
-                </>
+              </>
             );
           }
         )}

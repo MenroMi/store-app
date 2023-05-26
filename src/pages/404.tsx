@@ -30,7 +30,7 @@ export default function Error404() {
   };
   return (
     <Layout title="Page not found...">
-      <SplitLayout>
+      <SplitLayout isErrorPage={true}>
         <Grid container justifyContent="center" alignItems="center" height="calc(100vh - 120px)">
           <Grid item container flexDirection="row" width="60%">
             <Typography variant="h2">{mockData.title}</Typography>
