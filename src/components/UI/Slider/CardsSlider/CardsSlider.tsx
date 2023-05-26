@@ -13,6 +13,8 @@ import { Button, Typography, Link as LinkMui, Box } from '@mui/material';
 // components
 import Card from '../../Cards/Card/Card';
 import DropDownMenu from '../../Menu/DropDownMenu/DropDownMenu';
+import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
+import Slide from '../Slide/Slide';
 
 // styled components
 import { CustomEmptyStateWrapper, CustomSlider } from './CardsSliderStyles';
@@ -27,10 +29,10 @@ import noProducts from '@/assets/icons/no-products.svg';
 // types
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
 
-export const CardsSlider = ({ products }: ICardsSliderProps) => {
+export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   const sliderSettings = {
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 3,
     infinite: true,
     dots: true,
     arrows: true,
@@ -41,16 +43,6 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
       {
         breakpoint: 1200,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-          touchMove: true,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
           infinite: true,
@@ -59,7 +51,7 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 400,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -68,21 +60,28 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
     ],
   };
 
-  if (products?.length > 4) {
+  if (products?.length > 3) {
     return (
-      <CustomSlider {...sliderSettings}>
-        {products?.map((product) => (
-          <Card
-            productCategory={product.categories[0].name}
-            productName={product.name}
-            productImageSrc={product?.images[0]?.url}
-            productPrice={product.price}
-            key={product.id}
-          >
-            <DropDownMenu productID={product.id} productName="nike" />
-          </Card>
-        ))}
-      </CustomSlider>
+      <>
+        <CustomSlider {...sliderSettings}>
+          {products?.map((product) => (
+            <Slide
+              productCategory={product.categories[0].name}
+              productName={product.name}
+              productImageSrc={product?.images[0]?.url}
+              productPrice={product.price}
+              key={product.id}
+            >
+              <DropDownMenu productID={product.id} productName={product.name} />
+            </Slide>
+          ))}
+        </CustomSlider>
+
+        <ModalDeleteItem
+          deleteMessage="Are you sure to delete selected item?"
+          deleteHandler={deleteProduct}
+        />
+      </>
     );
   } else if (products?.length > 0) {
     return (
@@ -96,9 +95,13 @@ export const CardsSlider = ({ products }: ICardsSliderProps) => {
             key={product.id}
             marginRight="38px"
           >
-            <DropDownMenu productID={product.id} productName="nike" />
+            <DropDownMenu productID={product.id} productName={product.name} />
           </Card>
         ))}
+        <ModalDeleteItem
+          deleteMessage="Are you sure to delete selected item?"
+          deleteHandler={deleteProduct}
+        />
       </Box>
     );
   } else {

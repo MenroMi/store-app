@@ -10,7 +10,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { ModalContext } from '@/components/Providers/modal';
 
 // styles
-import { CustomModalBox, CustomModalWrapper } from './ModalDelteItemStyles';
+import { CustomModalBox, CustomModalWrapper } from './ModalDeleteItemStyles';
 
 // assets
 import closeIcon from '@/assets/icons/close.svg';

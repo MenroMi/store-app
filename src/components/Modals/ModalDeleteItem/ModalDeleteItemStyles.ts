@@ -12,7 +12,7 @@ export const CustomModalWrapper = styled.div(({ display }: ICustomModalWrapperPr
   height: '100vh',
   backgroundColor: 'rgba(51, 51, 51, 0.09)',
   backdropFilter: 'blur(9px)',
-  zIndex: '99',
+  zIndex: '1300',
   display: display,
   justifyContent: 'center',
   alignItems: 'center',
