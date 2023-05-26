@@ -79,7 +79,7 @@ export const NAV_BURGER_LINKS: INavItem[] = [
     role: 'user',
     name: 'Log out',
     to: Routes.search,
-  }
+  },
 ];
 
 export const ASIDE_MENU_LINKS = [
@@ -205,7 +205,7 @@ export const othersItems: MenuItemParams[] = [
   },
 ];
 
-export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api';
+export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
 
 export const ONE_MOCKED_PRODUCT = {
   id: 3,
