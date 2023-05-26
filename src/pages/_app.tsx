@@ -4,7 +4,7 @@ import Providers from '@/components/Providers';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Providers dehydrateState={pageProps.dehydrateState}>
+    <Providers dehydrateState={pageProps.dehydratedState}>
       <Component {...pageProps} />
     </Providers>
   );
