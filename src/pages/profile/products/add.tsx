@@ -28,6 +28,7 @@ import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
 
 export default function AddProduct() {
+  const [loading, setLoading] = useState<boolean>(false);
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
   const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
   const { data: categoriesData } = useQuery(['categories'], () => getDataWithField('categories'));
@@ -60,14 +61,8 @@ export default function AddProduct() {
 
   // urls of images. used to show the image on the screen
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
-  // files that will be sent to the server
-  const [imagesToPost, setImagesToPost] = useState<File[]>([]);
 
   const router = useRouter();
-
-  // submit the form
-
-  if (isLoading) return <FullScreenLoader />;
 
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,9 +72,8 @@ export default function AddProduct() {
         // create url of the image to show the image on the screen
         setSelectedImages((prevState) => [
           ...prevState,
-          { id: Date.now(), url: URL.createObjectURL(image) },
+          { id: Date.now(), url: URL.createObjectURL(image), imageFile: image },
         ]);
-        setImagesToPost((prevState) => [...prevState, image]);
       }
     }
   };
@@ -121,14 +115,21 @@ export default function AddProduct() {
   };
 
   const handleSubmit = () => {
-    mutate(imagesToPost);
+    setLoading(true)
+    if (selectedImages && selectedImages?.length > 0) {
+      const imagesToPost = selectedImages?.map((image) => image.imageFile);
+      mutate(imagesToPost, {
+        onSuccess: () => router.push(Routes.myProducts),
+        onError: () => router.push(Routes.error500),
+      });
+    }
   };
   return (
     <Layout title="Add Product">
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
         <FormAddProduct
-          isLoading={isLoading}
+          isLoading={loading  }
           sizes={sizesData}
           productName={productName}
           price={price}

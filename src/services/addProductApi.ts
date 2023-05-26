@@ -8,7 +8,7 @@ import { baseURL } from '@/constants';
 import { IProductData } from '@/types/addProductTypes';
 
 export const getDataWithField = async (endpoint: string, fieldName: string = 'name') =>
-  await getDataFromServer(`${endpoint}`, `fields=${fieldName}`).then((res) => res?.data?.data);
+  await getDataFromServer(`${endpoint}`, `?fields=${fieldName}`).then((res) => res?.data?.data);
 
 export const getUserID = async (token: string) =>
   await axios.get(`${baseURL}users/me?fields=id`, {

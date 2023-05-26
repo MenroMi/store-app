@@ -2,7 +2,7 @@ import theme from '@/utils/mui/theme';
 import { TextField, styled } from '@mui/material';
 
 export const HeaderSearchLayout = styled('div')(() => ({
-  position: 'absolute',
+  position: 'fixed',
   width: '100%',
   height: '100vh',
   zIndex: '100000',
