@@ -30,22 +30,22 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
       </Head>
       <main>
         <LayoutAuthPages>
-          <Grid container sx={{ height: 1}}>
-              <Image
-                src={logo}
-                alt={'logoIcon'}
-                style={{
-                  position: 'absolute',
-                  top: queryDownMd ? 18 : 50,
-                  left: queryDownMd ? 20 : 40,
-                  cursor: 'pointer',
-                }}
-                priority={true}
-                width={queryDownMd ? 35.31 : 40}
-                height={queryDownMd ? 26.52 : 30}
-                onClick={() => push(Routes.search)}
-              />
-            <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0, width:1}}>
+          <Grid container sx={{ height: 1 }}>
+            <Image
+              src={logo}
+              alt={'logoIcon'}
+              style={{
+                position: 'absolute',
+                top: queryDownMd ? 18 : 50,
+                left: queryDownMd ? 20 : 40,
+                cursor: 'pointer',
+              }}
+              priority={true}
+              width={queryDownMd ? 35.31 : 40}
+              height={queryDownMd ? 26.52 : 30}
+              onClick={() => push(Routes.search)}
+            />
+            <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0, width: 1 }}>
               <Grid
                 container
                 sx={{

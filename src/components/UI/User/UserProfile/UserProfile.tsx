@@ -6,6 +6,9 @@ import { Box, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 // interface
 import { IUserProfileProps } from '@/types/userProfileTypes';
+import { useContext } from 'react';
+import { UserContext } from '@/components/Providers/user';
+import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 
 export default function UserProfile({
   username,
@@ -13,6 +16,8 @@ export default function UserProfile({
   avatarSrc,
   userBonusPoints,
 }: IUserProfileProps) {
+  const { user } = useContext(UserContext);
+
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
@@ -37,18 +42,32 @@ export default function UserProfile({
           ml: queryDownSm ? 2.25 : 6,
         }}
       >
-        <Box
+        {/* <Box
           component={Image}
           src={avatarSrc}
           alt="Avatar"
           width={queryDownSm ? 60 : 120}
           height={queryDownSm ? 60 : 120}
+
+        /> */}
+        <Box
           sx={{
+            alignItems: 'center',
             border: queryDownSm ? '2px solid #ffffff' : '4px solid #ffffff',
             borderRadius: '50%',
           }}
-        />
-        <Box sx={{ mb: queryDownSm ? 0.75 : 2, ml: queryDownSm ? 1.5 : 3, alignSelf: 'end' }}>
+        >
+          <Image
+            style={{ borderRadius: '50%' }}
+            src={getProfilePhoto(user)}
+            alt="Avatar"
+            width={queryDownSm ? 60 : 120}
+            height={queryDownSm ? 60 : 120}
+            priority={true}
+          />
+        </Box>
+
+        <Box sx={{ mb: queryDownSm ? 0.75 : 3.6, ml: queryDownSm ? 1.5 : 3, alignSelf: 'end' }}>
           <Typography variant="h5">{username}</Typography>
           <Typography variant="body1">{userBonusPoints} bonus points</Typography>
         </Box>
