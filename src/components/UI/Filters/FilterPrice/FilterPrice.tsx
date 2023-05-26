@@ -12,7 +12,7 @@ import makeArray from '@/utils/filters/makeRouterQueryArray';
 const FilterPrice: React.FC = (): JSX.Element => {
   const router = useRouter();
   const [max, setMax] = useState(0);
-  const [actualAmount, setActualAmount] = useState('30');
+  const [actualAmount, setActualAmount] = useState<number>(30);
   const contextFilters = useContext(FiltersContext);
 
   const query = makeArray(router.query);
@@ -22,10 +22,10 @@ const FilterPrice: React.FC = (): JSX.Element => {
     queryFn: () => getFilteredData(query),
   });
 
-  const handleChanges = (value) => {
+  const handleChanges = (value: string | number) => {
     const regexp = /(?=(.*[a-zA-Z]))|(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])/;
 
-    if (regexp.test(value)) {
+    if (regexp.test(String(value))) {
       return;
     } else {
       setActualAmount(() => +value);
@@ -71,7 +71,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
         </FormControl>
       </Box>
       <Slider
-        onChange={(e, value) => handleChanges(value)}
+        onChange={(e, value) => handleChanges(value as number)}
         onChangeCommitted={(e) => {
           contextFilters?.isChecked(e);
         }}
