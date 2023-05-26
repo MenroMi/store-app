@@ -33,7 +33,7 @@ export default function UserMenu() {
         <Image
           style={{ borderRadius: '50%' }}
           src={getProfilePhoto(user)}
-          alt=" "
+          alt="avatar-icon"
           width={40}
           height={40}
           priority={true}
