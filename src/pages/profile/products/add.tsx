@@ -1,7 +1,13 @@
 // basic
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
-import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
+import {
+  QueryClient,
+  dehydrate,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 // mui
 import { Box } from '@mui/material';
@@ -36,7 +42,8 @@ export default function AddProduct() {
   const { data: id } = useQuery(['id'], () =>
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
-  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images), {
+
+  const { mutate } = useMutation((images: File[]) => handlePostProduct(images), {
     onSuccess: () => {
       setClickedId(null);
       setSelectedImages([]);
@@ -48,6 +55,8 @@ export default function AddProduct() {
       router.push(Routes.error500);
     },
   });
+
+  const queryClient = useQueryClient();
 
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
@@ -115,11 +124,14 @@ export default function AddProduct() {
   };
 
   const handleSubmit = () => {
-    setLoading(true)
+    setLoading(true);
     if (selectedImages && selectedImages?.length > 0) {
       const imagesToPost = selectedImages?.map((image) => image.imageFile);
       mutate(imagesToPost, {
-        onSuccess: () => router.push(Routes.myProducts),
+        onSuccess: () => {
+          queryClient.invalidateQueries(['userProducts']);
+          router.push(Routes.myProducts);
+        },
         onError: () => router.push(Routes.error500),
       });
     }
@@ -129,7 +141,7 @@ export default function AddProduct() {
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
         <FormAddProduct
-          isLoading={loading  }
+          isLoading={loading}
           sizes={sizesData}
           productName={productName}
           price={price}

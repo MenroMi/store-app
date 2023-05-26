@@ -47,7 +47,7 @@ export default function Home() {
 
   const router = useRouter();
 
-  const { data: userProducts, isLoading } = useQuery(['userProducts'], () =>
+  const { data: userProducts } = useQuery(['userProducts'], () =>
     getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
 
@@ -78,7 +78,7 @@ export default function Home() {
             avatarSrc={getProfilePhoto(user)}
             profileTopBgSrc={profileTopBg}
             userBonusPoints="1 374"
-            username={user?.username || 'Guest'}
+            username={user?.firstName || user?.username || 'Guest'}
           />
           <Box>
             <Box
