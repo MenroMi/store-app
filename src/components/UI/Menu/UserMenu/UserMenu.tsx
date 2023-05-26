@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Button,Menu,Box, MenuItem} from '@mui/material';
+import { Button, Menu, Box, MenuItem } from '@mui/material';
 import Image from 'next/image';
-import { getProfilePfoto } from '@/utils/profile/profilePhoto';
+import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 import { useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';
@@ -28,9 +28,16 @@ export default function UserMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{ borderRadius: '50%', p:'0px', maxWidth:'35px' }}
+        sx={{ borderRadius: '50%', p: '0px', maxWidth: '35px' }}
       >
-        <Image src={getProfilePfoto(user)} alt="userAavatar" width={35} height={35} priority={true} />
+        <Image
+          style={{ borderRadius: '50%' }}
+          src={getProfilePhoto(user)}
+          alt="avatar-icon"
+          width={40}
+          height={40}
+          priority={true}
+        />
       </Button>
       <CustomDropDownMenu
         id="basic-menu"

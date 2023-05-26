@@ -8,7 +8,7 @@ import { Box, Typography } from '@mui/material';
 
 // image
 import { getProfileName } from '@/utils/profile/profileName';
-import { getProfilePfoto } from '@/utils/profile/profilePhoto';
+import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 
 const AsideProfile: React.FC = (): JSX.Element => {
   const { user } = useContext(UserContext);
@@ -23,7 +23,8 @@ const AsideProfile: React.FC = (): JSX.Element => {
       }}
     >
       <Image
-        src={getProfilePfoto(user)}
+        style={{ borderRadius: '50%' }}
+        src={getProfilePhoto(user)}
         alt="Avatar"
         width={64}
         height={64}

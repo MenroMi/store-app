@@ -6,7 +6,7 @@ import { useContext } from 'react';
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Box, Grid, Typography} from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
@@ -47,27 +47,46 @@ const CardList = () => {
     contextProducts?.data
   );
   return (
-
     <CustomSearchOverlay>
       {contextProducts?.isLoading ? (
-        <FullScreenLoader/>
-      ) :
-      <>
-      {Array.isArray(products) ?
-        (<CardsGridContainer container >
-          {products.map(({ id, attributes: { name, price, images: { data: imagesData }, gender: { data: genderData } } }: AttrFromData) => (
-            <Grid item key={id}>
-            <Card
-              productCategory={genderData ? (genderData.id === 3 ? "Men's Shoes" : "Women's Shoes") : ''}
-              productImageSrc={imagesData ? (imagesData[0] ? imagesData[0].attributes.url : singInImg) : singInImg}
-              productName={name}
-              productPrice={price}
-            >
-              <DropDownMenu productName={name} productID={id} />
-            </Card>
-            </Grid>
-          ))} 
-            </CardsGridContainer>) : (<CatalogIsEmptyContainer>
+        <FullScreenLoader />
+      ) : (
+        <>
+          {Array.isArray(products) ? (
+            <CardsGridContainer container>
+              {products.map(
+                ({
+                  id,
+                  attributes: {
+                    name,
+                    price,
+                    images: { data: imagesData },
+                    gender: { data: genderData },
+                  },
+                }: AttrFromData) => (
+                  <Grid item key={id}>
+                    <Card
+                      productCategory={
+                        genderData ? (genderData.id === 3 ? "Men's Shoes" : "Women's Shoes") : ''
+                      }
+                      productImageSrc={
+                        imagesData
+                          ? imagesData[0]
+                            ? imagesData[0].attributes.url
+                            : singInImg
+                          : singInImg
+                      }
+                      productName={name}
+                      productPrice={price}
+                    >
+                      <DropDownMenu productName={name} productID={id} />
+                    </Card>
+                  </Grid>
+                )
+              )}
+            </CardsGridContainer>
+          ) : (
+            <CatalogIsEmptyContainer>
               <Box
                 component={Image}
                 src={emptyIcon}
@@ -79,13 +98,18 @@ const CardList = () => {
                   opacity: '0.1',
                 }}
               />
-              <Typography variant="h2" sx={{ opacity: '0.5', width:queryDownMd ? '250px' : '375px'}}>
+              <Typography
+                variant="h2"
+                sx={{ opacity: '0.5', width: queryDownMd ? '250px' : '375px' }}
+              >
                 Catalog is empty.
               </Typography>
-            </CatalogIsEmptyContainer>)}
-      </>}
+            </CatalogIsEmptyContainer>
+          )}
+        </>
+      )}
     </CustomSearchOverlay>
-  )
+  );
 };
 
 export default CardList;
