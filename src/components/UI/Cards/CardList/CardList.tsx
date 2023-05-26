@@ -6,6 +6,7 @@ import Router, { useRouter } from 'next/router';
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 // utils
 import makeArray from '@/utils/filters/makeRouterQueryArray';
@@ -127,23 +128,3 @@ const CardList = () => {
 };
 
 export default CardList;
-
-/***
- *  loader
- * 
- *         <Box
-          sx={{
-            display: `${isFetching && !isLoading ? 'block' : 'none'}`,
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'rgba(255,255, 255, 0.5)',
-            backdropFilter: 'blur(5px)',
-            position: 'absolute',
-            zIndex: '5000',
-            top: '0',
-            transition: '0.3s ease-in',
-          }}
-        >
-          <FullScreenLoader />
-        </Box>
- */

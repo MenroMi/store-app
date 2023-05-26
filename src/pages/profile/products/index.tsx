@@ -28,7 +28,7 @@ import { CardsSlider } from '@/components/UI/Slider/CardsSlider/CardsSlider';
 
 // constants
 import { Routes } from '@/constants';
-
+import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 // services
 import { getUserProducts } from '@/services/myProfileApi';
 import { UserContext } from '@/components/Providers/user';
@@ -45,14 +45,14 @@ export default function Home() {
 
   return (
     <Layout title="Home">
-      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 :  '38px' }}>
+      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 : '38px' }}>
         <AsideProfileMenu />
         {isLoading ? (
           <Box>Loading</Box>
         ) : (
           <Box sx={{ maxWidth: '1480px', m: '38px' }}>
             <UserProfile
-              avatarSrc={user?.avatar || noAvatar}
+              avatarSrc={getProfilePhoto(user)}
               profileTopBgSrc={profileTopBg}
               userBonusPoints="1 374"
               username={user?.username || 'Guest'}
@@ -73,7 +73,7 @@ export default function Home() {
                     <Button variant="contained" sx={{ padding: '10px 26px' }}>
                       Add product
                     </Button>
-                  </LinkMui>  
+                  </LinkMui>
                 )}
               </Box>
 
