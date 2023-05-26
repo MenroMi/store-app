@@ -6,7 +6,6 @@ import Router, { useRouter } from 'next/router';
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box, Grid, Typography } from '@mui/material';
-import { Box, Grid, Typography } from '@mui/material';
 
 // utils
 import makeArray from '@/utils/filters/makeRouterQueryArray';

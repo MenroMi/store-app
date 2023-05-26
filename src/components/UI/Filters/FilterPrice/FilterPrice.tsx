@@ -12,7 +12,7 @@ import makeArray from '@/utils/filters/makeRouterQueryArray';
 const FilterPrice: React.FC = (): JSX.Element => {
   const router = useRouter();
   const [max, setMax] = useState(0);
-  const [actualAmount, setActualAmount] = useState<number>(30);
+  const [actualAmount, setActualAmount] = useState('30');
   const contextFilters = useContext(FiltersContext);
 
   const query = makeArray(router.query);
@@ -21,6 +21,16 @@ const FilterPrice: React.FC = (): JSX.Element => {
     queryKey: ['filteredData', query],
     queryFn: () => getFilteredData(query),
   });
+
+  const handleChanges = (value) => {
+    const regexp = /(?=(.*[a-zA-Z]))|(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])/;
+
+    if (regexp.test(value)) {
+      return;
+    } else {
+      setActualAmount(() => +value);
+    }
+  };
 
   useEffect(() => {
     const maxNumber = () => {
@@ -47,9 +57,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel htmlFor="outlined-adornment-amount">Up to Amount</InputLabel>
           <OutlinedInput
-            onChange={(e) => {
-              setActualAmount(+e.target.value);
-            }}
+            onChange={(e) => handleChanges(e.target.value)}
             onKeyDown={(e) => {
               contextFilters?.isChecked(e);
             }}
@@ -63,7 +71,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
         </FormControl>
       </Box>
       <Slider
-        onChange={(e, value) => setActualAmount(() => +value)}
+        onChange={(e, value) => handleChanges(value)}
         onChangeCommitted={(e) => {
           contextFilters?.isChecked(e);
         }}
@@ -71,7 +79,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
         name="price"
         valueLabelDisplay="auto"
         aria-label="price filter"
-        value={actualAmount}
+        value={+actualAmount}
         max={max}
       />
     </Box>
