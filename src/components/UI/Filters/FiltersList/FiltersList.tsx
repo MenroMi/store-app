@@ -1,9 +1,6 @@
 // basic
 import { useContext } from 'react';
 
-// mui
-import { useTheme, Theme } from '@mui/material';
-
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
 
@@ -15,10 +12,12 @@ import FilterCheckbox from '@/components/UI/Filters/FilterCheckbox/FilterCheckbo
 import { InputsData } from '@/types/filterListTypes';
 import FilterBrand from '../FilterBrand/FilterBrand';
 import FilterPrice from '../FilterPrice/FilterPrice';
+import { useRouter } from 'next/router';
 
 // FUNCTION COMPONENT
 const FiltersList: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
+  const router = useRouter();
 
   const isInputs = (inputs: object[], label: string) => {
     switch (label) {
@@ -32,7 +31,25 @@ const FiltersList: React.FC = (): JSX.Element => {
           inputs.map((input) => {
             const { id, attributes } = input as InputsData;
 
-            return <FilterCheckbox label={label} key={id} id={id} attributes={attributes} />;
+            let checked =
+              typeof router.query[label] === 'undefined'
+                ? false
+                : router.query[label]?.includes(attributes?.name!);
+
+            return (
+              <FilterCheckbox
+                label={label}
+                key={id}
+                id={id}
+                attributes={attributes}
+                checked={checked!}
+                styles={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  mt: '15px',
+                }}
+              />
+            );
           })
         );
     }

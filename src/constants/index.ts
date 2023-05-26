@@ -29,6 +29,8 @@ export enum Routes {
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
   search = '/catalog/search',
+  forWomen = '/catalog/search?gender=women',
+  forMen = '/catalog/search?gender=men',
   settings = '/profile/settings',
 }
 
@@ -39,11 +41,11 @@ export const NAV_LINKS = [
   },
   {
     name: 'For women',
-    to: Routes.search,
+    to: Routes.forWomen,
   },
   {
     name: 'For men',
-    to: Routes.search,
+    to: Routes.forMen,
   },
 ];
 
@@ -77,7 +79,7 @@ export const NAV_BURGER_LINKS: INavItem[] = [
     role: 'user',
     name: 'Log out',
     to: Routes.search,
-  }
+  },
 ];
 
 export const ASIDE_MENU_LINKS = [
@@ -204,8 +206,6 @@ export const othersItems: MenuItemParams[] = [
 ];
 
 export const baseURL = 'https://shoes-shop-strapi.herokuapp.com/api/';
-export const uploadImageURL = 'https://shoes-shop-strapi.herokuapp.com';
-
 export const ONE_MOCKED_PRODUCT = {
   id: 3,
   productImageSrc: productImage,
