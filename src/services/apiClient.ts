@@ -6,6 +6,6 @@ const instance = axios.create({
   baseURL,
 });
 
-export const getDataFromServer = async (url: string, params: string | null = 'populate=*') => {
+export const getDataFromServer = async (url: string, params: string = 'populate=*') => {
   return await instance.get(`${url}?${params}`);
 };

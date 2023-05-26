@@ -1,6 +1,36 @@
 import { getDataFromServer } from './apiClient';
 import { AttrFromData } from '@/types/cardListTypes';
 
+export const getProducts = async (page: number) => {
+  const pagination = await getDataFromServer(
+    `/products`,
+    `pagination[page]=${page}&pagination[pageSize]=25`
+  ).then((res) => res?.data?.data);
+
+  const products = await Promise.allSettled(
+    pagination.map((product: { id: number }) => getDataFromServer(`/products/${product?.id}`))
+  ).then((results) => {
+    return results.map((result: any) => result?.value?.data?.data);
+  });
+
+  const productsEA = products.map(({ id, attributes }: AttrFromData) => {
+    const { name, images, price, gender, teamName } = attributes;
+
+    return {
+      id,
+      attributes: {
+        name,
+        images,
+        price,
+        gender,
+        teamName,
+      },
+    };
+  });
+
+  return productsEA;
+};
+
 export const getFilters = async () => {
   const endpoints = ['/genders', '/brands', '/colors'];
   const filters = await Promise.allSettled(endpoints.map((ep) => getDataFromServer(ep)));
