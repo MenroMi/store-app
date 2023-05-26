@@ -14,9 +14,6 @@ import {
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
-import { StaticImageData } from 'next/image';
-import { useShoppingCart } from '@/context/ShoppingCartContext';
-import { useContext } from 'react';
 
 const keyStr =
   'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
@@ -31,7 +28,6 @@ const Card: React.FC<ICardProps> = ({
   marginRight,
   children,
 }): JSX.Element => {
-  const { increaseCartQuantity } = useShoppingCart();
   return (
     <CustomCardWrapper marginRight={marginRight}>
       <Box sx={{ height: { sm: '380px', xs: '250px' }, overflow: 'hidden' }}>
@@ -50,7 +46,6 @@ const Card: React.FC<ICardProps> = ({
         <Typography variant="subtitle1">{`$` + productPrice}</Typography>
       </CustomTypographyWrapper>
       <Typography variant="subtitle2Small">{productCategory}</Typography>
-      <Button onClick={() => increaseCartQuantity(id!)}>Add to card</Button>
     </CustomCardWrapper>
   );
 };

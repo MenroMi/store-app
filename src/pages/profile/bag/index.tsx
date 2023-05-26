@@ -44,7 +44,6 @@ import router from 'next/router';
 import { Routes, baseURL } from '@/constants';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
-
 // interface
 // import { BagContextProvider } from '@/context/bagContext';
 import { ShoppingCartProvider, useShoppingCart } from '@/context/ShoppingCartContext';
@@ -65,12 +64,45 @@ const Bag = () => {
   const { cartItems } = useShoppingCart();
 
   const [subTotal, setSubTotal] = useState<number>(0);
+  const [prodPrice, setProdPrice] = useState<number>(0);
 
+  // async function getProductPriceById(id: number) {
+  //   let newList: any = await axios.get(`${baseURL}products/${id}`);
+  //   const productPrice: number = newList.data.data.attributes.price;
+  //   console.log(newList.data.data.attributes.price);
+  // }
+
+  useEffect(() => {
+    async function getProductPriceById(id: number) {
+      let newList: any = await axios.get(`${baseURL}products/${id}`);
+      const productPrice: number = newList.data.data.attributes.price;
+      // console.log(newList.data.data.attributes.price);
+      console.log(productPrice);
+      return productPrice;
+    }
+    // const price = getProductPriceById(498);
+    // console.log(price);
+    
+    const SUBTotal = cartItems.reduce((total, cartItem) => {
+      const item = cartItems.find((i) => i.id === cartItem.id);
+      const price = async () => getProductPriceById(item!.id);
+      const resPrice = price();
+      console.log(resPrice);
+      return total + 250 * item!.quantity!;
+    }, 0);
+    setSubTotal(SUBTotal);
+  }, [cartItems]);
 
   // useEffect(() => {
+  //   async function getProductPriceById(id: number) {
+  //     let newList: any = await axios.get(`${baseURL}products/${id}`);
+  //     const productPrice: number = newList.data.data.attributes.price;
+  //     console.log(newList.data.data.attributes.price);
+  //   }
   //   setSubTotal(
   //     cartItems.reduce((total, cartItem) => {
   //       const item = cartItems.find((i) => i.id === cartItem.id);
+  //       getProductPriceById(item!.id)
   //       return total + (item?.productPrice || 0) * cartItem.quantity;
   //     }, 0)
   //   );
@@ -88,8 +120,6 @@ const Bag = () => {
       text: { caption },
     },
   } = useTheme<Theme>();
-
-  console.log(cartItems);
 
   const handleCheckout = (): void => {
     router.push(Routes.checkout);

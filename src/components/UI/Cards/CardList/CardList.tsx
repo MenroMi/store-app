@@ -1,5 +1,5 @@
 // basic
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import Router from 'next/router';
 import { useContext } from 'react';
 
@@ -70,7 +70,7 @@ const CardList: React.FC<ICardListProps> = ({
     if (Array.isArray(products)) {
       return products.map(({ id, attributes }: AttrFromData) => {
         const { name, price, images, gender } = attributes;
-        let url;
+        let url: string | StaticImageData;
 
         if (images?.data === null) {
           url = singInImg;

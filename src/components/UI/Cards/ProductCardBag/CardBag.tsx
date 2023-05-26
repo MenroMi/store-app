@@ -64,10 +64,10 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
       setResProduct(newList.data.data);
     }
     showArrayFromStorage(item!.id);
-    async function getProductPriceById(id: number) {
-      let newList: any = await axios.get(`${baseURL}products/${id}`);
-      console.log(newList.data.data.attributes.price);
-    }
+    // async function getProductPriceById(id: number) {
+    //   let newList: any = await axios.get(`${baseURL}products/${id}`);
+    //   console.log(newList.data.data.attributes.price);
+    // }
   }, []);
 
   // console.log(resProduct);
@@ -97,6 +97,7 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
           <Box
             component={Image}
             src={singInImg}
+            priority={true}
             alt="Product"
             sx={{
               borderRadius: '6px',
@@ -104,7 +105,7 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
               maxHeight: queryUpSm ? '214px' : '101px',
             }}
           ></Box>
-          </Box>
+        </Box>
         <CustomBox
           sx={{
             flexDirection: 'column',
