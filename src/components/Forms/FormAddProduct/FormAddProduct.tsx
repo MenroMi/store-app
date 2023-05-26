@@ -66,7 +66,7 @@ export default function FormAddProduct({
                 variant="contained"
                 disabled={isLoading}
                 type="submit"
-                sx={{ padding: '10px 60px' }}
+                sx={{ padding: '10px 60px', width: '146px' }}
               >
                 {isLoading ? <ButtonLoader /> : 'Save'}
               </Button>
@@ -198,7 +198,7 @@ export default function FormAddProduct({
                 variant="contained"
                 type="submit"
                 disabled={isLoading}
-                sx={{ padding: '10px 60px' }}
+                sx={{ padding: '10px 60px', width: '146px' }}
               >
                 {isLoading ? <ButtonLoader /> : 'Save'}
               </Button>
