@@ -35,7 +35,18 @@ export default function AddProduct() {
   const { data: id } = useQuery(['id'], () =>
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
-  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images));
+  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images), {
+    onSuccess: () => {
+      setClickedId(null);
+      setSelectedImages([]);
+      router.push(Routes.myProducts);
+    },
+    onError: () => {
+      setClickedId(null);
+      setSelectedImages([]);
+      router.push(Routes.error500);
+    },
+  });
 
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
@@ -110,14 +121,7 @@ export default function AddProduct() {
   };
 
   const handleSubmit = () => {
-    mutate(imagesToPost, {
-      onSuccess: () => {
-        setClickedId(null);
-        setSelectedImages([]);
-        router.push(Routes.myProducts);
-      },
-      onError: () => router.push(Routes.error500),
-    });
+    mutate(imagesToPost);
   };
   return (
     <Layout title="Add Product">

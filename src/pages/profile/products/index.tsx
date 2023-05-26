@@ -35,6 +35,7 @@ import { deleteProduct, getUserProducts } from '@/services/myProfileApi';
 // contexts
 import { UserContext } from '@/components/Providers/user';
 import { ModalContext } from '@/components/Providers/modal';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const theme = useTheme<Theme>();
@@ -43,6 +44,8 @@ export default function Home() {
   const queryClient = useQueryClient();
 
   const { user } = useContext(UserContext);
+
+  const router = useRouter();
 
   const { data: userProducts, isLoading } = useQuery(['userProducts'], () =>
     getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
@@ -58,6 +61,8 @@ export default function Home() {
       onSuccess: () => {
         queryClient.invalidateQueries(['userProducts']);
       },
+
+      onError: () => router.push(Routes.error500),
     }
   );
 
