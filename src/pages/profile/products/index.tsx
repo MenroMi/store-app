@@ -72,35 +72,33 @@ export default function Home() {
     <Layout title="Home">
       <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 : '38px' }}>
         <AsideProfileMenu />
-        {isLoading ? (
-          <Box>Loading</Box>
-        ) : (
-          <Box sx={{ maxWidth: '1480px', m: '38px' }}>
-            <UserProfile
-              avatarSrc={getProfilePhoto(user)}
-              profileTopBgSrc={profileTopBg}
-              userBonusPoints="1 374"
-              username={user?.username || 'Guest'}
-            />
-            <Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  mt: queryDownSm ? 10 : 15,
-                  mb: 4.5,
-                }}
-              >
-                <Typography variant="h2">My products</Typography>
-                {!queryDownMd && userProducts?.data?.products?.length > 0 && (
-                  <LinkMui component={Link} href={Routes.addProduct} underline="none">
-                    <Button variant="contained" sx={{ padding: '10px 26px' }}>
-                      Add product
-                    </Button>
-                  </LinkMui>
-                )}
-              </Box>
+
+        <Box sx={{ maxWidth: '1480px', m: '38px' }}>
+          <UserProfile
+            avatarSrc={getProfilePhoto(user)}
+            profileTopBgSrc={profileTopBg}
+            userBonusPoints="1 374"
+            username={user?.username || 'Guest'}
+          />
+          <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mt: queryDownSm ? 10 : 15,
+                mb: 4.5,
+              }}
+            >
+              <Typography variant="h2">My products</Typography>
+              {!queryDownMd && userProducts?.data?.products?.length > 0 && (
+                <LinkMui component={Link} href={Routes.addProduct} underline="none">
+                  <Button variant="contained" sx={{ padding: '10px 26px' }}>
+                    Add product
+                  </Button>
+                </LinkMui>
+              )}
+            </Box>
 
             <CardsSlider
               products={userProducts?.data?.products}
