@@ -34,9 +34,6 @@ export default function UpdateProfile() {
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const token = localStorage.getItem('token')
-    ? localStorage.getItem('token')
-    : sessionStorage.getItem('token');
   const id = Number(user?.id);
   const [updateFormData, setUpdateFormData] = useState<ISettings>({
     firstName: user?.firstName ? user.firstName : '',
@@ -67,6 +64,11 @@ export default function UpdateProfile() {
     event.preventDefault();
     // console.log(user?.avatar);
     let dataToUpdate = { ...updateFormData };
+
+    const token = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : sessionStorage.getItem('token');
+
     if (avatarToPost) {
       const response = await uploadImage(avatarToPost);
       const avatarID = response.data[0].id;
@@ -92,6 +94,10 @@ export default function UpdateProfile() {
   };
 
   const deleteAvatarIcon = () => {
+    const token = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : sessionStorage.getItem('token');
+
     if (user?.avatar) {
       if (user.avatar.formats.thumbnail.url) {
         deleteMutate(

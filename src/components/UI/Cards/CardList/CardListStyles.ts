@@ -7,14 +7,13 @@ export const CustomSearchOverlay = styled('div')({
   width: '100%',
   overflowY: 'scroll',
   overflowX: 'hidden',
-  position:'relative',
+  position: 'relative',
   [theme.breakpoints.down('md')]: {
     height: 'calc(100vh - 306px)',
   },
   [theme.breakpoints.down('sm')]: {
     height: 'calc(100vh - 306px)',
   },
-
 
   '&::-webkit-scrollbar': {
     width: '20px',
@@ -57,7 +56,7 @@ export const CatalogIsEmptyContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent:'center',
+  justifyContent: 'center',
   position: 'absolute',
   left: '51%',
   top: '50%',

@@ -1,19 +1,14 @@
 // basic
 import Image from 'next/image';
-import Router from 'next/router';
-import { useContext } from 'react';
+import Router, { useRouter } from 'next/router';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box, Grid, Typography } from '@mui/material';
 
-// context
-import { FiltersContext } from '@/contexts/filtersContext';
-import { ProductsContext } from '@/contexts/productsContext';
-
 // utils
-import { dataFromActiveFilters } from '@/utils/filters/activeProducts';
+import makeArray from '@/utils/filters/makeRouterQueryArray';
 
 // image
 import singInImg from '@/assets/singInBg.png';
@@ -22,39 +17,60 @@ import emptyIcon from '@/assets/icons/empty.svg';
 // component
 import Card from '@/components/UI/Cards/Card/Card';
 import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
+import FullScreenLoader from '../../Loader/FullScreenLoader';
 
 // styled component
 import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
 
 // interface
 import { AttrFromData } from '@/types/cardListTypes';
-import FullScreenLoader from '../../Loader/FullScreenLoader';
+import { getFilteredData } from '@/services/searchApi';
+import { useQuery } from '@tanstack/react-query';
 
 const CardList = () => {
   const theme = useTheme<Theme>();
-  const contextFilter = useContext(FiltersContext);
-  const contextProducts = useContext(ProductsContext);
-  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const router = useRouter();
 
-  if (contextProducts?.isError) {
+  const query = makeArray(router.query);
+
+  const { data, isFetching, isError, isLoading } = useQuery({
+    queryKey: ['filteredData', query],
+    queryFn: () => getFilteredData(query),
+    keepPreviousData: true,
+  });
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  if (isError) {
     Router.push('/404');
     return null;
   }
 
-  let products = dataFromActiveFilters(
-    contextFilter?.activeFilters!,
-    contextFilter?.data,
-    contextProducts?.data
-  );
   return (
-    <CustomSearchOverlay>
-      {contextProducts?.isLoading ? (
-        <FullScreenLoader />
+    <CustomSearchOverlay
+      sx={{
+        overflowY: `${isFetching && !isLoading ? 'clip' : 'scroll'}`,
+      }}
+    >
+      {isFetching ? (
+        <Box
+          sx={{
+            // display: `${isFetching && !isLoading ? 'block' : 'none'}`,
+            height: '100%',
+            width: '100%',
+            backgroundColor: 'rgba(255,255, 255, 0.5)',
+            backdropFilter: 'blur(5px)',
+            position: 'absolute',
+            zIndex: '5000',
+            top: '0',
+            transition: '0.3s ease-in',
+          }}
+        >
+          <FullScreenLoader />
+        </Box>
       ) : (
         <>
-          {Array.isArray(products) ? (
+          {Array.isArray(data?.data) && data?.data.length !== 0 ? (
             <CardsGridContainer container>
-              {products.map(
+              {data?.data.map(
                 ({
                   id,
                   attributes: {

@@ -1,6 +1,6 @@
 import { AttrTypes, InputsData } from '@/types/filterListTypes';
 import { FormControlLabel, Typography, Checkbox, useTheme, Theme } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
@@ -10,11 +10,14 @@ interface IFilterCheckbox {
   label: string;
   id: number;
   attributes: AttrTypes;
+  checked: boolean;
+  styles: object;
 }
 
-const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label }) => {
+const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label, checked, styles }) => {
   const theme = useTheme<Theme>();
   const context = useContext(FiltersContext);
+  const [isClicked, setIsClicked] = useState<boolean>(checked);
 
   return (
     <FormControlLabel
@@ -28,14 +31,14 @@ const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label }) =>
           inputProps={{ datatype: label }}
           name={attributes?.name}
           id={`${id}`}
-          onClick={(e) => context?.isChecked(e)}
+          checked={isClicked}
+          onClick={(e) => {
+            setIsClicked(() => !isClicked);
+            context?.isChecked(e);
+          }}
         />
       }
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        mt: '15px',
-      }}
+      sx={styles}
     />
   );
 };
