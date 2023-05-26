@@ -18,6 +18,8 @@ export const Header = styled('header')`
 
 export const Nav = styled('nav')`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   column-gap: 44px;
 `;
 
@@ -29,7 +31,7 @@ export const NavList = styled('ul')<INavProps>`
       ? `
       flex-direction: column;
       position: absolute;
-      top: -10px;
+      top: -20px;
       right: -20px;
       width: 270px;
       height: 100vh;
@@ -52,8 +54,6 @@ export const NavListItem = styled('li')`
   line-height: 30px;
 `;
 
-export const NavListItemIcon = styled(Image)``;
-
 export const NavListLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -65,7 +65,7 @@ export const NavListLink = styled(Link)`
 
 export const Options = styled('section')`
   display: flex;
-  column-gap: 26px;
+  align-items: center;
 `;
 
 export const OptionsImage = styled(Image)`
@@ -83,6 +83,7 @@ export const Cart = styled('section')`
   [&.fieldset]: border-radius: 42px;
   display: flex;
   align-items: center;
+  gap:18px;
 `;
 
 export const Burger = styled('section')`

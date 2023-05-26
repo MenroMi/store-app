@@ -1,20 +1,18 @@
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 import { UPDATE_PROFILE_INPUTS } from '@/constants/ui';
-import { IFormData } from '@/types/formDataTypes';
-import { IFormProps } from '@/types/formTypes';
+import { ISettings } from '@/types';
+import { IUpdateFormProps } from '@/types/formTypes';
 import styled from '@emotion/styled';
 import { Button, FormControl, FormLabel, OutlinedInput, Typography } from '@mui/material';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 
 const FormMui = styled('form')({
   display: 'flex',
   flexDirection: 'column',
-  gap: '24px'
+  gap: '24px',
 });
-type Props = {};
 
-const FormSettings = ({ loading, formData = {}, setFormData, handleSubmit }: IFormProps) => {
-
+const FormSettings = ({ loading, formData, setFormData, handleSubmit }: IUpdateFormProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -22,7 +20,7 @@ const FormSettings = ({ loading, formData = {}, setFormData, handleSubmit }: IFo
     }));
   };
   return (
-    <FormMui action="" onSubmit={handleSubmit}>
+    <FormMui onSubmit={handleSubmit}>
       {UPDATE_PROFILE_INPUTS.map(({ id, placeholder, label, type }) => (
         <FormControl key={id}>
           <FormLabel htmlFor={id}>
@@ -34,22 +32,13 @@ const FormSettings = ({ loading, formData = {}, setFormData, handleSubmit }: IFo
             placeholder={placeholder}
             required
             type={type}
-            value={
-              formData[id as keyof IFormData]
-            }
+            value={formData[id as keyof ISettings]}
             onChange={handleChange}
           />
         </FormControl>
       ))}
-      <Button
-        variant="contained"
-        // disabled={loading && true}
-        type="submit"
-      >
-        {loading ? 
-          <ButtonLoader />
-          : 'Сonfirm'
-        }
+      <Button variant="contained" disabled={loading && true} type="submit">
+        {loading ? <ButtonLoader /> : 'Сonfirm'}
       </Button>
     </FormMui>
   );

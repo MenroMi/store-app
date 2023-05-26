@@ -1,5 +1,4 @@
 // basic
-import Image from 'next/image';
 import React from 'react';
 
 // mui
@@ -11,7 +10,6 @@ import {
   FormLabel,
   OutlinedInput,
   TextField,
-  Grid,
   Theme,
   useMediaQuery,
   useTheme,
@@ -35,7 +33,6 @@ export default function FormAddProduct({
   brand,
   description,
   selectedSize,
-  selectedImages,
   categoryOptions,
   price,
   sizes,
@@ -52,7 +49,7 @@ export default function FormAddProduct({
 }: IFormAddProductProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const queryDownXl = useMediaQuery<unknown>(theme.breakpoints.down('xl'));
 
   return (
     <Box sx={{ m: '38px', maxWidth: '1480px', width: '100%' }}>
@@ -97,10 +94,7 @@ export default function FormAddProduct({
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              maxWidth: {
-                xl: '436px',
-                lg: '350px',
-              },
+              maxWidth: queryDownXl ? '350px' : '436px',
             }}
           >
             <FormControl sx={{ mb: 3 }}>
@@ -194,14 +188,11 @@ export default function FormAddProduct({
           </Box>
 
           <Box sx={{ width: queryDownLg ? '100%' : '50%' }}>
-            <AddProductUploadImage
-              handleChooseImage={handleChooseImage}
-              selectedImages={selectedImages}
-            />
+            <AddProductUploadImage handleChooseImage={handleChooseImage} />
           </Box>
 
           {queryDownLg && (
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3, alignSelf: 'end' }}>
               <Button
                 variant="contained"
                 type="submit"

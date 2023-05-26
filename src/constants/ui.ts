@@ -16,28 +16,21 @@ export const homeItems: MenuItemParams[] = [
 
   export const UPDATE_PROFILE_INPUTS: IUpdateProfileInput[] = [
     {
-      id: 'name',
+      id: 'firstName',
       placeholder: 'Jane',
       label: 'Name',
       type: 'text',
     },
   
     {
-      id: 'surname',
+      id: 'lastName',
       placeholder: 'Meldrum',
       label: 'Surname',
       type: 'text',
     },
   
     {
-      id: 'email',
-      placeholder: 'email@example.com',
-      label: 'Email',
-      type: 'email',
-    },
-  
-    {
-      id: 'phone',
+      id: 'phoneNumber',
       placeholder: '(949) 354-2574',
       label: 'Phone number',
       type: 'tel',

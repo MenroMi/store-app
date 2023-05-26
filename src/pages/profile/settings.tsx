@@ -1,14 +1,9 @@
 // basic
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 
 // mui
-import {
-  Box,
-  Button,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Button, FormLabel, Input, Typography, useMediaQuery } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 
 // images
@@ -23,46 +18,121 @@ import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProf
 // styled components
 
 // constants
-import { IFormData } from '@/types/formDataTypes';
 import FormSettings from '@/components/Forms/FormSettings/FormSettings';
+import { ISettings } from '@/types';
+import { UserContext } from '@/components/Providers/user';
+import { useMutation } from '@tanstack/react-query';
+import { deleteAvatar, getUser, updateUser } from '@/services/userService';
+import { uploadImage } from '@/services/productApi';
 
 export default function UpdateProfile() {
-  const [formData, setFormData] = useState<IFormData>({
-    name: '',
-    surname: '',
-    email: '',
-    phone: ''
-  });
-
+  const { mutate: updateMutate, isLoading: updateIsLoading } = useMutation(updateUser);
+  const { mutate: deleteMutate } = useMutation(deleteAvatar);
+  const { mutate: userMutate } = useMutation(getUser);
+  const { user, setUser } = useContext(UserContext);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
+  const token = localStorage.getItem('token')
+    ? localStorage.getItem('token')
+    : sessionStorage.getItem('token');
+  const id = Number(user?.id);
+  const [updateFormData, setUpdateFormData] = useState<ISettings>({
+    firstName: user?.firstName ? user.firstName : '',
+    lastName: user?.lastName ? user.lastName : '',
+    phoneNumber: user?.phoneNumber ? user.phoneNumber : '',
+  });
+
+  const [avatarToDisplay, setAvatarToDisplay] = useState(
+    user && user?.avatar?.formats?.thumbnail?.url ? user?.avatar.formats?.thumbnail?.url : ''
+  );
+  const [avatarToPost, setAvatarToPost] = useState<File>();
+
+  const handleAvatarSetup = async (event: ChangeEvent<HTMLInputElement>) => {
+    const avatar = event.target.files?.[0] as File;
+    if (avatar) {
+      setAvatarToDisplay(URL.createObjectURL(avatar));
+      setAvatarToPost(avatar);
+    }
+  };
+
+  const invokeAvatarChoise = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { name, email,phone,surname} = formData;
-    console.log(name, email, phone, surname);
+    // console.log(user?.avatar);
+    let dataToUpdate = { ...updateFormData };
+    if (avatarToPost) {
+      const response = await uploadImage(avatarToPost);
+      const avatarID = response.data[0].id;
+      dataToUpdate = { ...updateFormData, avatar: avatarID };
+    }
+
+    updateMutate(
+      { token, id, dataToUpdate },
+      {
+        onSuccess: async () => {
+          userMutate(token, {
+            onSuccess: (data) => {
+              setUser(data);
+            },
+          });
+          console.log('Form updated successfully');
+        },
+        onError: (error) => {
+          console.log('Something went wrong: ', error);
+        },
+      }
+    );
   };
 
-  
+  const deleteAvatarIcon = () => {
+    if (user?.avatar) {
+      if (user.avatar.formats.thumbnail.url) {
+        deleteMutate(
+          { token, id: user.avatar.id },
+          {
+            onSuccess: async () => {
+              userMutate(token, {
+                onSuccess: (data) => {
+                  setUser(data);
+                  setAvatarToDisplay('');
+                },
+              });
+
+              console.log('Form updated successfully');
+            },
+          }
+        );
+      }
+    }
+  };
+
   return (
     <Layout title="Settings">
-      <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
+      <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 : '38px' }}>
         <AsideProfileMenu />
-        <Box sx={{
-          mx: queryDownMd ? 'auto' : '0', 
-          px: queryDownMd ? '20px' : '0',
-          mb:3
-          }}>
+        <Box
+          sx={{
+            mx: queryDownMd ? 'auto' : '0',
+            px: queryDownMd ? '20px' : '0',
+            mb: 3,
+          }}
+        >
           <Typography variant="h2" sx={{ mb: 4.5 }}>
             My Profile
           </Typography>
 
-          <Box sx={{ display: 'flex', alignItems: 'center'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Image
-              src={noAvatar}
+              src={avatarToDisplay ? avatarToDisplay : noAvatar}
               alt="Avatar"
-              style={{borderRadius:'50%', border:'2px solid silver'}}
+              style={{ borderRadius: '50%', border: '2px solid silver' }}
               width={queryDownMd ? 100 : 150}
               height={queryDownMd ? 100 : 150}
             />
@@ -74,38 +144,61 @@ export default function UpdateProfile() {
                 ml: queryDownMd ? '28px' : '76px',
               }}
             >
-              <Button
-                variant="outlined"
-                sx={{
-                  fontSize: queryDownMd ? '12px' : '16px',
-                  width: queryDownMd ? '117px' : '152px',
-                  height: queryDownMd ? '30px' : '40px'
-                }}
-              >
-                Change photo
-              </Button>
+              <FormLabel htmlFor="upload">
+                <Button
+                  variant="outlined"
+                  onClick={invokeAvatarChoise}
+                  sx={{
+                    fontSize: queryDownMd ? '12px' : '16px',
+                    width: queryDownMd ? '117px' : '152px',
+                    height: queryDownMd ? '30px' : '40px',
+                  }}
+                >
+                  Change photo
+                </Button>
+                <Input
+                  type="file"
+                  ref={fileInputRef}
+                  name="upload"
+                  id="upload"
+                  onChange={handleAvatarSetup}
+                  sx={{ display: 'none' }}
+                  inputProps={{
+                    accept: '.jpeg, .jpg, .png',
+                    size: 1048576,
+                  }}
+                />
+              </FormLabel>
+
               <Button
                 variant="contained"
+                onClick={deleteAvatarIcon}
                 sx={{
                   fontSize: queryDownMd ? '12px' : '16px',
                   width: queryDownMd ? '117px' : '152px',
-                  height: queryDownMd ? '30px' : '40px'
+                  height: queryDownMd ? '30px' : '40px',
                 }}
               >
                 Delete
               </Button>
             </Box>
-          </Box> 
+          </Box>
 
-          <Typography 
-          variant="body1" 
-          sx={{ 
-            mt: queryDownMd ? '12px' : 6,
-            mb: queryDownMd ? 3 : 6
-}}>
-           Welcome back! Please enter your details to log into your account.
+          <Typography
+            variant="body1"
+            sx={{
+              mt: queryDownMd ? '12px' : 6,
+              mb: queryDownMd ? 3 : 6,
+            }}
+          >
+            Welcome back! Please enter your details to log into your account.
           </Typography>
-          <FormSettings loading={false} formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />
+          <FormSettings
+            loading={updateIsLoading}
+            formData={updateFormData}
+            setFormData={setUpdateFormData}
+            handleSubmit={handleSubmit}
+          />
         </Box>
       </Box>
     </Layout>

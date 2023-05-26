@@ -24,7 +24,6 @@ const SplitLayout = ({ children, title = 'Shoes Shop', isErrorPage }: ISplitLayo
   const { pathname, push } = useRouter();
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
-  
   return (
     <>
       <Head>
@@ -32,21 +31,22 @@ const SplitLayout = ({ children, title = 'Shoes Shop', isErrorPage }: ISplitLayo
       </Head>
       <main>
         <LayoutAuthPages>
-          <Grid container sx={{ height: 1}}>
-              {!isErrorPage && <Image
-                src={logo}
-                alt={'logoIcon'}
-                style={{
-                  position: 'absolute',
-                  top: queryDownMd ? 18 : 50,
-                  left: queryDownMd ? 20 : 40,
-                  cursor: 'pointer',
-                }}
-                width={queryDownMd ? 35.31 : 40}
-                height={queryDownMd ? 26.52 : 30}
-                onClick={() => push(Routes.home)}
-              />}
-            <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0, width:1}}>
+          <Grid container sx={{ height: 1 }}>
+            {!isErrorPage && <Image
+              src={logo}
+              alt={'logoIcon'}
+              style={{
+                position: 'absolute',
+                top: queryDownMd ? 18 : 50,
+                left: queryDownMd ? 20 : 40,
+                cursor: 'pointer',
+              }}
+              priority={true}
+              width={queryDownMd ? 35.31 : 40}
+              height={queryDownMd ? 26.52 : 30}
+              onClick={() => push(Routes.search)}
+            />}
+            <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0, width: 1 }}>
               <Grid
                 container
                 sx={{

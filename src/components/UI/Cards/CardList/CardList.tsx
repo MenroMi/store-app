@@ -1,12 +1,12 @@
 // basic
 import Image from 'next/image';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useContext } from 'react';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Grid, Box, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
@@ -25,117 +25,88 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 
 // styled component
 import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
-import { ONE_MOCKED_PRODUCT } from '@/constants/mockedData';
 
 // interface
-import { ICardListProps, AttrFromData } from '@/types/cardListTypes';
-import { uploadImageURL } from '@/constants/urls';
+import { AttrFromData } from '@/types/cardListTypes';
+import FullScreenLoader from '../../Loader/FullScreenLoader';
 
-// FUNCTIONAL COMPONENT
-const CardList: React.FC<ICardListProps> = ({
-  products = [...new Array(8).fill(ONE_MOCKED_PRODUCT)],
-}): JSX.Element | null => {
+const CardList = () => {
   const theme = useTheme<Theme>();
-  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
   const contextFilter = useContext(FiltersContext);
   const contextProducts = useContext(ProductsContext);
-
-  const isVisible = (elem: JSX.Element, id: number) => {
-    return (
-      <Grid
-        key={id}
-        xl={contextFilter?.hide ? 2.3 : 3}
-        lg={contextFilter?.hide ? 3 : 4}
-        md={contextFilter?.hide ? 4 : 6}
-        sm={5}
-        xs={5.7}
-        item
-      >
-        {elem}
-      </Grid>
-    );
-  };
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
   if (contextProducts?.isError) {
     Router.push('/404');
     return null;
   }
 
-  const checkData = () => {
-    let products = dataFromActiveFilters(
-      contextFilter?.activeFilters!,
-      contextFilter?.data,
-      contextProducts?.data
-    );
-
-    if (Array.isArray(products)) {
-      return products.map(({ id, attributes }: AttrFromData) => {
-        const { name, price, images, gender } = attributes;
-        let url;
-
-        if (images?.data === null || typeof images === 'undefined') {
-          url = singInImg;
-        } else {
-          url = uploadImageURL + images?.data?.[0]?.attributes?.url;
-        }
-
-        return isVisible(
-          <Card
-            productCategory={gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
-            productImageSrc={url}
-            productName={name}
-            productPrice={price}
-          >
-            <DropDownMenu productName={name} productID={id} />
-          </Card>,
-          id
-        );
-      });
-    }
-
-    return (
-      <CatalogIsEmptyContainer>
-        <Box
-          component={Image}
-          src={emptyIcon}
-          alt="catalog is empty"
-          width={200}
-          height={200}
-          sx={{
-            opacity: '0.1',
-          }}
-        />
-        <Typography variant="h2" sx={{ opacity: '0.5' }}>
-          Catalog is empty.
-        </Typography>
-      </CatalogIsEmptyContainer>
-    );
-  };
-
+  let products = dataFromActiveFilters(
+    contextFilter?.activeFilters!,
+    contextFilter?.data,
+    contextProducts?.data
+  );
   return (
     <CustomSearchOverlay>
       {contextProducts?.isLoading ? (
-        <Box>Loading...</Box>
+        <FullScreenLoader />
       ) : (
-        <CardsGridContainer
-          container
-          columnSpacing={{
-            md: 5,
-            lg: 5,
-            xl: 7,
-          }}
-          sx={{
-            padding: `${!queryUpMd && '0 0 0 20px'}`,
-            columnGap: contextFilter?.hide && queryUpMd ? { xl: '13px' } : '',
-            rowGap: { md: '32px', xs: '16px' },
-            justifyContent: 'flex-start',
-          }}
-        >
-          {contextProducts?.isFetched &&
-            contextProducts?.data &&
-            contextFilter?.data &&
-            checkData()}
-        </CardsGridContainer>
+        <>
+          {Array.isArray(products) ? (
+            <CardsGridContainer container>
+              {products.map(
+                ({
+                  id,
+                  attributes: {
+                    name,
+                    price,
+                    images: { data: imagesData },
+                    gender: { data: genderData },
+                  },
+                }: AttrFromData) => (
+                  <Grid item key={id}>
+                    <Card
+                      productCategory={
+                        genderData ? (genderData.id === 3 ? "Men's Shoes" : "Women's Shoes") : ''
+                      }
+                      productImageSrc={
+                        imagesData
+                          ? imagesData[0]
+                            ? imagesData[0].attributes.url
+                            : singInImg
+                          : singInImg
+                      }
+                      productName={name}
+                      productPrice={price}
+                    >
+                      <DropDownMenu productName={name} productID={id} />
+                    </Card>
+                  </Grid>
+                )
+              )}
+            </CardsGridContainer>
+          ) : (
+            <CatalogIsEmptyContainer>
+              <Box
+                component={Image}
+                src={emptyIcon}
+                alt="catalog is empty"
+                width={queryDownMd ? 150 : 200}
+                height={queryDownMd ? 150 : 200}
+                priority={true}
+                sx={{
+                  opacity: '0.1',
+                }}
+              />
+              <Typography
+                variant="h2"
+                sx={{ opacity: '0.5', width: queryDownMd ? '250px' : '375px' }}
+              >
+                Catalog is empty.
+              </Typography>
+            </CatalogIsEmptyContainer>
+          )}
+        </>
       )}
     </CustomSearchOverlay>
   );

@@ -1,3 +1,5 @@
+import { IAvatar } from "./userTypes";
+
 export interface MenuItemParams {
   id: number;
   label: string;
@@ -10,4 +12,11 @@ export interface IComment {
   name: string;
   rating: number;
   location: string;
+}
+
+export interface ISettings {
+  firstName: string;
+  lastName: string;
+  phoneNumber: number | string;
+  avatar?: IAvatar | null;
 }

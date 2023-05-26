@@ -30,3 +30,8 @@ export const postProduct = (data: IProductData, token: string) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const getProduct = () => {
+  
+  // axios.get(`${baseURL}products/)
+}  

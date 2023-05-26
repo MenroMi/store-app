@@ -142,7 +142,7 @@ const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }:
           </FormControl>
         )}
       </Box>
-      {(pathname === Routes.login || pathname === Routes.register) && (
+      {pathname === Routes.login && (
         <Box
           component={'div'}
           sx={{

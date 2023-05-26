@@ -24,17 +24,23 @@ const Card: React.FC<ICardProps> = ({
 }): JSX.Element => {
   return (
     <CustomCardWrapper marginRight={marginRight}>
-      <Box sx={{ height: { sm: '380px', xs: '250px' }, overflow: 'hidden' }}>
+      <Box
+        sx={{
+          height: { sm: '380px', xs: '250px' },
+          overflow: 'hidden',
+          position: 'relative',
+        }}
+      >
         <CustomImage
           src={productImageSrc}
           alt="product template"
-          width={320}
-          height={380}
+          fill
+          priority={true}
           placeholder="blur"
           blurDataURL={blurDataURL}
         />
+        {children}
       </Box>
-      {children}
       <CustomTypographyWrapper>
         <CustomTypographyName variant="subtitle1">{productName}</CustomTypographyName>
         <Typography variant="subtitle1">{`$` + productPrice}</Typography>

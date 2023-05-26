@@ -11,7 +11,6 @@ import theme from '@/utils/mui/theme';
 // components
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants/routes';
@@ -27,7 +26,6 @@ const Registration = () => {
     confirm: '',
     checked: false,
   });
-
   const { mutate, isLoading, isError, isSuccess } = useMutation(registration);
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const {
@@ -36,16 +34,12 @@ const Registration = () => {
     },
   } = useTheme();
 
-  if (isLoading) return (
-    <FullScreenLoader />
-  )
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { email, name, confirm, password } = formData;
     if (email && password && name && confirm && password === confirm) {
-      console.log(email, password, name, confirm);
-      mutate({ username: name, email, password });
+      mutate({ username: name, email, password }, {
+      });
     }
   };
 

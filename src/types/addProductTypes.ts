@@ -12,9 +12,13 @@ export interface ISizesOptionsData {
   id: number;
 }
 
+export interface ISelectedImage {
+  url: string;
+  id: number;
+}
+
 export interface IAddProductUploadImageProps {
   handleChooseImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  selectedImages: string[];
 }
 
 export interface IAddProductRadioGroup {
@@ -45,7 +49,6 @@ export interface IFormAddProductProps {
   gendersOptions: ISelectOptionsData[];
   brandsOptions: ISelectOptionsData[];
   categoryOptions: ISelectOptionsData[];
-  selectedImages: string[];
   price: string;
   sizes: ISizesOptionsData[];
   isLoading: boolean;
@@ -56,7 +59,7 @@ export interface IFormAddProductProps {
   setGender: (gender: string) => void;
   setBrand: (brand: string) => void;
   setDescription: (desc: string) => void;
-  handleSubmit: (images?: any) => void;
+  handleSubmit: () => void;
   handleSelectSize: (size: string) => void;
   handleChooseImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

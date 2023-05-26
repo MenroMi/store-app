@@ -122,9 +122,17 @@ const SignComments = () => {
                     alignItems: 'center',
                     pl: '11px',
                     cursor: 'pointer',
+                    visibility: offset === 0 ? 'hidden' : 'visible',
                   }}
                 >
-                  <Image src={left} alt={'arrowLeft'} />
+                  <Image
+                    src={left}
+                    alt={'arrowLeft'}
+                    priority={true}
+                    width={10}
+                    height={19}
+                    style={{}}
+                  />
                 </Box>
                 <Box
                   component={'div'}
@@ -138,9 +146,17 @@ const SignComments = () => {
                     alignItems: 'center',
                     pl: '13px',
                     cursor: 'pointer',
+                    visibility:
+                      offset === commentWidth * (comments.length - 1) ? 'hidden' : 'visible',
                   }}
                 >
-                  <Image src={right} alt={'arrowRight'} />
+                  <Image 
+                  src={right} 
+                  alt={'arrowRight'} 
+                  priority={true} 
+                  width={10} 
+                  height={19} 
+                  />
                 </Box>
               </Box>
             </Box>

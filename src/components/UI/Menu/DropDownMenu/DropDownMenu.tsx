@@ -43,7 +43,10 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
     return items.map(({ id, label, method }): JSX.Element => {
       if (label === 'Add to Cart') {
         return (
-          <MenuItem key={id} onClick={() => contextStorage?.addUniqueID(productName, productID)}>
+          <MenuItem key={id} onClick={() => {
+            contextStorage?.addUniqueID(productName, productID)
+            setAnchorElement(null)
+          }}>
             {label}
           </MenuItem>
         );

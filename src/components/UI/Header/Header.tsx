@@ -3,14 +3,14 @@ import * as styles from './styles';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Button, InputAdornment, Typography, useTheme, Theme } from '@mui/material';
+import { Box, Button, InputAdornment, Typography, useTheme, Theme, useMediaQuery, } from '@mui/material';
 
 import { Routes } from '@/constants/routes';
 
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 import CartIcon from '@/assets/icons/bag.svg';
-import Profile from '@/assets/icons/profile.svg';
+import leftBurgerSetting from '@/assets/icons/leftBurgerSetting.svg';
 
 import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
@@ -22,17 +22,20 @@ import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
 import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
+import UserMenu from '../Menu/UserMenu/UserMenu';
+import SearchHeader from '../Search/SearchHeader/SearchHeader';
+import theme from '@/utils/mui/theme';
 
 export default function Header() {
-  const [isSearchClicled, setIsSearchClicked] = useState(false);
-  const [isBurgerClicled, setIsBurgerClicked] = useState(false);
+  const [isBurgerClicled, setIsBurgerClicked] = useState<boolean>(false);
+  const [searchOpen, setSearchOpen] = useState<boolean>(false);
+    const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+    const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   const { user, setUser } = useContext(UserContext);
 
   const contextStorage = useContext(StorageContext);
-  const { push } = useRouter();
-
-  const nav_burger_links = user ? NAV_BURGER_LINKS.slice(3) : NAV_BURGER_LINKS.slice(0, 3);
+  const { push, pathname } = useRouter();
 
   const logOut = (e: React.MouseEvent<HTMLElement>) => {
     if (e.currentTarget.textContent === 'Log Out') {
@@ -41,6 +44,7 @@ export default function Header() {
       sessionStorage.removeItem('token');
     }
   };
+
   /**
    *
    * @param item navigation item
@@ -84,173 +88,194 @@ export default function Header() {
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
-      <styles.Nav>
-        <Link href={user ? Routes.home : Routes.search}>
-          <Image src={Logo} alt="logo" />
-        </Link>
-        <styles.NavList
-          burger={false}
-          sx={{
-            display: {
-              md: 'flex',
-              xs: 'none',
-            },
-          }}
-        >
-          {NAV_LINKS.map((item, index) => (
-            <styles.NavListItem key={index}>
-              <styles.NavListLink
-                href={dynamicParams(item, 'Home', Routes.home, Routes.search, 'link')!}
-              >
-                {item.name}
-              </styles.NavListLink>
-            </styles.NavListItem>
-          ))}
-        </styles.NavList>
-      </styles.Nav>
-      <styles.Options
-        sx={{
-          columnGap: {
-            md: '26px',
-            xs: '22px',
-          },
-        }}
-      >
-        <styles.SearchBar
-          sx={{
-            '& fieldset': {
-              sm: { border: '1px solid #494949' },
-              xs: { border: `${isSearchClicled ? '1px solid #494949' : 'none'} ` },
-            },
-            height: {
-              lg: '48px',
-              sm: '40px',
-              xs: '25px',
-            },
-            width: {
-              lg: '320px',
-              md: '250px',
-              sm: '200px',
-              xs: `${isSearchClicled ? '150px' : '25px'} `,
-            },
-          }}
-          id="search"
-          type="search"
-          placeholder="search"
-          size="small"
-          InputProps={{
-            style: {
-              height: '100%',
-            },
-            startAdornment: (
-              <InputAdornment position="start">
-                <Image
-                  width={22}
-                  onClick={() => setIsSearchClicked((prev) => !prev)}
-                  src={SearchIcon}
-                  alt="search-icon"
-                />
-              </InputAdornment>
-            ),
-            autoComplete: 'off',
-          }}
-        />
-        <styles.Cart>
-          <Link href={Routes.bag}>
-            <Box sx={{ position: 'relative' }}>
-              <Image width={22} src={CartIcon} alt="cart-icon" />
-              <Box
-                bgcolor={main}
-                sx={{
-                  display: `${contextStorage?.storageLength === 0 ? 'none' : 'block'}`,
-                  position: 'absolute',
-                  top: '-5px',
-                  right: '-10px',
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: '50%',
-                }}
-              >
-                <Box
-                  sx={{
-                    color: 'white',
-                    position: 'absolute',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                  }}
-                >
-                  {contextStorage?.storageLength}
-                </Box>
-              </Box>
-            </Box>
-          </Link>
-        </styles.Cart>
-
-        <styles.Burger
-          sx={{
-            display: {
-              md: 'none',
-              xs: 'flex',
-            },
-          }}
-        >
-          <styles.OptionsImage
-            onClick={() => setIsBurgerClicked((prev) => !prev)}
-            width={22}
-            src={isBurgerClicled ? CloseIcon : BurgerIcon}
-            alt="burger-icon"
-          />
-          {isBurgerClicled && (
-            <styles.NavList
+      {searchOpen ? (
+        <SearchHeader setSearchOpen={setSearchOpen} />
+      ) : (
+        <>
+          <styles.Nav>
+            <Link href={user ? Routes.myProducts : Routes.search}>
+              <Image src={Logo} alt="logo" priority={true} width={40} height={30} />
+            </Link>
+            <styles.NavListLink
+              href={user ? Routes.myProducts : Routes.search}
               sx={{
                 display: {
-                  lg: 'none',
+                  md: 'flex',
+                  xs: 'none',
+                },
+              }}
+            >
+              <Typography variant="h6">Products</Typography>
+            </styles.NavListLink>
+          </styles.Nav>
+          <styles.Options
+            sx={{
+              columnGap: { md: '40px', xs: 3 },
+            }}
+          >
+            {!user && (
+              <Button
+                variant="outlined"
+                sx={{
+                  maxWidth: '145px',
+                  width: 1,
+                  height: '48px',
+                  display: {
+                    md: 'flex',
+                    xs: 'none',
+                  },
+                }}
+                onClick={() => push(Routes.login)}
+              >
+                Sign in
+              </Button>
+            )}
+            <Box
+             sx={{
+                display: {
+                  sm: 'flex',
+                  xs: 'none',
+                },
+              }}
+              onClick={() => {
+                setSearchOpen(true);
+              }}
+            >
+              <styles.SearchBar
+                sx={{
+                  '& fieldset': {
+                    sm: { border: '1px solid #494949' },
+                    xs: { border: 'none' },
+                  },
+                  height: {
+                    lg: '48px',
+                    sm: '40px',
+                    xs: '25px',
+                  },
+                  width: {
+                    lg: '320px',
+                    md: '250px',
+                    sm: '200px',
+                    xs: '25px',
+                  },
+                }}
+                disabled
+                type="search"
+                placeholder="search"
+                size="small"
+                InputProps={{
+                  style: {
+                    height: '100%',
+                  },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Image
+                        width={22}
+                        src={SearchIcon}
+                        alt="search-icon"
+                      />
+                    </InputAdornment>
+                  ),
+                  autoComplete: 'off',
+                }}
+              />
+            </Box>
+            <styles.Cart>
+              <Link href={Routes.bag} >
+                <Box sx={{ position: 'relative', pt: '2px' }}>
+                  <Image width={22} height={24} priority={true} src={CartIcon} alt="cart-icon" />
+                  <Box
+                    bgcolor={main}
+                    sx={{
+                      display: `${contextStorage?.storageLength === 0 ? 'none' : 'block'}`,
+                      position: 'absolute',
+                      top: '-5px',
+                      right: '-10px',
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        color: 'white',
+                        position: 'absolute',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                      }}
+                    >
+                      {contextStorage?.storageLength}
+                    </Box>
+                  </Box>
+                </Box>
+              </Link>
+             {queryDownSm &&  <Image
+                        width={22}
+                        onClick={() => setSearchOpen(true)}
+                        src={SearchIcon}
+                        alt="search-icon"
+                      />}
+              { !queryDownMd && user && <UserMenu />}
+            </styles.Cart>
+            <styles.Burger
+              sx={{
+                display: {
+                  md: 'none',
                   xs: 'flex',
                 },
               }}
-              burger
             >
-              {user && <AsideProfile />}
-              {nav_burger_links.map((item, index) => (
-                <styles.NavListItem key={index} onClick={logOut}>
-                  <styles.NavListItemIcon src={item.icon} alt="menu-icon" />
-                  <styles.NavListLink
-                    href={
-                      dynamicParams(
-                        item,
-                        'Home',
-                        Routes.home,
-                        user ? Routes.home : Routes.search,
-                        'link'
-                      )!
-                    }
-                    onClick={() => setIsBurgerClicked(true)}
-                  >
-                    {dynamicParams(item, 'Log In', 'Log Out', 'Log In', 'name')}
-                  </styles.NavListLink>
-                </styles.NavListItem>
-              ))}
-            </styles.NavList>
-          )}
-        </styles.Burger>
-        {!user && (
-          <Button
-            variant="text"
-            sx={{
-              display: {
-                md: 'flex',
-                xs: 'none',
-              },
-            }}
-            onClick={() => push(Routes.login)}
-          >
-            <Image src={Profile} alt={'LogIn'} width={23} height={23} />
-            <Typography variant="subtitle2" sx={{ pl: '4px' }}>
-              Log in
-            </Typography>
-          </Button>
-        )}
-      </styles.Options>
+              <styles.OptionsImage
+                onClick={() => setIsBurgerClicked((prev) => !prev)}
+                width={22}
+                src={isBurgerClicled ? CloseIcon : BurgerIcon}
+                alt="burger-icon"
+                priority={true}
+              />
+              {isBurgerClicled && (
+                <styles.NavList
+                  sx={{
+                    display: {
+                      lg: 'none',
+                      xs: 'flex',
+                    },
+                  }}
+                  burger
+                >
+                  <AsideProfile />
+                  {NAV_BURGER_LINKS.filter(
+                    (el) => el.role && el.role.includes(user ? 'user' : 'guest')
+                  ).map(({ icon, role, name, to }) => (
+                    <styles.NavListItem
+                      key={name}
+                      onClick={async () => {
+                        await push(to);
+                        setIsBurgerClicked(false);
+                        if (name === 'Log out') {
+                          setUser(null);
+                          localStorage.removeItem('token');
+                          sessionStorage.removeItem('token');
+                        }
+                      }}
+                    >
+                      <Image
+                        src={
+                          pathname === to || (!user && name === 'Home') ? leftBurgerSetting : icon
+                        }
+                        alt="menu-icon"
+                        width={20}
+                        height={20}
+                        priority={true}
+                      />
+                      <Typography variant="h6">{name}</Typography>
+                    </styles.NavListItem>
+                  ))}
+                </styles.NavList>
+              )}
+            </styles.Burger>
+          </styles.Options>
+        </>
+      )}
     </styles.Header>
   );
 }
