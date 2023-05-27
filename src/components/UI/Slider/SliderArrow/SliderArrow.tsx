@@ -18,6 +18,7 @@ interface ISliderArrowProps {
 export default function SliderArrow({ className, style, onClick, next = true }: ISliderArrowProps) {
   const theme = useTheme<Theme>();
   const queryDownXl = useMediaQuery<unknown>(theme.breakpoints.down('xl'));
+
   return (
     <Image
       src={next ? rightArrow : leftArrow}

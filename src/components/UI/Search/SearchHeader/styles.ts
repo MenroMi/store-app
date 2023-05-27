@@ -12,7 +12,9 @@ export const HeaderSearchLayout = styled('div')(() => ({
 }));
 
 export const HeaderSearchContainer = styled('div')(() => ({
-  minHeight: '420px',
+  maxHeight: '500px',
+  height: '100%',
+
   width: '100%',
   background: '#fff',
   padding: '45px 60px 20px 40px',
@@ -23,6 +25,7 @@ export const HeaderSearchContainer = styled('div')(() => ({
   },
 }));
 export const HeaderSearchDiv = styled('div')(() => ({
+  position: 'relative',
   width: '100%',
   height: '79px',
   display: 'flex',
@@ -45,15 +48,15 @@ export const HeaderSearch = styled(TextField)(() => ({
     lineHeight: '29px',
 
     [theme.breakpoints.down('sm')]: {
-    fontSize: '10px',
-    lineHeight: '12px',
-  },
+      fontSize: '10px',
+      lineHeight: '12px',
+    },
   },
   height: '79px',
   width: '100%',
   maxWidth: '1070px',
   [theme.breakpoints.down('sm')]: {
-      height: '25px',
+    height: '25px',
   },
 }));
 

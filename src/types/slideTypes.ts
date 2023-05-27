@@ -9,5 +9,5 @@ export interface ISlideProps {
   productName: string;
   productPrice: number;
   marginRight?: string | number;
-  children: JSX.Element;
+  children?: JSX.Element;
 }
