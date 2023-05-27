@@ -24,7 +24,7 @@ export default function SliderArrow({ className, style, onClick, next = true }: 
       src={next ? rightArrow : leftArrow}
       alt={next ? 'Next' : 'Previous'}
       className={className}
-      style={{ ...style, display: 'block', right: `${next && '0'}` }}
+      style={{ ...style, display: 'block' }}
       onClick={onClick}
     />
   );

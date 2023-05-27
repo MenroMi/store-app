@@ -11,8 +11,20 @@ export const SearchSlider = styled(Slider)(() => ({
     height: '280px',
   },
 
+  '& .slick-arrow.slick-next': {
+    right: '-25px',
+  },
+
+  [theme.breakpoints.down('lg')]: {
+    maxWidth: '100%',
+  },
+
   [theme.breakpoints.down('sm')]: {
-    maxWidth: '400px',
+    margin: '0 0 0 20px',
+    '& .slick-list': {
+      height: '250px',
+    },
+    maxWidth: '300px',
   },
 
   [theme.breakpoints.down(400)]: {

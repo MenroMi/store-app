@@ -23,6 +23,7 @@ import FullScreenLoader from '../../Loader/FullScreenLoader';
 import { getSearchProducts } from '@/services/searchApi';
 import { useQuery } from '@tanstack/react-query';
 import SearchHeaderSlider from '../../Slider/SearchSlider/SearchHeaderSlider';
+import { CustomTypographyName, CustomTypographyWrapper } from '../../Cards/Card/CardStyles';
 
 interface ISearchHeaderProps {
   setSearchOpen: Dispatch<SetStateAction<boolean>>;
@@ -130,7 +131,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
               ) : (
                 <SearchHeaderSlider products={data} />
               )}
-              <Box sx={{ maxWidth: '500px', width: '100%' }}>
+              <Box sx={{ maxWidth: '500px', width: '100%', display: { lg: 'block', xs: 'none' } }}>
                 <Typography variant="h5" sx={{ color: palette.text.primary }}>
                   Popular Search Terms
                 </Typography>
@@ -141,19 +142,20 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                   }}
                 >
                   {popular.map((search) => (
-                    <Typography
+                    <CustomTypographyName
                       variant="subtitle1"
                       key={search}
                       sx={{
                         cursor: 'pointer',
                         '&:hover': { color: palette.primary.main },
+                        fontSize: { xl: '28px', md: '20px' },
                       }}
                       onClick={() => {
                         console.log(search);
                       }}
                     >
                       {search}
-                    </Typography>
+                    </CustomTypographyName>
                   ))}
                 </Box>
               </Box>

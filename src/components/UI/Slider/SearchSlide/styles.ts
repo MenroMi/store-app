@@ -49,12 +49,17 @@ export const CustomSearchSlideWrapper = styled('div')({
       },
     },
   },
+
+  [theme.breakpoints.down('sm')]: {
+    maxHeight: '150px',
+    maxWidth: '170px',
+  },
 });
 
-export const CustomSearchSlide = styled('div')({
+export const CustomSearchSlide = styled('div')(({ theme }) => ({
   width: '100%',
   overflow: 'hidden',
   position: 'relative',
   mr: '10px',
   mb: '10px',
-});
+}));

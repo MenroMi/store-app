@@ -10,7 +10,6 @@ import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
-import PrimaryButton from '../../Buttons/PrimaryButton/PrimaryButton';
 
 // FUNCTIONAL COMPONENT
 const SearchSlide: React.FC<ISlideProps> = ({
@@ -24,7 +23,7 @@ const SearchSlide: React.FC<ISlideProps> = ({
     <CustomSearchSlideWrapper>
       <CustomSearchSlide
         sx={{
-          height: { md: '200px', sm: '150px', xs: '100px' },
+          height: { sm: '200px', xs: '200px' },
         }}
       >
         <CustomImage
@@ -34,6 +33,7 @@ const SearchSlide: React.FC<ISlideProps> = ({
           priority={true}
           placeholder="blur"
           blurDataURL={keyStr}
+          sx={{ objectPosition: 'bottom' }}
         />
         {children}
       </CustomSearchSlide>

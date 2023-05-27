@@ -215,14 +215,31 @@ export const ONE_MOCKED_PRODUCT = {
 };
 
 export const searchSliderOptions = {
-  slidesToShow: 3.95,
-  slidesToScroll: 1,
+  slidesToShow: 4.7,
+  slidesToScroll: 2,
   infinite: false,
   arrows: true,
   touchMove: false,
   responsive: [
     {
+      breakpoint: 1920,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        touchMove: true,
+      },
+    },
+    {
       breakpoint: 1600,
+      settings: {
+        slidesToShow: 3.5,
+        slidesToScroll: 1,
+        touchMove: true,
+      },
+    },
+
+    {
+      breakpoint: 1300,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,
@@ -232,16 +249,9 @@ export const searchSliderOptions = {
     {
       breakpoint: 1200,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 4,
         slidesToScroll: 2,
         touchMove: true,
-      },
-    },
-    {
-      breakpoint: 400,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
       },
     },
   ],
