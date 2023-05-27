@@ -27,5 +27,6 @@ export interface AttrFromData {
     images: ImageAttrData;
     gender: GenderAttrData;
     teamName: string;
+    categories?: string[] | string;
   };
 }
