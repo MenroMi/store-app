@@ -33,7 +33,7 @@ const CardList = () => {
 
   const query = makeArray(router.query);
 
-  const { data, isFetching, isError, isLoading } = useQuery({
+  const { data, isFetching, isError, isRefetching } = useQuery({
     queryKey: ['filteredData', query],
     queryFn: () => getFilteredData(query),
     keepPreviousData: true,
@@ -47,7 +47,7 @@ const CardList = () => {
   return (
     <CustomSearchOverlay
       sx={{
-        overflowY: `${isFetching && !isLoading ? 'clip' : 'scroll'}`,
+        overflowY: `${isFetching ? 'clip' : 'scroll'}`,
       }}
     >
       {isFetching ? (

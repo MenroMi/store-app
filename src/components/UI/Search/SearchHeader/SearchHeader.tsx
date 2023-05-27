@@ -21,6 +21,8 @@ import {
   HeaderSearchLayout,
 } from './styled';
 import FullScreenLoader from '../../Loader/FullScreenLoader';
+import { getSearchProducts } from '@/services/searchApi';
+import { useQuery } from '@tanstack/react-query';
 
 interface ISearchHeaderProps {
   setSearchOpen: Dispatch<SetStateAction<boolean>>;
@@ -31,32 +33,20 @@ const PopularSearch = ['Nike Air Force 1 LV8', 'Nike Air Force 1', `Nike Air For
 const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const [popular, setPopular] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false)
   const { palette } = useTheme();
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
-  
+  const { data, isFetched, isLoading, isError, error, isFetching } = useQuery({
+    queryKey: ['searchData', inputValue],
+    queryFn: () => getSearchProducts(inputValue),
+  });
+
   useEffect(() => {
-    let timerId: NodeJS.Timeout;
-
-    const handleSearch = () => {
-      setLoading(true);
-      console.log('your logic', inputValue);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    }
-
-    if (inputValue.replace(/\s/g, '')){
-    timerId = setTimeout(handleSearch, 1500)
-  }
-  return () => {clearTimeout(timerId)}
-  }, [inputValue]);
-
-  useEffect(() =>{
     setPopular(PopularSearch);
-  },[popular])
+  }, [popular]);
+
+  console.log(data);
 
   return (
     <HeaderSearchLayout>
@@ -83,7 +73,9 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
             placeholder="Search"
             size="small"
             value={inputValue}
-            onChange={(event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setInputValue(event.target.value);
+            }}
             autoFocus
             InputProps={{
               style: {
@@ -116,45 +108,73 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
             onClick={() => setSearchOpen(false)}
           />
         </HeaderSearchDiv>
-        {loading ? 
-        <Box sx={{height:'300px', position:'relative'}}>
-          <FullScreenLoader/> 
+        {typeof data === 'undefined' ? (
+          <Box sx={{ height: '300px', position: 'relative' }}>
+            <FullScreenLoader />
           </Box>
-          : <>
-        <HeaderDiv>
-          <Typography variant="h5" sx={{ color: palette.text.primary }}>
-            Popular Search Terms
-          </Typography>
-          <Box
-            sx={{
-              mt: queryDownSm ? 1 : 3,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: queryDownSm ? 1.5 : 3,
-            }}
-          >
-            {popular.map((search) => (
-              <Typography
-                variant="subtitle1"
-                key={search}
-                sx={{
-                  cursor: 'pointer',
-                  '&:hover': { color: palette.primary.main },
-                }}
-                onClick={() => {
-                  console.log(search);
-                }}
-              >
-                {search}
+        ) : (
+          <>
+            <HeaderDiv>
+              <Typography variant="h5" sx={{ color: palette.text.primary }}>
+                Popular Search Terms
               </Typography>
-            ))}
-          </Box>
-        </HeaderDiv>
-        <HeaderDiv>Search Answer</HeaderDiv>
-        </>}
+              <Box
+                sx={{
+                  mt: queryDownSm ? 1 : 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: queryDownSm ? 1.5 : 3,
+                }}
+              ></Box>
+            </HeaderDiv>
+            <HeaderDiv>Search Answer</HeaderDiv>
+          </>
+        )}
       </HeaderSearchContainer>
     </HeaderSearchLayout>
   );
 };
 
 export default SearchHeader;
+
+/**
+ * 
+ * 
+ *   // useEffect(() => {
+  //   let timerId: NodeJS.Timeout;
+
+  //   const handleSearch = () => {
+  //     setLoading(true);
+  //     console.log('your logic', inputValue);
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, 2000);
+  //   };
+
+  //   if (inputValue.replace(/\s/g, '')) {
+  //     timerId = setTimeout(handleSearch, 1500);
+  //   }
+  //   return () => {
+  //     clearTimeout(timerId);
+  //   };
+  // }, [inputValue]);
+ */
+
+/**
+   * 
+   *                 {popular.map((search) => (
+                  <Typography
+                    variant="subtitle1"
+                    key={search}
+                    sx={{
+                      cursor: 'pointer',
+                      '&:hover': { color: palette.primary.main },
+                    }}
+                    onClick={() => {
+                      console.log(search);
+                    }}
+                  >
+                    {search}
+                  </Typography>
+                ))}
+   */

@@ -1,20 +1,15 @@
 import { getDataFromServer } from './apiClient';
 import { AttrFromData } from '@/types/cardListTypes';
 
-export const getProducts = async (page: number) => {
-  const pagination = await getDataFromServer(
-    `/products`,
-    `pagination[page]=${page}&pagination[pageSize]=25`
-  ).then((res) => res?.data?.data);
+export const getSearchProducts = async (value: string) => {
+  let url: string = '/products?populate=*&';
 
-  const products = await Promise.allSettled(
-    pagination.map((product: { id: number }) => getDataFromServer(`/products/${product?.id}`))
-  ).then((results) => {
-    return results.map((result: any) => result?.value?.data?.data);
-  });
+  const allProducts = await getDataFromServer(url, `filters[name][$containsi]=${value}`).then(
+    (res) => res.data.data
+  );
 
-  const productsEA = products.map(({ id, attributes }: AttrFromData) => {
-    const { name, images, price, gender, teamName } = attributes;
+  const productsEA = allProducts.map(({ id, attributes }: AttrFromData) => {
+    const { name, images, price, gender, teamName, categories } = attributes;
 
     return {
       id,
@@ -24,6 +19,7 @@ export const getProducts = async (page: number) => {
         price,
         gender,
         teamName,
+        categories,
       },
     };
   });
