@@ -8,7 +8,7 @@ export const SearchSlider = styled(Slider)(() => ({
   maxWidth: '65%',
 
   '& .slick-list': {
-    height: '260px',
+    height: '280px',
   },
 
   [theme.breakpoints.down('sm')]: {

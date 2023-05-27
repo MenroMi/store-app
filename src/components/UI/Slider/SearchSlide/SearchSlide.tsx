@@ -1,5 +1,5 @@
 // mui
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 // constants
 import { keyStr } from '@/constants';
@@ -10,6 +10,7 @@ import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
+import PrimaryButton from '../../Buttons/PrimaryButton/PrimaryButton';
 
 // FUNCTIONAL COMPONENT
 const SearchSlide: React.FC<ISlideProps> = ({
@@ -21,7 +22,11 @@ const SearchSlide: React.FC<ISlideProps> = ({
 }): JSX.Element => {
   return (
     <CustomSearchSlideWrapper>
-      <CustomSearchSlide sx={{ height: { md: '200px', sm: '150px', xs: '100px' } }}>
+      <CustomSearchSlide
+        sx={{
+          height: { md: '200px', sm: '150px', xs: '100px' },
+        }}
+      >
         <CustomImage
           src={productImageSrc}
           alt="product template"
@@ -39,6 +44,8 @@ const SearchSlide: React.FC<ISlideProps> = ({
           <CustomTypographyName variant="subtitle2Small">{'$' + productPrice}</CustomTypographyName>
         </Box>
       </Box>
+      <Button>See more</Button>
+      {/* redirect button to single page product */}
     </CustomSearchSlideWrapper>
   );
 };
