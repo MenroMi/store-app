@@ -12,7 +12,7 @@ import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 import { ISlideProps } from '@/types/slideTypes';
 
 // FUNCTIONAL COMPONENT
-const SearchSlide: React.FC<ISlideProps> = ({
+const SearchSlideDesktop: React.FC<ISlideProps> = ({
   productCategory,
   productImageSrc,
   productName,
@@ -50,4 +50,4 @@ const SearchSlide: React.FC<ISlideProps> = ({
   );
 };
 
-export default SearchSlide;
+export default SearchSlideDesktop;

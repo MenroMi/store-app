@@ -214,7 +214,7 @@ export const ONE_MOCKED_PRODUCT = {
   productCategory: "Women's shoes",
 };
 
-export const searchSliderOptions = {
+export const searchSliderOptionsOnDesktop = {
   slidesToShow: 4.7,
   slidesToScroll: 2,
   infinite: false,
@@ -255,6 +255,15 @@ export const searchSliderOptions = {
       },
     },
   ],
+};
+
+export const searchSliderOptionsOnMobile = {
+  arrow: true,
+  slidesToShow: 3.05,
+  slidesToScroll: 3,
+  vertical: true,
+  verticalSwiping: true,
+  infinite: false,
 };
 
 export const keyStr =

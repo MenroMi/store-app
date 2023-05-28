@@ -1,17 +1,31 @@
+// basic
 import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
-import {
-  Theme,
-  useMediaQuery,
-  useTheme,
-  InputAdornment,
-  Box,
-  Typography,
-  Divider,
-} from '@mui/material';
 import Image from 'next/image';
+
+// services
+import { getSearchProducts } from '@/services/searchApi';
+
+// rq
+import { useQuery } from '@tanstack/react-query';
+
+// mui
+import { Theme, useMediaQuery, useTheme, InputAdornment, Box, Typography } from '@mui/material';
+
+// plugins
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+// components
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
+import SearchSliderMobile from '@/components/UI/Slider/SearchSliderMobile/SearchSliderMobile/SearchSliderMobile';
+import SearchSliderDesktop from '@/components/UI/Slider/SearchSliderDesktop/SearchSliderDesktop/SearchSliderDesktop';
+
+// images
 import logo from '@/assets/icons/logo.svg';
 import close from '@/assets/icons/close.svg';
 import search from '@/assets/icons/search.svg';
+
+// styled components
 import {
   HeaderDiv,
   HeaderSearch,
@@ -19,16 +33,18 @@ import {
   HeaderSearchDiv,
   HeaderSearchLayout,
 } from './styles';
-import FullScreenLoader from '../../Loader/FullScreenLoader';
-import { getSearchProducts } from '@/services/searchApi';
-import { useQuery } from '@tanstack/react-query';
-import SearchHeaderSlider from '../../Slider/SearchSlider/SearchHeaderSlider';
-import { CustomTypographyName, CustomTypographyWrapper } from '../../Cards/Card/CardStyles';
+import { CustomTypographyName } from '../../Cards/Card/CardStyles';
+import { AttrFromData } from '@/types/cardListTypes';
 
+// interface
 interface ISearchHeaderProps {
   setSearchOpen: Dispatch<SetStateAction<boolean>>;
 }
+interface ISearchViewProps {
+  products: AttrFromData[];
+}
 
+// mock data
 const PopularSearch = ['Nike Air Force 1 LV8', 'Nike Air Force 1', `Nike Air Force 1 '07 High'`];
 
 const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
@@ -37,8 +53,9 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const { palette } = useTheme();
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
+  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
 
-  const { data, isFetched, isLoading, isError, error, isFetching } = useQuery({
+  const { data } = useQuery({
     queryKey: ['searchData', inputValue],
     queryFn: () => getSearchProducts(inputValue),
   });
@@ -113,32 +130,46 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
               sx={{
                 mt: queryDownSm ? 1 : 3,
                 display: 'flex',
+                flexDirection: queryDownLg ? 'column' : 'row',
                 justifyContent: 'space-between',
                 gap: queryDownSm ? 1.5 : 3,
                 height: '100%',
               }}
             >
+              <Typography sx={{ order: 2, display: { lg: 'none', xs: 'block' } }}>
+                Search result:
+              </Typography>
               {typeof data === 'undefined' ? (
                 <Box
                   sx={{
                     position: 'relative',
                     maxWidth: '1920px',
+
                     width: '100%',
+                    order: { lg: 1, xs: 3 },
                   }}
                 >
                   <FullScreenLoader />
                 </Box>
+              ) : queryDownLg ? (
+                <SearchSliderMobile products={data} />
               ) : (
-                <SearchHeaderSlider products={data} />
+                <SearchSliderDesktop products={data} />
               )}
-              <Box sx={{ maxWidth: '500px', width: '100%', display: { lg: 'block', xs: 'none' } }}>
+              <Box
+                sx={{
+                  maxWidth: '500px',
+                  width: '100%',
+                  display: { lg: 'block' },
+                  order: { lg: 2 },
+                }}
+              >
                 <Typography variant="h5" sx={{ color: palette.text.primary }}>
                   Popular Search Terms
                 </Typography>
                 <Box
                   sx={{
                     mt: '10px',
-                    padding: '5px 5px 5px 0',
                   }}
                 >
                   {popular.map((search) => (

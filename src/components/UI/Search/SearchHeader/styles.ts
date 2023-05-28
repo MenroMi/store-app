@@ -12,8 +12,7 @@ export const HeaderSearchLayout = styled('div')(() => ({
 }));
 
 export const HeaderSearchContainer = styled('div')(() => ({
-  maxHeight: '500px',
-  height: '100%',
+  minHeight: '200px',
 
   width: '100%',
   background: '#fff',
@@ -21,12 +20,10 @@ export const HeaderSearchContainer = styled('div')(() => ({
 
   [theme.breakpoints.down('sm')]: {
     padding: '26px 20px 20px',
-    maxHeight: '380px',
   },
 
   [theme.breakpoints.down(400)]: {
     padding: '26px 20px 20px',
-    maxHeight: '340px',
   },
 }));
 export const HeaderSearchDiv = styled('div')(() => ({
@@ -69,7 +66,7 @@ export const HeaderDiv = styled('div')(() => ({
   margin: '40px 67px 20px 80px',
 
   [theme.breakpoints.down('lg')]: {
-    margin: '40px 67px 20px 0',
+    margin: '40px 0 20px 0',
   },
 
   [theme.breakpoints.down('sm')]: {

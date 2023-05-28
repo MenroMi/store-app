@@ -11,33 +11,28 @@ import signIn from '@/assets/singInBg.png';
 import emptyIcon from '@/assets/icons/empty.svg';
 
 // constants
-import { searchSliderOptions } from '@/constants';
-
-// components
-import SliderArrow from '@/components/UI/Slider/SliderArrow/SliderArrow';
-import SearchSlide from '@/components/UI/Slider/SearchSlide/SearchSlide';
+import { searchSliderOptionsOnMobile } from '@/constants';
 
 // styled components
 import { CustomEmptyStateWrapper } from '@/components/UI/Slider/CardsSlider/CardsSliderStyles';
-import { SearchSlider } from './styles';
 import { AttrFromData } from '@/types/cardListTypes';
+import Slider from 'react-slick';
+import SearchSlideMobile from '../SearchSlideMobile/SearchSlideMobile';
 
 // interface
 interface ISearchHeaderSliderProps {
   products: AttrFromData[];
 }
 
-const SearchHeaderSlider: React.FC<ISearchHeaderSliderProps> = ({ products }): JSX.Element => {
-  const sliderSettings = {
-    nextArrow: <SliderArrow />,
-    prevArrow: <SliderArrow next={false} />,
-    ...searchSliderOptions,
-  };
-
+const SearchSliderMobile: React.FC<ISearchHeaderSliderProps> = ({ products }): JSX.Element => {
   const mappingSearchSlides = (products: AttrFromData[]) => {
-    return products?.map((product: any) => (
-      <SearchSlide
-        productCategory="Casual"
+    return products?.map((product: AttrFromData) => (
+      <SearchSlideMobile
+        productCategory={
+          product.attributes.categories!.data?.[0]
+            ? product.attributes.categories!.data[0].attributes.name
+            : 'Classic'
+        }
         productName={product.attributes.name}
         productImageSrc={
           product.attributes.images.data?.[0]
@@ -46,21 +41,23 @@ const SearchHeaderSlider: React.FC<ISearchHeaderSliderProps> = ({ products }): J
         }
         productPrice={product.attributes.price}
         key={product.id}
-      ></SearchSlide>
+      />
     ));
   };
 
   if (products?.length > 3) {
-    return <SearchSlider {...sliderSettings}>{mappingSearchSlides(products)}</SearchSlider>;
+    return (
+      <Box sx={{ order: 3 }}>
+        <Slider {...searchSliderOptionsOnMobile}>{mappingSearchSlides(products)}</Slider>
+      </Box>
+    );
   } else if (products?.length > 0) {
     return (
       <Box
         sx={{
           display: 'flex',
-          gap: '100px',
-          m: '0 50px 0 50px',
-          justifyContent: 'center',
-          flex: '1',
+          flexDirection: 'column',
+          order: 2,
         }}
       >
         {mappingSearchSlides(products)}
@@ -68,7 +65,7 @@ const SearchHeaderSlider: React.FC<ISearchHeaderSliderProps> = ({ products }): J
     );
   } else {
     return (
-      <CustomEmptyStateWrapper sx={{ flex: '1', alignSelf: 'center' }}>
+      <CustomEmptyStateWrapper sx={{ flex: '1', alignSelf: 'center', order: 3 }}>
         <Box
           component={Image}
           src={emptyIcon}
@@ -83,4 +80,4 @@ const SearchHeaderSlider: React.FC<ISearchHeaderSliderProps> = ({ products }): J
   }
 };
 
-export default SearchHeaderSlider;
+export default SearchSliderMobile;
