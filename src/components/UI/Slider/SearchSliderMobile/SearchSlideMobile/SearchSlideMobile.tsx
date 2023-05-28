@@ -26,22 +26,24 @@ const SearchSlideMobile: React.FC<ISlideProps> = ({
           justifyContent: 'space-between',
           flexDirection: 'column',
           width: '100%',
+          gap: '5px',
         }}
       >
-        <CustomTypographyName variant="h4">{productName}</CustomTypographyName>
+        <CustomTypographyName variant="h4" sx={{ fontSize: { sm: '20px', xs: '13px' } }}>
+          {productName}
+        </CustomTypographyName>
 
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
-            gap: '30px',
-            alignItems: 'center',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
             maxWidth: { md: '250px', xs: '150px' },
             width: '100%',
           }}
         >
           <CustomTypographyName variant="subtitle2Thin">{productCategory}</CustomTypographyName>
-          <CustomTypographyName variant="subtitle2Small">{'$' + productPrice}</CustomTypographyName>
+          <CustomTypographyName variant="subtitle1">{'$' + productPrice}</CustomTypographyName>
         </Box>
       </Box>
       <Image src={productImageSrc} alt="something" width={70} height={70} />
