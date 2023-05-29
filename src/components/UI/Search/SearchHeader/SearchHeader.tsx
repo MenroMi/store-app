@@ -1,6 +1,16 @@
 // basic
-import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import Image from 'next/image';
+
+// context
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // services
 import { getSearchProducts } from '@/services/searchApi';
@@ -27,30 +37,26 @@ import search from '@/assets/icons/search.svg';
 
 // styled components
 import {
+  ButtonSeeAll,
   HeaderDiv,
   HeaderSearch,
   HeaderSearchContainer,
   HeaderSearchDiv,
   HeaderSearchLayout,
 } from './styles';
-import { CustomTypographyName } from '../../Cards/Card/CardStyles';
-import { AttrFromData } from '@/types/cardListTypes';
 
 // interface
 interface ISearchHeaderProps {
   setSearchOpen: Dispatch<SetStateAction<boolean>>;
-}
-interface ISearchViewProps {
-  products: AttrFromData[];
 }
 
 // mock data
 const PopularSearch = ['Nike Air Force 1 LV8', 'Nike Air Force 1', `Nike Air Force 1 '07 High'`];
 
 const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
+  const contextFilters = useContext(FiltersContext);
   const [popular, setPopular] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  const { palette } = useTheme();
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
@@ -63,6 +69,31 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   useEffect(() => {
     setPopular(PopularSearch);
   }, [popular]);
+
+  const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    let searchObj: {
+      [x: string]: string[];
+    };
+
+    if (inputValue.length <= 0) {
+      searchObj = {
+        name: [],
+      };
+      contextFilters!.setActiveFilters(searchObj);
+      contextFilters!.setPage(1);
+      setSearchOpen(false);
+      return;
+    } else {
+      searchObj = {
+        name: [`${inputValue}`],
+      };
+
+      contextFilters!.setActiveFilters(searchObj);
+      contextFilters!.setPage(1);
+      setSearchOpen(false);
+      return;
+    }
+  };
 
   return (
     <HeaderSearchLayout>
@@ -156,11 +187,25 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
               ) : (
                 <SearchSliderDesktop products={data} />
               )}
-              <Box
+            </Box>
+          </HeaderDiv>
+          <ButtonSeeAll onClick={(e) => onRedirectToFilterPage(e)}>
+            {`See all ` + inputValue}
+          </ButtonSeeAll>
+        </>
+      </HeaderSearchContainer>
+    </HeaderSearchLayout>
+  );
+};
+
+export default SearchHeader;
+
+{
+  /* <Box
                 sx={{
                   maxWidth: '500px',
                   width: '100%',
-                  display: { lg: 'block' },
+                  display: { lg: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
                   order: { lg: 2 },
                 }}
               >
@@ -170,6 +215,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                 <Box
                   sx={{
                     mt: '10px',
+                    flex: '2',
                   }}
                 >
                   {popular.map((search) => (
@@ -189,13 +235,22 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                     </CustomTypographyName>
                   ))}
                 </Box>
-              </Box>
-            </Box>
-          </HeaderDiv>
-        </>
-      </HeaderSearchContainer>
-    </HeaderSearchLayout>
-  );
-};
+              </Box> */
+}
 
-export default SearchHeader;
+// useEffect(() => {
+//   let timerId: NodeJS.Timeout;
+
+//   // const handleSearch = () => {
+//   //   setTimeout(() => {
+//   //     setLoading(false);
+//   //   }, 2000);
+//   // }
+
+//   if (inputValue.replace(/\s/g, '')) {
+//     timerId = setTimeout(handleSearch, 1500);
+//   }
+//   return () => {
+//     clearTimeout(timerId);
+//   };
+// }, [inputValue]);

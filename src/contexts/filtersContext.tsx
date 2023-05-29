@@ -1,6 +1,6 @@
 // basic
 import React, { useEffect, useState } from 'react';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // react-query
@@ -25,6 +25,7 @@ export interface IFiltersContext {
   isChecked: any;
   activeFilters: ActiveFiltersTypes;
   setPage: (x: number) => void;
+  setActiveFilters: (x: ActiveFiltersTypes) => void;
 }
 
 export interface AllFilterTypes {
@@ -38,11 +39,11 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const router = useRouter();
-
   const firstRenderPage = typeof router.query.page === 'undefined' ? 1 : +router.query.page;
   const [page, setPage] = useState<number>(firstRenderPage);
   const [hide, setHide] = useState<boolean>(true);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
+  const lengthRouterQuery = Object.entries(router.query).length;
 
   useEffect(() => {
     getParamsURL(router, activeFilters, page);
@@ -73,7 +74,14 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (lengthRouterQuery <= 0) {
+      setActiveFilters({});
+    }
+  }, [lengthRouterQuery]);
 
   const contextFilters = useQuery({
     queryKey: ['filters'],
@@ -100,7 +108,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
       valuePrice = isNaN(+value) ? 0 : +value;
 
       setActiveFilters((prev) => {
-        return { ...prev, [name]: [`${valuePrice}`] };
+        return { ...prev, [name]: [`${valuePrice}`], name: [] };
       });
       return;
     };
@@ -120,11 +128,11 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         setActiveFilters((prev) => {
           if (label in prev) {
             return checked === true
-              ? { ...prev, [label]: [...prev[label], name] }
-              : { ...prev, [label]: prev[label].filter((item) => item !== name) };
+              ? { ...prev, [label]: [...prev[label], name], name: [] }
+              : { ...prev, [label]: prev[label].filter((item) => item !== name), name: [] };
           }
 
-          return { ...prev, [label]: [name] };
+          return { ...prev, [label]: [name], name: [] };
         });
         return;
     }
@@ -143,6 +151,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         onHideFilters,
         isChecked,
         setPage: (value) => setPage(value),
+        setActiveFilters: (value) => setActiveFilters({ ...value }),
         activeFilters,
       }}
     >
