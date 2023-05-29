@@ -57,12 +57,12 @@ const Authorization = () => {
               : sessionStorage.setItem('token', data.jwt);
 
             userMutate(data.jwt, {
-              onSuccess: (data) => {
+              onSuccess: async (data) => {
                 setUser(data);
+                await push(Routes.myProducts);
                 setIsOpen(true);
                 setIsFailed(false);
                 setMessage("You've succesfully logged in");
-                push(Routes.myProducts);
               },
               onError: () => {
                 setIsOpen(true);
