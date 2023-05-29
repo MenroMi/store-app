@@ -1,5 +1,5 @@
 // basic
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -17,6 +17,8 @@ import { IFormData } from '@/types/formDataTypes';
 import { useMutation } from '@tanstack/react-query';
 import { reset } from '@/services/authService';
 import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
+import Notification from '@/components/UI/Notification/Notificaton';
+import { NotificationContext } from '@/components/Providers/notification';
 
 const Reset = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -24,8 +26,7 @@ const Reset = () => {
     confirm: '',
   });
   const { mutate, isError } = useMutation(reset);
-  const [loading, setLoading] = useState<boolean>(false)
-
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     query: { code = '' },
@@ -37,16 +38,23 @@ const Reset = () => {
     },
   } = useTheme();
 
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { password, confirm } = formData;
     if (password && confirm && password === confirm) {
-                  setLoading(true)
+      setLoading(true);
       mutate(
         { password, passwordConfirmation: confirm, code },
         {
-          onError: () => setLoading(false),
+          onError: () => {
+            setLoading(false);
+          },
           onSuccess: () => {
+            setIsOpen(true);
+            setIsFailed(false);
+            setMessage("You've succesfully changed your password");
             push(Routes.login);
           },
         }
@@ -92,6 +100,8 @@ const Reset = () => {
           </Box>
         </>
       )}
+
+      <Notification />
     </SplitLayout>
   );
 };
