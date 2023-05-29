@@ -11,7 +11,7 @@ import signIn from '@/assets/singInBg.png';
 import emptyIcon from '@/assets/icons/empty.svg';
 
 // constants
-import { searchSliderOptionsOnMobile } from '@/constants';
+import { searchSliderOptionsOnMobile } from '@/constants/ui';
 
 // styled components
 import { CustomEmptyStateWrapper } from '@/components/UI/Slider/CardsSlider/CardsSliderStyles';
