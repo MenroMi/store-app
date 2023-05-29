@@ -68,7 +68,7 @@ export interface IFormAddProductProps {
 
 export interface IProductData {
   data: {
-    description: string;
+    description?: string;
     images: string[];
     name: string;
     categories: string;

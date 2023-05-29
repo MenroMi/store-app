@@ -31,12 +31,12 @@ export const postProduct = (data: IProductData, token: string) =>
     },
   });
 
-export const getProductById = async (id: number) => {
+export const getProductById = async (id: number | string) => {
   const { data } = await axios.get(`${baseURL}products/${id}?populate=images,color,gender,size`);
-  return data;
+  return data.data;
 }
 
 export const getProducts = async () => {
-  const { data } = await axios.get(`${baseURL}products?pagination[limit]=20`);
+  const { data } = await axios.get(`${baseURL}products?pagination[limit]=-1`);
   return data?.data;
 }
