@@ -137,6 +137,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         return;
     }
   };
+  console.log(activeFilters);
 
   return (
     <FiltersContext.Provider

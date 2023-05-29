@@ -53,8 +53,6 @@ interface ISearchHeaderProps {
   setSearchOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-// mock data
-
 const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const contextFilters = useContext(FiltersContext);
   const [inputValue, setInputValue] = useState<string>('');
@@ -75,6 +73,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
     if (inputValue.length <= 0) {
       searchObj = {
         name: [],
+        page: ['1'],
       };
       contextFilters!.setActiveFilters(searchObj);
       contextFilters!.setPage(1);
