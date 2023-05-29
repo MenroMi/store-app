@@ -1,3 +1,5 @@
+import { ICategory } from './cardsSliderTypes';
+
 export interface ICardListProps {
   products?: any[];
 }
@@ -27,6 +29,11 @@ export interface AttrFromData {
     images: ImageAttrData;
     gender: GenderAttrData;
     teamName: string;
-    categories?: string[] | string;
+    categories?: {
+      data: {
+        id: number;
+        attributes: ICategory;
+      }[];
+    };
   };
 }

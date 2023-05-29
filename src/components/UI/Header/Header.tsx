@@ -3,7 +3,15 @@ import * as styles from './styles';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Button, InputAdornment, Typography, useTheme, Theme, useMediaQuery, } from '@mui/material';
+import {
+  Box,
+  Button,
+  InputAdornment,
+  Typography,
+  useTheme,
+  Theme,
+  useMediaQuery,
+} from '@mui/material';
 
 import { Routes } from '@/constants/routes';
 
@@ -29,8 +37,8 @@ import theme from '@/utils/mui/theme';
 export default function Header() {
   const [isBurgerClicled, setIsBurgerClicked] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
-    const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
-    const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   const { user, setUser } = useContext(UserContext);
 
@@ -131,7 +139,7 @@ export default function Header() {
               </Button>
             )}
             <Box
-             sx={{
+              sx={{
                 display: {
                   sm: 'flex',
                   xs: 'none',
@@ -169,11 +177,7 @@ export default function Header() {
                   },
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Image
-                        width={22}
-                        src={SearchIcon}
-                        alt="search-icon"
-                      />
+                      <Image width={22} src={SearchIcon} alt="search-icon" />
                     </InputAdornment>
                   ),
                   autoComplete: 'off',
@@ -181,7 +185,7 @@ export default function Header() {
               />
             </Box>
             <styles.Cart>
-              <Link href={Routes.bag} >
+              <Link href={Routes.bag}>
                 <Box sx={{ position: 'relative', pt: '2px' }}>
                   <Image width={22} height={24} priority={true} src={CartIcon} alt="cart-icon" />
                   <Box
@@ -209,13 +213,15 @@ export default function Header() {
                   </Box>
                 </Box>
               </Link>
-             {queryDownSm &&  <Image
-                        width={22}
-                        onClick={() => setSearchOpen(true)}
-                        src={SearchIcon}
-                        alt="search-icon"
-                      />}
-              { !queryDownMd && user && <UserMenu />}
+              {queryDownSm && (
+                <Image
+                  width={22}
+                  onClick={() => setSearchOpen(true)}
+                  src={SearchIcon}
+                  alt="search-icon"
+                />
+              )}
+              {!queryDownMd && user && <UserMenu />}
             </styles.Cart>
             <styles.Burger
               sx={{
