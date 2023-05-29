@@ -8,7 +8,7 @@ export default function Notification() {
   return (
     <Snackbar
       open={isOpen}
-      autoHideDuration={6000}
+      autoHideDuration={3000}
       onClose={() => setIsOpen(false)}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
