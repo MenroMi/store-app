@@ -97,13 +97,11 @@ export default function UpdateProfile() {
               setLoading(false);
             },
           });
-          console.log('Form updated successfully');
         },
         onError: (error) => {
           setIsOpen(true);
           setIsFailed(true);
           setMessage("Something went wrong: we couldn't update your profile");
-          console.log('Something went wrong: ', error);
         },
       }
     );
