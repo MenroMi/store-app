@@ -1,5 +1,5 @@
 // basic
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -16,7 +16,6 @@ import {
 
 // images
 import profileTopBg from '@/assets/profileTopBg.png';
-import noAvatar from '@/assets/noAvatar.png';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -37,20 +36,20 @@ import { UserContext } from '@/components/Providers/user';
 import { ModalContext } from '@/components/Providers/modal';
 import { useRouter } from 'next/router';
 import Notification from '@/components/UI/Notification/Notificaton';
+import { NotificationContext } from '@/components/Providers/notification';
 
 export default function Home() {
-  const [open, setOpen] = useState<boolean>(false);
-
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryClient = useQueryClient();
 
   const { user } = useContext(UserContext);
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const router = useRouter();
 
-  const { data: userProducts, isLoading } = useQuery(['userProducts'], () =>
+  const { data: userProducts } = useQuery(['userProducts'], () =>
     getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
 
@@ -63,9 +62,16 @@ export default function Home() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['userProducts']);
+        setIsOpen(true);
+        setIsFailed(false);
+        setMessage("You've succesfully deleted the product");
       },
 
-      onError: () => router.push(Routes.error500),
+      onError: () => {
+        setIsOpen(true);
+        setIsFailed(true);
+        setMessage('Something went wrong: the product was not deleted');
+      },
     }
   );
 

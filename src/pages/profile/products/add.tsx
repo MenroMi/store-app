@@ -37,8 +37,12 @@ export default function AddProduct() {
   const { data: id } = useQuery(['id'], () =>
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
-  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images), {
+
+  const { mutate } = useMutation((images: File[]) => handlePostProduct(images), {
     onSuccess: () => {
+      setIsOpen(true);
+      setMessage('Product had been added successfully!');
+      setIsFailed(false);
       setClickedId(null);
       setSelectedImages([]);
       router.push(Routes.myProducts);
@@ -121,19 +125,7 @@ export default function AddProduct() {
     setLoading(true);
     if (selectedImages && selectedImages?.length > 0) {
       const imagesToPost = selectedImages?.map((image) => image.imageFile);
-      mutate(imagesToPost, {
-        onSuccess: () => {
-          setIsOpen(true);
-          setMessage('Product had been added successfully!');
-          router.push(Routes.myProducts);
-        },
-        onError: () => {
-          setIsOpen(true);
-          setIsFailed(true);
-          setMessage('Something went wrong!');
-          router.push(Routes.error500);
-        },
-      });
+      mutate(imagesToPost);
     }
   };
   return (
