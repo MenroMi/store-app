@@ -125,8 +125,7 @@ export default function Header() {
               <Button
                 variant="outlined"
                 sx={{
-                  maxWidth: '145px',
-                  width: 1,
+                  width: '145px',
                   height: '48px',
                   display: {
                     md: 'flex',
