@@ -132,6 +132,7 @@ export default function Home() {
                   setIsRedirecting(true);
                   await router.push(Routes.addProduct);
                 }}
+                disabled={isRedirecting}
                 sx={{ padding: '5px 13px', mt: 2.5, width: '146px' }}
               >
                 {isRedirecting ? <ButtonLoader /> : 'Add product'}
