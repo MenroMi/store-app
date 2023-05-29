@@ -21,7 +21,7 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
     }
   }
 
-  if (searchParams.size === 0) {
+  if (searchParams.size === 0 && router.pathname === '/catalog/search') {
     searchParams.append('page', `${page}`);
   }
 

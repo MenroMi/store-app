@@ -18,12 +18,13 @@ interface ISliderArrowProps {
 export default function SliderArrow({ className, style, onClick, next = true }: ISliderArrowProps) {
   const theme = useTheme<Theme>();
   const queryDownXl = useMediaQuery<unknown>(theme.breakpoints.down('xl'));
+
   return (
     <Image
       src={next ? rightArrow : leftArrow}
       alt={next ? 'Next' : 'Previous'}
       className={className}
-      style={{ ...style, display: 'block', right: `${next && '0'}` }}
+      style={{ ...style, display: 'block' }}
       onClick={onClick}
     />
   );

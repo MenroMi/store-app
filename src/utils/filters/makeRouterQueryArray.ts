@@ -3,7 +3,7 @@ import { ParsedUrlQuery } from 'querystring';
 const makeArray = (router: ParsedUrlQuery) => {
   let res: { [x: string]: string[] | string } = {};
 
-  if (typeof router === 'undefined') {
+  if (typeof router === 'undefined' || Object.entries(router).length <= 0) {
     res = { ...res, page: ['1'] };
     return res;
   }
