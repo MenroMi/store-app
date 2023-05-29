@@ -22,6 +22,7 @@ import { Fragment, useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';
 import theme from '@/utils/mui/theme';
+import { NotificationContext } from '@/components/Providers/notification';
 
 const AsideProfileMenu: React.FC = (): JSX.Element => {
   const {
@@ -32,6 +33,8 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
   const { user, setUser } = useContext(UserContext);
   const { push, pathname } = useRouter();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+
+  const { setIsFailed, setIsOpen, setMessage } = useContext(NotificationContext);
 
   return queryDownMd ? (
     <></>
@@ -79,6 +82,9 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
                   onClick={async () => {
                     await push(to);
                     if (name === 'Log out') {
+                      setIsFailed(false);
+                      setIsOpen(true);
+                      setMessage('Succesfully logged out');
                       setUser(null);
                       localStorage.removeItem('token');
                       sessionStorage.removeItem('token');

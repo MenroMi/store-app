@@ -37,6 +37,7 @@ import { NAV_BURGER_LINKS } from '@/constants';
 // components
 import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
+import { NotificationContext } from '@/components/Providers/notification';
 import UserMenu from '../Menu/UserMenu/UserMenu';
 import SearchHeader from '../Search/SearchHeader/SearchHeader';
 
@@ -53,6 +54,7 @@ export default function Header() {
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   const { user, setUser } = useContext(UserContext);
+  const { setIsFailed, setIsOpen, setMessage } = useContext(NotificationContext);
   const contextStorage = useContext(StorageContext);
   const { push, pathname } = useRouter();
 
@@ -265,12 +267,17 @@ export default function Header() {
                     <styles.NavListItem
                       key={name}
                       onClick={async () => {
-                        await push(to);
-                        setIsBurgerClicked(false);
                         if (name === 'Log out') {
+                          setIsFailed(false);
+                          setIsOpen(true);
+                          setMessage('Succesfully logged out');
                           setUser(null);
                           localStorage.removeItem('token');
                           sessionStorage.removeItem('token');
+                          await push(to);
+                        } else {
+                          await push(to);
+                          setIsBurgerClicked(false);
                         }
                       }}
                     >

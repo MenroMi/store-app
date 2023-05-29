@@ -31,10 +31,10 @@ import { IProductData } from '@/types/addProductTypes';
 // context
 import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
+import { NotificationContext } from '@/components/Providers/notification';
 
 export default function AddProduct() {
   // useQuery
-  const queryClient = useQueryClient();
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
   const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
   const { data: categoriesData } = useQuery(['categories'], () => getDataWithField('categories'));
@@ -43,11 +43,16 @@ export default function AddProduct() {
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
 
-  // mutations
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation((images: File[]) => handlePostProduct(images), {
     onSuccess: () => {
+      setIsOpen(true);
+      setMessage('Product had been added successfully!');
+      setIsFailed(false);
       setClickedId(null);
       setSelectedImages([]);
+      queryClient.invalidateQueries(['userProducts']);
       router.push(Routes.myProducts);
     },
     onError: () => {
@@ -56,8 +61,6 @@ export default function AddProduct() {
       router.push(Routes.error500);
     },
   });
-
-  const router = useRouter();
 
   // states
   const [loading, setLoading] = useState<boolean>(false);
@@ -72,6 +75,10 @@ export default function AddProduct() {
   // contexts
   const { setClickedId } = useContext(ModalContext);
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
+
+  const router = useRouter();
 
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,13 +134,7 @@ export default function AddProduct() {
     setLoading(true);
     if (selectedImages && selectedImages?.length > 0) {
       const imagesToPost = selectedImages?.map((image) => image.imageFile);
-      mutate(imagesToPost, {
-        onSuccess: () => {
-          queryClient.invalidateQueries(['userProducts']);
-          router.push(Routes.myProducts);
-        },
-        onError: () => router.push(Routes.error500),
-      });
+      mutate(imagesToPost);
     }
   };
   return (

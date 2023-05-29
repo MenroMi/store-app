@@ -26,17 +26,21 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
 import { uploadImage } from '@/services/addProductApi';
 import { Routes } from '@/constants';
+import { NotificationContext } from '@/components/Providers/notification';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 export default function UpdateProfile() {
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
-  const { mutate: updateMutate} = useMutation(updateUser);
+  const { mutate: updateMutate } = useMutation(updateUser);
   const { mutate: deleteMutate } = useMutation(deleteAvatar);
   const { mutate: userMutate } = useMutation(getUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
   const { push } = useRouter();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const id = Number(user?.id);
   const [updateFormData, setUpdateFormData] = useState<ISettings>({
@@ -66,7 +70,7 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true)
+    setLoading(true);
     let dataToUpdate = { ...updateFormData };
 
     const token = localStorage.getItem('token')
@@ -85,15 +89,19 @@ export default function UpdateProfile() {
         onSuccess: async () => {
           userMutate(token, {
             onSuccess: async (data) => {
-              await push(Routes.myProducts);
-               setLoading(false)
               setUser(data);
+              await push(Routes.myProducts);
+              setIsOpen(true);
+              setIsFailed(false);
+              setMessage('Profile has been updated');
+              setLoading(false);
             },
           });
-          console.log('Form updated successfully');
         },
         onError: (error) => {
-          console.log('Something went wrong: ', error);
+          setIsOpen(true);
+          setIsFailed(true);
+          setMessage("Something went wrong: we couldn't update your profile");
         },
       }
     );
@@ -111,13 +119,19 @@ export default function UpdateProfile() {
           {
             onSuccess: async () => {
               userMutate(token, {
-                onSuccess: (data) => {
+                onSuccess: async (data) => {
+                  setIsOpen(true);
+                  setIsFailed(false);
+                  setMessage('Avatar was deleted');
                   setUser(data);
                   setAvatarToDisplay('');
                 },
               });
-
-              console.log('Form updated successfully');
+            },
+            onError: () => {
+              setIsOpen(true);
+              setIsFailed(true);
+              setMessage("Something went wrong: we could't delete your avatar");
             },
           }
         );
@@ -213,6 +227,8 @@ export default function UpdateProfile() {
           />
         </Box>
       </Box>
+
+      <Notification />
     </Layout>
   );
 }
