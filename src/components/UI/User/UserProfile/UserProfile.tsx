@@ -13,7 +13,6 @@ import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 export default function UserProfile({
   username,
   profileTopBgSrc,
-  avatarSrc,
   userBonusPoints,
 }: IUserProfileProps) {
   const { user } = useContext(UserContext);
