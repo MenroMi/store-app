@@ -6,7 +6,12 @@ export default function Notification() {
   const { isOpen, setIsOpen, isFailed, message } = useContext(NotificationContext);
 
   return (
-    <Snackbar open={isOpen} autoHideDuration={6000} onClose={() => setIsOpen(false)}>
+    <Snackbar
+      open={isOpen}
+      autoHideDuration={6000}
+      onClose={() => setIsOpen(false)}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    >
       <Alert
         onClose={() => setIsOpen(false)}
         severity={isFailed ? 'error' : 'success'}
