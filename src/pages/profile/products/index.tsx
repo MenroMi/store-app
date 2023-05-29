@@ -1,5 +1,5 @@
 // basic
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -27,7 +27,6 @@ import { CardsSlider } from '@/components/UI/Slider/CardsSlider/CardsSlider';
 
 // constants
 import { Routes } from '@/constants/routes';
-import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 // services
 import { deleteProduct, getUserProducts } from '@/services/myProfileApi';
 
@@ -35,18 +34,25 @@ import { deleteProduct, getUserProducts } from '@/services/myProfileApi';
 import { UserContext } from '@/components/Providers/user';
 import { ModalContext } from '@/components/Providers/modal';
 import { useRouter } from 'next/router';
+import Notification from '@/components/UI/Notification/Notificaton';
+import { NotificationContext } from '@/components/Providers/notification';
+import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 
 export default function Home() {
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryClient = useQueryClient();
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
+  const {
+    setIsOpen: setIsNotificationOpen,
+    setIsFailed,
+    setMessage,
+  } = useContext(NotificationContext);
 
-  const router = useRouter();
-
-  const { data: userProducts, isLoading } = useQuery(['userProducts'], () =>
+  const { data: userProducts } = useQuery(['userProducts'], () =>
     getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
 
@@ -58,10 +64,18 @@ export default function Home() {
       ),
     {
       onSuccess: () => {
+        setIsDeleting(false);
         queryClient.invalidateQueries(['userProducts']);
+        setIsNotificationOpen(true);
+        setIsFailed(false);
+        setMessage("You've succesfully deleted the product");
       },
 
-      onError: () => router.push(Routes.error500),
+      onError: () => {
+        setIsNotificationOpen(true);
+        setIsFailed(true);
+        setMessage('Something went wrong: the product was not deleted');
+      },
     }
   );
 
@@ -77,7 +91,7 @@ export default function Home() {
             avatarSrc={getProfilePhoto(user)}
             profileTopBgSrc={profileTopBg}
             userBonusPoints="1 374"
-            username={user?.username || 'Guest'}
+            username={user?.firstName || user?.username || 'Guest'}
           />
           <Box>
             <Box
@@ -101,7 +115,11 @@ export default function Home() {
 
             <CardsSlider
               products={userProducts?.data?.products}
-              deleteProduct={() => mutate(clickedId!)}
+              deleteProduct={() => {
+                setIsDeleting(true);
+                mutate(clickedId!);
+              }}
+              isLoading={isDeleting}
             />
 
             {queryDownMd && userProducts?.data?.products?.length > 0 && (
@@ -114,6 +132,8 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
+
+      <Notification />
     </Layout>
   );
 }

@@ -14,13 +14,19 @@ import { CustomModalBox, CustomModalWrapper } from './ModalDeleteItemStyles';
 
 // assets
 import closeIcon from '@/assets/icons/close.svg';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 interface IModalDeleteItemProps {
   deleteMessage: string;
   deleteHandler: () => void;
+  isLoading?: boolean;
 }
 
-export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModalDeleteItemProps) {
+export default function ModalDeleteItem({
+  deleteMessage,
+  deleteHandler,
+  isLoading,
+}: IModalDeleteItemProps) {
   const { isOpen, setIsOpen } = useContext(ModalContext);
   const modalRef = useRef<HTMLDivElement | null>();
   const closeModal = () => {
@@ -80,7 +86,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
               sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
               onClick={handleDelete}
             >
-              Delete
+              {isLoading ? <ButtonLoader /> : 'Delete'}
             </Button>
           </Box>
         </CustomModalBox>

@@ -1,13 +1,5 @@
-// basic
-import { useRouter } from 'next/router';
-import { Routes } from '@/constants/routes';
-
 // mui
-import { Grid, Box, Typography } from '@mui/material';
-
-// layouts
-import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
-import Layout from '@/components/Layout/MainLayout';
+import {Typography } from '@mui/material';
 
 // mock data
 const mockData = {
@@ -16,38 +8,13 @@ const mockData = {
 };
 
 // styled components
-import { CustomButton } from '@/styles/pageStyles/Error404Styles';
+import ErrorLayout from '@/components/Layout/ErrorLayout/ErrorLayout';
 
 export default function Error404() {
-  const router = useRouter();
-
-  const handleGoBack = (): void => {
-    router.back();
-  };
-
-  const handleGoHome = (): void => {
-    router.push(Routes.search);
-  };
   return (
-    <Layout title="Page not found...">
-      <SplitLayout isErrorPage={true}>
-        <Grid container justifyContent="center" alignItems="center" height="calc(100vh - 120px)">
-          <Grid item container flexDirection="row" width="60%">
-            <Typography variant="h2">{mockData.title}</Typography>
-            <Typography variant="h5Gray" mt={2} mb={2}>
-              {mockData.description}
-            </Typography>
-            <Box display="flex" gap={2}>
-              <CustomButton variant="outlined" onClick={handleGoBack}>
-                Go back
-              </CustomButton>
-              <CustomButton variant="contained" onClick={handleGoHome}>
-                Home
-              </CustomButton>
-            </Box>
-          </Grid>
-        </Grid>
-      </SplitLayout>
-    </Layout>
+    <ErrorLayout title={mockData.title} >
+      <Typography variant="h2">{mockData.title}</Typography>
+      <Typography variant="h5Gray" sx={{ fontSize: { xs: '12px' }}}>{mockData.description}</Typography>
+ </ErrorLayout>
   );
 }
