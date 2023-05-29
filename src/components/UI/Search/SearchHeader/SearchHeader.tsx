@@ -17,7 +17,6 @@ import { getSearchProducts } from '@/services/searchApi';
 
 // rq
 import { useQuery } from '@tanstack/react-query';
-import { useDebounce } from '@tanstack/react-query';
 
 // mui
 import { Theme, useMediaQuery, useTheme, InputAdornment, Box, Typography } from '@mui/material';
@@ -47,6 +46,7 @@ import {
 } from './styles';
 import { CustomTypographyName } from '../../Cards/Card/CardStyles';
 import SearchPopularTerms from '../SearchPopularTerms/SearchPopularTerms';
+import useDebounceQuery from '@/hooks/useDebounceQuery';
 
 // interface
 interface ISearchHeaderProps {
@@ -61,22 +61,11 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-
-  const { data } = useQuery({
-    queryKey: ['searchData', inputValue],
-    queryFn: () => getSearchProducts(inputValue),
-  });
-
-  React.useEffect(() => {
-    const handler: NodeJS.Timeout = setTimeout(() => {
-      setInputValue(inputValue);
-    }, 1500);
-
-    // Cancel the timeout if value changes (also on delay change or unmount)
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [inputValue]);
+  const { data } = useDebounceQuery(
+    ['searchData', inputValue],
+    () => getSearchProducts(inputValue),
+    1500
+  );
 
   const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     let searchObj: {
@@ -108,7 +97,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
 
     setInputValue(value.textContent!);
   };
-
   return (
     <HeaderSearchLayout>
       <HeaderSearchContainer>
