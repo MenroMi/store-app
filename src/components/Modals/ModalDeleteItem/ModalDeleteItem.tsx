@@ -72,7 +72,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
           >
             <Button
               variant="outlined"
-              sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+              sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%', mr: 3.5 }}
               onClick={closeModal}
             >
               Cancel
@@ -80,7 +80,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
 
             <Button
               variant="contained"
-              sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+              sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%' }}
               onClick={handleDelete}
               disabled={isDeleting}
             >
@@ -125,7 +125,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
         >
           <Button
             variant="outlined"
-            sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+            sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%', mr: 3.5 }}
             onClick={closeModal}
           >
             Cancel
@@ -133,7 +133,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
 
           <Button
             variant="contained"
-            sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+            sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%' }}
             onClick={handleDelete}
             disabled={isDeleting}
           >
