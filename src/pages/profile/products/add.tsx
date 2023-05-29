@@ -26,6 +26,7 @@ import { IProductData } from '@/types/addProductTypes';
 // context
 import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
+import { NotificationContext } from '@/components/Providers/notification';
 
 export default function AddProduct() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -61,6 +62,8 @@ export default function AddProduct() {
 
   // urls of images. used to show the image on the screen
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const router = useRouter();
 
@@ -115,12 +118,21 @@ export default function AddProduct() {
   };
 
   const handleSubmit = () => {
-    setLoading(true)
+    setLoading(true);
     if (selectedImages && selectedImages?.length > 0) {
       const imagesToPost = selectedImages?.map((image) => image.imageFile);
       mutate(imagesToPost, {
-        onSuccess: () => router.push(Routes.myProducts),
-        onError: () => router.push(Routes.error500),
+        onSuccess: () => {
+          setIsOpen(true);
+          setMessage('Product had been added successfully!');
+          router.push(Routes.myProducts);
+        },
+        onError: () => {
+          setIsOpen(true);
+          setIsFailed(true);
+          setMessage('Something went wrong!');
+          router.push(Routes.error500);
+        },
       });
     }
   };
@@ -129,7 +141,7 @@ export default function AddProduct() {
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
         <FormAddProduct
-          isLoading={loading  }
+          isLoading={loading}
           sizes={sizesData}
           productName={productName}
           price={price}

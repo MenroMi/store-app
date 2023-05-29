@@ -1,5 +1,5 @@
 // basic
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -36,8 +36,11 @@ import { deleteProduct, getUserProducts } from '@/services/myProfileApi';
 import { UserContext } from '@/components/Providers/user';
 import { ModalContext } from '@/components/Providers/modal';
 import { useRouter } from 'next/router';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 export default function Home() {
+  const [open, setOpen] = useState<boolean>(false);
+
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
@@ -115,6 +118,8 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
+
+      <Notification />
     </Layout>
   );
 }
