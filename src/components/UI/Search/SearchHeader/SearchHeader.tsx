@@ -44,6 +44,8 @@ import {
   HeaderSearchDiv,
   HeaderSearchLayout,
 } from './styles';
+import { CustomTypographyName } from '../../Cards/Card/CardStyles';
+import SearchPopularTerms from '../SearchPopularTerms/SearchPopularTerms';
 
 // interface
 interface ISearchHeaderProps {
@@ -51,11 +53,9 @@ interface ISearchHeaderProps {
 }
 
 // mock data
-const PopularSearch = ['Nike Air Force 1 LV8', 'Nike Air Force 1', `Nike Air Force 1 '07 High'`];
 
 const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const contextFilters = useContext(FiltersContext);
-  const [popular, setPopular] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
@@ -65,10 +65,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
     queryKey: ['searchData', inputValue],
     queryFn: () => getSearchProducts(inputValue),
   });
-
-  useEffect(() => {
-    setPopular(PopularSearch);
-  }, [popular]);
 
   const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     let searchObj: {
@@ -93,6 +89,12 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
       setSearchOpen(false);
       return;
     }
+  };
+
+  const onClickPopularTerm = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    const value = e.target as HTMLElement;
+
+    setInputValue(value.textContent!);
   };
 
   return (
@@ -163,10 +165,11 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                 display: 'flex',
                 flexDirection: queryDownLg ? 'column' : 'row',
                 justifyContent: 'space-between',
-                gap: queryDownSm ? 1.5 : 3,
+                gap: queryDownSm ? 1.5 : 5,
                 height: '100%',
               }}
             >
+              <SearchPopularTerms onChangeSearchTerm={(e) => onClickPopularTerm(e)} />
               <Typography sx={{ order: 2, display: { lg: 'none', xs: 'block' } }}>
                 Search result:
               </Typography>

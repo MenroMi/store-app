@@ -20,9 +20,9 @@ import SearchSlideDesktop from '@/components/UI/Slider/SearchSliderDesktop/Searc
 // styled components
 import { CustomEmptyStateWrapper } from '@/components/UI/Slider/CardsSlider/CardsSliderStyles';
 import { SearchSlider } from './styles';
-import { AttrFromData } from '@/types/cardListTypes';
 
 // interface
+import { AttrFromData } from '@/types/cardListTypes';
 interface ISearchHeaderSliderProps {
   products: AttrFromData[];
 }

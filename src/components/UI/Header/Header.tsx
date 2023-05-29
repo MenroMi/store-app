@@ -48,7 +48,7 @@ import { INavItem } from '@/types/INavItem';
 
 export default function Header() {
   const [isBurgerClicled, setIsBurgerClicked] = useState<boolean>(false);
-  const [searchOpen, setSearchOpen] = useState<boolean>(false);
+  const [searchOpen, setSearchOpen] = useState<boolean>(true);
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
