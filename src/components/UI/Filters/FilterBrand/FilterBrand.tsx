@@ -1,14 +1,19 @@
-import Image from 'next/image';
-import { InputAdornment, Box } from '@mui/material';
+// basic
 import React, { useState, Fragment } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+
+// mui
+import { InputAdornment, Box } from '@mui/material';
 
 // images
 import searchIcon from '@/assets/icons/search.svg';
 
+// components
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+
 // styled component
 import { CustomTextField } from './styles';
-import { useRouter } from 'next/router';
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 // interface
 interface IFilterBrand {
@@ -16,9 +21,11 @@ interface IFilterBrand {
   inputs: object[];
 }
 
+// variable for checkbox
+let checked: boolean;
+
 const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
   const router = useRouter();
-  let checked: boolean;
   const [searchingBrand, setSearchingBrand] = useState<string>('');
 
   const visibleBrandFilters = (inputs: any) => {

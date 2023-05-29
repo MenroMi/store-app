@@ -215,16 +215,17 @@ export const ONE_MOCKED_PRODUCT = {
 };
 
 export const searchSliderOptionsOnDesktop = {
-  slidesToShow: 4.7,
+  slidesToShow: 8,
   slidesToScroll: 2,
   infinite: false,
   arrows: true,
   touchMove: false,
+  swipe: true,
   responsive: [
     {
       breakpoint: 1920,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 7,
         slidesToScroll: 1,
         touchMove: true,
       },
@@ -232,25 +233,8 @@ export const searchSliderOptionsOnDesktop = {
     {
       breakpoint: 1600,
       settings: {
-        slidesToShow: 3.5,
+        slidesToShow: 5,
         slidesToScroll: 1,
-        touchMove: true,
-      },
-    },
-
-    {
-      breakpoint: 1300,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        touchMove: true,
-      },
-    },
-    {
-      breakpoint: 1200,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 2,
         touchMove: true,
       },
     },
@@ -268,3 +252,5 @@ export const searchSliderOptionsOnMobile = {
 
 export const keyStr =
   'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
+
+export const regExpOnlyNumbs = /(?=(.*[a-zA-Z]))|(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])/;

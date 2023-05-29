@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 // mui
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -44,6 +44,7 @@ export default function SearchResultPage(): JSX.Element {
       >
         <PathAndSearchResult />
       </Box>
+
       <FiltersAndCards />
       <Box
         onClick={(e) => onHideFilters(e)}

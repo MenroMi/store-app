@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useContext } from 'react';
 
 // mui
-import { Box, Divider, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -17,7 +17,7 @@ import hideFilterIcon from '@/assets/icons/filter.svg';
 import SearchPath from '@/components/UI/Search/SearchPath/SearchPath';
 
 // styled components
-import { CustomTypographyH2, CustomHideFilterBtn, CustomGridContainer } from './SearchResultStyles';
+import { CustomTypographyH2, CustomHideFilterBtn, CustomGridContainer } from './styles';
 
 // FUNCTIONAL COMPONENT
 const SearchResult: React.FC = () => {
@@ -38,7 +38,6 @@ const SearchResult: React.FC = () => {
           >
             Search results
           </CustomTypographyH2>
-          <Divider sx={{ width: '100%', marginTop: '12px' }} />
         </>
       ) : null}
 
