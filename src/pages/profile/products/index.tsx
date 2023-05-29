@@ -36,7 +36,6 @@ export default function Home() {
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryClient = useQueryClient();
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   const router = useRouter();
@@ -59,15 +58,18 @@ export default function Home() {
         id
       ),
     {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(['userProducts']);
         setIsDeleting(false);
-        queryClient.invalidateQueries(['userProducts']);
+        setIsModalOpen(false);
         setIsNotificationOpen(true);
         setIsFailed(false);
         setMessage("You've succesfully deleted the product");
       },
 
       onError: () => {
+        setIsDeleting(false);
+        setIsModalOpen(false);
         setIsNotificationOpen(true);
         setIsFailed(true);
         setMessage('Something went wrong: the product was not deleted');
@@ -75,7 +77,7 @@ export default function Home() {
     }
   );
 
-  const { clickedId } = useContext(ModalContext);
+  const { clickedId, setIsDeleting, setIsOpen: setIsModalOpen } = useContext(ModalContext);
 
   return (
     <Layout title="Home">
@@ -121,7 +123,6 @@ export default function Home() {
                 setIsDeleting(true);
                 mutate(clickedId!);
               }}
-              isLoading={isDeleting}
             />
 
             {queryDownMd && userProducts?.data?.products?.length > 0 && (

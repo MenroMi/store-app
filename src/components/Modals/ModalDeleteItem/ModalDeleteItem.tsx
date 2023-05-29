@@ -19,27 +19,24 @@ import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 interface IModalDeleteItemProps {
   deleteMessage: string;
   deleteHandler: () => void;
-  isLoading?: boolean;
 }
 
-export default function ModalDeleteItem({
-  deleteMessage,
-  deleteHandler,
-  isLoading,
-}: IModalDeleteItemProps) {
-  const { isOpen, setIsOpen } = useContext(ModalContext);
+export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModalDeleteItemProps) {
+  const { isOpen, setIsOpen, isDeleting, setIsDeleting } = useContext(ModalContext);
   const modalRef = useRef<HTMLDivElement | null>();
+
   const closeModal = () => {
     if (typeof document !== 'undefined') {
       document.body.style.overflow = 'scroll';
     }
     setIsOpen(false);
+    setIsDeleting(false);
   };
 
   const handleDelete = () => {
     deleteHandler();
-    closeModal();
   };
+
   return typeof document !== 'undefined' ? (
     createPortal(
       <CustomModalWrapper
@@ -85,8 +82,9 @@ export default function ModalDeleteItem({
               variant="contained"
               sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
               onClick={handleDelete}
+              disabled={isDeleting}
             >
-              {isLoading ? <ButtonLoader /> : 'Delete'}
+              {isDeleting ? <ButtonLoader /> : 'Delete'}
             </Button>
           </Box>
         </CustomModalBox>
@@ -137,8 +135,9 @@ export default function ModalDeleteItem({
             variant="contained"
             sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
             onClick={handleDelete}
+            disabled={isDeleting}
           >
-            Delete
+            {isDeleting ? <ButtonLoader /> : 'Delete'}
           </Button>
         </Box>
       </CustomModalBox>

@@ -29,7 +29,7 @@ import noProducts from '@/assets/icons/no-products.svg';
 // types
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
 
-export const CardsSlider = ({ products, deleteProduct, isLoading }: ICardsSliderProps) => {
+export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   const sliderSettings = {
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -80,7 +80,6 @@ export const CardsSlider = ({ products, deleteProduct, isLoading }: ICardsSlider
         <ModalDeleteItem
           deleteMessage="Are you sure to delete selected item?"
           deleteHandler={deleteProduct}
-          isLoading={isLoading}
         />
       </>
     );
@@ -102,7 +101,6 @@ export const CardsSlider = ({ products, deleteProduct, isLoading }: ICardsSlider
         <ModalDeleteItem
           deleteMessage="Are you sure to delete selected item?"
           deleteHandler={deleteProduct}
-          isLoading={isLoading}
         />
       </Box>
     );
