@@ -16,7 +16,6 @@ import {
 
 // images
 import profileTopBg from '@/assets/profileTopBg.png';
-import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -36,6 +35,9 @@ import { deleteProduct, getUserProducts } from '@/services/myProfileApi';
 import { UserContext } from '@/components/Providers/user';
 import { ModalContext } from '@/components/Providers/modal';
 import { useRouter } from 'next/router';
+import Notification from '@/components/UI/Notification/Notificaton';
+import { NotificationContext } from '@/components/Providers/notification';
+import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 
 export default function Home() {
   const theme = useTheme<Theme>();
@@ -45,10 +47,11 @@ export default function Home() {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
-
-  const router = useRouter();
-
-  
+  const {
+    setIsOpen: setIsNotificationOpen,
+    setIsFailed,
+    setMessage,
+  } = useContext(NotificationContext);
 
   const { data: userProducts } = useQuery(['userProducts'], () =>
     getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
@@ -64,9 +67,16 @@ export default function Home() {
       onSuccess: () => {
         setIsDeleting(false);
         queryClient.invalidateQueries(['userProducts']);
+        setIsNotificationOpen(true);
+        setIsFailed(false);
+        setMessage("You've succesfully deleted the product");
       },
 
-      onError: () => router.push(Routes.error500),
+      onError: () => {
+        setIsNotificationOpen(true);
+        setIsFailed(true);
+        setMessage('Something went wrong: the product was not deleted');
+      },
     }
   );
 
@@ -123,6 +133,8 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
+
+      <Notification />
     </Layout>
   );
 }
