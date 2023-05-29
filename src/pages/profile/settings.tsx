@@ -30,9 +30,9 @@ import { NotificationContext } from '@/components/Providers/notification';
 import Notification from '@/components/UI/Notification/Notificaton';
 
 export default function UpdateProfile() {
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
-  const { mutate: updateMutate} = useMutation(updateUser);
+  const { mutate: updateMutate } = useMutation(updateUser);
   const { mutate: deleteMutate } = useMutation(deleteAvatar);
   const { mutate: userMutate } = useMutation(getUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -70,7 +70,7 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true)
+    setLoading(true);
     let dataToUpdate = { ...updateFormData };
 
     const token = localStorage.getItem('token')
@@ -88,12 +88,13 @@ export default function UpdateProfile() {
       {
         onSuccess: async () => {
           userMutate(token, {
-            onSuccess: (data) => {
+            onSuccess: async (data) => {
+              setUser(data);
+              await push(Routes.myProducts);
               setIsOpen(true);
               setIsFailed(false);
               setMessage('Profile has been updated');
-              setLoading(false)
-              setUser(data);
+              setLoading(false);
             },
           });
           console.log('Form updated successfully');
