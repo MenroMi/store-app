@@ -9,6 +9,7 @@ import { StaticImageData } from 'next/image';
 import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 import profileIcon from '@/assets/icons/profile.svg';
 import bonusAccountIcon from '@/assets/icons/bonusAcc.svg';
+import shoesIcon from '@/assets/icons/shoes.svg';
 import logoutIcon from '@/assets/icons/logout.svg';
 import homeIcon from '@/assets/icons/home.svg';
 import loginIcon from '@/assets/icons/login.svg';
@@ -55,6 +56,12 @@ export const NAV_BURGER_LINKS: INavItem[] = [
     role: 'user guest',
     name: 'Home',
     to: Routes.myProducts,
+  },
+  {
+    icon: shoesIcon,
+    role: 'user',
+    name: 'Catalog',
+    to: Routes.search,
   },
   {
     icon: bonusAccountIcon,
