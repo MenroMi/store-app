@@ -214,3 +214,58 @@ export const ONE_MOCKED_PRODUCT = {
   productPrice: 160,
   productCategory: "Women's shoes",
 };
+
+export const searchSliderOptionsOnDesktop = {
+  slidesToShow: 4.7,
+  slidesToScroll: 2,
+  infinite: false,
+  arrows: true,
+  touchMove: false,
+  responsive: [
+    {
+      breakpoint: 1920,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        touchMove: true,
+      },
+    },
+    {
+      breakpoint: 1600,
+      settings: {
+        slidesToShow: 3.5,
+        slidesToScroll: 1,
+        touchMove: true,
+      },
+    },
+
+    {
+      breakpoint: 1300,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        touchMove: true,
+      },
+    },
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 2,
+        touchMove: true,
+      },
+    },
+  ],
+};
+
+export const searchSliderOptionsOnMobile = {
+  arrow: true,
+  slidesToShow: 3.05,
+  slidesToScroll: 3,
+  vertical: true,
+  verticalSwiping: true,
+  infinite: false,
+};
+
+export const keyStr =
+  'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';

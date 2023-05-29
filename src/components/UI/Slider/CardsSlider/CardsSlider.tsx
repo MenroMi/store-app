@@ -38,7 +38,7 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
     arrows: true,
     touchMove: false,
     nextArrow: <SliderArrow />,
-    prevArrow: <SliderArrow next={false} />,
+    prevArrow: <SliderArrow style={{ right: '0' }} next={false} />,
     responsive: [
       {
         breakpoint: 1200,

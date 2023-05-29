@@ -1,33 +1,50 @@
+// basic
 import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
-import {
-  Theme,
-  useMediaQuery,
-  useTheme,
-  InputAdornment,
-  Box,
-  Typography,
-  Button,
-} from '@mui/material';
 import Image from 'next/image';
+
+// services
+import { getSearchProducts } from '@/services/searchApi';
+
+// rq
+import { useQuery } from '@tanstack/react-query';
+
+// mui
+import { Theme, useMediaQuery, useTheme, InputAdornment, Box, Typography } from '@mui/material';
+
+// plugins
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+// components
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
+import SearchSliderMobile from '@/components/UI/Slider/SearchSliderMobile/SearchSliderMobile/SearchSliderMobile';
+import SearchSliderDesktop from '@/components/UI/Slider/SearchSliderDesktop/SearchSliderDesktop/SearchSliderDesktop';
+
+// images
 import logo from '@/assets/icons/logo.svg';
 import close from '@/assets/icons/close.svg';
 import search from '@/assets/icons/search.svg';
-import { useRouter } from 'next/router';
+
+// styled components
 import {
   HeaderDiv,
   HeaderSearch,
   HeaderSearchContainer,
   HeaderSearchDiv,
   HeaderSearchLayout,
-} from './styled';
-import FullScreenLoader from '../../Loader/FullScreenLoader';
-import { getSearchProducts } from '@/services/searchApi';
-import { useQuery } from '@tanstack/react-query';
+} from './styles';
+import { CustomTypographyName } from '../../Cards/Card/CardStyles';
+import { AttrFromData } from '@/types/cardListTypes';
 
+// interface
 interface ISearchHeaderProps {
   setSearchOpen: Dispatch<SetStateAction<boolean>>;
 }
+interface ISearchViewProps {
+  products: AttrFromData[];
+}
 
+// mock data
 const PopularSearch = ['Nike Air Force 1 LV8', 'Nike Air Force 1', `Nike Air Force 1 '07 High'`];
 
 const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
@@ -36,8 +53,9 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const { palette } = useTheme();
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
+  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
 
-  const { data, isFetched, isLoading, isError, error, isFetching } = useQuery({
+  const { data } = useQuery({
     queryKey: ['searchData', inputValue],
     queryFn: () => getSearchProducts(inputValue),
   });
@@ -45,8 +63,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   useEffect(() => {
     setPopular(PopularSearch);
   }, [popular]);
-
-  console.log(data);
 
   return (
     <HeaderSearchLayout>
@@ -108,73 +124,78 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
             onClick={() => setSearchOpen(false)}
           />
         </HeaderSearchDiv>
-        {typeof data === 'undefined' ? (
-          <Box sx={{ height: '300px', position: 'relative' }}>
-            <FullScreenLoader />
-          </Box>
-        ) : (
-          <>
-            <HeaderDiv>
-              <Typography variant="h5" sx={{ color: palette.text.primary }}>
-                Popular Search Terms
+        <>
+          <HeaderDiv>
+            <Box
+              sx={{
+                mt: queryDownSm ? 1 : 3,
+                display: 'flex',
+                flexDirection: queryDownLg ? 'column' : 'row',
+                justifyContent: 'space-between',
+                gap: queryDownSm ? 1.5 : 3,
+                height: '100%',
+              }}
+            >
+              <Typography sx={{ order: 2, display: { lg: 'none', xs: 'block' } }}>
+                Search result:
               </Typography>
+              {typeof data === 'undefined' ? (
+                <Box
+                  sx={{
+                    position: 'relative',
+                    maxWidth: '1920px',
+
+                    width: '100%',
+                    order: { lg: 1, xs: 3 },
+                  }}
+                >
+                  <FullScreenLoader />
+                </Box>
+              ) : queryDownLg ? (
+                <SearchSliderMobile products={data} />
+              ) : (
+                <SearchSliderDesktop products={data} />
+              )}
               <Box
                 sx={{
-                  mt: queryDownSm ? 1 : 3,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: queryDownSm ? 1.5 : 3,
+                  maxWidth: '500px',
+                  width: '100%',
+                  display: { lg: 'block' },
+                  order: { lg: 2 },
                 }}
-              ></Box>
-            </HeaderDiv>
-            <HeaderDiv>Search Answer</HeaderDiv>
-          </>
-        )}
+              >
+                <Typography variant="h5" sx={{ color: palette.text.primary }}>
+                  Popular Search Terms
+                </Typography>
+                <Box
+                  sx={{
+                    mt: '10px',
+                  }}
+                >
+                  {popular.map((search) => (
+                    <CustomTypographyName
+                      variant="subtitle1"
+                      key={search}
+                      sx={{
+                        cursor: 'pointer',
+                        '&:hover': { color: palette.primary.main },
+                        fontSize: { xl: '28px', md: '20px' },
+                      }}
+                      onClick={() => {
+                        console.log(search);
+                      }}
+                    >
+                      {search}
+                    </CustomTypographyName>
+                  ))}
+                </Box>
+              </Box>
+            </Box>
+          </HeaderDiv>
+        </>
       </HeaderSearchContainer>
     </HeaderSearchLayout>
   );
 };
 
 export default SearchHeader;
-
-/**
- * 
- * 
- *   // useEffect(() => {
-  //   let timerId: NodeJS.Timeout;
-
-  //   const handleSearch = () => {
-  //     setLoading(true);
-  //     console.log('your logic', inputValue);
-  //     setTimeout(() => {
-  //       setLoading(false);
-  //     }, 2000);
-  //   };
-
-  //   if (inputValue.replace(/\s/g, '')) {
-  //     timerId = setTimeout(handleSearch, 1500);
-  //   }
-  //   return () => {
-  //     clearTimeout(timerId);
-  //   };
-  // }, [inputValue]);
- */
-
-/**
-   * 
-   *                 {popular.map((search) => (
-                  <Typography
-                    variant="subtitle1"
-                    key={search}
-                    sx={{
-                      cursor: 'pointer',
-                      '&:hover': { color: palette.primary.main },
-                    }}
-                    onClick={() => {
-                      console.log(search);
-                    }}
-                  >
-                    {search}
-                  </Typography>
-                ))}
-   */
