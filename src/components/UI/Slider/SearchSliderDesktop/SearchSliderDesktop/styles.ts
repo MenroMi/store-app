@@ -4,8 +4,7 @@ import { Box } from '@mui/material';
 import Slider from 'react-slick';
 
 export const SearchSlider = styled(Slider)(() => ({
-  margin: '0 50px 0 50px',
-  maxWidth: '65%',
+  maxWidth: '100%',
   width: '100%',
 
   '& .slick-list': {

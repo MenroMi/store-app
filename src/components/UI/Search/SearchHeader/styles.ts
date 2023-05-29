@@ -1,5 +1,5 @@
 import theme from '@/utils/mui/theme';
-import { TextField, styled } from '@mui/material';
+import { Button, TextField, styled } from '@mui/material';
 
 export const HeaderSearchLayout = styled('div')(() => ({
   position: 'fixed',
@@ -63,7 +63,7 @@ export const HeaderSearch = styled(TextField)(() => ({
 }));
 
 export const HeaderDiv = styled('div')(() => ({
-  margin: '40px 67px 20px 80px',
+  margin: '40px 30px 20px 25px',
 
   [theme.breakpoints.down('lg')]: {
     margin: '40px 0 20px 0',
@@ -73,3 +73,16 @@ export const HeaderDiv = styled('div')(() => ({
     margin: '20px 0',
   },
 }));
+
+export const ButtonSeeAll = styled(Button)({
+  width: '100%',
+  border: '2px solid rgba(0,0,0,0.2)',
+  fontSize: '24px',
+  color: 'rgba(0,0,0,0.5)',
+  transition: '0.3s all',
+  '&:hover': {
+    border: '2px solid  rgba(254, 100, 94, 1)',
+    backgroundColor: theme?.palette?.primary?.main,
+    color: theme?.palette?.primary?.contrastText,
+  },
+});
