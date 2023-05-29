@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 
 export const SearchSlider = styled(Slider)(() => ({
   maxWidth: '100%',
-  width: '65%',
+  width: '70%',
 
   '& .slick-list': {
     height: '280px',

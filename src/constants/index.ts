@@ -215,7 +215,7 @@ export const ONE_MOCKED_PRODUCT = {
 };
 
 export const searchSliderOptionsOnDesktop = {
-  slidesToShow: 4.9,
+  slidesToShow: 5.8,
   slidesToScroll: 2,
   infinite: false,
   arrows: true,
@@ -225,7 +225,7 @@ export const searchSliderOptionsOnDesktop = {
     {
       breakpoint: 1920,
       settings: {
-        slidesToShow: 4.9,
+        slidesToShow: 5,
         slidesToScroll: 1,
         touchMove: true,
       },

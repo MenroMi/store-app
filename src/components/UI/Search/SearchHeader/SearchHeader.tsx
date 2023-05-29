@@ -17,6 +17,7 @@ import { getSearchProducts } from '@/services/searchApi';
 
 // rq
 import { useQuery } from '@tanstack/react-query';
+import { useDebounce } from '@tanstack/react-query';
 
 // mui
 import { Theme, useMediaQuery, useTheme, InputAdornment, Box, Typography } from '@mui/material';
@@ -65,6 +66,17 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
     queryKey: ['searchData', inputValue],
     queryFn: () => getSearchProducts(inputValue),
   });
+
+  React.useEffect(() => {
+    const handler: NodeJS.Timeout = setTimeout(() => {
+      setInputValue(inputValue);
+    }, 1500);
+
+    // Cancel the timeout if value changes (also on delay change or unmount)
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [inputValue]);
 
   const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     let searchObj: {
@@ -178,7 +190,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                   sx={{
                     position: 'relative',
                     maxWidth: '1920px',
-
                     width: '100%',
                     order: { lg: 1, xs: 3 },
                   }}
@@ -202,44 +213,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
 };
 
 export default SearchHeader;
-
-{
-  /* <Box
-                sx={{
-                  maxWidth: '500px',
-                  width: '100%',
-                  display: { lg: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
-                  order: { lg: 2 },
-                }}
-              >
-                <Typography variant="h5" sx={{ color: palette.text.primary }}>
-                  Popular Search Terms
-                </Typography>
-                <Box
-                  sx={{
-                    mt: '10px',
-                    flex: '2',
-                  }}
-                >
-                  {popular.map((search) => (
-                    <CustomTypographyName
-                      variant="subtitle1"
-                      key={search}
-                      sx={{
-                        cursor: 'pointer',
-                        '&:hover': { color: palette.primary.main },
-                        fontSize: { xl: '28px', md: '20px' },
-                      }}
-                      onClick={() => {
-                        console.log(search);
-                      }}
-                    >
-                      {search}
-                    </CustomTypographyName>
-                  ))}
-                </Box>
-              </Box> */
-}
 
 // useEffect(() => {
 //   let timerId: NodeJS.Timeout;

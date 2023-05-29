@@ -7,10 +7,10 @@ interface ISearchPopularTermsProps {
   onChangeSearchTerm: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
 }
 
+// mock data
 const PopularSearch = ['Nike Air Force 1 LV8', 'Nike Air Force 1', `Nike Air Force 1 '07 High'`];
 
 const SearchPopularTerms: React.FC<ISearchPopularTermsProps> = ({ onChangeSearchTerm }) => {
-  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [popular, setPopular] = useState<string[]>([]);
   const { palette } = useTheme<Theme>();
 
@@ -23,7 +23,9 @@ const SearchPopularTerms: React.FC<ISearchPopularTermsProps> = ({ onChangeSearch
       sx={{
         maxWidth: '500px',
         width: '100%',
-        display: { lg: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
+        display: { lg: 'flex', xs: 'none' },
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         order: { lg: 2 },
       }}
     >
