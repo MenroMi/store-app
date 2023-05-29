@@ -73,8 +73,6 @@ export const getFilteredData = async (query: any) => {
   let url: string = `/products?populate=*&`;
   let page: number = 1;
 
-  // console.log('Search API', query);
-
   if (typeof query !== 'undefined') {
     for (let prop in query) {
       if (!Array.isArray(query[prop])) {

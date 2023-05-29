@@ -13,7 +13,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
@@ -22,7 +22,7 @@ import leftBurgerSetting from '@/assets/icons/leftBurgerSetting.svg';
 
 import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
-import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
+import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants/routes';
 import { useRouter } from 'next/router';
 
 import { INavItem } from '@/types/INavItem';

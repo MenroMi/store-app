@@ -1,4 +1,4 @@
-import { baseURL } from '@/constants';
+import { baseURL } from '@/constants/urls';
 import { ISettings } from '@/types';
 import axios from 'axios';
 
@@ -14,8 +14,6 @@ export const getUser = async (token: string | null) => {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  // console.log(response.data);
   return response.data;
 };
 
@@ -25,7 +23,6 @@ export const updateUser = async ({ token, id, dataToUpdate }: IUpdateData) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response.data);
   return response.data;
 };
 
@@ -35,6 +32,5 @@ export const deleteAvatar = async ({ token, id }: Omit<IUpdateData, 'dataToUpdat
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response.data);
   return response.data;
 };

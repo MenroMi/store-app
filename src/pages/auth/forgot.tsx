@@ -11,7 +11,7 @@ import FormRegistration from '@/components/Forms/FormRegistration/FormRegistrati
 import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import { IFormData } from '@/types/formDataTypes';
 import { forgot } from '@/services/authService';
 import { useMutation } from '@tanstack/react-query';

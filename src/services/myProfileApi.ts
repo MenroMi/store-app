@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { baseURL } from '@/constants';
+import { baseURL } from '@/constants/urls';
 
 export const getUserProducts = async (token: string) =>
   await axios.get(`${baseURL}users/me?populate[products][populate][0]=images,categories`, {
