@@ -26,7 +26,7 @@ export interface IAddProductRadioGroup {
   selectedSize: string | number;
   handleSelectSize: (size: string) => void;
   sizes: ISizesOptionsData[] | undefined;
-  availableSizes?:  ISizesOptionsData[] | undefined;
+  availableSize?:  ISizesOptionsData | undefined;
   isAddPage: boolean;
 }
 

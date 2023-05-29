@@ -46,8 +46,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
     setPopular(PopularSearch);
   }, [popular]);
 
-  console.log(data);
-
   return (
     <HeaderSearchLayout>
       <HeaderSearchContainer>
@@ -136,45 +134,3 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
 };
 
 export default SearchHeader;
-
-/**
- * 
- * 
- *   // useEffect(() => {
-  //   let timerId: NodeJS.Timeout;
-
-  //   const handleSearch = () => {
-  //     setLoading(true);
-  //     console.log('your logic', inputValue);
-  //     setTimeout(() => {
-  //       setLoading(false);
-  //     }, 2000);
-  //   };
-
-  //   if (inputValue.replace(/\s/g, '')) {
-  //     timerId = setTimeout(handleSearch, 1500);
-  //   }
-  //   return () => {
-  //     clearTimeout(timerId);
-  //   };
-  // }, [inputValue]);
- */
-
-/**
-   * 
-   *                 {popular.map((search) => (
-                  <Typography
-                    variant="subtitle1"
-                    key={search}
-                    sx={{
-                      cursor: 'pointer',
-                      '&:hover': { color: palette.primary.main },
-                    }}
-                    onClick={() => {
-                      console.log(search);
-                    }}
-                  >
-                    {search}
-                  </Typography>
-                ))}
-   */

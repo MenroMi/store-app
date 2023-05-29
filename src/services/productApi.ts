@@ -33,11 +33,10 @@ export const postProduct = (data: IProductData, token: string) =>
 
 export const getProductById = async (id: number) => {
   const { data } = await axios.get(`${baseURL}products/${id}?populate=images,color,gender,size`);
-  console.log(id);
   return data;
 }
 
 export const getProducts = async () => {
-  const { data } = await axios.get(`${baseURL}products?pagination[limit]=-1`);
+  const { data } = await axios.get(`${baseURL}products?pagination[limit]=20`);
   return data?.data;
 }

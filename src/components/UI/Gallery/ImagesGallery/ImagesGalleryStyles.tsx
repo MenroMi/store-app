@@ -14,12 +14,12 @@ export const CustomIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 export const CustomGalleryImageContainer = styled(Grid)<ICustomGalleryImageProps>(({ isMain }) => ({
-    maxWidth: 76,
-    maxHeight: 76,
+    width: 76,
+    height: 76,
     objectFit: 'cover',
     ...(isMain && {
-        maxWidth: 588,
-        maxHeight: 628,
+        width: 588,
+        height: 628,
     })
 }));
 
@@ -28,7 +28,9 @@ export const CustomGalleryImage = styled(Image)<ICustomGalleryImageProps>(({ sel
     width: '100%',
     height: '100%',
     objectFit: 'cover',
+    cursor: 'pointer',
     ...(selected && {
-        filter: 'brightness(75%)'
+        filter: 'brightness(75%)',
+        cursor: 'auto',
     }),
 }));

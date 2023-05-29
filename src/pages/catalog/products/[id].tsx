@@ -16,10 +16,6 @@ export interface ISingleProductPage {
 }
 
 export default function SingleProductPage({ product, sizes }: ISingleProductPage) {
-    // console.log(product);
-//     const { data: userProducts, isLoading } = useQuery(['userProducts'], () =>
-//     getUserProducts()
-//   );
     return (
         <Layout title="Product">
             <ProductContainer container>
@@ -32,11 +28,11 @@ export default function SingleProductPage({ product, sizes }: ISingleProductPage
 
 export async function getStaticProps({ params } : any) {
 
-    const { data: { attributes: product } } = await getProductById(params.id);
+    const { data } = await getProductById(params.id);
     const sizes = await getDataWithField('sizes', 'value');
     return {
         props: {
-            product,
+            product: {...data.attributes, id: data.id},
             sizes
         },
     };
@@ -44,13 +40,13 @@ export async function getStaticProps({ params } : any) {
 
 export async function getStaticPaths() {
     const products: any = await getProducts();
-    // const products: AttrFromData[] = await getProducts();
+    // console.log(products);
     const paths = products.map((product: any) =>({
         params: {id: product.id.toString()},
     }));
 
     return {
         paths,
-        fallback: false,
+        fallback: 'blocking',
     };
 }

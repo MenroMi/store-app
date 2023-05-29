@@ -1,7 +1,7 @@
 import { Button, styled, Typography } from "@mui/material";
 
 export const CustomButton = styled(Button)({
-    width: 248,
+    width: '100%',
     padding: 20,
 });
 
