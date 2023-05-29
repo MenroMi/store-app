@@ -19,6 +19,8 @@ import { Routes } from '@/constants';
 import { IFormData } from '@/types/formDataTypes';
 import { UserContext } from '@/components/Providers/user';
 import { getUser } from '@/services/userService';
+import { NotificationContext } from '@/components/Providers/notification';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 const Authorization = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -27,9 +29,10 @@ const Authorization = () => {
     checked: false,
   });
   const { setUser } = useContext(UserContext);
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
   const { mutate, isError } = useMutation(login);
-  const { mutate:userMutate } = useMutation(getUser);
-  const [loading, setLoading] = useState<boolean>(false)
+  const { mutate: userMutate } = useMutation(getUser);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { push } = useRouter();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -43,10 +46,10 @@ const Authorization = () => {
     event.preventDefault();
     const { email, password, checked } = formData;
     if (email && password) {
-      setLoading(true)
+      setLoading(true);
       mutate(
         { identifier: email, password },
-        { 
+        {
           onError: () => setLoading(false),
           onSuccess: (data) => {
             checked
@@ -56,7 +59,15 @@ const Authorization = () => {
             userMutate(data.jwt, {
               onSuccess: (data) => {
                 setUser(data);
+                setIsOpen(true);
+                setIsFailed(false);
+                setMessage("You've succesfully logged in");
                 push(Routes.myProducts);
+              },
+              onError: () => {
+                setIsOpen(true);
+                setIsFailed(true);
+                setMessage('Something went wrong: failed to log in');
               },
             });
           },
@@ -110,6 +121,8 @@ const Authorization = () => {
           </LinkMui>
         </Box>
       </Box>
+
+      <Notification />
     </SplitLayout>
   );
 };
