@@ -1,7 +1,13 @@
 // basic
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
-import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
+import {
+  QueryClient,
+  dehydrate,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 // mui
 import { Box } from '@mui/material';
@@ -38,6 +44,8 @@ export default function AddProduct() {
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
 
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation((images: File[]) => handlePostProduct(images), {
     onSuccess: () => {
       setIsOpen(true);
@@ -45,6 +53,7 @@ export default function AddProduct() {
       setIsFailed(false);
       setClickedId(null);
       setSelectedImages([]);
+      queryClient.invalidateQueries(['userProducts']);
       router.push(Routes.myProducts);
     },
     onError: () => {
