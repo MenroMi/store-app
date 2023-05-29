@@ -1,5 +1,7 @@
-import { ISizesOptionsData } from "./addProductTypes";
+import { IProductData, ISizesOptionsData } from "./addProductTypes";
+import { AttrFromData } from '@/types/cardListTypes';
 
 export interface IDescriptionProps {
-    sizes: ISizesOptionsData[],
+    product: IProductData | any,
+    sizes?: ISizesOptionsData[],
 }

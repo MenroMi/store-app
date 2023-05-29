@@ -16,7 +16,6 @@ import {
 
 // images
 import profileTopBg from '@/assets/profileTopBg.png';
-import noAvatar from '@/assets/noAvatar.png';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';

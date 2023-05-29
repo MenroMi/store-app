@@ -16,7 +16,8 @@ const products = Array(7).fill(undefined).map((_, idx) => ({
     productImageSrc: idx % 2 ? productImage : productImage2
 }));
 
-export default function ImagesGallery() {
+export default function ImagesGallery({images} : any) {
+    console.log(images);
     const [mainImageIndex, setMainImageIndex] = useState<number>(0);
 
     const handleNextImage = () => {
@@ -38,15 +39,15 @@ export default function ImagesGallery() {
     return (
         <Grid container item xs={6.3} maxHeight={628}>
             <Grid container item xs={1.6} overflow='hidden'>
-                {products.map((product, idx) => (
-                    <CustomGalleryImageContainer item key={idx}>
-                        <CustomGalleryImage src={product.productImageSrc} onClick={() => selectImage(idx)} selected={idx === mainImageIndex} blurDataURL={blurDataURL} alt={`Shoe image ${idx+1}`}/>
+                {images.map((image: any, idx: number) => (
+                    <CustomGalleryImageContainer item key={image.id}>
+                        <CustomGalleryImage src={image.attributes.url} onClick={() => selectImage(idx)} selected={idx === mainImageIndex} blurDataURL={blurDataURL} alt={`Shoe image ${idx+1}`} width={100} height={100}/>
                     </CustomGalleryImageContainer>
                 ))}
             </Grid>
             <Grid container item xs={10}>
                 <CustomGalleryImageContainer isMain={true} position='relative'>
-                    <CustomGalleryImage src={products[mainImageIndex].productImageSrc} alt="Main Image" blurDataURL={blurDataURL} priority={true} isMain={true}/>
+                    <CustomGalleryImage src={images[mainImageIndex].attributes.url} alt="Main Image" blurDataURL={blurDataURL} priority={true} isMain={true} width={100} height={100}/>
                     <Box position='absolute' bottom={25} right={25}>
                         <CustomIconButton onClick={handlePreviousImage} disabled={mainImageIndex === 0}>
                             <Box component={Image} src={LeftArraow} alt="Previous image" width={6.5} height="auto"></Box>

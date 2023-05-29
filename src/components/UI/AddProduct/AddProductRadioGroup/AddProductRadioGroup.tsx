@@ -14,6 +14,7 @@ import {
 
 export default function AddProductRadioGroup({
   selectedSize,
+  availableSizes,
   handleSelectSize,
   sizes,
   isAddPage

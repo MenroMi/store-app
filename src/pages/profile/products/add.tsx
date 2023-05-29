@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 
 // mui
-import { Box, Modal } from '@mui/material';
+import { Box } from '@mui/material';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';

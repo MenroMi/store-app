@@ -52,6 +52,16 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
         );
       }
 
+      if (label === 'View') {
+        return (
+          <MenuItem key={id} onClick={() => {
+            router.push(`${Routes.products}/${productID}`);
+          }}>
+            {label}
+          </MenuItem>
+        )
+      }
+
       return (
         <MenuItem key={id} onClick={() => method}>
           {label}

@@ -25,6 +25,7 @@ export enum Routes {
   myProducts = '/profile/products',
   search = '/catalog/search',
   settings = '/profile/settings',
+  products = '/catalog/products',
 }
 
 export const NAV_LINKS = [

@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { useQuery, dehydrate, QueryClient } from '@tanstack/react-query';
 import { getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
-import { useParamsURL } from '@/utils/hooks/useParamsURL';
 import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // interface
@@ -38,7 +37,6 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const [hide, setHide] = useState<boolean>(true);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes[]>([]);
-  const { handleFiltersURL } = useParamsURL();
 
   const { isFetched, isFetching, isLoading, isError, error, data } = useQuery({
     queryKey: ['filters'],
@@ -69,11 +67,9 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
 
     if (checked === false) {
       setActiveFilters((prev) => [...prev.filter((filter) => filter.name !== name)]);
-      // handleFiltersURL(data?., data?.values);
       return;
     }
 
-    // handleFiltersURL(data?.label, data?.values);
     setActiveFilters((prev) => [...prev, { label, id, name, checked }]);
   };
 
@@ -87,8 +83,8 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         data,
         hide,
         onHide,
-        onHideFilters,
         isChecked,
+        onHideFilters,
         activeFilters,
       }}
     >
