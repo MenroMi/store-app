@@ -1,13 +1,12 @@
 import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
-import theme from '@/utils/mui/theme';
 
-export const CustomFlexWrapper = styled(Box)(() => ({
+export const CustomFlexWrapper = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   maxWidth: '320px',
-}));
+});
 
 export const CustomSearchPathButton = styled(Button)(({ theme }) => ({
   fontSize: '15px',
