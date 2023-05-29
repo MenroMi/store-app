@@ -1,26 +1,24 @@
 // mui
-import { Box, Pagination, Skeleton, Theme, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Skeleton, Theme, useMediaQuery, useTheme } from '@mui/material';
 import React, { useContext } from 'react';
 
 // components
 import CardList from '../../Cards/CardList/CardList';
 import FiltersList from '../../Filters/FiltersList/FiltersList';
+import PaginationMui from '../../Pagination/Pagination';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
-import { ProductsContext } from '@/contexts/productsContext';
 
 // styled component
 import { CustomAside } from './FiltersAndCardsStyles';
-import { useRouter } from 'next/router';
+import FullScreenLoader from '../../Loader/FullScreenLoader';
 
 // interface
 
 // FUNCTIONAL COMPONENT
 const FiltersAndCards: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
-  const contextProducts = useContext(ProductsContext);
-  const router = useRouter();
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
@@ -70,16 +68,7 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
         }}
       >
         <CardList />
-        <Pagination
-          showFirstButton
-          showLastButton
-          page={contextProducts?.page}
-          onChange={contextProducts?.onChangePage}
-          count={contextProducts?.maxPage}
-          shape="rounded"
-          color="primary"
-          size="large"
-        />
+        <PaginationMui />
       </Box>
     </Box>
   );

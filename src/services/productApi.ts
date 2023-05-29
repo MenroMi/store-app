@@ -8,7 +8,7 @@ import { baseURL } from '@/constants/urls';
 import { IProductData } from '@/types/addProductTypes';
 
 export const getDataWithField = async (endpoint: string, fieldName: string = 'name') =>
-  await getDataFromServer(`${endpoint}`, `fields=${fieldName}`).then((res) => res?.data?.data);
+  await getDataFromServer(`${endpoint}`, `?fields=${fieldName}`).then((res) => res?.data?.data);
 
 export const getUserID = async (token: string) =>
   await axios.get(`${baseURL}users/me?fields=id`, {
@@ -39,5 +39,5 @@ export const getProductById = async (id: number) => {
 
 export const getProducts = async () => {
   const { data } = await axios.get(`${baseURL}products?pagination[limit]=-1`);
-  return data.data;
+  return data?.data;
 }

@@ -49,7 +49,6 @@ export default function FormAddProduct({
 }: IFormAddProductProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-  const queryDownXl = useMediaQuery<unknown>(theme.breakpoints.down('xl'));
 
   return (
     <Box sx={{ m: '38px', maxWidth: '1480px', width: '100%' }}>
@@ -67,7 +66,7 @@ export default function FormAddProduct({
                 variant="contained"
                 disabled={isLoading}
                 type="submit"
-                sx={{ padding: '10px 60px' }}
+                sx={{ padding: '10px 60px', width: '146px' }}
               >
                 {isLoading ? <ButtonLoader /> : 'Save'}
               </Button>
@@ -94,7 +93,10 @@ export default function FormAddProduct({
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              maxWidth: queryDownXl ? '350px' : '436px',
+              maxWidth: {
+                lg: '350px',
+                xl: '436px',
+              },
             }}
           >
             <FormControl sx={{ mb: 3 }}>
@@ -197,7 +199,7 @@ export default function FormAddProduct({
                 variant="contained"
                 type="submit"
                 disabled={isLoading}
-                sx={{ padding: '10px 60px' }}
+                sx={{ padding: '10px 60px', width: '146px' }}
               >
                 {isLoading ? <ButtonLoader /> : 'Save'}
               </Button>

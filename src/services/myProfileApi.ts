@@ -8,3 +8,10 @@ export const getUserProducts = async (token: string) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const deleteProduct = async (token: string, id: number) =>
+  await axios.delete(`${baseURL}products/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });

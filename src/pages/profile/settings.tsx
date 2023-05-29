@@ -1,6 +1,7 @@
 // basic
 import Image from 'next/image';
 import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 
 // mui
 import { Box, Button, FormLabel, Input, Typography, useMediaQuery } from '@mui/material';
@@ -24,6 +25,7 @@ import { UserContext } from '@/components/Providers/user';
 import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
 import { uploadImage } from '@/services/productApi';
+import { Routes } from '@/constants/routes';
 
 export default function UpdateProfile() {
   const { mutate: updateMutate, isLoading: updateIsLoading } = useMutation(updateUser);
@@ -32,11 +34,9 @@ export default function UpdateProfile() {
   const { user, setUser } = useContext(UserContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
+  const { push } = useRouter();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  const token = localStorage.getItem('token')
-    ? localStorage.getItem('token')
-    : sessionStorage.getItem('token');
   const id = Number(user?.id);
   const [updateFormData, setUpdateFormData] = useState<ISettings>({
     firstName: user?.firstName ? user.firstName : '',
@@ -67,6 +67,11 @@ export default function UpdateProfile() {
     event.preventDefault();
     // console.log(user?.avatar);
     let dataToUpdate = { ...updateFormData };
+
+    const token = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : sessionStorage.getItem('token');
+
     if (avatarToPost) {
       const response = await uploadImage(avatarToPost);
       const avatarID = response.data[0].id;
@@ -92,6 +97,10 @@ export default function UpdateProfile() {
   };
 
   const deleteAvatarIcon = () => {
+    const token = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : sessionStorage.getItem('token');
+
     if (user?.avatar) {
       if (user.avatar.formats.thumbnail.url) {
         deleteMutate(
@@ -99,7 +108,8 @@ export default function UpdateProfile() {
           {
             onSuccess: async () => {
               userMutate(token, {
-                onSuccess: (data) => {
+                onSuccess: async (data) => {
+                  await push(Routes.myProducts);
                   setUser(data);
                   setAvatarToDisplay('');
                 },

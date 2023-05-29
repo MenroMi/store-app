@@ -1,8 +1,5 @@
 export interface ActiveFiltersTypes {
-  label: string;
-  id: number;
-  name: string;
-  checked: boolean;
+  [label: string]: string[];
 }
 
 export interface FilterListRender {

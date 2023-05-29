@@ -25,6 +25,8 @@ export enum Routes {
   myProducts = '/profile/products',
   search = '/catalog/search',
   settings = '/profile/settings',
+  forWomen = '/catalog/search?gender=women',
+  forMen = '/catalog/search?gender=men',
   products = '/catalog/products',
 }
 
@@ -35,11 +37,11 @@ export const NAV_LINKS = [
   },
   {
     name: 'For women',
-    to: Routes.search,
+    to: Routes.forWomen,
   },
   {
     name: 'For men',
-    to: Routes.search,
+    to: Routes.forMen,
   },
 ];
 

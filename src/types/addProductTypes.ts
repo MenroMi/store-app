@@ -15,6 +15,7 @@ export interface ISizesOptionsData {
 export interface ISelectedImage {
   url: string;
   id: number;
+  imageFile: File;
 }
 
 export interface IAddProductUploadImageProps {

@@ -8,6 +8,7 @@ import { MenuItem, Box } from '@mui/material';
 
 // context
 import { StorageContext } from '@/contexts/sessionStorageContext';
+import { ModalContext } from '@/components/Providers/modal';
 
 // images
 import dotsBtn from '@/assets/icons/dots.svg';
@@ -34,19 +35,43 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
   const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
+  const { setIsOpen, setClickedId } = useContext(ModalContext);
 
   const openDropDownMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElement(e.currentTarget);
+  };
+
+  const handleOpenModal = (id: number) => {
+    document.body.style.overflow = 'hidden';
+    setClickedId(id);
+    setIsOpen(true);
   };
 
   const setMenuItems = (items: MenuItemParams[]) => {
     return items.map(({ id, label, method }): JSX.Element => {
       if (label === 'Add to Cart') {
         return (
-          <MenuItem key={id} onClick={() => {
-            contextStorage?.addUniqueID(productName, productID)
-            setAnchorElement(null)
-          }}>
+          <MenuItem
+            key={id}
+            onClick={() => {
+              contextStorage?.addUniqueID(productName, productID);
+              setAnchorElement(null);
+            }}
+          >
+            {label}
+          </MenuItem>
+        );
+      }
+
+      if (label === 'Delete') {
+        return (
+          <MenuItem
+            key={id}
+            onClick={() => {
+              handleOpenModal(productID);
+              setAnchorElement(null);
+            }}
+          >
             {label}
           </MenuItem>
         );
