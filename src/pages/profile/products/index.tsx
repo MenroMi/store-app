@@ -48,6 +48,8 @@ export default function Home() {
 
   const router = useRouter();
 
+  
+
   const { data: userProducts } = useQuery(['userProducts'], () =>
     getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
