@@ -13,7 +13,6 @@ import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 export default function UserProfile({
   username,
   profileTopBgSrc,
-  avatarSrc,
   userBonusPoints,
 }: IUserProfileProps) {
   const { user } = useContext(UserContext);
@@ -42,14 +41,6 @@ export default function UserProfile({
           ml: queryDownSm ? 2.25 : 6,
         }}
       >
-        {/* <Box
-          component={Image}
-          src={avatarSrc}
-          alt="Avatar"
-          width={queryDownSm ? 60 : 120}
-          height={queryDownSm ? 60 : 120}
-
-        /> */}
         <Box
           sx={{
             alignItems: 'center',

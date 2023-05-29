@@ -18,7 +18,6 @@ import Layout from '@/components/Layout/MainLayout';
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
@@ -35,7 +34,7 @@ import { ModalContext } from '@/components/Providers/modal';
 import { NotificationContext } from '@/components/Providers/notification';
 
 export default function AddProduct() {
-  const [loading, setLoading] = useState<boolean>(false);
+  // useQuery
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
   const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
   const { data: categoriesData } = useQuery(['categories'], () => getDataWithField('categories'));
@@ -63,6 +62,8 @@ export default function AddProduct() {
     },
   });
 
+  // states
+  const [loading, setLoading] = useState<boolean>(false);
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [category, setCategory] = useState<string>('5');
@@ -71,9 +72,8 @@ export default function AddProduct() {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
+  // contexts
   const { setClickedId } = useContext(ModalContext);
-
-  // urls of images. used to show the image on the screen
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
 
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);

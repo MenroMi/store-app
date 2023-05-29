@@ -30,10 +30,11 @@ import { NotificationContext } from '@/components/Providers/notification';
 import Notification from '@/components/UI/Notification/Notificaton';
 
 export default function UpdateProfile() {
-  const { mutate: updateMutate, isLoading: updateIsLoading } = useMutation(updateUser);
+  const [loading, setLoading] = useState<boolean>(false)
+  const { user, setUser } = useContext(UserContext);
+  const { mutate: updateMutate} = useMutation(updateUser);
   const { mutate: deleteMutate } = useMutation(deleteAvatar);
   const { mutate: userMutate } = useMutation(getUser);
-  const { user, setUser } = useContext(UserContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
   const { push } = useRouter();
@@ -69,7 +70,7 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // console.log(user?.avatar);
+    setLoading(true)
     let dataToUpdate = { ...updateFormData };
 
     const token = localStorage.getItem('token')
@@ -91,6 +92,7 @@ export default function UpdateProfile() {
               setIsOpen(true);
               setIsFailed(false);
               setMessage('Profile has been updated');
+              setLoading(false)
               setUser(data);
             },
           });
@@ -219,7 +221,7 @@ export default function UpdateProfile() {
             Welcome back! Please enter your details to log into your account.
           </Typography>
           <FormSettings
-            loading={updateIsLoading}
+            loading={loading}
             formData={updateFormData}
             setFormData={setUpdateFormData}
             handleSubmit={handleSubmit}
