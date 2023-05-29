@@ -1,7 +1,13 @@
 // basic
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
-import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
+import {
+  QueryClient,
+  dehydrate,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 // mui
 import { Box } from '@mui/material';
@@ -12,7 +18,6 @@ import Layout from '@/components/Layout/MainLayout';
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
 import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
 
 // constants
 import { Routes } from '@/constants';
@@ -28,7 +33,8 @@ import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
 
 export default function AddProduct() {
-  const [loading, setLoading] = useState<boolean>(false);
+  // useQuery
+  const queryClient = useQueryClient();
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
   const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
   const { data: categoriesData } = useQuery(['categories'], () => getDataWithField('categories'));
@@ -36,7 +42,9 @@ export default function AddProduct() {
   const { data: id } = useQuery(['id'], () =>
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
-  const { mutate, isLoading } = useMutation((images: File[]) => handlePostProduct(images), {
+
+  // mutations
+  const { mutate } = useMutation((images: File[]) => handlePostProduct(images), {
     onSuccess: () => {
       setClickedId(null);
       setSelectedImages([]);
@@ -49,6 +57,10 @@ export default function AddProduct() {
     },
   });
 
+  const router = useRouter();
+
+  // states
+  const [loading, setLoading] = useState<boolean>(false);
   const [productName, setProductName] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [category, setCategory] = useState<string>('5');
@@ -57,12 +69,9 @@ export default function AddProduct() {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
+  // contexts
   const { setClickedId } = useContext(ModalContext);
-
-  // urls of images. used to show the image on the screen
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
-
-  const router = useRouter();
 
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,11 +124,14 @@ export default function AddProduct() {
   };
 
   const handleSubmit = () => {
-    setLoading(true)
+    setLoading(true);
     if (selectedImages && selectedImages?.length > 0) {
       const imagesToPost = selectedImages?.map((image) => image.imageFile);
       mutate(imagesToPost, {
-        onSuccess: () => router.push(Routes.myProducts),
+        onSuccess: () => {
+          queryClient.invalidateQueries(['userProducts']);
+          router.push(Routes.myProducts);
+        },
         onError: () => router.push(Routes.error500),
       });
     }
@@ -129,7 +141,7 @@ export default function AddProduct() {
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
         <FormAddProduct
-          isLoading={loading  }
+          isLoading={loading}
           sizes={sizesData}
           productName={productName}
           price={price}

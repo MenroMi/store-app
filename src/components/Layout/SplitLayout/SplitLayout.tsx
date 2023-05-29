@@ -14,7 +14,7 @@ const LayoutAuthPages = styled('div')`
   position: relative;
 `;
 
-type ISplitLayoutProps = {
+interface ISplitLayoutProps{
   children: React.ReactNode;
   title?: string;
 };
@@ -66,8 +66,8 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
               <Image
                 src={getImage(pathname)}
                 alt={`${pathname.slice(1)}Bg`}
-                fill
                 priority={true}
+                fill
                 style={{ objectFit: 'cover', zIndex: 1000 }}
               />
               {pathname === Routes.register && <SignComments />}
