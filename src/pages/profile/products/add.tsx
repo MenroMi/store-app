@@ -20,12 +20,10 @@ import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProf
 import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 // services
-import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
-
-// interfaces
+import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/productApi';
 import { IProductData } from '@/types/addProductTypes';
 
 // context

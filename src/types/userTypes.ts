@@ -1,4 +1,4 @@
-interface IAvatar {
+export interface IAvatar {
   id: number;
   name: string;
   alternativeText: any;

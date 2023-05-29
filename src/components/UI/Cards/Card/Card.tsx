@@ -11,9 +11,7 @@ import {
 
 // interface
 import { ICardProps } from '@/types/cardTypes';
-
-const keyStr =
-  'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
+import { blurDataURL } from '@/constants/urls';
 
 // FUNCTIONAL COMPONENT
 const Card: React.FC<ICardProps> = ({
@@ -39,7 +37,7 @@ const Card: React.FC<ICardProps> = ({
           fill
           priority={true}
           placeholder="blur"
-          blurDataURL={keyStr}
+          blurDataURL={blurDataURL}
         />
         {children}
       </Box>

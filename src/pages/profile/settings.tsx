@@ -24,8 +24,8 @@ import { ISettings } from '@/types';
 import { UserContext } from '@/components/Providers/user';
 import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
-import { uploadImage } from '@/services/addProductApi';
-import { Routes } from '@/constants';
+import { uploadImage } from '@/services/productApi';
+import { Routes } from '@/constants/routes';
 import { NotificationContext } from '@/components/Providers/notification';
 import Notification from '@/components/UI/Notification/Notificaton';
 

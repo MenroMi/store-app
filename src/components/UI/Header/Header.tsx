@@ -32,7 +32,7 @@ import { UserContext } from '@/components/Providers/user';
 
 // constants
 import { Routes } from '@/constants';
-import { NAV_BURGER_LINKS } from '@/constants';
+import { NAV_BURGER_LINKS } from '@/constants/routes';
 
 // components
 import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';

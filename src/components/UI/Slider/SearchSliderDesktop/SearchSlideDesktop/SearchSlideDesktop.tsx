@@ -2,7 +2,7 @@
 import { Box, Button } from '@mui/material';
 
 // constants
-import { keyStr } from '@/constants';
+import { blurDataURL } from '@/constants/urls';
 
 // styled components
 import { CustomImage, CustomTypographyName } from '@/components/UI/Cards/Card/CardStyles';
@@ -32,7 +32,7 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
           fill
           priority={true}
           placeholder="blur"
-          blurDataURL={keyStr}
+          blurDataURL={blurDataURL}
           sx={{ objectPosition: 'bottom' }}
         />
         {children}
