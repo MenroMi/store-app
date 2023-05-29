@@ -3,7 +3,15 @@ import * as styles from './styles';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Box, Button, InputAdornment, Typography, useTheme, Theme, useMediaQuery, } from '@mui/material';
+import {
+  Box,
+  Button,
+  InputAdornment,
+  Typography,
+  useTheme,
+  Theme,
+  useMediaQuery,
+} from '@mui/material';
 
 import { Routes } from '@/constants';
 
@@ -20,21 +28,21 @@ import { useRouter } from 'next/router';
 import { INavItem } from '@/types/INavItem';
 import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
-import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
 import UserMenu from '../Menu/UserMenu/UserMenu';
 import SearchHeader from '../Search/SearchHeader/SearchHeader';
 import theme from '@/utils/mui/theme';
+import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 export default function Header() {
   const [isBurgerClicled, setIsBurgerClicked] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
-    const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
-    const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
+  const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   const { user, setUser } = useContext(UserContext);
+  const { cartQuantity } = useShoppingCart();
 
-  const contextStorage = useContext(StorageContext);
   const { push, pathname } = useRouter();
 
   const logOut = (e: React.MouseEvent<HTMLElement>) => {
@@ -82,9 +90,9 @@ export default function Header() {
     },
   } = useTheme<Theme>();
 
-  useEffect(() => {
-    contextStorage?.setNewLengthFromStorage();
-  }, [contextStorage]);
+  // useEffect(() => {
+  //   contextStorage?.setNewLengthFromStorage();
+  // }, [contextStorage]);
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
@@ -131,7 +139,7 @@ export default function Header() {
               </Button>
             )}
             <Box
-             sx={{
+              sx={{
                 display: {
                   sm: 'flex',
                   xs: 'none',
@@ -169,11 +177,7 @@ export default function Header() {
                   },
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Image
-                        width={22}
-                        src={SearchIcon}
-                        alt="search-icon"
-                      />
+                      <Image width={22} src={SearchIcon} alt="search-icon" />
                     </InputAdornment>
                   ),
                   autoComplete: 'off',
@@ -181,13 +185,13 @@ export default function Header() {
               />
             </Box>
             <styles.Cart>
-              <Link href={Routes.bag} >
+              <Link href={Routes.bag}>
                 <Box sx={{ position: 'relative', pt: '2px' }}>
                   <Image width={22} height={24} priority={true} src={CartIcon} alt="cart-icon" />
                   <Box
                     bgcolor={main}
                     sx={{
-                      display: `${contextStorage?.storageLength === 0 ? 'none' : 'block'}`,
+                      display: `${cartQuantity === 0 ? 'none' : 'block'}`,
                       position: 'absolute',
                       top: '-5px',
                       right: '-10px',
@@ -204,18 +208,20 @@ export default function Header() {
                         transform: 'translateX(-50%)',
                       }}
                     >
-                      {contextStorage?.storageLength}
+                      {cartQuantity}
                     </Box>
                   </Box>
                 </Box>
               </Link>
-             {queryDownSm &&  <Image
-                        width={22}
-                        onClick={() => setSearchOpen(true)}
-                        src={SearchIcon}
-                        alt="search-icon"
-                      />}
-              { !queryDownMd && user && <UserMenu />}
+              {queryDownSm && (
+                <Image
+                  width={22}
+                  onClick={() => setSearchOpen(true)}
+                  src={SearchIcon}
+                  alt="search-icon"
+                />
+              )}
+              {!queryDownMd && user && <UserMenu />}
             </styles.Cart>
             <styles.Burger
               sx={{

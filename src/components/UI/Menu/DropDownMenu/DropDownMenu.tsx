@@ -21,6 +21,7 @@ import { MenuItemParams } from '@/types';
 
 // constants
 import { Routes, homeItems, othersItems } from '@/constants';
+import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 // interface
 interface IDropDownMenuProps {
@@ -34,6 +35,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
   const router = useRouter();
   const open = Boolean(anchorElement);
   const { setIsOpen, setClickedId } = useContext(ModalContext);
+  const { increaseCartQuantity } = useShoppingCart();
 
   const openDropDownMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElement(e.currentTarget);
@@ -52,7 +54,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
           <MenuItem
             key={id}
             onClick={() => {
-              contextStorage?.addUniqueID(productName, productID);
+              increaseCartQuantity(productID!);
               setAnchorElement(null);
             }}
           >

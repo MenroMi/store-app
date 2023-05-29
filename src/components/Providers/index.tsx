@@ -15,6 +15,7 @@ import ReactQueryProvider from './queryClient';
 import UserProvider from './user';
 import { ModalProvider } from './modal';
 import ImagesProvider from './images';
+import { ShoppingCartProvider } from '@/contexts/shoppingCardContext';
 
 export interface IProvidersProps {
   children: ReactNode;
@@ -26,6 +27,7 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
     <ThemeProvider theme={theme}>
       <ReactQueryProvider dehydrateState={dehydrateState}>
         <UserProvider>
+          <ShoppingCartProvider>
           <StorageProvider>
             <FiltersProvider>
               <ImagesProvider>
@@ -33,6 +35,7 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
               </ImagesProvider>
             </FiltersProvider>
           </StorageProvider>
+          </ShoppingCartProvider>
         </UserProvider>
       </ReactQueryProvider>
     </ThemeProvider>
