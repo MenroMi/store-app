@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext } from 'react';
 import { useSessionStorage } from '@/hooks/useSessionStorage/useSessionStorage';
+import { StaticImageData } from 'next/image';
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -8,6 +9,10 @@ type ShoppingCartProviderProps = {
 export type CartItem = {
   id: number;
   quantity: number;
+  // productName: string;
+  // productCategory: string;
+  // productImageSrc: StaticImageData | string;
+  // productPrice: number;
 };
 
 export type ShoppingCartContext = {

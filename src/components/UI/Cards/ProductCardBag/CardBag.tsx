@@ -24,6 +24,8 @@ import BagQuantityButton from '../../Buttons/BagQuantityButton/BagQuantityButton
 import BagDeleteButton from '../../Buttons/BagDeleteButton/BagDeleteButton';
 import { CustomImage } from '../Card/CardStyles';
 import singInImg from '@/assets/singInBg.png';
+import { getProductById, getProductPriceById } from '@/services/cardBagService';
+import queryClient from '@/components/Providers/queryClient';
 
 // interface
 type CartItemProps = {
@@ -32,50 +34,21 @@ type CartItemProps = {
 };
 
 const CardBag = ({ id, quantity }: CartItemProps) => {
-  // const { name, price, gender } = attributes;
-  const { removeFromCart, increaseCartQuantity, decreaseCartQuantity, getItemQuantity, cartItems } =
-    useShoppingCart();
+  const { cartItems } = useShoppingCart();
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  // const { data: any } = useQuery(['id'], () => getProductById(id));
+  // const getProductById = async (id: number) => {
+  //   return await axios.get(`${baseURL}/products/${id}`).then((response) => response?.data?.data);
+  // };
 
-  const [resProduct, setResProduct] = useState<AttrFromData>();
-
-  // const quantity = getItemQuantity(id);
+  const keyStr =
+    'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
 
   const item = cartItems.find((i) => i.id === id);
-  // if (item == null) return null;
 
-  // async function showArrayFromStorage(id: number) {
-  //   let newList: AttrFromData = await axios
-  //     .get(`${baseURL}products/${id}`)
-  //     .then((res) => res.data.data);
-  //   return newList;
-  // }
-
-  // const product: any = showArrayFromStorage(item.id).then((res) => console.log(res));
-  // console.log(product);
-
-  useEffect(() => {
-    async function showArrayFromStorage(id: number) {
-      let newList: any = await axios.get(`${baseURL}products/${id}`);
-      // console.log(newList.data.data);
-      setResProduct(newList.data.data);
-    }
-    showArrayFromStorage(item!.id);
-    // async function getProductPriceById(id: number) {
-    //   let newList: any = await axios.get(`${baseURL}products/${id}`);
-    //   console.log(newList.data.data.attributes.price);
-    // }
-  }, []);
-
-  // console.log(resProduct);
-
-  // const product: any = showArrayFromStorage(item.id);
-  // console.log(product);
-  // const resProduct: AttrFromData = product.data.data;
-  // console.log(resProduct);
+  const { data } = useQuery(['id', item?.id!], () => getProductById(id));
+  
 
   return (
     <>
@@ -95,16 +68,26 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
           }}
         >
           <Box
-            component={Image}
-            src={singInImg}
-            priority={true}
-            alt="Product"
             sx={{
               borderRadius: '6px',
               maxWidth: queryUpSm ? '223px' : '104px',
               maxHeight: queryUpSm ? '214px' : '101px',
             }}
-          ></Box>
+          >
+            <CustomImage
+              src={data?.images?.data[0]?.attributes?.url}
+              alt="product template"
+              priority={true}
+              placeholder="blur"
+              blurDataURL={keyStr}
+              width={223}
+              height={214}
+              sx={{
+                maxWidth: queryUpSm ? '223px' : '104px',
+                maxHeight: queryUpSm ? '214px' : '101px',
+              }}
+            />
+          </Box>
         </Box>
         <CustomBox
           sx={{
@@ -118,9 +101,9 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
                 width: '100%',
               }}
             >
-              <Typography variant="h3">{resProduct?.attributes.name}</Typography>
+              <Typography variant="h3">{data?.name}</Typography>
               <Typography variant="h5">
-                {resProduct?.attributes?.gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
+                {data?.gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
               </Typography>
               <Typography
                 variant="h4Warning"
@@ -132,7 +115,7 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
               </Typography>
             </Box>
             <Box>
-              <Typography variant="h3">{resProduct?.attributes.price}$</Typography>
+              <Typography variant="h3">{data?.price}$</Typography>
             </Box>
           </CustomBox>
           <CustomBox

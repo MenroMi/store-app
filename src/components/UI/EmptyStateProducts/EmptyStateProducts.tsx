@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { CustomEmptyStateWrapper } from './styles';
 import noProducts from '@/assets/icons/no-products.svg';
 import Image from 'next/image';
@@ -23,6 +23,6 @@ const EmptyStateProducts = () => {
       </LinkMui>
     </CustomEmptyStateWrapper>
   );
-}
+};
 
-export default EmptyStateProducts
+export default EmptyStateProducts;
