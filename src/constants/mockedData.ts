@@ -45,3 +45,8 @@ export const comments: IComment[] = [
       location: 'Venice, Italy',
     },
 ];
+
+export const mockData500 = {
+  title: 'Oh snap!',
+  description: 'We’re not quite sure what went wrong. You can go back home...',
+};
