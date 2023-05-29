@@ -26,6 +26,8 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
 import { uploadImage } from '@/services/addProductApi';
 import { Routes } from '@/constants';
+import { NotificationContext } from '@/components/Providers/notification';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 export default function UpdateProfile() {
   const { mutate: updateMutate, isLoading: updateIsLoading } = useMutation(updateUser);
@@ -36,6 +38,8 @@ export default function UpdateProfile() {
   const theme = useTheme<Theme>();
   const { push } = useRouter();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const id = Number(user?.id);
   const [updateFormData, setUpdateFormData] = useState<ISettings>({
@@ -84,12 +88,18 @@ export default function UpdateProfile() {
         onSuccess: async () => {
           userMutate(token, {
             onSuccess: (data) => {
+              setIsOpen(true);
+              setIsFailed(false);
+              setMessage('Profile has been updated');
               setUser(data);
             },
           });
           console.log('Form updated successfully');
         },
         onError: (error) => {
+          setIsOpen(true);
+          setIsFailed(true);
+          setMessage("Something went wrong: we couldn't update your profile");
           console.log('Something went wrong: ', error);
         },
       }
@@ -109,13 +119,18 @@ export default function UpdateProfile() {
             onSuccess: async () => {
               userMutate(token, {
                 onSuccess: async (data) => {
-                  await push(Routes.myProducts);
+                  setIsOpen(true);
+                  setIsFailed(false);
+                  setMessage('Avatar was deleted');
                   setUser(data);
                   setAvatarToDisplay('');
                 },
               });
-
-              console.log('Form updated successfully');
+            },
+            onError: () => {
+              setIsOpen(true);
+              setIsFailed(true);
+              setMessage("Something went wrong: we could't delete your avatar");
             },
           }
         );
@@ -211,6 +226,8 @@ export default function UpdateProfile() {
           />
         </Box>
       </Box>
+
+      <Notification />
     </Layout>
   );
 }

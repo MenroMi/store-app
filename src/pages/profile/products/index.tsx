@@ -45,9 +45,11 @@ export default function Home() {
   const queryClient = useQueryClient();
 
   const { user } = useContext(UserContext);
-  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
-
-  const router = useRouter();
+  const {
+    setIsOpen: setIsNotificationOpen,
+    setIsFailed,
+    setMessage,
+  } = useContext(NotificationContext);
 
   const { data: userProducts } = useQuery(['userProducts'], () =>
     getUserProducts(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
@@ -62,13 +64,13 @@ export default function Home() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['userProducts']);
-        setIsOpen(true);
+        setIsNotificationOpen(true);
         setIsFailed(false);
         setMessage("You've succesfully deleted the product");
       },
 
       onError: () => {
-        setIsOpen(true);
+        setIsNotificationOpen(true);
         setIsFailed(true);
         setMessage('Something went wrong: the product was not deleted');
       },
