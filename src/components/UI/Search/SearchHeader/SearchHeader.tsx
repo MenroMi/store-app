@@ -64,7 +64,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const { data } = useDebounceQuery(
     ['searchData', inputValue],
     () => getSearchProducts(inputValue),
-    1500
+    1000
   );
 
   const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -201,20 +201,3 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
 };
 
 export default SearchHeader;
-
-// useEffect(() => {
-//   let timerId: NodeJS.Timeout;
-
-//   // const handleSearch = () => {
-//   //   setTimeout(() => {
-//   //     setLoading(false);
-//   //   }, 2000);
-//   // }
-
-//   if (inputValue.replace(/\s/g, '')) {
-//     timerId = setTimeout(handleSearch, 1500);
-//   }
-//   return () => {
-//     clearTimeout(timerId);
-//   };
-// }, [inputValue]);

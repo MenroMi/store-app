@@ -11,18 +11,6 @@ export const MobileSliderWrapper = styled('div')(() => ({
   marginTop: '10px',
   padding: '10px',
 
-  button: {
-    position: 'absolute',
-    width: '70%',
-    zIndex: '12',
-    top: '50%',
-    left: '50%',
-    transform: 'translateX(-50%) translateY(-50%)',
-    opacity: '0',
-    transition: '0.2s all',
-    boxShadow: '0px 3px 3px 1px rgba(66, 68, 90, 0.3)',
-  },
-
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -37,16 +25,5 @@ export const MobileSliderWrapper = styled('div')(() => ({
   },
   '&:hover::before': {
     opacity: '1',
-  },
-
-  '&:hover': {
-    button: {
-      opacity: '1',
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      '&:active': {
-        backgroundColor: theme.palette.primary.dark,
-      },
-    },
   },
 }));

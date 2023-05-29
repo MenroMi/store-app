@@ -50,6 +50,7 @@ const SearchSliderDesktop: React.FC<ISearchHeaderSliderProps> = ({ products }): 
         }
         productPrice={product.attributes.price}
         key={product.id}
+        id={product.id}
       />
     ));
   };
