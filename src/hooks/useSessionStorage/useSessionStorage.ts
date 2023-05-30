@@ -13,7 +13,10 @@ export function useSessionStorage<T>(key: string, initialValue: T | (() => T)) {
   });
 
   useEffect(() => {
-    sessionStorage.setItem(key, JSON.stringify(value));
+    if (window) {
+      // set props data to session storage or local storage
+      sessionStorage.setItem(key, JSON.stringify(value));
+    }
   }, [key, value]);
 
   return [value, setValue] as [typeof value, typeof setValue];

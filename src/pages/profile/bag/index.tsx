@@ -1,23 +1,11 @@
 // basic
-import { useContext, useEffect, useState } from 'react';
-import Image from 'next/image';
-import Head from 'next/head';
+import { useEffect, useState } from 'react';
 
 // mui
-import {
-  Grid,
-  Stack,
-  Typography,
-  Button,
-  useTheme,
-  Box,
-  Theme,
-  useMediaQuery,
-} from '@mui/material';
+import { Grid, Stack, Typography, Box, useMediaQuery } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 // images
-import DownIcon from '@/assets/icons/down.svg';
 import singInImg from '@/assets/singInBg.png';
 
 // layout
@@ -25,8 +13,8 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import CountBagComponent from '@/components/UI/CountBagComponent/CountBagComponent';
-import PrimaryButton from '@/components/UI/Buttons/PrimaryButton/PrimaryButton';
-import SecondaryButton from '@/components/UI/Buttons/SecondaryButton/SecondaryButton';
+import EmptyStateProducts from '@/components/UI/EmptyStateProducts/EmptyStateProducts';
+import CardBag from '@/components/UI/Cards/ProductCardBag/CardBag';
 
 // styled components
 import {
@@ -34,24 +22,19 @@ import {
   CustomTotalSummaryWrapper,
   CustomBagBtnsWrapper,
 } from '@/styles/pageStyles/BagStyles';
+import { CustomButton } from '@/styles/pageStyles/CheckoutStyles';
+
+// context
+import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 // interface
-// import { CardBagContextType, ICardBagProps } from '@/types/productCardBag';
-// import { BagContext, CardBagContextType, ICardBagProps } from '@/context/bagContext';
-import { CustomButton } from '@/styles/pageStyles/CheckoutStyles';
 import router from 'next/router';
 import { Routes } from '@/constants/routes';
-import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // interface
-// import { BagContextProvider } from '@/context/bagContext';
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
-import CardBag from '@/components/UI/Cards/ProductCardBag/CardBag';
-import axios from 'axios';
 import { AttrFromData } from '@/types/cardListTypes';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
-import EmptyStateProducts from '@/components/UI/EmptyStateProducts/EmptyStateProducts';
-import { getProductPriceById, getProductPrices, getProducts } from '@/services/cardBagService';
+import { getProducts } from '@/services/cardBagService';
 
 const Bag = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
@@ -75,18 +58,13 @@ const Bag = () => {
   }, [cartItems]);
 
   const shipping: number = subTotal === 0 ? 0 : 10;
-  const {
-    palette: {
-      text: { caption },
-    },
-  } = useTheme<Theme>();
 
   const handleCheckout = (): void => {
     router.push(Routes.checkout);
   };
   return (
     <Layout title="Bag">
-      <main style={{ marginTop: '80px', width: '100%' }}>
+      <section style={{ marginTop: '80px', width: '100%' }}>
         {cartQuantity > 0 ? (
           <Grid
             container
@@ -107,39 +85,38 @@ const Bag = () => {
                 </Typography>
                 <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
                   <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
-                    {items &&
-                      items.map(
-                        ({
-                          id,
-                          attributes: {
-                            name,
-                            price,
-                            images: { data: imagesData },
-                            gender: { data: genderData },
-                          },
-                        }: AttrFromData) => (
-                          <CardBag
-                            key={id}
-                            id={id}
-                            productCategory={
-                              genderData
-                                ? genderData.id === 3
-                                  ? "Men's Shoes"
-                                  : "Women's Shoes"
-                                : ''
-                            }
-                            productImageSrc={
-                              imagesData
-                                ? imagesData[0]
-                                  ? imagesData[0].attributes.url
-                                  : singInImg
+                    {items?.map(
+                      ({
+                        id,
+                        attributes: {
+                          name,
+                          price,
+                          images: { data: imagesData },
+                          gender: { data: genderData },
+                        },
+                      }: AttrFromData) => (
+                        <CardBag
+                          key={id}
+                          id={id}
+                          productCategory={
+                            genderData
+                              ? genderData.id === 3
+                                ? "Men's Shoes"
+                                : "Women's Shoes"
+                              : ''
+                          }
+                          productImageSrc={
+                            imagesData
+                              ? imagesData[0]
+                                ? imagesData[0].attributes.url
                                 : singInImg
-                            }
-                            productName={name}
-                            productPrice={price}
-                          />
-                        )
-                      )}
+                              : singInImg
+                          }
+                          productName={name}
+                          productPrice={price}
+                        />
+                      )
+                    )}
                   </Stack>
                 </Grid>
               </Box>
@@ -211,37 +188,9 @@ const Bag = () => {
             <EmptyStateProducts />
           </Box>
         )}
-      </main>
+      </section>
     </Layout>
   );
 };
 
 export default Bag;
-
-// export async function getStaticProps() {
-//   const queryClient = new QueryClient();
-
-//   await Promise.all([queryClient.prefetchQuery(['id'], () => getProductPriceById(501))]);
-
-//   return {
-//     props: {
-//       dehydratedState: dehydrate(queryClient),
-//     },
-//   };
-// }
-
-// export async function getServerSideProps(context: { query: { [x: string]: string[] | string } }) {
-//   const queryClient = new QueryClient();
-//   let query = makeArray(context?.query);
-
-//   await queryClient.prefetchQuery({
-//     queryKey: ['filteredData', query],
-//     queryFn: () => getFilteredData(query),
-//   });
-
-//   return {
-//     props: {
-//       dehydratedState: dehydrate(queryClient),
-//     },
-//   };
-// }

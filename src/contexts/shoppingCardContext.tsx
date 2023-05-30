@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext, useEffect } from 'react';
 import { useSessionStorage } from '@/hooks/useSessionStorage/useSessionStorage';
 import { StaticImageData } from 'next/image';
 
