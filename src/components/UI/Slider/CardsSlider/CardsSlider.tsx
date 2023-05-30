@@ -30,43 +30,20 @@ import noProducts from '@/assets/icons/no-products.svg';
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
 import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 import { useRouter } from 'next/router';
+import { myProfileSliderOptions } from '@/constants/ui';
 
 export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   const sliderSettings = {
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    infinite: true,
-    dots: true,
-    arrows: true,
-    touchMove: false,
     nextArrow: <SliderArrow />,
-    prevArrow: <SliderArrow style={{ right: '0' }} next={false} />,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          infinite: true,
-          dots: true,
-          touchMove: true,
-        },
-      },
-      {
-        breakpoint: 400,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    prevArrow: <SliderArrow next={false} />,
+    ...myProfileSliderOptions,
   };
 
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   const router = useRouter();
 
-  if (products?.length > 3) {
+  if (products?.length > 4) {
     return (
       <>
         <CustomSlider {...sliderSettings}>

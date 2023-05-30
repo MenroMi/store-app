@@ -83,14 +83,14 @@ export default function Home() {
       <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 : '38px' }}>
         <AsideProfileMenu />
 
-        <Box sx={{ maxWidth: '1480px', m: '38px' }}>
+        <Box sx={{ m: '38px' }}>
           <UserProfile
             avatarSrc={getProfilePhoto(user)}
             profileTopBgSrc={profileTopBg}
             userBonusPoints="1 374"
             username={user?.firstName || user?.username || 'Guest'}
           />
-          <Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '1480px' }}>
             <Box
               sx={{
                 display: 'flex',

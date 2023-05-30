@@ -119,7 +119,6 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
                 type="file"
                 onChange={handleChooseImage}
                 style={{ display: 'none' }}
-                required
                 id="images"
                 name="images"
                 accept="image/*"
@@ -136,7 +135,6 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
                 type="file"
                 onChange={handleChooseImage}
                 style={{ display: 'none' }}
-                required
                 id="images"
                 name="images"
                 accept="image/*"
