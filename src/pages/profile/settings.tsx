@@ -83,6 +83,11 @@ export default function UpdateProfile() {
       dataToUpdate = { ...updateFormData, avatar: avatarID };
     }
 
+    sessionStorage.setItem(
+      'settings-data',
+      JSON.stringify({ ...dataToUpdate, avatar: avatarToDisplay })
+    );
+
     updateMutate(
       { token, id, dataToUpdate },
       {
@@ -112,6 +117,13 @@ export default function UpdateProfile() {
       ? localStorage.getItem('token')
       : sessionStorage.getItem('token');
 
+    const userDataStr = sessionStorage.getItem('settings-data');
+
+    if (userDataStr) {
+      const userDataObj = JSON.parse(userDataStr);
+      sessionStorage.setItem('settings-data', JSON.stringify({ ...userDataObj, avatar: '' }));
+    }
+
     if (user?.avatar) {
       if (user.avatar.formats.thumbnail.url) {
         deleteMutate(
@@ -138,6 +150,18 @@ export default function UpdateProfile() {
       }
     }
   };
+
+  useEffect(() => {
+    const userDataStr = sessionStorage.getItem('settings-data');
+    if (userDataStr) {
+      const { firstName, lastName, phoneNumber, avatar }: Record<string, string> =
+        JSON.parse(userDataStr);
+      setUpdateFormData({ firstName, lastName, phoneNumber });
+      if (avatar.startsWith('blob')) {
+        setAvatarToDisplay(avatar);
+      }
+    }
+  }, []);
 
   return (
     <Layout title="Settings">
