@@ -54,6 +54,7 @@ export default function AddProductRadioGroup({
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: 2,
+                  minWidth:'70px',
                   margin: '8px 8px 8px 0',
                   border: '1px solid #494949',
                   borderRadius: 1,
