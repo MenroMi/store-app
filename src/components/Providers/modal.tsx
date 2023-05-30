@@ -6,6 +6,8 @@ interface IModalContext {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   clickedId: number | null;
   setClickedId: Dispatch<SetStateAction<number | null>>;
+  isDeleting: boolean;
+  setIsDeleting: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ModalContext = createContext<IModalContext>({
@@ -13,6 +15,8 @@ export const ModalContext = createContext<IModalContext>({
   setIsOpen: () => {},
   clickedId: null,
   setClickedId: () => {},
+  isDeleting: false,
+  setIsDeleting: () => {},
 });
 
 interface IModalProviderProps {
@@ -23,9 +27,12 @@ interface IModalProviderProps {
 export function ModalProvider({ children }: IModalProviderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [clickedId, setClickedId] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   return (
-    <ModalContext.Provider value={{ isOpen, setIsOpen, clickedId, setClickedId }}>
+    <ModalContext.Provider
+      value={{ isOpen, setIsOpen, clickedId, setClickedId, isDeleting, setIsDeleting }}
+    >
       {children}
     </ModalContext.Provider>
   );
