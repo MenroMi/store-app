@@ -20,7 +20,6 @@ import FormSettings from '@/components/Forms/FormSettings/FormSettings';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // constants
-import { uploadImage } from '@/services/addProductApi';
 import { ISettings } from '@/types';
 import { UserContext } from '@/components/Providers/user';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
