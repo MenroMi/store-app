@@ -39,7 +39,7 @@ export const UPDATE_PROFILE_INPUTS: IUpdateProfileInput[] = [
 
 export const myProfileSliderOptions = {
   slidesToShow: 4,
-  slidesToScroll: 1,
+  slidesToScroll: 2,
   infinite: true,
   arrows: true,
   touchMove: false,
@@ -60,32 +60,16 @@ export const myProfileSliderOptions = {
         touchMove: true,
       },
     },
-    {
-      breakpoint: 1200,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        touchMove: true,
-      },
-    },
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        touchMove: true,
-      },
-    },
-
-    {
-      breakpoint: 400,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        touchMove: true,
-      },
-    },
   ],
+};
+
+export const myProfileSliderMobileOptions = {
+  arrow: true,
+  slidesToShow: 3.05,
+  slidesToScroll: 3,
+  vertical: true,
+  verticalSwiping: true,
+  infinite: false,
 };
 
 export const searchSliderOptionsOnDesktop = {
