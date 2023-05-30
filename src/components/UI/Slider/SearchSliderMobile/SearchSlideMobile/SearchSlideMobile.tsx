@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 // mui
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 
 // styled components
 import { CustomTypographyName } from '@/components/UI/Cards/Card/CardStyles';
@@ -10,6 +10,8 @@ import { MobileSliderWrapper } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
+import { useRouter } from 'next/router';
+import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SearchSlideMobile: React.FC<ISlideProps> = ({
@@ -17,9 +19,16 @@ const SearchSlideMobile: React.FC<ISlideProps> = ({
   productImageSrc,
   productName,
   productPrice,
+  id,
 }): JSX.Element => {
+  const router = useRouter();
+
   return (
-    <MobileSliderWrapper>
+    <MobileSliderWrapper
+      onClick={() => {
+        router.push(`${Routes.products}/${id}`);
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
@@ -47,7 +56,6 @@ const SearchSlideMobile: React.FC<ISlideProps> = ({
         </Box>
       </Box>
       <Image src={productImageSrc} alt="something" width={70} height={70} />
-      <Button>See more</Button>
     </MobileSliderWrapper>
   );
 };

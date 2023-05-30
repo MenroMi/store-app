@@ -25,7 +25,8 @@ export enum Routes {
   checkout = '/profile/checkout',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
-  search = '/catalog/search',
+  search = '/catalog/search?page=1',
+  forParamsURL = '/catalog/search', // dont touch this route. Thanks
   settings = '/profile/settings',
   forWomen = '/catalog/search?gender=women',
   forMen = '/catalog/search?gender=men',

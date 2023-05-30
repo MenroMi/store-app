@@ -1,3 +1,4 @@
+import { Routes } from '@/constants/routes';
 import { ActiveFiltersTypes } from '@/types/filterListTypes';
 export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: number) => {
   const searchParams = new URLSearchParams(
@@ -30,6 +31,6 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
 
     searchParams.append('page', `${page}`);
 
-    router.push(`${router.pathname}?${searchParams.toString()}`);
+    router.push(`${Routes.forParamsURL}?${searchParams.toString()}`, undefined, { shallow: true });
   }
 };
