@@ -35,7 +35,7 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
 
   const router = useRouter();
 
-  if (products?.length > 4) {
+  if (products?.length > 3) {
     return (
       <>
         <CustomSlider {...myProfileSliderMobileOptions}>
@@ -65,7 +65,15 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
     );
   } else if (products?.length > 0) {
     return (
-      <Box sx={{ display: 'flex' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '38px',
+          flexWrap: 'wrap',
+        }}
+      >
         {products?.map((product) => (
           <Card
             productCategory={product.categories[0].name}
@@ -73,7 +81,6 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
             productImageSrc={product?.images[0]?.url}
             productPrice={product.price}
             key={product.id}
-            marginRight="38px"
           >
             <DropDownMenu productID={product.id} productName={product.name} />
           </Card>
