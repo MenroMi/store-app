@@ -6,10 +6,12 @@ import { IDescriptionProps } from '@/types/productTypes';
 import { StorageContext } from '@/contexts/sessionStorageContext';
 import { useState, ChangeEvent, useContext } from 'react';
 import theme from '@/utils/mui/theme';
+import { useRouter } from 'next/router';
 
 export default function Description({ product, sizes }: IDescriptionProps) {
   const contextStorage = useContext(StorageContext);
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
+  const router = useRouter()
   const [selectedValue, setSelectedValue] = useState<string>('rose');
   const [selectedSize, setSelectedSize] = useState<string>(
     product.attributes?.size.data?.id.toString() || '-1'
@@ -64,6 +66,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
         <CustomButton
           variant="outlined"
           onClick={() => {
+            router.back()
             contextStorage?.addUniqueID(product.attributes?.name, product.id);
           }}
         >
