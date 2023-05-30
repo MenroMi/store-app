@@ -7,6 +7,7 @@ import { getParamsURL } from '@/utils/filters/getParamsURL';
 import { useQuery } from '@tanstack/react-query';
 import { getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
+import { onCheckedCheckbox, onCheckedPrice } from '@/utils/filters/onActiveCheckbox';
 
 // interface
 interface IFiltersProvider {
@@ -102,56 +103,27 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     let checked: boolean;
     let name: string;
     let label: string;
-    let valuePrice: number;
-    const onCheckedPrice = (value: string) => {
-      name = 'price';
-      valuePrice = isNaN(+value) ? 0 : +value;
-
-      setActiveFilters((prev) => {
-        return { ...prev, [name]: [`${valuePrice}`], name: [] };
-      });
-      return;
-    };
 
     switch (e.type) {
       case 'mouseup': {
-        return onCheckedPrice(e.target.textContent);
+        return onCheckedPrice(setActiveFilters, e.target.textContent);
       }
       case 'keydown': {
-        return e.code === 'Enter' ? onCheckedPrice(e.target.value) : null;
+        return e.code === 'Enter' ? onCheckedPrice(setActiveFilters, e.target.value) : null;
       }
       default:
         checked = e.target.checked;
         name = e.target.name;
         label = e.target.getAttribute('datatype');
-
         if (label === 'brand') {
-          setActiveFilters((prev) => {
-            if (label in prev) {
-              return checked === true
-                ? { ...prev, [label]: [...prev[label], name], name: [] }
-                : { ...prev, [label]: prev[label].filter((item) => item !== name), name: [] };
-            }
-
-            return { ...prev, [label]: [name], name: [] };
-          });
+          onCheckedCheckbox(setActiveFilters, checked, name, label, { name: [] });
         } else {
-          setActiveFilters((prev) => {
-            if (label in prev) {
-              return checked === true
-                ? { ...prev, [label]: [...prev[label], name] }
-                : { ...prev, [label]: prev[label].filter((item) => item !== name) };
-            }
-
-            return { ...prev, [label]: [name] };
-          });
+          onCheckedCheckbox(setActiveFilters, checked, name, label);
         }
 
         return;
     }
   };
-
-  console.log(activeFilters);
 
   return (
     <FiltersContext.Provider
