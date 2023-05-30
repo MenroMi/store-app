@@ -125,19 +125,31 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         name = e.target.name;
         label = e.target.getAttribute('datatype');
 
-        setActiveFilters((prev) => {
-          if (label in prev) {
-            return checked === true
-              ? { ...prev, [label]: [...prev[label], name], name: [] }
-              : { ...prev, [label]: prev[label].filter((item) => item !== name), name: [] };
-          }
+        if (label === 'brand') {
+          setActiveFilters((prev) => {
+            if (label in prev) {
+              return checked === true
+                ? { ...prev, [label]: [...prev[label], name], name: [] }
+                : { ...prev, [label]: prev[label].filter((item) => item !== name), name: [] };
+            }
 
-          return { ...prev, [label]: [name], name: [] };
-        });
+            return { ...prev, [label]: [name], name: [] };
+          });
+        } else {
+          setActiveFilters((prev) => {
+            if (label in prev) {
+              return checked === true
+                ? { ...prev, [label]: [...prev[label], name] }
+                : { ...prev, [label]: prev[label].filter((item) => item !== name) };
+            }
+
+            return { ...prev, [label]: [name] };
+          });
+        }
+
         return;
     }
   };
-  console.log(activeFilters);
 
   return (
     <FiltersContext.Provider
