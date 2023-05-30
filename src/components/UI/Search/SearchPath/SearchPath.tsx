@@ -30,15 +30,15 @@ const SearchPath: React.FC = (): JSX.Element => {
   });
 
   return (
-    <CustomFlexWrapper mt={`${queryUpMd && context?.hide ? '8px' : !queryUpMd ? '8px' : '0'}`}>
+    <CustomFlexWrapper mt={`${queryUpMd && context?.hide ? '8px' : '0'}`}>
       <Typography
         variant="h4"
         sx={{
-          marginTop: `${queryUpMd && '8px'}`,
           marginRight: `${queryDownLg && '40px'}`,
           borderBottom: `${queryUpMd && !context?.hide && '1px solid #eaecf0'}`,
           pl: `${queryUpMd && context?.hide ? '40px' : !queryUpMd ? '0' : '40px'}`,
           pb: `${queryUpMd && !context?.hide && '16px'}`,
+          fontSize: { sm: '25px', xs: '15px' },
         }}
       >
         {`${

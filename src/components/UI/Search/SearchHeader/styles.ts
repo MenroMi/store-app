@@ -4,7 +4,7 @@ import { Button, TextField, styled } from '@mui/material';
 export const HeaderSearchLayout = styled('div')(() => ({
   position: 'fixed',
   width: '100%',
-  height: '100vh',
+  height: '100%',
   zIndex: '100000',
   top: 0,
   left: 0,
@@ -13,7 +13,6 @@ export const HeaderSearchLayout = styled('div')(() => ({
 
 export const HeaderSearchContainer = styled('div')(() => ({
   minHeight: '200px',
-
   width: '100%',
   background: '#fff',
   padding: '45px 60px 20px 40px',
