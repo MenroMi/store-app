@@ -84,7 +84,7 @@ export default function UpdateProfile() {
     }
 
     sessionStorage.setItem(
-      'settings data',
+      'settings-data',
       JSON.stringify({ ...dataToUpdate, avatar: avatarToDisplay })
     );
 
@@ -117,11 +117,11 @@ export default function UpdateProfile() {
       ? localStorage.getItem('token')
       : sessionStorage.getItem('token');
 
-    const userDataStr = sessionStorage.getItem('settings data');
+    const userDataStr = sessionStorage.getItem('settings-data');
 
     if (userDataStr) {
       const userDataObj = JSON.parse(userDataStr);
-      sessionStorage.setItem('settings data', JSON.stringify({ ...userDataObj, avatar: '' }));
+      sessionStorage.setItem('settings-data', JSON.stringify({ ...userDataObj, avatar: '' }));
     }
 
     if (user?.avatar) {
@@ -152,7 +152,7 @@ export default function UpdateProfile() {
   };
 
   useEffect(() => {
-    const userDataStr = sessionStorage.getItem('settings data');
+    const userDataStr = sessionStorage.getItem('settings-data');
     if (userDataStr) {
       const { firstName, lastName, phoneNumber, avatar }: Record<string, string> =
         JSON.parse(userDataStr);
