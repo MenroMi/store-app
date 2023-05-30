@@ -22,7 +22,7 @@ import { MenuItemParams } from '@/types';
 // constants
 import { Routes } from '@/constants/routes';
 import { homeItems, othersItems } from '@/constants/ui';
-
+import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 
 // interface
 interface IDropDownMenuProps {
@@ -32,6 +32,7 @@ interface IDropDownMenuProps {
 
 const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
@@ -79,12 +80,17 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
 
       if (label === 'View') {
         return (
-          <MenuItem key={id} onClick={() => {
-            router.push(`${Routes.products}/${productID}`);
-          }}>
-            {label}
+          <MenuItem
+            key={id}
+            onClick={async () => {
+              setIsRedirecting(true);
+              await router.push(`${Routes.products}/${productID}`);
+            }}
+            sx={{ maxHeight: '36px' }}
+          >
+            {isRedirecting ? <ButtonLoader /> : label}
           </MenuItem>
-        )
+        );
       }
 
       return (
