@@ -7,6 +7,7 @@ import loginIcon from '@/assets/icons/login.svg';
 import homeIcon from '@/assets/icons/home.svg';
 import error404 from '@/assets/error404.png';
 import error500 from '@/assets/error500.png';
+import shoesIcon from '@/assets/icons/shoes.svg';
 import { StaticImageData } from 'next/image';
 import { INavItem } from '@/types/INavItem';
 import signIn from '@/assets/singInBg.png';
@@ -53,6 +54,12 @@ export const NAV_BURGER_LINKS: INavItem[] = [
     to: Routes.myProducts,
   },
   {
+    icon: shoesIcon,
+    role: 'user',
+    name: 'Catalog',
+    to: Routes.search,
+  },
+  {
     icon: bonusAccountIcon,
     role: 'user',
     name: 'Add Product',
@@ -75,7 +82,7 @@ export const NAV_BURGER_LINKS: INavItem[] = [
     role: 'user',
     name: 'Log out',
     to: Routes.search,
-  }
+  },
 ];
 
 export const ASIDE_MENU_LINKS = [

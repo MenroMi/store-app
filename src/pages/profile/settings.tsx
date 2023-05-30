@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
 
 // mui
 import { Box, Button, FormLabel, Input, Typography, useMediaQuery } from '@mui/material';
@@ -15,14 +16,12 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
-
-// styled components
+import FormSettings from '@/components/Forms/FormSettings/FormSettings';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // constants
-import FormSettings from '@/components/Forms/FormSettings/FormSettings';
 import { ISettings } from '@/types';
 import { UserContext } from '@/components/Providers/user';
-import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
 import { uploadImage } from '@/services/productApi';
 import { Routes } from '@/constants/routes';
@@ -32,8 +31,8 @@ import Notification from '@/components/UI/Notification/Notificaton';
 export default function UpdateProfile() {
   const [loading, setLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
-  const { mutate: updateMutate } = useMutation(updateUser);
-  const { mutate: deleteMutate } = useMutation(deleteAvatar);
+  const { mutate: updateMutate} = useMutation(updateUser);
+  const { mutate: deleteMutate, isLoading } = useMutation(deleteAvatar);
   const { mutate: userMutate } = useMutation(getUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
@@ -223,13 +222,15 @@ export default function UpdateProfile() {
               <Button
                 variant="contained"
                 onClick={deleteAvatarIcon}
+                disabled={isLoading}
                 sx={{
                   fontSize: queryDownMd ? '12px' : '16px',
                   width: queryDownMd ? '117px' : '152px',
                   height: queryDownMd ? '30px' : '40px',
                 }}
               >
-                Delete
+                {isLoading ? <ButtonLoader /> : 'Delete'}
+                
               </Button>
             </Box>
           </Box>

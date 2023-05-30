@@ -117,6 +117,17 @@ export default function Header() {
             >
               <Typography variant="h6">Products</Typography>
             </styles.NavListLink>
+            {user  && <styles.NavListLink
+              href={Routes.search}
+              sx={{
+                display: {
+                  md: 'flex',
+                  xs: 'none',
+                },
+              }}
+            >
+              <Typography variant="h6">Catalog</Typography>
+            </styles.NavListLink>}
           </styles.Nav>
           <styles.Options
             sx={{
