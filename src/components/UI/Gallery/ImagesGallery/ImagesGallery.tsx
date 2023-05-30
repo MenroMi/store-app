@@ -18,6 +18,7 @@ import theme from './../../../../utils/mui/theme';
 
 export default function ImagesGallery({ images }: IImageGalleryProps) {
   const [mainImageIndex, setMainImageIndex] = useState<number>(0);
+  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   const handleNextImage = () => {
@@ -37,19 +38,19 @@ export default function ImagesGallery({ images }: IImageGalleryProps) {
   };
 
   return (
-    <Grid container item xs={queryDownSm ? 12 : 6.3} maxHeight={628}>
+    <Grid container item xs={queryDownLg ? 12 : 6.3} maxHeight={queryDownLg ? 750 : 628}>
       {images.data ? (
-        <Grid container gap={queryDownSm ?2 : 0}>
+        <Grid container gap={queryDownLg ? 2 : 0}>
           <Grid
             container
             item
-            xs={queryDownSm ? 12 : 1.6}
+            xs={queryDownLg ? 12 : 1.6}
             sx={{
-              justifyContent:queryDownSm ?'space-between' : 'start',
+              justifyContent: queryDownSm ? 'space-between' : queryDownLg ? 'center' : 'start',
               overflow: 'hidden',
-              flexDirection: queryDownSm ? 'row' : 'column',
+              flexDirection: queryDownLg ? 'row' : 'column',
               gap: 2,
-              order:queryDownSm ? 1 : 0
+              order: queryDownLg ? 1 : 0,
             }}
           >
             {images.data.map((image, idx: number) => (
@@ -65,7 +66,7 @@ export default function ImagesGallery({ images }: IImageGalleryProps) {
               </CustomGalleryImageContainer>
             ))}
           </Grid>
-          <Grid container item xs={queryDownSm ? 12 :10}>
+          <Grid container item xs={queryDownLg ? 12 : 10} justifyContent="center">
             <CustomGalleryImageContainer isMain={true} position="relative">
               <CustomGalleryImage
                 src={images.data[mainImageIndex]?.attributes.url || defImg}

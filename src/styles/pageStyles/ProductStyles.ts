@@ -12,10 +12,7 @@ export const ProductContainer = styled(Grid)(({ theme }) => ({
         alignItems:'center',
         padding:'0 20px',
         flexDirection:'column',
-    },
-
-    [theme.breakpoints.down('sm')]:{
         margin: '20px auto',
         gap:'20px',
-    }
+    },
 }));

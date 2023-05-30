@@ -26,7 +26,7 @@ export const CustomGalleryImageContainer = styled(Grid)<ICustomGalleryImageProps
         height: 628,
         [theme.breakpoints.down('sm')]:{
         height: 360,
-        }
+        },
     }),
      
 }));
