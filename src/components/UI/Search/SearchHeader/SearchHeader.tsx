@@ -62,7 +62,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const { data } = useDebounceQuery(
     ['searchData', inputValue],
     () => getSearchProducts(inputValue),
-    1000
+    500
   );
 
   const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
