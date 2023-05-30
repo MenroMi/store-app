@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 // mui
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 
 // styled components
 import { CustomTypographyName } from '@/components/UI/Cards/Card/CardStyles';
@@ -10,7 +10,6 @@ import { MobileSliderWrapper } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
-import DropDownMenu from '../../Menu/DropDownMenu/DropDownMenu';
 
 // FUNCTIONAL COMPONENT
 const SlideMobile: React.FC<ISlideProps> = ({
