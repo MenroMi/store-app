@@ -28,12 +28,23 @@ import { getProductById, getProductPriceById } from '@/services/cardBagService';
 import queryClient from '@/components/Providers/queryClient';
 
 // interface
-type CartItemProps = {
+export type CartItemProps = {
   id: number;
-  quantity: number;
+  // quantity: number;
+  productCategory: string;
+  productImageSrc: StaticImageData | string;
+  productName: string;
+  productPrice: number;
 };
 
-const CardBag = ({ id, quantity }: CartItemProps) => {
+  const CardBag = ({
+    id,
+    // quantity,
+    productCategory,
+    productImageSrc,
+    productName,
+    productPrice
+  }: CartItemProps) => {
   const { cartItems } = useShoppingCart();
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
@@ -45,10 +56,9 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
   const keyStr =
     'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
 
-  const item = cartItems.find((i) => i.id === id);
+  // const item = cartItems.find((i) => i.id === id);
 
-  const { data } = useQuery(['id', item?.id!], () => getProductById(id));
-  
+  // const { data } = useQuery(['id', item?.id!], () => getProductById(id));
 
   return (
     <>
@@ -75,7 +85,7 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
             }}
           >
             <CustomImage
-              src={data?.images?.data[0]?.attributes?.url}
+              src={productImageSrc}
               alt="product template"
               priority={true}
               placeholder="blur"
@@ -101,10 +111,8 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
                 width: '100%',
               }}
             >
-              <Typography variant="h3">{data?.name}</Typography>
-              <Typography variant="h5">
-                {data?.gender?.data?.id === 3 ? "Men's Shoes" : "Women's Shoes"}
-              </Typography>
+              <Typography variant="h3">{productName}</Typography>
+              <Typography variant="h5">{productCategory}</Typography>
               <Typography
                 variant="h4Warning"
                 sx={{
@@ -115,7 +123,7 @@ const CardBag = ({ id, quantity }: CartItemProps) => {
               </Typography>
             </Box>
             <Box>
-              <Typography variant="h3">{data?.price}$</Typography>
+              <Typography variant="h3">{productPrice}$</Typography>
             </Box>
           </CustomBox>
           <CustomBox

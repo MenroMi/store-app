@@ -51,11 +51,7 @@ import axios from 'axios';
 import { AttrFromData } from '@/types/cardListTypes';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 import EmptyStateProducts from '@/components/UI/EmptyStateProducts/EmptyStateProducts';
-import { getProductPriceById } from '@/services/cardBagService';
-import { ICardBagProps, ICardsBagProps } from '@/types/productCardBag';
-import { reducePrice } from '@/utils/price/reducePrice';
-import makeArray from '@/utils/filters/makeRouterQueryArray';
-import { getFilteredData } from '@/services/searchApi';
+import { getProductPriceById, getProductPrices, getProducts } from '@/services/cardBagService';
 
 const Bag = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
@@ -63,84 +59,20 @@ const Bag = () => {
 
   const { cartItems, cartQuantity } = useShoppingCart();
 
-  console.log(cartItems);
-  
-  // const { data } = useQuery(['id'], () => getProductPriceById(507));
-  // console.log(data);
-  // cartItems.map((item) => {
-  //   const price = getProductPriceById(item.id);
-  //   console.log(price);
-  // });
+  const [subTotal, setSubtotal] = useState<number>(0);
 
-  // const [subTotal, setSubTotal] = useState<number>(0);
-  //  console.log(reducePrice());
+  const ArrayId: number[] = cartItems.map((item) => item.id);
+  const { data: items } = useQuery(['items', ArrayId], () => getProducts(ArrayId));
+  console.log(items);
 
-  const subTotal = cartItems.reduce((total, cartItem) => {
-    const item = cartItems.find((i) => i.id === cartItem.id);
-    const { data } = useQuery(['id'], () => getProductPriceById(item?.id!));
-    return total + (data || 0) * cartItem.quantity;
-  }, 0);
-
-
-
-  // const [prodPrice, setProdPrice] = useState<number>(0);
-
-  // async function getProductPriceById(id: number) {
-  //   let newList: any = await axios.get(`${baseURL}products/${id}`);
-  //   const productPrice: number = newList.data.data.attributes.price;
-  //   console.log(newList.data.data.attributes.price);
-  // }
-
-  // const { data } = useQuery(['id'], () => getProductPriceById(507));
-  // const { data } = useQuery(['id', item?.id!], () => getProductPriceById(id));
-
-  // useEffect(() => {
-  // async function getProductPriceById(id: number) {
-  //   let newList: any = await axios.get(`${baseURL}products/${id}`);
-  //   const productPrice: number = newList.data.data.attributes.price;
-  //   console.log(productPrice);
-  //   return productPrice;
-  // }
-
-  // const getProductPriceById = async (id: number) => {
-  //   const response: number = await axios
-  //     .get(`${baseURL}/products/${id}`)
-  //     .then((res) => res?.data?.data?.attributes?.price);
-  //   console.log(response);
-  //   return response;
-  // };
-  // getProductPriceById(507);
-  // const price = getProductPriceById(498);
-  // console.log(getProductPriceById(498));
-  // const SUBTotal = cartItems.reduce((total, cartItem) => {
-  //   const item = cartItems.find((i) => i.id === cartItem.id);
-  //   return total + getProductPriceById(item!.id!) * item!.quantity!;
-  // }, 0);
-
-  // console.log(SUBTotal);
-  // setSubTotal(SUBTotal);
-  // }, [cartItems]);
-
-  // useEffect(() => {
-  //   async function getProductPriceById(id: number) {
-  //     let newList: any = await axios.get(`${baseURL}products/${id}`);
-  //     const productPrice: number = newList.data.data.attributes.price;
-  //     console.log(newList.data.data.attributes.price);
-  //   }
-  //   setSubTotal(
-  //     cartItems.reduce((total, cartItem) => {
-  //       const item = cartItems.find((i) => i.id === cartItem.id);
-  //       getProductPriceById(item!.id)
-  //       return total + (item?.productPrice || 0) * cartItem.quantity;
-  //     }, 0)
-  //   );
-  // }, [cartItems]);
-
-  // useEffect(() => {
-  //   const reducePrice = (array: any) =>
-  //     array.reduce((acc: number, elem: AttrFromData) => acc + elem.productPrice * elem.quantity, 0);
-  //   setSubTotal(reducePrice(cartItems));
-  // }, [cartItems]);
+  useEffect(() => {
+    const summary = items?.reduce((total, cartItem) => {
+      const item = items.find((i) => i.id === cartItem.id);
+      const cartsItem = cartItems.find((i) => i.id === cartItem.id);
+      return total + (item?.attributes?.price || 0) * cartsItem?.quantity!;
+    }, 0);
+    summary && setSubtotal(summary);
+  }, [cartItems]);
 
   const shipping: number = subTotal === 0 ? 0 : 10;
   const {
@@ -175,15 +107,39 @@ const Bag = () => {
                 </Typography>
                 <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
                   <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
-                    {cartItems ? (
-                      cartItems.map((product) => (
-                        <CardBag key={product.id} id={product.id} quantity={product.quantity} />
-                      ))
-                    ) : (
-                      <Typography variant="h2" sx={{ marginLeft: '15px' }}>
-                        NOTHING is here
-                      </Typography>
-                    )}
+                    {items &&
+                      items.map(
+                        ({
+                          id,
+                          attributes: {
+                            name,
+                            price,
+                            images: { data: imagesData },
+                            gender: { data: genderData },
+                          },
+                        }: AttrFromData) => (
+                          <CardBag
+                            key={id}
+                            id={id}
+                            productCategory={
+                              genderData
+                                ? genderData.id === 3
+                                  ? "Men's Shoes"
+                                  : "Women's Shoes"
+                                : ''
+                            }
+                            productImageSrc={
+                              imagesData
+                                ? imagesData[0]
+                                  ? imagesData[0].attributes.url
+                                  : singInImg
+                                : singInImg
+                            }
+                            productName={name}
+                            productPrice={price}
+                          />
+                        )
+                      )}
                   </Stack>
                 </Grid>
               </Box>
@@ -274,19 +230,18 @@ export default Bag;
 //   };
 // }
 
+// export async function getServerSideProps(context: { query: { [x: string]: string[] | string } }) {
+//   const queryClient = new QueryClient();
+//   let query = makeArray(context?.query);
 
-export async function getServerSideProps(context: { query: { [x: string]: string[] | string } }) {
-  const queryClient = new QueryClient();
-  let query = makeArray(context?.query);
+//   await queryClient.prefetchQuery({
+//     queryKey: ['filteredData', query],
+//     queryFn: () => getFilteredData(query),
+//   });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['filteredData', query],
-    queryFn: () => getFilteredData(query),
-  });
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }
