@@ -10,6 +10,7 @@ interface IDeleteIconContainerProps {
 export const CustomImage = styled(Image)(() => ({
   width: '100%',
   height: '100%',
+  objectFit: 'cover',
 
   '&:hover': {
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
