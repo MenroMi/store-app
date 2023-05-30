@@ -1,12 +1,13 @@
 // basic
 import React, { useEffect, useState } from 'react';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // react-query
 import { useQuery } from '@tanstack/react-query';
 import { getFilters } from '@/services/searchApi';
 import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
+import { onCheckedCheckbox, onCheckedPrice } from '@/utils/filters/onActiveCheckbox';
 
 // interface
 interface IFiltersProvider {
@@ -25,6 +26,7 @@ export interface IFiltersContext {
   isChecked: any;
   activeFilters: ActiveFiltersTypes;
   setPage: (x: number) => void;
+  setActiveFilters: (x: ActiveFiltersTypes) => void;
 }
 
 export interface AllFilterTypes {
@@ -38,14 +40,15 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const router = useRouter();
-
   const firstRenderPage = typeof router.query.page === 'undefined' ? 1 : +router.query.page;
   const [page, setPage] = useState<number>(firstRenderPage);
   const [hide, setHide] = useState<boolean>(true);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
+  const lengthRouterQuery = Object.entries(router.query).length;
 
   useEffect(() => {
     getParamsURL(router, activeFilters, page);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters, page]);
 
@@ -73,7 +76,14 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (typeof lengthRouterQuery === 'undefined' || lengthRouterQuery <= 0) {
+      setActiveFilters({});
+    }
+  }, [lengthRouterQuery]);
 
   const contextFilters = useQuery({
     queryKey: ['filters'],
@@ -94,38 +104,24 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
     let checked: boolean;
     let name: string;
     let label: string;
-    let valuePrice: number;
-    const onCheckedPrice = (value: string) => {
-      name = 'price';
-      valuePrice = isNaN(+value) ? 0 : +value;
-
-      setActiveFilters((prev) => {
-        return { ...prev, [name]: [`${valuePrice}`] };
-      });
-      return;
-    };
 
     switch (e.type) {
       case 'mouseup': {
-        return onCheckedPrice(e.target.textContent);
+        return onCheckedPrice(setActiveFilters, e.target.textContent);
       }
       case 'keydown': {
-        return e.code === 'Enter' ? onCheckedPrice(e.target.value) : null;
+        return e.code === 'Enter' ? onCheckedPrice(setActiveFilters, e.target.value) : null;
       }
       default:
         checked = e.target.checked;
         name = e.target.name;
         label = e.target.getAttribute('datatype');
+        if (label === 'brand') {
+          onCheckedCheckbox(setActiveFilters, checked, name, label, { name: [] });
+        } else {
+          onCheckedCheckbox(setActiveFilters, checked, name, label);
+        }
 
-        setActiveFilters((prev) => {
-          if (label in prev) {
-            return checked === true
-              ? { ...prev, [label]: [...prev[label], name] }
-              : { ...prev, [label]: prev[label].filter((item) => item !== name) };
-          }
-
-          return { ...prev, [label]: [name] };
-        });
         return;
     }
   };
@@ -143,6 +139,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         isChecked,
         onHideFilters,
         setPage: (value) => setPage(value),
+        setActiveFilters: (value) => setActiveFilters({ ...value }),
         activeFilters,
       }}
     >

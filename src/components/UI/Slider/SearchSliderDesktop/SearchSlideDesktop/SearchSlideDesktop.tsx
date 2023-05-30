@@ -10,6 +10,8 @@ import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
+import { useRouter } from 'next/router';
+import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SearchSlideDesktop: React.FC<ISlideProps> = ({
@@ -18,7 +20,10 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
   productName,
   productPrice,
   children,
+  id,
 }): JSX.Element => {
+  const router = useRouter();
+
   return (
     <CustomSearchSlideWrapper>
       <CustomSearchSlide
@@ -44,8 +49,13 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
           <CustomTypographyName variant="subtitle2Small">{'$' + productPrice}</CustomTypographyName>
         </Box>
       </Box>
-      <Button>See more</Button>
-      {/* redirect button to single page product */}
+      <Button
+        onClick={() => {
+          router.push(`${Routes.products}/${id}`);
+        }}
+      >
+        See more
+      </Button>
     </CustomSearchSlideWrapper>
   );
 };

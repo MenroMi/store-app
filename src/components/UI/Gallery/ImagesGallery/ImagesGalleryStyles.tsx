@@ -13,14 +13,22 @@ export const CustomIconButton = styled(IconButton)(({ theme }) => ({
     backgroundColor: theme.palette.primary.contrastText,
 }));
 
-export const CustomGalleryImageContainer = styled(Grid)<ICustomGalleryImageProps>(({ isMain }) => ({
+export const CustomGalleryImageContainer = styled(Grid)<ICustomGalleryImageProps>(({theme, isMain }) => ({
     width: 76,
     height: 76,
+    [theme.breakpoints.down('sm')]:{
+    width: 70,
+    height: 70,
+        },
     objectFit: 'cover',
     ...(isMain && {
         width: 588,
         height: 628,
-    })
+        [theme.breakpoints.down('sm')]:{
+        height: 360,
+        },
+    }),
+     
 }));
 
 export const CustomGalleryImage = styled(Image)<ICustomGalleryImageProps>(({ selected }) => ({

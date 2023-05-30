@@ -10,4 +10,5 @@ export interface ISlideProps {
   productPrice: number;
   marginRight?: string | number;
   children?: JSX.Element;
+  id?: number;
 }

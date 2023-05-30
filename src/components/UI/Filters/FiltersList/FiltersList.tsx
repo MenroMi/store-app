@@ -1,4 +1,5 @@
 // basic
+import { useRouter } from 'next/router';
 import { useContext } from 'react';
 
 // context
@@ -7,12 +8,11 @@ import { FiltersContext } from '@/contexts/filtersContext';
 // components
 import Filter from '@/components/UI/Filters/Filter/Filter';
 import FilterCheckbox from '@/components/UI/Filters/FilterCheckbox/FilterCheckbox';
+import FilterBrand from '@/components/UI/Filters/FilterBrand/FilterBrand';
+import FilterPrice from '@/components/UI/Filters/FilterPrice/FilterPrice';
 
 // interface
 import { InputsData } from '@/types/filterListTypes';
-import FilterBrand from '../FilterBrand/FilterBrand';
-import FilterPrice from '../FilterPrice/FilterPrice';
-import { useRouter } from 'next/router';
 
 // FUNCTION COMPONENT
 const FiltersList: React.FC = (): JSX.Element => {

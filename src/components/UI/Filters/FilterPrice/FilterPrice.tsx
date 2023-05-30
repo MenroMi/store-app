@@ -1,13 +1,27 @@
+// basic
 import { useState, useContext, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
-import { getFilteredData } from '@/services/searchApi';
 import { useRouter } from 'next/router';
+
+// mui
+import { FormControl, InputAdornment, InputLabel, OutlinedInput, Box, Slider } from '@mui/material';
+
+// rq
 import { useQuery } from '@tanstack/react-query';
-import { InputsData } from '@/types/filterListTypes';
-import { FiltersContext } from '@/contexts/filtersContext';
-import { FormControl, InputAdornment, InputLabel, OutlinedInput, Typography } from '@mui/material';
+
+// services
+import { getFilteredData } from '@/services/searchApi';
+
+// utils
 import makeArray from '@/utils/filters/makeRouterQueryArray';
+
+// context
+import { FiltersContext } from '@/contexts/filtersContext';
+
+// constants
+import { regExpOnlyNumbs } from '@/constants';
+
+// interface
+import { InputsData } from '@/types/filterListTypes';
 
 const FilterPrice: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -23,9 +37,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
   });
 
   const handleChanges = (value: string | number) => {
-    const regexp = /(?=(.*[a-zA-Z]))|(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])/;
-
-    if (regexp.test(String(value))) {
+    if (regExpOnlyNumbs.test(String(value))) {
       return;
     } else {
       setActualAmount(() => +value);
@@ -49,6 +61,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
     };
 
     maxNumber();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [max]);
 
   return (

@@ -79,18 +79,20 @@ export const getFilteredData = async (query: any) => {
         query[prop] = query[prop].split(',');
       }
 
-      if (prop === 'price') {
-        url += `filters[price][$between]=0&filters[price][$between]=${query[prop][0]}&`;
-        continue;
-      }
-
-      if (prop === 'page') {
-        page = query[prop].join();
-        continue;
-      }
-
       if (query[prop].length <= 0) {
         continue;
+      }
+
+      switch (prop) {
+        case 'price':
+          url += `filters[price][$between]=0&filters[price][$between]=${query[prop][0]}&`;
+          continue;
+        case 'name':
+          url += `filters[name][$containsi]=${query[prop][0]}&`;
+          continue;
+        case 'page':
+          page = query[prop].join();
+          continue;
       }
 
       for (let key of query[prop]) {
@@ -100,8 +102,6 @@ export const getFilteredData = async (query: any) => {
   }
 
   const products = await getDataFromServer(url, `pagination[page]=${page}&pagination[pageSize]=25`);
-
-  // console.log(products?.data);
 
   return products?.data;
 };
