@@ -11,7 +11,7 @@ import { useTheme, Theme } from '@mui/material/styles';
 import arrowIcon from '@/assets/icons/down.svg';
 
 // styled component
-import { CustomFilterHeader } from './FilterStyles';
+import { CustomFilterHeader } from './styles';
 
 // interface
 interface IFilterProps {

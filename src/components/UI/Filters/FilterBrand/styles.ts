@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
-export const CustomTextField = styled(TextField)(() => ({
+export const CustomTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     '& fieldset': { borderRadius: '42px' },
     fontSize: '12px',
@@ -14,4 +14,4 @@ export const CustomTextField = styled(TextField)(() => ({
     },
   },
   marginBottom: '20px',
-}));
+});

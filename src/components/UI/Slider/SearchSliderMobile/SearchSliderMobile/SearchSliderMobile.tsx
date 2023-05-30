@@ -41,6 +41,7 @@ const SearchSliderMobile: React.FC<ISearchHeaderSliderProps> = ({ products }): J
         }
         productPrice={product.attributes.price}
         key={product.id}
+        id={product.id}
       />
     ));
   };

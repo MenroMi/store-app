@@ -1,20 +1,19 @@
-// mui
-import { Box, Skeleton, Theme, useMediaQuery, useTheme } from '@mui/material';
+// basic
 import React, { useContext } from 'react';
 
+// mui
+import { Box, Button, Theme, useMediaQuery, useTheme } from '@mui/material';
+
 // components
-import CardList from '../../Cards/CardList/CardList';
-import FiltersList from '../../Filters/FiltersList/FiltersList';
-import PaginationMui from '../../Pagination/Pagination';
+import CardList from '@/components/UI/Cards/CardList/CardList';
+import FiltersList from '@/components/UI/Filters/FiltersList/FiltersList';
+import PaginationMui from '@/components/UI/Pagination/Pagination';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
 
 // styled component
-import { CustomAside } from './FiltersAndCardsStyles';
-import FullScreenLoader from '../../Loader/FullScreenLoader';
-
-// interface
+import { CustomAside } from './styles';
 
 // FUNCTIONAL COMPONENT
 const FiltersAndCards: React.FC = (): JSX.Element => {
@@ -36,21 +35,7 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
     >
       {!context?.hide ? (
         <CustomAside>
-          {context?.isFetched && !context?.isLoading ? (
-            <FiltersList />
-          ) : (
-            [...new Array(5).fill(null)].map((_, id) => {
-              return (
-                <Skeleton
-                  key={id}
-                  width={320}
-                  height={42}
-                  variant="rectangular"
-                  sx={{ mt: '20px', borderRadius: '8px' }}
-                />
-              );
-            })
-          )}
+          <FiltersList />
         </CustomAside>
       ) : null}
 
