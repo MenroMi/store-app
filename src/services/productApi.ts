@@ -3,7 +3,7 @@ import axios from 'axios';
 // services
 import { getDataFromServer } from './apiClient';
 // constants
-import { baseURL } from '@/constants';
+import { baseURL } from '@/constants/urls';
 // interfaces
 import { IProductData } from '@/types/addProductTypes';
 
@@ -30,3 +30,13 @@ export const postProduct = (data: IProductData, token: string) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const getProductById = async (id: number | string) => {
+  const { data } = await axios.get(`${baseURL}products/${id}?populate=images,color,gender,size`);
+  return data.data;
+}
+
+export const getProducts = async () => {
+  const { data } = await axios.get(`${baseURL}products?pagination[limit]=-1`);
+  return data?.data;
+}

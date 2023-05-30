@@ -140,8 +140,8 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         data: contextFilters?.data,
         hide,
         onHide,
-        onHideFilters,
         isChecked,
+        onHideFilters,
         setPage: (value) => setPage(value),
         activeFilters,
       }}

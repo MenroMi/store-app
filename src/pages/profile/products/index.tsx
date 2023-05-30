@@ -17,8 +17,7 @@ import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProf
 import { CardsSlider } from '@/components/UI/Slider/CardsSlider/CardsSlider';
 
 // constants
-import { Routes } from '@/constants';
-
+import { Routes } from '@/constants/routes';
 // services
 import { deleteProduct, getUserProducts } from '@/services/myProfileApi';
 

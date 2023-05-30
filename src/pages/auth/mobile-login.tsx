@@ -5,7 +5,7 @@ import Image from 'next/image';
 import logo from '@/assets/icons/logo.svg';
 import { Box, Button, Typography, Link as LinkMui, useTheme } from '@mui/material';
 import { useRouter } from 'next/router';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import Link from 'next/link';
 
 const LayoutSignPage = styled('div')`

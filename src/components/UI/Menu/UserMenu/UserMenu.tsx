@@ -5,7 +5,7 @@ import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 import { useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import { CustomDropDownMenu } from '../DropDownMenu/styles';
 
 export default function UserMenu() {

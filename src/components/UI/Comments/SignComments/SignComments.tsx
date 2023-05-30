@@ -10,7 +10,7 @@ import right from '@/assets/icons/right.svg';
 import left from '@/assets/icons/left.svg';
 
 // constants
-import { comments } from '@/constants';
+import { comments } from '@/constants/mockedData';
 
 // styled components
 import { CustomBoxComments, CustomComments, CustomArrow } from './styles';

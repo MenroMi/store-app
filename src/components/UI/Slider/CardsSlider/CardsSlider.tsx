@@ -20,7 +20,7 @@ import Slide from '../Slide/Slide';
 import { CustomEmptyStateWrapper, CustomSlider } from './CardsSliderStyles';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import SliderArrow from '../SliderArrow/SliderArrow';
 
 // images

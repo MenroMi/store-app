@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 // interface
 import { IFormProps } from '@/types/formTypes';
