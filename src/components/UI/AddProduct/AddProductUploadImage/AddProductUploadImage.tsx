@@ -34,10 +34,12 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   const { selectedImages, setSelectedImages } = useContext(ImagesContext);
-  const { clickedId } = useContext(ModalContext);
+  const { clickedId, setIsOpen } = useContext(ModalContext);
 
-  const handleDeleteImage = (id: number) =>
+  const handleDeleteImage = async (id: number) => {
     setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+    setIsOpen(false);
+  };
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
 

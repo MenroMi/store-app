@@ -1,18 +1,9 @@
 // basic
 import React, { useContext, useState } from 'react';
-import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // mui
-import {
-  Box,
-  Button,
-  Typography,
-  Link as LinkMui,
-  useTheme,
-  Theme,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Button, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
 
 // images
 import profileTopBg from '@/assets/profileTopBg.png';
@@ -37,13 +28,16 @@ import { useRouter } from 'next/router';
 import Notification from '@/components/UI/Notification/Notificaton';
 import { NotificationContext } from '@/components/Providers/notification';
 import { getProfilePhoto } from '@/utils/profile/profilePhoto';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 export default function Home() {
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryClient = useQueryClient();
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const { user } = useContext(UserContext);
   const {
@@ -63,15 +57,18 @@ export default function Home() {
         id
       ),
     {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(['userProducts']);
         setIsDeleting(false);
-        queryClient.invalidateQueries(['userProducts']);
+        setIsModalOpen(false);
         setIsNotificationOpen(true);
         setIsFailed(false);
         setMessage("You've succesfully deleted the product");
       },
 
       onError: () => {
+        setIsDeleting(false);
+        setIsModalOpen(false);
         setIsNotificationOpen(true);
         setIsFailed(true);
         setMessage('Something went wrong: the product was not deleted');
@@ -79,7 +76,7 @@ export default function Home() {
     }
   );
 
-  const { clickedId } = useContext(ModalContext);
+  const { clickedId, setIsDeleting, setIsOpen: setIsModalOpen } = useContext(ModalContext);
 
   return (
     <Layout title="Home">
@@ -105,11 +102,17 @@ export default function Home() {
             >
               <Typography variant="h2">My products</Typography>
               {!queryDownMd && userProducts?.data?.products?.length > 0 && (
-                <LinkMui component={Link} href={Routes.addProduct} underline="none">
-                  <Button variant="contained" sx={{ padding: '10px 26px' }}>
-                    Add product
-                  </Button>
-                </LinkMui>
+                <Button
+                  variant="contained"
+                  sx={{ padding: '10px 26px', width: '146px' }}
+                  disabled={isRedirecting}
+                  onClick={async () => {
+                    setIsRedirecting(true);
+                    await router.push(Routes.addProduct);
+                  }}
+                >
+                  {isRedirecting ? <ButtonLoader /> : 'Add product'}
+                </Button>
               )}
             </Box>
 
@@ -119,15 +122,20 @@ export default function Home() {
                 setIsDeleting(true);
                 mutate(clickedId!);
               }}
-              isLoading={isDeleting}
             />
 
             {queryDownMd && userProducts?.data?.products?.length > 0 && (
-              <LinkMui component={Link} href={Routes.addProduct} underline="none">
-                <Button variant="contained" sx={{ padding: '5px 13px', mt: 2.5 }}>
-                  Add product
-                </Button>
-              </LinkMui>
+              <Button
+                variant="contained"
+                onClick={async () => {
+                  setIsRedirecting(true);
+                  await router.push(Routes.addProduct);
+                }}
+                disabled={isRedirecting}
+                sx={{ padding: '5px 13px', mt: 2.5, width: '146px' }}
+              >
+                {isRedirecting ? <ButtonLoader /> : 'Add product'}
+              </Button>
             )}
           </Box>
         </Box>
