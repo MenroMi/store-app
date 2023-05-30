@@ -27,6 +27,7 @@ const SearchPath: React.FC = (): JSX.Element => {
   const { data } = useQuery({
     queryKey: ['filteredData', query],
     queryFn: () => getFilteredData(query),
+    keepPreviousData: true,
   });
 
   return (
