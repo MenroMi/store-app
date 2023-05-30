@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 // mui
-import { Box, Theme, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Theme, useMediaQuery, useTheme } from '@mui/material';
 
 // components
 import CardList from '@/components/UI/Cards/CardList/CardList';

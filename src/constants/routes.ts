@@ -23,7 +23,8 @@ export enum Routes {
   bag = '/profile/bag',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
-  search = '/catalog/search',
+  search = '/catalog/search?page=1',
+  forParamsURL = '/catalog/search', // dont touch this route. Thanks
   settings = '/profile/settings',
   forWomen = '/catalog/search?gender=women',
   forMen = '/catalog/search?gender=men',
@@ -75,7 +76,7 @@ export const NAV_BURGER_LINKS: INavItem[] = [
     role: 'user',
     name: 'Log out',
     to: Routes.search,
-  }
+  },
 ];
 
 export const ASIDE_MENU_LINKS = [

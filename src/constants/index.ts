@@ -28,7 +28,7 @@ export enum Routes {
   bag = '/profile/bag',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
-  search = '/catalog/search',
+  search = '/catalog/search?page=1',
   forWomen = '/catalog/search?gender=women',
   forMen = '/catalog/search?gender=men',
   settings = '/profile/settings',

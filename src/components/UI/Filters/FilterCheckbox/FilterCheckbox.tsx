@@ -22,7 +22,6 @@ const FilterCheckbox: React.FC<IFilterCheckbox> = ({ id, attributes, label, chec
   const theme = useTheme<Theme>();
   const context = useContext(FiltersContext);
   const [isClicked, setIsClicked] = useState<boolean>(checked);
-
   useEffect(() => {
     if (checked) {
       setIsClicked(true);

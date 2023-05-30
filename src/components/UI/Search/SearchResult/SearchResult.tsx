@@ -17,13 +17,19 @@ import hideFilterIcon from '@/assets/icons/filter.svg';
 import SearchPath from '@/components/UI/Search/SearchPath/SearchPath';
 
 // styled components
-import { CustomTypographyH2, CustomHideFilterBtn, CustomGridContainer } from './styles';
+import {
+  CustomTypographyH2,
+  CustomHideFilterBtn,
+  CustomGridContainer,
+  ResetButton,
+} from './styles';
+import { useRouter } from 'next/router';
 
 // FUNCTIONAL COMPONENT
 const SearchResult: React.FC = () => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
-
+  const router = useRouter();
   const context = useContext(FiltersContext);
 
   return (
@@ -64,6 +70,16 @@ const SearchResult: React.FC = () => {
             pr: `${queryUpMd && '40px'}`,
           }}
         >
+          <ResetButton
+            sx={{
+              fontSize: { md: '24px', sm: '16px', xs: '15px' },
+              mr: '5px',
+            }}
+            onClick={() => router.push(router.pathname + `?page=1`)}
+          >
+            Reset Filters
+          </ResetButton>
+          |
           <CustomHideFilterBtn
             onClick={context?.onHide}
             variant="text"
@@ -78,7 +94,8 @@ const SearchResult: React.FC = () => {
               />
             }
             sx={{
-              fontSize: { lg: '24px', md: '24px', sm: '16px', xs: '15px' },
+              fontSize: { md: '24px', sm: '16px', xs: '15px' },
+              ml: '5px',
             }}
           >
             {context?.hide ? 'Filters' : 'Hide Filters'}

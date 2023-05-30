@@ -31,3 +31,15 @@ export const CustomGridContainer = styled(Grid)({
   alignItems: 'center',
   backgroundColor: theme?.palette?.primary?.contrastText,
 });
+
+export const ResetButton = styled(Button)(({ theme }) => ({
+  fontSize: '14px',
+  borderRadius: '10px',
+  color: theme?.palette?.text?.primary,
+  paddingTop: '0',
+  paddingBottom: '0',
+  fontWeight: 400,
+  '&:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+  },
+}));

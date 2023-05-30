@@ -78,7 +78,7 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (lengthRouterQuery <= 0) {
+    if (typeof lengthRouterQuery === 'undefined' || lengthRouterQuery <= 0) {
       setActiveFilters({});
     }
   }, [lengthRouterQuery]);
@@ -150,6 +150,8 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
         return;
     }
   };
+
+  console.log(activeFilters);
 
   return (
     <FiltersContext.Provider
