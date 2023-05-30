@@ -71,10 +71,15 @@ const PaginationMui: React.FC = () => {
       };
       onActualPage();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data]);
 
   return (
     <Pagination
+      sx={{
+        display: `${Object.entries(router.query).length > 0 && maxPage === 0 ? 'none' : 'block'}`,
+      }}
       page={page}
       onClick={(e) => onChangePage(e)}
       count={maxPage}

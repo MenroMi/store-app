@@ -52,7 +52,9 @@ const SearchPath: React.FC = (): JSX.Element => {
             : context?.activeFilters?.brand?.length > 1
             ? `${context?.activeFilters?.brand[0]} and others...`
             : context?.activeFilters?.brand[0]
-        } (${data.meta.pagination.total})`}
+        } (${
+          typeof data?.meta?.pagination?.total === 'undefined' ? 0 : data?.meta?.pagination?.total
+        })`}
       </Typography>
     </CustomFlexWrapper>
   );

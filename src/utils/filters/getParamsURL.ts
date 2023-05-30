@@ -31,6 +31,6 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
 
     searchParams.append('page', `${page}`);
 
-    router.push(`${Routes.forParamsURL}?${searchParams.toString()}`);
+    router.push(`${Routes.forParamsURL}?${searchParams.toString()}`, undefined, { shallow: true });
   }
 };

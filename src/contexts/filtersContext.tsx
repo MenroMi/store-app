@@ -47,16 +47,8 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const lengthRouterQuery = Object.entries(router.query).length;
 
   useEffect(() => {
-    let timerID: NodeJS.Timeout;
+    getParamsURL(router, activeFilters, page);
 
-    const handleURLParams = () => {
-      getParamsURL(router, activeFilters, page);
-      return;
-    };
-
-    timerID = setTimeout(handleURLParams, 500);
-
-    return () => clearTimeout(timerID);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilters, page]);
 
