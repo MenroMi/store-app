@@ -15,10 +15,12 @@ import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import { IFormData } from '@/types/formDataTypes';
 import { UserContext } from '@/components/Providers/user';
 import { getUser } from '@/services/userService';
+import { NotificationContext } from '@/components/Providers/notification';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 const Authorization = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -27,9 +29,10 @@ const Authorization = () => {
     checked: false,
   });
   const { setUser } = useContext(UserContext);
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
   const { mutate, isError } = useMutation(login);
-  const { mutate:userMutate } = useMutation(getUser);
-  const [loading, setLoading] = useState<boolean>(false)
+  const { mutate: userMutate } = useMutation(getUser);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { push } = useRouter();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -43,10 +46,10 @@ const Authorization = () => {
     event.preventDefault();
     const { email, password, checked } = formData;
     if (email && password) {
-      setLoading(true)
+      setLoading(true);
       mutate(
         { identifier: email, password },
-        { 
+        {
           onError: () => setLoading(false),
           onSuccess: (data) => {
             checked
@@ -54,9 +57,17 @@ const Authorization = () => {
               : sessionStorage.setItem('token', data.jwt);
 
             userMutate(data.jwt, {
-              onSuccess: (data) => {
+              onSuccess: async (data) => {
                 setUser(data);
-                push(Routes.myProducts);
+                await push(Routes.myProducts);
+                setIsOpen(true);
+                setIsFailed(false);
+                setMessage("You've succesfully logged in");
+              },
+              onError: () => {
+                setIsOpen(true);
+                setIsFailed(true);
+                setMessage('Something went wrong: failed to log in');
               },
             });
           },
@@ -110,6 +121,8 @@ const Authorization = () => {
           </LinkMui>
         </Box>
       </Box>
+
+      <Notification />
     </SplitLayout>
   );
 };

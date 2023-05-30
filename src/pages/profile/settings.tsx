@@ -10,7 +10,6 @@ import { useTheme, Theme } from '@mui/material/styles';
 
 // images
 import noAvatar from '@/assets/noAvatar.png';
-import { uploadImage } from '@/services/addProductApi';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -21,13 +20,17 @@ import FormSettings from '@/components/Forms/FormSettings/FormSettings';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // constants
+import { uploadImage } from '@/services/addProductApi';
 import { ISettings } from '@/types';
 import { UserContext } from '@/components/Providers/user';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
-import { Routes } from '@/constants';
+import { uploadImage } from '@/services/productApi';
+import { Routes } from '@/constants/routes';
+import { NotificationContext } from '@/components/Providers/notification';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 export default function UpdateProfile() {
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
   const { mutate: updateMutate} = useMutation(updateUser);
   const { mutate: deleteMutate, isLoading } = useMutation(deleteAvatar);
@@ -36,6 +39,8 @@ export default function UpdateProfile() {
   const theme = useTheme<Theme>();
   const { push } = useRouter();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const id = Number(user?.id);
   const [updateFormData, setUpdateFormData] = useState<ISettings>({
@@ -65,7 +70,7 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLoading(true)
+    setLoading(true);
     let dataToUpdate = { ...updateFormData };
 
     const token = localStorage.getItem('token')
@@ -78,21 +83,30 @@ export default function UpdateProfile() {
       dataToUpdate = { ...updateFormData, avatar: avatarID };
     }
 
+    sessionStorage.setItem(
+      'settings-data',
+      JSON.stringify({ ...dataToUpdate, avatar: avatarToDisplay })
+    );
+
     updateMutate(
       { token, id, dataToUpdate },
       {
         onSuccess: async () => {
           userMutate(token, {
             onSuccess: async (data) => {
-              await push(Routes.myProducts);
-               setLoading(false)
               setUser(data);
+              await push(Routes.myProducts);
+              setIsOpen(true);
+              setIsFailed(false);
+              setMessage('Profile has been updated');
+              setLoading(false);
             },
           });
-          console.log('Form updated successfully');
         },
         onError: (error) => {
-          console.log('Something went wrong: ', error);
+          setIsOpen(true);
+          setIsFailed(true);
+          setMessage("Something went wrong: we couldn't update your profile");
         },
       }
     );
@@ -103,6 +117,13 @@ export default function UpdateProfile() {
       ? localStorage.getItem('token')
       : sessionStorage.getItem('token');
 
+    const userDataStr = sessionStorage.getItem('settings-data');
+
+    if (userDataStr) {
+      const userDataObj = JSON.parse(userDataStr);
+      sessionStorage.setItem('settings-data', JSON.stringify({ ...userDataObj, avatar: '' }));
+    }
+
     if (user?.avatar) {
       if (user.avatar.formats.thumbnail.url) {
         deleteMutate(
@@ -110,19 +131,37 @@ export default function UpdateProfile() {
           {
             onSuccess: async () => {
               userMutate(token, {
-                onSuccess: (data) => {
+                onSuccess: async (data) => {
+                  setIsOpen(true);
+                  setIsFailed(false);
+                  setMessage('Avatar was deleted');
                   setUser(data);
                   setAvatarToDisplay('');
                 },
               });
-
-              console.log('Form updated successfully');
+            },
+            onError: () => {
+              setIsOpen(true);
+              setIsFailed(true);
+              setMessage("Something went wrong: we could't delete your avatar");
             },
           }
         );
       }
     }
   };
+
+  useEffect(() => {
+    const userDataStr = sessionStorage.getItem('settings-data');
+    if (userDataStr) {
+      const { firstName, lastName, phoneNumber, avatar }: Record<string, string> =
+        JSON.parse(userDataStr);
+      setUpdateFormData({ firstName, lastName, phoneNumber });
+      if (avatar.startsWith('blob')) {
+        setAvatarToDisplay(avatar);
+      }
+    }
+  }, []);
 
   return (
     <Layout title="Settings">
@@ -214,6 +253,8 @@ export default function UpdateProfile() {
           />
         </Box>
       </Box>
+
+      <Notification />
     </Layout>
   );
 }

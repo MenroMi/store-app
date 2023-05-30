@@ -2,7 +2,7 @@ import { Grid, styled, Theme, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import logo from '@/assets/icons/logo.svg';
 import { useRouter } from 'next/router';
-import { Routes, getImage } from '@/constants';
+import { Routes, getImage } from '@/constants/routes';
 import SignComments from '@/components/UI/Comments/SignComments/SignComments';
 import Head from 'next/head';
 
@@ -17,9 +17,10 @@ const LayoutAuthPages = styled('div')`
 interface ISplitLayoutProps{
   children: React.ReactNode;
   title?: string;
+  isErrorPage?: boolean;
 };
 
-const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
+const SplitLayout = ({ children, title = 'Shoes Shop', isErrorPage }: ISplitLayoutProps) => {
   const { pathname, push } = useRouter();
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -31,7 +32,7 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
       <main>
         <LayoutAuthPages>
           <Grid container sx={{ height: 1 }}>
-            <Image
+            {!isErrorPage && <Image
               src={logo}
               alt={'logoIcon'}
               style={{
@@ -44,7 +45,7 @@ const SplitLayout = ({ children, title = 'Shoes Shop' }: ISplitLayoutProps) => {
               width={queryDownMd ? 35.31 : 40}
               height={queryDownMd ? 26.52 : 30}
               onClick={() => push(Routes.search)}
-            />
+            />}
             <Grid item sm={6} sx={{ pt: queryDownMd ? '58.87px' : 0, width: 1 }}>
               <Grid
                 container

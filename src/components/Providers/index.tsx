@@ -15,6 +15,7 @@ import ReactQueryProvider from './queryClient';
 import UserProvider from './user';
 import { ModalProvider } from './modal';
 import ImagesProvider from './images';
+import { NotificationProvider } from './notification';
 
 export interface IProvidersProps {
   children: ReactNode;
@@ -29,7 +30,9 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
           <StorageProvider>
             <FiltersProvider>
               <ImagesProvider>
-                <ModalProvider>{children}</ModalProvider>
+                <ModalProvider>
+                  <NotificationProvider>{children}</NotificationProvider>
+                </ModalProvider>
               </ImagesProvider>
             </FiltersProvider>
           </StorageProvider>

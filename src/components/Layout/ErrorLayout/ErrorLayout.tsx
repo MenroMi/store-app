@@ -13,7 +13,7 @@ import { UserContext } from '@/components/Providers/user';
 
 // components constants
 import Header from '@/components/UI/Header';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 //images
 import error404 from '@/assets/error404.png';

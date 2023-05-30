@@ -20,7 +20,9 @@ import { CustomDotsBtn, CustomDropDownMenu } from './styles';
 import { MenuItemParams } from '@/types';
 
 // constants
-import { Routes, homeItems, othersItems } from '@/constants';
+import { Routes } from '@/constants/routes';
+import { homeItems, othersItems } from '@/constants/ui';
+
 
 // interface
 interface IDropDownMenuProps {
@@ -73,6 +75,16 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
             {label}
           </MenuItem>
         );
+      }
+
+      if (label === 'View') {
+        return (
+          <MenuItem key={id} onClick={() => {
+            router.push(`${Routes.products}/${productID}`);
+          }}>
+            {label}
+          </MenuItem>
+        )
       }
 
       return (
