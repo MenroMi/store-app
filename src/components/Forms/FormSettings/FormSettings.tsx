@@ -1,5 +1,5 @@
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
-import { UPDATE_PROFILE_INPUTS } from '@/constants';
+import { UPDATE_PROFILE_INPUTS } from '@/constants/ui';
 import { ISettings } from '@/types';
 import { IUpdateFormProps } from '@/types/formTypes';
 import styled from '@emotion/styled';

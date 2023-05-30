@@ -4,7 +4,7 @@ import noProducts from '@/assets/icons/no-products.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Typography, Link as LinkMui } from '@mui/material';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 const EmptyStateProducts = () => {
   return (

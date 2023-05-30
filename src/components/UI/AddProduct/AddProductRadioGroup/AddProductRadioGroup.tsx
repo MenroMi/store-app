@@ -14,16 +14,17 @@ import {
 
 export default function AddProductRadioGroup({
   selectedSize,
+  availableSize,
   handleSelectSize,
   sizes,
+  isAddPage
 }: IAddProductRadioGroup) {
   const theme = useTheme<Theme>();
-
   return (
     <FormControl>
-      <FormLabel htmlFor="size" sx={{ mt: 3 }}>
+      {isAddPage && <FormLabel htmlFor="size" sx={{ mt: 3 }}>
         <Typography variant="caption">Add size</Typography>
-      </FormLabel>
+      </FormLabel>}
       <RadioGroup
         value={selectedSize}
         id="size"
@@ -37,15 +38,17 @@ export default function AddProductRadioGroup({
         }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSelectSize(e.target.value)}
       >
-        {sizes?.map((size) => (
-          <FormControlLabel
+        {sizes?.map((size) => {
+          const disabled = availableSize ? size.id !== availableSize?.id : false;  
+          return (<FormControlLabel
             key={size.id}
             value={size.id}
+            disabled={disabled}
             sx={{ m: 0 }}
             control={<Radio style={{ display: 'none' }} />}
             label={
               <Box
-                onClick={() => handleSelectSize(size.id.toString())}
+                onClick={() => !disabled && handleSelectSize(size.id.toString())}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
@@ -54,18 +57,19 @@ export default function AddProductRadioGroup({
                   margin: '8px 8px 8px 0',
                   border: '1px solid #494949',
                   borderRadius: 1,
-                  cursor: 'pointer',
+                  cursor: `${!disabled && 'pointer'}`,
                   userSelect: 'none',
                   borderColor: `${
                     selectedSize === size.id.toString() ? theme.palette.primary.main : '#494949'
                   }`,
+                  backgroundColor: `${disabled && '#F0F0F0'}`,
                 }}
               >
                 <Typography variant="body1">EU-{size.attributes.value}</Typography>
               </Box>
             }
           />
-        ))}
+        )})}
       </RadioGroup>
     </FormControl>
   );

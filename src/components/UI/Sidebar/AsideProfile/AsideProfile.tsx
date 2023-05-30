@@ -22,6 +22,7 @@ const AsideProfile: React.FC = (): JSX.Element => {
         borderBottom: '1px solid #eaecf0',
       }}
     >
+      <Box sx={{width:'64px',height:'64px'}}>
       <Image
         style={{ borderRadius: '50%' }}
         src={getProfilePhoto(user)}
@@ -29,7 +30,8 @@ const AsideProfile: React.FC = (): JSX.Element => {
         width={64}
         height={64}
         priority={true}
-      />
+        />
+        </Box>
       <Box sx={{ ml: '16px' }}>
         <Typography variant="body2" sx={{ color: '#98A2B3' }}>
           Welcome

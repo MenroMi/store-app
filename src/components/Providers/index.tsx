@@ -16,6 +16,7 @@ import UserProvider from './user';
 import { ModalProvider } from './modal';
 import ImagesProvider from './images';
 import { ShoppingCartProvider } from '@/contexts/shoppingCardContext';
+import { NotificationProvider } from './notification';
 
 export interface IProvidersProps {
   children: ReactNode;
@@ -28,13 +29,15 @@ export default function Providers({ children, dehydrateState }: IProvidersProps)
       <ReactQueryProvider dehydrateState={dehydrateState}>
         <UserProvider>
           <ShoppingCartProvider>
-          <StorageProvider>
-            <FiltersProvider>
-              <ImagesProvider>
-                <ModalProvider>{children}</ModalProvider>
-              </ImagesProvider>
-            </FiltersProvider>
-          </StorageProvider>
+            <StorageProvider>
+              <FiltersProvider>
+                <ImagesProvider>
+                  <ModalProvider>
+                    <NotificationProvider>{children}</NotificationProvider>
+                  </ModalProvider>
+                </ImagesProvider>
+              </FiltersProvider>
+            </StorageProvider>
           </ShoppingCartProvider>
         </UserProvider>
       </ReactQueryProvider>

@@ -11,7 +11,7 @@ import signIn from '@/assets/singInBg.png';
 import emptyIcon from '@/assets/icons/empty.svg';
 
 // constants
-import { searchSliderOptionsOnDesktop } from '@/constants';
+import { searchSliderOptionsOnDesktop } from '@/constants/ui';
 
 // components
 import SliderArrow from '@/components/UI/Slider/SliderArrow/SliderArrow';

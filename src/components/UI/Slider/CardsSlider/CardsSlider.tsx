@@ -1,5 +1,5 @@
 // basic
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,7 +20,7 @@ import Slide from '../Slide/Slide';
 import { CustomEmptyStateWrapper, CustomSlider } from './CardsSliderStyles';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import SliderArrow from '../SliderArrow/SliderArrow';
 
 // images
@@ -28,6 +28,8 @@ import noProducts from '@/assets/icons/no-products.svg';
 
 // types
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
+import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
+import { useRouter } from 'next/router';
 
 export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   const sliderSettings = {
@@ -59,6 +61,10 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
       },
     ],
   };
+
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
+  const router = useRouter();
 
   if (products?.length > 3) {
     return (
@@ -114,11 +120,17 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
         <Typography variant="body1" sx={{ mt: '10px' }}>
           Post can contain video, images and text.
         </Typography>
-        <LinkMui component={Link} href={Routes.addProduct} sx={{ mt: 5 }} underline="none">
-          <Button variant="contained" sx={{ padding: '10px 26px' }}>
-            Add product
-          </Button>
-        </LinkMui>
+        <Button
+          variant="contained"
+          onClick={async () => {
+            setIsRedirecting(true);
+            await router.push(Routes.addProduct);
+          }}
+          disabled={isRedirecting}
+          sx={{ padding: '5px 13px', mt: 2.5, width: '146px' }}
+        >
+          {isRedirecting ? <ButtonLoader /> : 'Add product'}
+        </Button>
       </CustomEmptyStateWrapper>
     );
   }

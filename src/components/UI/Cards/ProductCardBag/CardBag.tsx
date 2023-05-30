@@ -17,7 +17,7 @@ import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 import { AttrFromData } from '@/types/cardListTypes';
 import axios from 'axios';
-import { baseURL } from '@/constants';
+import { baseURL } from '@/constants/urls';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 // import { getProductById } from '@/services/cardBagService';
 import BagQuantityButton from '../../Buttons/BagQuantityButton/BagQuantityButton';

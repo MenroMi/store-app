@@ -40,7 +40,7 @@ import {
 // import { BagContext, CardBagContextType, ICardBagProps } from '@/context/bagContext';
 import { CustomButton } from '@/styles/pageStyles/CheckoutStyles';
 import router from 'next/router';
-import { Routes, baseURL } from '@/constants';
+import { Routes } from '@/constants/routes';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // interface

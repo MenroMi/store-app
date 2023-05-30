@@ -5,7 +5,7 @@ import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 import { useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import { CustomDropDownMenu } from '../DropDownMenu/styles';
 
 export default function UserMenu() {
@@ -28,14 +28,14 @@ export default function UserMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{ borderRadius: '50%', p: '0px', maxWidth: '35px' }}
+        sx={{ borderRadius: '50%', p: '0px', maxWidth: '35px', height:'64px' }}
       >
         <Image
           style={{ borderRadius: '50%' }}
           src={getProfilePhoto(user)}
           alt="avatar-icon"
-          width={40}
-          height={40}
+          width={35}
+          height={35}
           priority={true}
         />
       </Button>

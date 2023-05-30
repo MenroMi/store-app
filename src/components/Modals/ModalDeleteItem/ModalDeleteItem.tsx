@@ -14,6 +14,7 @@ import { CustomModalBox, CustomModalWrapper } from './ModalDeleteItemStyles';
 
 // assets
 import closeIcon from '@/assets/icons/close.svg';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 interface IModalDeleteItemProps {
   deleteMessage: string;
@@ -21,19 +22,21 @@ interface IModalDeleteItemProps {
 }
 
 export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModalDeleteItemProps) {
-  const { isOpen, setIsOpen } = useContext(ModalContext);
+  const { isOpen, setIsOpen, isDeleting, setIsDeleting } = useContext(ModalContext);
   const modalRef = useRef<HTMLDivElement | null>();
+
   const closeModal = () => {
     if (typeof document !== 'undefined') {
       document.body.style.overflow = 'scroll';
     }
     setIsOpen(false);
+    setIsDeleting(false);
   };
 
   const handleDelete = () => {
     deleteHandler();
-    closeModal();
   };
+
   return typeof document !== 'undefined' ? (
     createPortal(
       <CustomModalWrapper
@@ -69,7 +72,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
           >
             <Button
               variant="outlined"
-              sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+              sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%', mr: 3.5 }}
               onClick={closeModal}
             >
               Cancel
@@ -77,10 +80,11 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
 
             <Button
               variant="contained"
-              sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+              sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%' }}
               onClick={handleDelete}
+              disabled={isDeleting}
             >
-              Delete
+              {isDeleting ? <ButtonLoader /> : 'Delete'}
             </Button>
           </Box>
         </CustomModalBox>
@@ -121,7 +125,7 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
         >
           <Button
             variant="outlined"
-            sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+            sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%', mr: 3.5 }}
             onClick={closeModal}
           >
             Cancel
@@ -129,10 +133,11 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
 
           <Button
             variant="contained"
-            sx={{ p: { sm: '5px 30px', md: '20px 120px' } }}
+            sx={{ p: { sm: '5px 30px', md: '20px 120px' }, width: '50%' }}
             onClick={handleDelete}
+            disabled={isDeleting}
           >
-            Delete
+            {isDeleting ? <ButtonLoader /> : 'Delete'}
           </Button>
         </Box>
       </CustomModalBox>

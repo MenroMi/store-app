@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { baseURL } from '@/constants';
+import { baseURL } from '@/constants/urls';
 import { AttrFromData } from '@/types/cardListTypes';
 
 const instance = axios.create({

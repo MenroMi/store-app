@@ -13,7 +13,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
@@ -22,13 +22,14 @@ import leftBurgerSetting from '@/assets/icons/leftBurgerSetting.svg';
 
 import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
-import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
+import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants/routes';
 import { useRouter } from 'next/router';
 
 import { INavItem } from '@/types/INavItem';
 import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
 
 import { UserContext } from '@/components/Providers/user';
+import { NotificationContext } from '@/components/Providers/notification';
 import UserMenu from '../Menu/UserMenu/UserMenu';
 import SearchHeader from '../Search/SearchHeader/SearchHeader';
 import theme from '@/utils/mui/theme';
@@ -42,6 +43,7 @@ export default function Header() {
 
   const { user, setUser } = useContext(UserContext);
   const { cartQuantity } = useShoppingCart();
+  const { setIsFailed, setIsOpen, setMessage } = useContext(NotificationContext);
 
   const { push, pathname } = useRouter();
 
@@ -115,6 +117,17 @@ export default function Header() {
             >
               <Typography variant="h6">Products</Typography>
             </styles.NavListLink>
+            {user  && <styles.NavListLink
+              href={Routes.search}
+              sx={{
+                display: {
+                  md: 'flex',
+                  xs: 'none',
+                },
+              }}
+            >
+              <Typography variant="h6">Catalog</Typography>
+            </styles.NavListLink>}
           </styles.Nav>
           <styles.Options
             sx={{
@@ -125,8 +138,7 @@ export default function Header() {
               <Button
                 variant="outlined"
                 sx={{
-                  maxWidth: '145px',
-                  width: 1,
+                  width: '145px',
                   height: '48px',
                   display: {
                     md: 'flex',
@@ -255,12 +267,17 @@ export default function Header() {
                     <styles.NavListItem
                       key={name}
                       onClick={async () => {
-                        await push(to);
-                        setIsBurgerClicked(false);
                         if (name === 'Log out') {
+                          setIsFailed(false);
+                          setIsOpen(true);
+                          setMessage('Succesfully logged out');
                           setUser(null);
                           localStorage.removeItem('token');
                           sessionStorage.removeItem('token');
+                          await push(to);
+                        } else {
+                          await push(to);
+                          setIsBurgerClicked(false);
                         }
                       }}
                     >

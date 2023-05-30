@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
 
 // mui
 import { Box, Button, FormLabel, Input, Typography, useMediaQuery } from '@mui/material';
@@ -15,27 +16,30 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
-
-// styled components
+import FormSettings from '@/components/Forms/FormSettings/FormSettings';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // constants
-import FormSettings from '@/components/Forms/FormSettings/FormSettings';
 import { ISettings } from '@/types';
 import { UserContext } from '@/components/Providers/user';
-import { useMutation } from '@tanstack/react-query';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
-import { uploadImage } from '@/services/addProductApi';
-import { Routes } from '@/constants';
+import { uploadImage } from '@/services/productApi';
+import { Routes } from '@/constants/routes';
+import { NotificationContext } from '@/components/Providers/notification';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 export default function UpdateProfile() {
-  const { mutate: updateMutate, isLoading: updateIsLoading } = useMutation(updateUser);
-  const { mutate: deleteMutate } = useMutation(deleteAvatar);
-  const { mutate: userMutate } = useMutation(getUser);
+  const [loading, setLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
+  const { mutate: updateMutate} = useMutation(updateUser);
+  const { mutate: deleteMutate, isLoading } = useMutation(deleteAvatar);
+  const { mutate: userMutate } = useMutation(getUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme<Theme>();
   const { push } = useRouter();
   const queryDownMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const id = Number(user?.id);
   const [updateFormData, setUpdateFormData] = useState<ISettings>({
@@ -65,7 +69,7 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // console.log(user?.avatar);
+    setLoading(true);
     let dataToUpdate = { ...updateFormData };
 
     const token = localStorage.getItem('token')
@@ -78,19 +82,30 @@ export default function UpdateProfile() {
       dataToUpdate = { ...updateFormData, avatar: avatarID };
     }
 
+    sessionStorage.setItem(
+      'settings-data',
+      JSON.stringify({ ...dataToUpdate, avatar: avatarToDisplay })
+    );
+
     updateMutate(
       { token, id, dataToUpdate },
       {
         onSuccess: async () => {
           userMutate(token, {
-            onSuccess: (data) => {
+            onSuccess: async (data) => {
               setUser(data);
+              await push(Routes.myProducts);
+              setIsOpen(true);
+              setIsFailed(false);
+              setMessage('Profile has been updated');
+              setLoading(false);
             },
           });
-          console.log('Form updated successfully');
         },
         onError: (error) => {
-          console.log('Something went wrong: ', error);
+          setIsOpen(true);
+          setIsFailed(true);
+          setMessage("Something went wrong: we couldn't update your profile");
         },
       }
     );
@@ -101,6 +116,13 @@ export default function UpdateProfile() {
       ? localStorage.getItem('token')
       : sessionStorage.getItem('token');
 
+    const userDataStr = sessionStorage.getItem('settings-data');
+
+    if (userDataStr) {
+      const userDataObj = JSON.parse(userDataStr);
+      sessionStorage.setItem('settings-data', JSON.stringify({ ...userDataObj, avatar: '' }));
+    }
+
     if (user?.avatar) {
       if (user.avatar.formats.thumbnail.url) {
         deleteMutate(
@@ -109,19 +131,36 @@ export default function UpdateProfile() {
             onSuccess: async () => {
               userMutate(token, {
                 onSuccess: async (data) => {
-                  await push(Routes.myProducts);
+                  setIsOpen(true);
+                  setIsFailed(false);
+                  setMessage('Avatar was deleted');
                   setUser(data);
                   setAvatarToDisplay('');
                 },
               });
-
-              console.log('Form updated successfully');
+            },
+            onError: () => {
+              setIsOpen(true);
+              setIsFailed(true);
+              setMessage("Something went wrong: we could't delete your avatar");
             },
           }
         );
       }
     }
   };
+
+  useEffect(() => {
+    const userDataStr = sessionStorage.getItem('settings-data');
+    if (userDataStr) {
+      const { firstName, lastName, phoneNumber, avatar }: Record<string, string> =
+        JSON.parse(userDataStr);
+      setUpdateFormData({ firstName, lastName, phoneNumber });
+      if (avatar.startsWith('blob')) {
+        setAvatarToDisplay(avatar);
+      }
+    }
+  }, []);
 
   return (
     <Layout title="Settings">
@@ -183,13 +222,15 @@ export default function UpdateProfile() {
               <Button
                 variant="contained"
                 onClick={deleteAvatarIcon}
+                disabled={isLoading}
                 sx={{
                   fontSize: queryDownMd ? '12px' : '16px',
                   width: queryDownMd ? '117px' : '152px',
                   height: queryDownMd ? '30px' : '40px',
                 }}
               >
-                Delete
+                {isLoading ? <ButtonLoader /> : 'Delete'}
+                
               </Button>
             </Box>
           </Box>
@@ -204,13 +245,15 @@ export default function UpdateProfile() {
             Welcome back! Please enter your details to log into your account.
           </Typography>
           <FormSettings
-            loading={updateIsLoading}
+            loading={loading}
             formData={updateFormData}
             setFormData={setUpdateFormData}
             handleSubmit={handleSubmit}
           />
         </Box>
       </Box>
+
+      <Notification />
     </Layout>
   );
 }

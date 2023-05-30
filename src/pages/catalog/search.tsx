@@ -18,6 +18,7 @@ import Layout from '@/components/Layout/MainLayout';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getFilteredData } from '@/services/searchApi';
 import makeArray from '@/utils/filters/makeRouterQueryArray';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 // FUNCTIONAL COMPONENT
 export default function SearchResultPage(): JSX.Element {
@@ -60,6 +61,8 @@ export default function SearchResultPage(): JSX.Element {
         data-overlay="overlay"
       />
       {!queryUpMd && !hide && <MobileFilterMenu />}
+
+      <Notification />
     </Layout>
   );
 }
