@@ -1,12 +1,5 @@
 // basic
-import React, {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from 'react';
 import Image from 'next/image';
 
 // context
@@ -14,9 +7,6 @@ import { FiltersContext } from '@/contexts/filtersContext';
 
 // services
 import { getSearchProducts } from '@/services/searchApi';
-
-// rq
-import { useQuery } from '@tanstack/react-query';
 
 // mui
 import { Theme, useMediaQuery, useTheme, InputAdornment, Box, Typography } from '@mui/material';
@@ -44,9 +34,9 @@ import {
   HeaderSearchDiv,
   HeaderSearchLayout,
 } from './styles';
-import { CustomTypographyName } from '../../Cards/Card/styles';
 import SearchPopularTerms from '../SearchPopularTerms/SearchPopularTerms';
 import useDebounceQuery from '@/hooks/useDebounceQuery';
+import onRedirectToFilterPage from '@/utils/search/onRedirectToFilterPage';
 
 // interface
 interface ISearchHeaderProps {
@@ -64,38 +54,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
     () => getSearchProducts(inputValue),
     500
   );
-
-  const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const resetFiltersAndCloseSearch = (
-      defaultValue: { [x: string]: string[] },
-      defaultPage: number,
-      defaultBool: boolean
-    ) => {
-      contextFilters!.setActiveFilters(defaultValue);
-      contextFilters!.setPage(defaultPage);
-      setSearchOpen(defaultBool);
-      return;
-    };
-
-    if (inputValue.length <= 0) {
-      resetFiltersAndCloseSearch(
-        {
-          name: [],
-          page: ['1'],
-        },
-        1,
-        false
-      );
-    } else {
-      resetFiltersAndCloseSearch(
-        {
-          name: [`${inputValue}`],
-        },
-        1,
-        false
-      );
-    }
-  };
 
   const onClickPopularTerm = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const value = e.target as HTMLElement;
@@ -196,7 +154,9 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
               )}
             </Box>
           </HeaderDiv>
-          <ButtonSeeAll onClick={(e) => onRedirectToFilterPage(e)}>
+          <ButtonSeeAll
+            onClick={() => onRedirectToFilterPage(contextFilters, inputValue, setSearchOpen)}
+          >
             {`See all ` + inputValue}
           </ButtonSeeAll>
         </>
