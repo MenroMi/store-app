@@ -1,6 +1,6 @@
 // basic
 import Image from 'next/image';
-import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 
@@ -27,11 +27,12 @@ import { uploadImage } from '@/services/productApi';
 import { Routes } from '@/constants/routes';
 import { NotificationContext } from '@/components/Providers/notification';
 import Notification from '@/components/UI/Notification/Notificaton';
+import { IUser } from '@/types/userTypes';
 
 export default function UpdateProfile() {
   const [loading, setLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
-  const { mutate: updateMutate} = useMutation(updateUser);
+  const { mutate: updateMutate } = useMutation(updateUser);
   const { mutate: deleteMutate, isLoading } = useMutation(deleteAvatar);
   const { mutate: userMutate } = useMutation(getUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,9 +49,18 @@ export default function UpdateProfile() {
     phoneNumber: user?.phoneNumber ? user.phoneNumber : '',
   });
 
-  const [avatarToDisplay, setAvatarToDisplay] = useState(
-    user && user?.avatar?.formats?.thumbnail?.url ? user?.avatar.formats?.thumbnail?.url : ''
-  );
+  const displayAvatar = (user: IUser) => {
+    const userDataFromSessionStorage = sessionStorage.getItem('settings-data');
+    if (user && user?.avatar?.formats?.thumbnail?.url) {
+      return user.avatar.formats.thumbnail.url;
+    } else if (userDataFromSessionStorage) {
+      return JSON.parse(userDataFromSessionStorage).avatar;
+    } else {
+      return '';
+    }
+  };
+
+  const [avatarToDisplay, setAvatarToDisplay] = useState<string>(user ? displayAvatar(user) : '');
   const [avatarToPost, setAvatarToPost] = useState<File>();
 
   const handleAvatarSetup = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -82,11 +92,6 @@ export default function UpdateProfile() {
       dataToUpdate = { ...updateFormData, avatar: avatarID };
     }
 
-    sessionStorage.setItem(
-      'settings-data',
-      JSON.stringify({ ...dataToUpdate, avatar: avatarToDisplay })
-    );
-
     updateMutate(
       { token, id, dataToUpdate },
       {
@@ -99,6 +104,13 @@ export default function UpdateProfile() {
               setIsFailed(false);
               setMessage('Profile has been updated');
               setLoading(false);
+              sessionStorage.setItem(
+                'settings-data',
+                JSON.stringify({
+                  ...updateFormData,
+                  avatar: data?.avatar?.formats.thumbnail.url,
+                })
+              );
             },
           });
         },
@@ -111,7 +123,7 @@ export default function UpdateProfile() {
     );
   };
 
-  const deleteAvatarIcon = () => {
+  const deleteAvatarIcon = useCallback(() => {
     const token = localStorage.getItem('token')
       ? localStorage.getItem('token')
       : sessionStorage.getItem('token');
@@ -121,6 +133,7 @@ export default function UpdateProfile() {
     if (userDataStr) {
       const userDataObj = JSON.parse(userDataStr);
       sessionStorage.setItem('settings-data', JSON.stringify({ ...userDataObj, avatar: '' }));
+      setAvatarToDisplay('');
     }
 
     if (user?.avatar) {
@@ -148,7 +161,7 @@ export default function UpdateProfile() {
         );
       }
     }
-  };
+  }, [deleteMutate, setIsFailed, setIsOpen, setMessage, setUser, user, userMutate]);
 
   useEffect(() => {
     const userDataStr = sessionStorage.getItem('settings-data');
@@ -156,10 +169,16 @@ export default function UpdateProfile() {
       const { firstName, lastName, phoneNumber, avatar }: Record<string, string> =
         JSON.parse(userDataStr);
       setUpdateFormData({ firstName, lastName, phoneNumber });
-      if (avatar.startsWith('blob')) {
+      if (avatar) {
         setAvatarToDisplay(avatar);
       }
+    } else {
+      sessionStorage.setItem(
+        'settings-data',
+        JSON.stringify({ ...updateFormData, avatar: avatarToDisplay })
+      );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -230,7 +249,6 @@ export default function UpdateProfile() {
                 }}
               >
                 {isLoading ? <ButtonLoader /> : 'Delete'}
-                
               </Button>
             </Box>
           </Box>
