@@ -34,6 +34,9 @@ export default function ModalDeleteItem({ deleteMessage, deleteHandler }: IModal
   };
 
   const handleDelete = () => {
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'scroll';
+    }
     deleteHandler();
   };
 

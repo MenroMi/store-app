@@ -21,12 +21,11 @@ export default function UserProfile({
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   return (
-    <Box sx={{ position: 'relative', maxWidth: '1480px' }}>
-      <Box
-        component={Image}
+    <Box sx={{ position: 'relative' }}>
+      <Image
         src={profileTopBgSrc}
         alt="Profile background"
-        sx={{
+        style={{
           maxWidth: '100%',
           maxHeight: queryDownSm ? '132px' : '262px',
           display: 'block',

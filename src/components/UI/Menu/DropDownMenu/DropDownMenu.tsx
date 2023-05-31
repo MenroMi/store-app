@@ -29,9 +29,11 @@ import { useShoppingCart } from '@/contexts/shoppingCardContext';
 interface IDropDownMenuProps {
   productID: number;
   productName: string;
+  top?: string;
+  right?: string;
 }
 
-const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }): JSX.Element => {
+const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, top, right }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const contextStorage = useContext(StorageContext);
@@ -110,6 +112,10 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
         onClick={(e) => openDropDownMenu(e)}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
+        sx={{
+          top: top,
+          right: right,
+        }}
       >
         <Box component={Image} src={dotsBtn} alt="More" />
       </CustomDotsBtn>

@@ -13,14 +13,12 @@ import { Button, Typography, Box } from '@mui/material';
 import Card from '../../Cards/Card/Card';
 import DropDownMenu from '../../Menu/DropDownMenu/DropDownMenu';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
-import Slide from '../Slide/Slide';
 
 // styled components
-import { CustomEmptyStateWrapper, CustomSlider } from './CardsSliderStyles';
+import { CustomEmptyStateWrapper, CustomSlider } from './styles';
 
 // constants
 import { Routes } from '@/constants/routes';
-import SliderArrow from '../SliderArrow/SliderArrow';
 
 // images
 import noProducts from '@/assets/icons/no-products.svg';
@@ -29,15 +27,10 @@ import noProducts from '@/assets/icons/no-products.svg';
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
 import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 import { useRouter } from 'next/router';
-import { myProfileSliderOptions } from '@/constants/ui';
+import { myProfileSliderMobileOptions } from '@/constants/ui';
+import SlideMobile from '../SlideMobile/SlideMobile';
 
-export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
-  const sliderSettings = {
-    nextArrow: <SliderArrow />,
-    prevArrow: <SliderArrow next={false} />,
-    ...myProfileSliderOptions,
-  };
-
+export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps) => {
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   const router = useRouter();
@@ -45,17 +38,22 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   if (products?.length > 3) {
     return (
       <>
-        <CustomSlider {...sliderSettings}>
+        <CustomSlider {...myProfileSliderMobileOptions}>
           {products?.map((product) => (
-            <Slide
+            <SlideMobile
               productCategory={product.categories[0].name}
               productName={product.name}
               productImageSrc={product?.images[0]?.url}
               productPrice={product.price}
               key={product.id}
             >
-              <DropDownMenu productID={product.id} productName={product.name} />
-            </Slide>
+              <DropDownMenu
+                top="5px"
+                right="5px"
+                productID={product.id}
+                productName={product.name}
+              />
+            </SlideMobile>
           ))}
         </CustomSlider>
 

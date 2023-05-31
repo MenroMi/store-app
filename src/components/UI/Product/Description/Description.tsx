@@ -62,9 +62,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
         <CustomTypography variant="h5">Select Size</CustomTypography>
         <Box
           pl={`calc((100% - ${
-            queryDownMini ? '226px' : 
-            queryDownSmall ? '304px' : 
-            queryDownFive ? '382px' : ''
+            queryDownMini ? '226px' : queryDownSmall ? '304px' : queryDownFive ? '382px' : ''
           })/2)`}
         >
           <AddProductRadioGroup
@@ -80,7 +78,6 @@ export default function Description({ product, sizes }: IDescriptionProps) {
         <CustomButton
           variant="outlined"
           onClick={() => {
-            router.back();
             contextStorage?.addUniqueID(product.attributes?.name, product.id);
           }}
         >

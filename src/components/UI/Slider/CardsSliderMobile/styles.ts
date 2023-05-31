@@ -5,16 +5,9 @@ import Slider from 'react-slick';
 
 export const CustomSlider = styled(Slider)(() => ({
   // margin: '50px',
-  maxWidth: '1350px',
+  //   maxWidth: '100%',
   alignSelf: 'center',
-
-  [theme.breakpoints.down(1800)]: {
-    maxWidth: '1000px',
-  },
-
-  [theme.breakpoints.down(1400)]: {
-    maxWidth: '850px',
-  },
+  maxWidth: '95%',
 }));
 
 export const CustomEmptyStateWrapper = styled(Box)(() => ({
