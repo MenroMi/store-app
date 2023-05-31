@@ -32,7 +32,7 @@ import { IUser } from '@/types/userTypes';
 export default function UpdateProfile() {
   const [loading, setLoading] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
-  const { mutate: updateMutate} = useMutation(updateUser);
+  const { mutate: updateMutate } = useMutation(updateUser);
   const { mutate: deleteMutate, isLoading } = useMutation(deleteAvatar);
   const { mutate: userMutate } = useMutation(getUser);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -62,8 +62,6 @@ export default function UpdateProfile() {
 
   const [avatarToDisplay, setAvatarToDisplay] = useState<string>(user ? displayAvatar(user) : '');
   const [avatarToPost, setAvatarToPost] = useState<File>();
-
-  console.log('Avatar to display: ', avatarToDisplay);
 
   const handleAvatarSetup = async (event: ChangeEvent<HTMLInputElement>) => {
     const avatar = event.target.files?.[0] as File;
@@ -170,13 +168,11 @@ export default function UpdateProfile() {
     if (userDataStr) {
       const { firstName, lastName, phoneNumber, avatar }: Record<string, string> =
         JSON.parse(userDataStr);
-      console.log('Hello from userDataStr');
       setUpdateFormData({ firstName, lastName, phoneNumber });
       if (avatar) {
         setAvatarToDisplay(avatar);
       }
     } else {
-      console.log('Set user data to SS');
       sessionStorage.setItem(
         'settings-data',
         JSON.stringify({ ...updateFormData, avatar: avatarToDisplay })
@@ -253,7 +249,6 @@ export default function UpdateProfile() {
                 }}
               >
                 {isLoading ? <ButtonLoader /> : 'Delete'}
-                
               </Button>
             </Box>
           </Box>
