@@ -3,8 +3,7 @@ import { MenuItemParams } from '@/types';
 
 export const homeItems: MenuItemParams[] = [
   { id: 1, label: 'View', method: () => {} },
-  { id: 2, label: 'Edit', method: () => {} },
-  { id: 3, label: 'Delete', method: () => {} },
+  { id: 2, label: 'Delete', method: () => {} },
 ];
 export const othersItems: MenuItemParams[] = [
   { id: 1, label: 'View', method: () => {} },
