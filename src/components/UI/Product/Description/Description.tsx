@@ -7,9 +7,10 @@ import { StorageContext } from '@/contexts/sessionStorageContext';
 import { useState, ChangeEvent, useContext } from 'react';
 import theme from '@/utils/mui/theme';
 import { useRouter } from 'next/router';
+import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 export default function Description({ product, sizes }: IDescriptionProps) {
-  const contextStorage = useContext(StorageContext);
+  // const contextStorage = useContext(StorageContext);
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryDownFive = useMediaQuery<unknown>(theme.breakpoints.down(586));
   const queryDownSmall = useMediaQuery<unknown>(theme.breakpoints.down(438));
@@ -19,6 +20,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
   const [selectedSize, setSelectedSize] = useState<string>(
     product.attributes?.size.data?.id.toString() || '-1'
   );
+  const { increaseCartQuantity } = useShoppingCart();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
@@ -75,12 +77,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
         </Box>
       </Grid>
       <Grid item xs={12} maxHeight={62}>
-        <CustomButton
-          variant="outlined"
-          onClick={() => {
-            contextStorage?.addUniqueID(product.attributes?.name, product.id);
-          }}
-        >
+        <CustomButton variant="outlined" onClick={() => increaseCartQuantity(product.id)}>
           Add to Bag
         </CustomButton>
       </Grid>

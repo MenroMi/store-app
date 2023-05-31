@@ -22,6 +22,7 @@ export enum Routes {
   error404 = '/404',
   error500 = '/500',
   bag = '/profile/bag',
+  checkout = '/profile/checkout',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
   search = '/catalog/search?page=1',

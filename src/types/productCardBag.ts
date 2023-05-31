@@ -1,17 +1,16 @@
 import { StaticImageData } from 'next/image';
+import { AttrFromData } from './cardListTypes';
 
 export interface ICardBagProps {
-  id: number;
-  productImageSrc: string | StaticImageData;
   productName: string;
-  productPrice: number;
   productCategory: string;
-  inStock: boolean;
+  productImageSrc: StaticImageData | string;
+  productPrice: number;
+  id: number;
   quantity: number;
 }
 
-export type CardBagContextType = {
-  products: ICardBagProps[];
-  changeQuantity: (id: number, quantity: number) => void;
-  deleteProduct: (id: number) => void;
-};
+export interface ICardsBagProps {
+  product: AttrFromData;
+  quantity: number;
+}
