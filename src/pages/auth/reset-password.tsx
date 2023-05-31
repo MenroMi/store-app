@@ -12,7 +12,7 @@ import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import { IFormData } from '@/types/formDataTypes';
 import { useMutation } from '@tanstack/react-query';
 import { reset } from '@/services/authService';

@@ -1,5 +1,5 @@
 // basic
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   QueryClient,
@@ -20,12 +20,10 @@ import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProf
 import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
 
 // constants
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 
 // services
-import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/addProductApi';
-
-// interfaces
+import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/productApi';
 import { IProductData } from '@/types/addProductTypes';
 
 // context
@@ -79,6 +77,14 @@ export default function AddProduct() {
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const router = useRouter();
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => setSelectedImages([]));
+
+    return () => {
+      router.events.off('routeChangeStart', () => setSelectedImages([]));
+    };
+  }, []);
 
   // executes when we add an image
   const handleChooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {

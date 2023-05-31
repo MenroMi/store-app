@@ -1,8 +1,10 @@
+// basic
 import React, { useContext, useEffect, useState } from 'react';
-import * as styles from './styles';
-
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+
+// mui
 import {
   Box,
   Button,
@@ -13,27 +15,37 @@ import {
   useMediaQuery,
 } from '@mui/material';
 
-import { Routes } from '@/constants';
+// theme MUI
+import theme from '@/utils/mui/theme';
 
+// images
 import Logo from '@/assets/icons/logo.svg';
 import SearchIcon from '@/assets/icons/search.svg';
 import CartIcon from '@/assets/icons/bag.svg';
 import leftBurgerSetting from '@/assets/icons/leftBurgerSetting.svg';
-
 import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
-import { NAV_BURGER_LINKS, NAV_LINKS } from '@/constants';
-import { useRouter } from 'next/router';
 
-import { INavItem } from '@/types/INavItem';
-import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
-
+// context
 import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
+
+// constants
+import { Routes } from '@/constants';
+import { NAV_BURGER_LINKS } from '@/constants/routes';
+
+// components
+import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
+
 import { NotificationContext } from '@/components/Providers/notification';
 import UserMenu from '../Menu/UserMenu/UserMenu';
 import SearchHeader from '../Search/SearchHeader/SearchHeader';
-import theme from '@/utils/mui/theme';
+
+// styled components
+import * as styles from './styles';
+
+// interface
+import { INavItem } from '@/types/INavItem';
 
 export default function Header() {
   const [isBurgerClicled, setIsBurgerClicked] = useState<boolean>(false);
@@ -43,48 +55,47 @@ export default function Header() {
 
   const { user, setUser } = useContext(UserContext);
   const { setIsFailed, setIsOpen, setMessage } = useContext(NotificationContext);
-
   const contextStorage = useContext(StorageContext);
   const { push, pathname } = useRouter();
 
-  const logOut = (e: React.MouseEvent<HTMLElement>) => {
-    if (e.currentTarget.textContent === 'Log Out') {
-      setUser(null);
-      localStorage.removeItem('token');
-      sessionStorage.removeItem('token');
-    }
-  };
+  // const logOut = (e: React.MouseEvent<HTMLElement>) => {
+  //   if (e.currentTarget.textContent === 'Log Out') {
+  //     setUser(null);
+  //     localStorage.removeItem('token');
+  //     sessionStorage.removeItem('token');
+  //   }
+  // };
 
-  /**
-   *
-   * @param item navigation item
-   * @param itemToChech dynamic navigation item
-   * @param unAuthItem item value if auth
-   * @param authItem item value if not auth
-   * @param type type of item field
-   * @returns
-   */
+  // /**
+  //  *
+  //  * @param item navigation item
+  //  * @param itemToChech dynamic navigation item
+  //  * @param unAuthItem item value if auth
+  //  * @param authItem item value if not auth
+  //  * @param type type of item field
+  //  * @returns
+  //  */
 
-  const dynamicParams = (
-    item: INavItem,
-    itemToCheck: string,
-    unAuthItem: string,
-    authItem: string,
-    type: string
-  ) => {
-    if (type === 'name') {
-      return item.name === itemToCheck
-        ? item.name === itemToCheck && user
-          ? unAuthItem
-          : authItem
-        : item.name;
-    } else if (type === 'link')
-      return item.name === itemToCheck
-        ? item.to === itemToCheck && user
-          ? unAuthItem
-          : authItem
-        : item.to;
-  };
+  // const dynamicParams = (
+  //   item: INavItem,
+  //   itemToCheck: string,
+  //   unAuthItem: string,
+  //   authItem: string,
+  //   type: string
+  // ) => {
+  //   if (type === 'name') {
+  //     return item.name === itemToCheck
+  //       ? item.name === itemToCheck && user
+  //         ? unAuthItem
+  //         : authItem
+  //       : item.name;
+  //   } else if (type === 'link')
+  //     return item.name === itemToCheck
+  //       ? item.to === itemToCheck && user
+  //         ? unAuthItem
+  //         : authItem
+  //       : item.to;
+  // };
 
   const {
     palette: {
@@ -117,6 +128,17 @@ export default function Header() {
             >
               <Typography variant="h6">Products</Typography>
             </styles.NavListLink>
+            {user  && <styles.NavListLink
+              href={Routes.search}
+              sx={{
+                display: {
+                  md: 'flex',
+                  xs: 'none',
+                },
+              }}
+            >
+              <Typography variant="h6">Catalog</Typography>
+            </styles.NavListLink>}
           </styles.Nav>
           <styles.Options
             sx={{

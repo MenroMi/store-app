@@ -2,7 +2,7 @@
 import { Box, Button } from '@mui/material';
 
 // constants
-import { keyStr } from '@/constants';
+import { blurDataURL } from '@/constants/urls';
 
 // styled components
 import { CustomImage, CustomTypographyName } from '@/components/UI/Cards/Card/CardStyles';
@@ -10,6 +10,8 @@ import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
+import { useRouter } from 'next/router';
+import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SearchSlideDesktop: React.FC<ISlideProps> = ({
@@ -18,7 +20,10 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
   productName,
   productPrice,
   children,
+  id,
 }): JSX.Element => {
+  const router = useRouter();
+
   return (
     <CustomSearchSlideWrapper>
       <CustomSearchSlide
@@ -32,7 +37,7 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
           fill
           priority={true}
           placeholder="blur"
-          blurDataURL={keyStr}
+          blurDataURL={blurDataURL}
           sx={{ objectPosition: 'bottom' }}
         />
         {children}
@@ -44,8 +49,13 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
           <CustomTypographyName variant="subtitle2Small">{'$' + productPrice}</CustomTypographyName>
         </Box>
       </Box>
-      <Button>See more</Button>
-      {/* redirect button to single page product */}
+      <Button
+        onClick={() => {
+          router.push(`${Routes.products}/${id}`);
+        }}
+      >
+        See more
+      </Button>
     </CustomSearchSlideWrapper>
   );
 };

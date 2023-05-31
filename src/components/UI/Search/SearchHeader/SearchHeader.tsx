@@ -1,6 +1,16 @@
 // basic
-import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import Image from 'next/image';
+
+// context
+import { FiltersContext } from '@/contexts/filtersContext';
 
 // services
 import { getSearchProducts } from '@/services/searchApi';
@@ -27,6 +37,7 @@ import search from '@/assets/icons/search.svg';
 
 // styled components
 import {
+  ButtonSeeAll,
   HeaderDiv,
   HeaderSearch,
   HeaderSearchContainer,
@@ -34,36 +45,57 @@ import {
   HeaderSearchLayout,
 } from './styles';
 import { CustomTypographyName } from '../../Cards/Card/CardStyles';
-import { AttrFromData } from '@/types/cardListTypes';
+import SearchPopularTerms from '../SearchPopularTerms/SearchPopularTerms';
+import useDebounceQuery from '@/hooks/useDebounceQuery';
 
 // interface
 interface ISearchHeaderProps {
   setSearchOpen: Dispatch<SetStateAction<boolean>>;
 }
-interface ISearchViewProps {
-  products: AttrFromData[];
-}
-
-// mock data
-const PopularSearch = ['Nike Air Force 1 LV8', 'Nike Air Force 1', `Nike Air Force 1 '07 High'`];
 
 const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
-  const [popular, setPopular] = useState<string[]>([]);
+  const contextFilters = useContext(FiltersContext);
   const [inputValue, setInputValue] = useState<string>('');
-  const { palette } = useTheme();
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
+  const { data } = useDebounceQuery(
+    ['searchData', inputValue],
+    () => getSearchProducts(inputValue),
+    500
+  );
 
-  const { data } = useQuery({
-    queryKey: ['searchData', inputValue],
-    queryFn: () => getSearchProducts(inputValue),
-  });
+  const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    let searchObj: {
+      [x: string]: string[];
+    };
 
-  useEffect(() => {
-    setPopular(PopularSearch);
-  }, [popular]);
+    if (inputValue.length <= 0) {
+      searchObj = {
+        name: [],
+        page: ['1'],
+      };
+      contextFilters!.setActiveFilters(searchObj);
+      contextFilters!.setPage(1);
+      setSearchOpen(false);
+      return;
+    } else {
+      searchObj = {
+        name: [`${inputValue}`],
+      };
 
+      contextFilters!.setActiveFilters(searchObj);
+      contextFilters!.setPage(1);
+      setSearchOpen(false);
+      return;
+    }
+  };
+
+  const onClickPopularTerm = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    const value = e.target as HTMLElement;
+
+    setInputValue(value.textContent!);
+  };
   return (
     <HeaderSearchLayout>
       <HeaderSearchContainer>
@@ -132,10 +164,11 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                 display: 'flex',
                 flexDirection: queryDownLg ? 'column' : 'row',
                 justifyContent: 'space-between',
-                gap: queryDownSm ? 1.5 : 3,
+                gap: queryDownSm ? 1.5 : 5,
                 height: '100%',
               }}
             >
+              <SearchPopularTerms onChangeSearchTerm={(e) => onClickPopularTerm(e)} />
               <Typography sx={{ order: 2, display: { lg: 'none', xs: 'block' } }}>
                 Search result:
               </Typography>
@@ -144,7 +177,6 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                   sx={{
                     position: 'relative',
                     maxWidth: '1920px',
-
                     width: '100%',
                     order: { lg: 1, xs: 3 },
                   }}
@@ -156,42 +188,11 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
               ) : (
                 <SearchSliderDesktop products={data} />
               )}
-              <Box
-                sx={{
-                  maxWidth: '500px',
-                  width: '100%',
-                  display: { lg: 'block' },
-                  order: { lg: 2 },
-                }}
-              >
-                <Typography variant="h5" sx={{ color: palette.text.primary }}>
-                  Popular Search Terms
-                </Typography>
-                <Box
-                  sx={{
-                    mt: '10px',
-                  }}
-                >
-                  {popular.map((search) => (
-                    <CustomTypographyName
-                      variant="subtitle1"
-                      key={search}
-                      sx={{
-                        cursor: 'pointer',
-                        '&:hover': { color: palette.primary.main },
-                        fontSize: { xl: '28px', md: '20px' },
-                      }}
-                      onClick={() => {
-                        console.log(search);
-                      }}
-                    >
-                      {search}
-                    </CustomTypographyName>
-                  ))}
-                </Box>
-              </Box>
             </Box>
           </HeaderDiv>
+          <ButtonSeeAll onClick={(e) => onRedirectToFilterPage(e)}>
+            {`See all ` + inputValue}
+          </ButtonSeeAll>
         </>
       </HeaderSearchContainer>
     </HeaderSearchLayout>

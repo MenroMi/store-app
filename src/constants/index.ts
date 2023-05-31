@@ -28,7 +28,7 @@ export enum Routes {
   bag = '/profile/bag',
   addProduct = '/profile/products/add',
   myProducts = '/profile/products',
-  search = '/catalog/search',
+  search = '/catalog/search?page=1',
   forWomen = '/catalog/search?gender=women',
   forMen = '/catalog/search?gender=men',
   settings = '/profile/settings',
@@ -215,16 +215,17 @@ export const ONE_MOCKED_PRODUCT = {
 };
 
 export const searchSliderOptionsOnDesktop = {
-  slidesToShow: 4.7,
+  slidesToShow: 5.8,
   slidesToScroll: 2,
   infinite: false,
   arrows: true,
   touchMove: false,
+  swipe: true,
   responsive: [
     {
       breakpoint: 1920,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         touchMove: true,
       },
@@ -232,25 +233,16 @@ export const searchSliderOptionsOnDesktop = {
     {
       breakpoint: 1600,
       settings: {
-        slidesToShow: 3.5,
+        slidesToShow: 3.9,
         slidesToScroll: 1,
         touchMove: true,
       },
     },
-
     {
       breakpoint: 1300,
       settings: {
-        slidesToShow: 3,
+        slidesToShow: 2.9,
         slidesToScroll: 1,
-        touchMove: true,
-      },
-    },
-    {
-      breakpoint: 1200,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 2,
         touchMove: true,
       },
     },
@@ -268,3 +260,5 @@ export const searchSliderOptionsOnMobile = {
 
 export const keyStr =
   'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8lxJXDwAGaQJBAQNgCgAAAABJRU5ErkJggg==';
+
+export const regExpOnlyNumbs = /(?=(.*[a-zA-Z]))|(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])/;

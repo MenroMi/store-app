@@ -1,5 +1,4 @@
 // basic
-import Link from 'next/link';
 import Image from 'next/image';
 
 // mui
@@ -17,7 +16,7 @@ import {
 import AsideProfile from '../AsideProfile/AsideProfile';
 
 // constants
-import { ASIDE_MENU_LINKS } from '@/constants';
+import { ASIDE_MENU_LINKS } from '@/constants/routes';
 import { Fragment, useContext } from 'react';
 import { UserContext } from '@/components/Providers/user';
 import { useRouter } from 'next/router';
@@ -29,6 +28,7 @@ const AsideProfileMenu: React.FC = (): JSX.Element => {
     palette: {
       text: { secondary },
     },
+    breakpoints
   } = useTheme<Theme>();
   const { user, setUser } = useContext(UserContext);
   const { push, pathname } = useRouter();

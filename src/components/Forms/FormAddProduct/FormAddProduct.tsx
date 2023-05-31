@@ -1,5 +1,5 @@
 // basic
-import React from 'react';
+import React, { useContext } from 'react';
 
 // mui
 import {
@@ -185,6 +185,7 @@ export default function FormAddProduct({
               handleSelectSize={handleSelectSize}
               sizes={sizes}
               selectedSize={selectedSize}
+              isAddPage={true}
             />
           </Box>
 

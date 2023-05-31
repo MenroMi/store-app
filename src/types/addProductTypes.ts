@@ -25,7 +25,9 @@ export interface IAddProductUploadImageProps {
 export interface IAddProductRadioGroup {
   selectedSize: string | number;
   handleSelectSize: (size: string) => void;
-  sizes: ISizesOptionsData[];
+  sizes: ISizesOptionsData[] | undefined;
+  availableSize?:  ISizesOptionsData | undefined;
+  isAddPage: boolean;
 }
 
 export interface IAddProductSelect {
@@ -66,7 +68,7 @@ export interface IFormAddProductProps {
 
 export interface IProductData {
   data: {
-    description: string;
+    description?: string;
     images: string[];
     name: string;
     categories: string;

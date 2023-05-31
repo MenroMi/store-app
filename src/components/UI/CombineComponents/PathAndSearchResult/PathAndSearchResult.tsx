@@ -2,22 +2,19 @@
 import React, { useContext } from 'react';
 
 // mui
-import { Box } from '@mui/material';
-import { useTheme, Theme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { Box, useTheme, Theme, useMediaQuery } from '@mui/material';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
 
 // components
-import SearchPath from '../../Search/SearchPath/SearchPath';
-import SearchResult from '../../Search/SearchResult/SearchResult';
+import SearchPath from '@/components/UI/Search/SearchPath/SearchPath';
+import SearchResult from '@/components/UI/Search/SearchResult/SearchResult';
 
 // FUNCTIONAL COMPONENT
 const PathAndSearchResult: React.FC = (): JSX.Element => {
   const theme = useTheme<Theme>();
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
-
   const context = useContext(FiltersContext);
 
   return (
@@ -31,6 +28,7 @@ const PathAndSearchResult: React.FC = (): JSX.Element => {
       }}
     >
       {!queryUpMd || context?.hide ? null : <SearchPath />}
+
       <SearchResult />
     </Box>
   );

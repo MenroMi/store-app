@@ -20,16 +20,21 @@ import { CustomDotsBtn, CustomDropDownMenu } from './styles';
 import { MenuItemParams } from '@/types';
 
 // constants
-import { Routes, homeItems, othersItems } from '@/constants';
+import { Routes } from '@/constants/routes';
+import { homeItems, othersItems } from '@/constants/ui';
+import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 
 // interface
 interface IDropDownMenuProps {
   productID: number;
   productName: string;
+  top?: string;
+  right?: string;
 }
 
-const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }): JSX.Element => {
+const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, top, right }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
@@ -75,6 +80,21 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
         );
       }
 
+      if (label === 'View') {
+        return (
+          <MenuItem
+            key={id}
+            onClick={async () => {
+              setIsRedirecting(true);
+              await router.push(`${Routes.products}/${productID}`);
+            }}
+            sx={{ maxHeight: '36px' }}
+          >
+            {isRedirecting ? <ButtonLoader /> : label}
+          </MenuItem>
+        );
+      }
+
       return (
         <MenuItem key={id} onClick={() => method}>
           {label}
@@ -90,6 +110,10 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName }):
         onClick={(e) => openDropDownMenu(e)}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
+        sx={{
+          top: top,
+          right: right,
+        }}
       >
         <Box component={Image} src={dotsBtn} alt="More" />
       </CustomDotsBtn>

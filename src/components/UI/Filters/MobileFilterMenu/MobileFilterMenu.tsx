@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
-import { Box, Slide } from '@mui/material';
+import { Box } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // context
@@ -17,9 +17,7 @@ import deleteIcon from '@/assets/icons/close.svg';
 import FiltersList from '@/components/UI/Filters/FiltersList/FiltersList';
 
 // styled component
-import { CustomOverlay } from './MobileFilterMenuStyles';
-
-// interface
+import { CustomOverlay } from './styles';
 
 // FUNCTIONAL COMPONENT
 const MobileFilterMenu: React.FC = (): JSX.Element => {
@@ -32,6 +30,7 @@ const MobileFilterMenu: React.FC = (): JSX.Element => {
     return (): void => {
       document.body.style.overflow = 'auto';
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -67,6 +66,3 @@ const MobileFilterMenu: React.FC = (): JSX.Element => {
 };
 
 export default MobileFilterMenu;
-
-/* <Slide in={!hide} direction="left"> */
-// </Slide>
