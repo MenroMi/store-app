@@ -27,13 +27,12 @@ import { CustomButton } from '@/styles/pageStyles/CheckoutStyles';
 // context
 import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
-// interface
+// router
 import router from 'next/router';
 import { Routes } from '@/constants/routes';
 
 // interface
 import { AttrFromData } from '@/types/cardListTypes';
-import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
 
 const Bag = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));

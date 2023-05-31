@@ -1,8 +1,15 @@
+// react
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
-import { useSessionStorage } from '@/hooks/useSessionStorage/useSessionStorage';
 import { useQuery } from '@tanstack/react-query';
+
+// services
 import { getProductById } from '@/services/cardBagService';
+
+// types
 import { AttrFromData } from '@/types/cardListTypes';
+
+// hooks
+import useSessionStorage from '@/hooks/useSessionStorage/useSessionStorage';
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -30,29 +37,23 @@ export function useShoppingCart() {
   return useContext(ShoppingCartContext);
 }
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
-  const { value, setValue } = useSessionStorage<CartItem[]>('shopping-cart');
+  const [value, setValue] = useSessionStorage<CartItem[]>('shopping-cart', []);
   const [valueIDs, setValueIDs] = useState<number[]>([]);
 
   useEffect(() => {
     let IDs: number[] = [];
-
     if (value.length > 0) {
       for (let i = 0; i < value.length; i++) {
         if (valueIDs.indexOf(value[i].id) > -1) {
           continue;
         }
-
         IDs.push(value[i].id);
       }
-
       setValueIDs((prev) => [...prev, ...IDs.filter((item) => item)]);
     }
-
     if (value.length === 0) {
       setValueIDs([]);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const { data, isFetched } = useQuery({
