@@ -1,16 +1,17 @@
 // basic
 import Image from 'next/image';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 // mui
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 // styled components
 import { CustomTypographyName } from '@/components/UI/Cards/Card/styles';
-import { MobileSliderWrapper } from './styles';
+import { MobileSlideWrapper } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
-import { useRouter } from 'next/router';
 import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
@@ -21,14 +22,21 @@ const SearchSlideMobile: React.FC<ISlideProps> = ({
   productPrice,
   id,
 }): JSX.Element => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   return (
-    <MobileSliderWrapper
+    <MobileSlideWrapper
       onClick={() => {
+        setIsLoading(true);
         router.push(`${Routes.products}/${id}`);
       }}
     >
+      {isLoading && (
+        <CircularProgress
+          sx={{ position: 'absolute', zIndex: 15, left: '47%', transform: 'translateX(-50%)' }}
+        />
+      )}
       <Box
         sx={{
           display: 'flex',
@@ -56,7 +64,7 @@ const SearchSlideMobile: React.FC<ISlideProps> = ({
         </Box>
       </Box>
       <Image src={productImageSrc} alt="something" width={70} height={70} />
-    </MobileSliderWrapper>
+    </MobileSlideWrapper>
   );
 };
 

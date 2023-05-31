@@ -1,5 +1,5 @@
 // mui
-import { Box, Button } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 
 // constants
 import { blurDataURL } from '@/constants/urls';
@@ -12,6 +12,7 @@ import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 import { ISlideProps } from '@/types/slideTypes';
 import { useRouter } from 'next/router';
 import { Routes } from '@/constants/routes';
+import { useState } from 'react';
 
 // FUNCTIONAL COMPONENT
 const SearchSlideDesktop: React.FC<ISlideProps> = ({
@@ -23,6 +24,7 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
   id,
 }): JSX.Element => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <CustomSearchSlideWrapper>
@@ -50,11 +52,17 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
         </Box>
       </Box>
       <Button
+        sx={{ position: 'relative' }}
         onClick={() => {
+          setIsLoading(true);
           router.push(`${Routes.products}/${id}`);
         }}
       >
-        See more
+        {isLoading ? (
+          <CircularProgress sx={{ height: '15px', width: '15px', color: 'white' }} />
+        ) : (
+          'See more'
+        )}
       </Button>
     </CustomSearchSlideWrapper>
   );
