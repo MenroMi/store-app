@@ -1,6 +1,6 @@
 import React from 'react';
 import { CustomEmptyStateWrapper } from './styles';
-import noProducts from '@/assets/icons/no-products.svg';
+import noProducts from '@/assets/icons/noProducts.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Typography, Link as LinkMui } from '@mui/material';
