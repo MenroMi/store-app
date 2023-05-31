@@ -5,6 +5,7 @@ declare module '@mui/material/styles' {
         iconLight: string;
         iconDark: string;
         caption: string;
+        selection: string;
     }
     interface TypographyVariants {
             h3Bold: React.CSSProperties;

@@ -3,7 +3,7 @@ import { Grid, IconButton, styled } from '@mui/material';
 
 export interface ICustomGalleryImageProps {
     selected?: boolean;
-    isMain?: boolean;
+    ismain?: string;
 }
 
 export const CustomIconButton = styled(IconButton)(({ theme }) => ({
@@ -13,7 +13,7 @@ export const CustomIconButton = styled(IconButton)(({ theme }) => ({
     backgroundColor: theme.palette.primary.contrastText,
 }));
 
-export const CustomGalleryImageContainer = styled(Grid)<ICustomGalleryImageProps>(({theme, isMain }) => ({
+export const CustomGalleryImageContainer = styled(Grid)<ICustomGalleryImageProps>(({theme, ismain }) => ({
     width: 76,
     height: 76,
     [theme.breakpoints.down('sm')]:{
@@ -21,7 +21,7 @@ export const CustomGalleryImageContainer = styled(Grid)<ICustomGalleryImageProps
     height: 70,
         },
     objectFit: 'cover',
-    ...(isMain && {
+    ...(!!ismain && {
         width: 588,
         height: 628,
         [theme.breakpoints.down('sm')]:{

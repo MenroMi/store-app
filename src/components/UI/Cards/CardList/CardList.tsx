@@ -26,6 +26,7 @@ import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from
 import { AttrFromData } from '@/types/cardListTypes';
 import { getFilteredData } from '@/services/searchApi';
 import { useQuery } from '@tanstack/react-query';
+import { Routes } from '@/constants/routes';
 
 const CardList = () => {
   const theme = useTheme<Theme>();
@@ -79,7 +80,9 @@ const CardList = () => {
                     gender: { data: genderData },
                   },
                 }: AttrFromData) => (
-                  <Grid item key={id}>
+                  <Grid item key={id} sx={{cursor: 'pointer'}} onClick={async () => { 
+                    await router.push(`${Routes.products}/${id}`);
+                  }}>
                     <Card
                       productCategory={
                         genderData ? (genderData.id === 3 ? "Men's Shoes" : "Women's Shoes") : ''
