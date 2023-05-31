@@ -1,15 +1,21 @@
 // basic
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // react-query
 import { useQuery } from '@tanstack/react-query';
+
+// services
 import { getFilters } from '@/services/searchApi';
-import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
+
+// utils
 import { onCheckedCheckbox, onCheckedPrice } from '@/utils/filters/onActiveCheckbox';
+import onReloadFiltersFromURL from '@/utils/filters/onReloadFiltersFromURL';
+import { getParamsURL } from '@/utils/filters/getParamsURL';
 
 // interface
+import { ActiveFiltersTypes, FilterListRender } from '@/types/filterListTypes';
+
 interface IFiltersProvider {
   children: React.ReactNode;
 }
@@ -40,52 +46,36 @@ export const FiltersContext = React.createContext<IFiltersContext | null>(null);
 // fc
 const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   const router = useRouter();
+  const lengthRouterQuery = Object.entries(router.query).length;
   const firstRenderPage = typeof router.query.page === 'undefined' ? 1 : +router.query.page;
+
   const [page, setPage] = useState<number>(firstRenderPage);
   const [hide, setHide] = useState<boolean>(true);
   const [activeFilters, setActiveFilters] = useState<ActiveFiltersTypes>({});
-  const lengthRouterQuery = Object.entries(router.query).length;
 
   useEffect(() => {
-    getParamsURL(router, activeFilters, page);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeFilters, page]);
-
-  useEffect(() => {
-    if (typeof router.query === 'undefined') {
-      return;
-    } else {
-      for (let key in router.query) {
-        if (typeof router.query[key] === 'undefined') {
-          continue;
-        } else {
-          setActiveFilters((prev: any) => {
-            return {
-              ...prev,
-              [key]: Array.isArray(router.query[key])
-                ? (router.query[key] as string[])!.map(
-                    (item: string) => `${item.slice(0, 1).toUpperCase()}${item.slice(1)}`
-                  )
-                : (router.query[key] as string)
-                    .split(',')
-                    .map((item) => `${item.slice(0, 1).toUpperCase()}${item.slice(1)}`),
-            };
-          });
-          continue;
-        }
-      }
-    }
+    onReloadFiltersFromURL(router, setActiveFilters); // work with first render url params
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (typeof lengthRouterQuery === 'undefined' || lengthRouterQuery <= 0) {
-      setActiveFilters({});
+    getParamsURL(router, activeFilters, page); // dynamic change filters and url params
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilters, page]);
+
+  useEffect(() => {
+    // when user click from another page on catalog this useeffect remove all active params from local state
+    if (
+      typeof lengthRouterQuery === 'undefined' ||
+      (lengthRouterQuery === 1 && typeof router.query.page !== 'undefined')
+    ) {
+      console.log('REMOVE ACTIVE FILTERS');
+      setActiveFilters({ page: ['1'] });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lengthRouterQuery]);
 
-  const contextFilters = useQuery({
+  const { data, error, isError, isFetched, isLoading } = useQuery({
     queryKey: ['filters'],
     queryFn: getFilters,
     refetchOnWindowFocus: false,
@@ -129,18 +119,18 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   return (
     <FiltersContext.Provider
       value={{
-        isFetched: contextFilters?.isFetched,
-        isLoading: contextFilters?.isLoading,
-        isError: contextFilters?.isError,
-        error: contextFilters?.error,
-        data: contextFilters?.data,
+        activeFilters,
+        isFetched,
+        isLoading,
+        isError,
+        error,
+        data,
         hide,
         onHide,
         isChecked,
         onHideFilters,
         setPage: (value) => setPage(value),
         setActiveFilters: (value) => setActiveFilters({ ...value }),
-        activeFilters,
       }}
     >
       {children}
