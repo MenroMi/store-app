@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { baseURL } from '@/constants/urls';
 import { AttrFromData } from '@/types/cardListTypes';
+import { CartItem } from '@/contexts/shoppingCardContext';
 
 const instance = axios.create({
   withCredentials: true,
@@ -9,7 +10,7 @@ const instance = axios.create({
 
 export const getProductById = async (id: number) => {
   const data = await instance.get(`/products/${id}?populate=*&`);
-  return data?.data?.data;
+  return data?.data;
 };
 
 // export const getProductPriceById = async (id: number) => {
@@ -31,7 +32,8 @@ export const getProductById = async (id: number) => {
 //   return ArrayOfPrices;
 // };
 
-export const getProducts = async (arrayOfId: number[]) => {
+export const getProducts = async (arrayOfProducts: CartItem[]) => {
+  const arrayOfId = arrayOfProducts.map((item) => item.id);
   let ArrayOfItems: AttrFromData[] = [];
   arrayOfId.map(async (id: number) => {
     const data = await instance.get(`/products/${id}?populate=*&`).then((res) => res?.data?.data);
