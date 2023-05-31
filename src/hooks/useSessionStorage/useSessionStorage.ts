@@ -1,16 +1,21 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 
-export function useSessionStorage<T>(key: string, initialValue: T | (() => T)) {
-  const [value, setValue] = useState<T>(() => {
-    const jsonValue = typeof window !== 'undefined' ? sessionStorage.getItem(key) : null;
-    if (jsonValue != null) return JSON.parse(jsonValue);
+export function useSessionStorage<T>(key: string) {
+  const [value, setValue] = useState<object[]>([]);
 
-    if (typeof initialValue === 'function') {
-      return (initialValue as () => T)();
-    } else {
-      return initialValue;
+  useEffect(() => {
+    if (sessionStorage.length > 0) {
+      let initValue = sessionStorage.getItem('shopping-cart');
+      console.log(sessionStorage);
+      console.log(value);
+
+      if (initValue) {
+        setValue(JSON.parse(initValue));
+      } else {
+        setValue([]);
+      }
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (window) {
@@ -18,5 +23,8 @@ export function useSessionStorage<T>(key: string, initialValue: T | (() => T)) {
     }
   }, [key, value]);
 
-  return [value, setValue] as [typeof value, typeof setValue];
+  return { value, setValue } as {
+    value: { id: number; quantity: number }[];
+    setValue: Dispatch<SetStateAction<T>>;
+  };
 }

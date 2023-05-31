@@ -3,14 +3,19 @@ import { baseURL } from '@/constants/urls';
 import { AttrFromData } from '@/types/cardListTypes';
 import { CartItem } from '@/contexts/shoppingCardContext';
 
-const instance = axios.create({
+export const instance = axios.create({
   withCredentials: true,
   baseURL,
 });
 
-export const getProductById = async (id: number) => {
-  const data = await instance.get(`/products/${id}?populate=*&`);
-  return data?.data;
+export const getProductById = async (data: number[]) => {
+  let responses = await Promise.allSettled(
+    data.map((id: any) => instance.get(`products/${id}?populate=*`))
+  ).catch((err) => err);
+
+  let res = responses.map((item: { value: { data: { data: object } } }) => item.value?.data?.data);
+
+  return res;
 };
 
 // export const getProductPriceById = async (id: number) => {
@@ -32,13 +37,13 @@ export const getProductById = async (id: number) => {
 //   return ArrayOfPrices;
 // };
 
-export const getProducts = async (arrayOfProducts: CartItem[]) => {
-  const arrayOfId = arrayOfProducts.map((item) => item.id);
-  let ArrayOfItems: AttrFromData[] = [];
-  arrayOfId.map(async (id: number) => {
-    const data = await instance.get(`/products/${id}?populate=*&`).then((res) => res?.data?.data);
-    ArrayOfItems.push(data);
-  });
-  console.log(ArrayOfItems);
-  return ArrayOfItems;
-};
+// export const getProducts = async (arrayOfProducts: CartItem[]) => {
+//   const arrayOfId = arrayOfProducts.map((item) => item.id);
+//   let ArrayOfItems: AttrFromData[] = [];
+//   arrayOfId.map(async (id: number) => {
+//     const data = await instance.get(`/products/${id}?populate=*&`).then((res) => res?.data?.data);
+//     ArrayOfItems.push(data);
+//   });
+//   console.log(ArrayOfItems);
+//   return ArrayOfItems;
+// };

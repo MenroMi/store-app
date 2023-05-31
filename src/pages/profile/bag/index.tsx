@@ -34,34 +34,30 @@ import { Routes } from '@/constants/routes';
 // interface
 import { AttrFromData } from '@/types/cardListTypes';
 import { QueryClient, dehydrate, useMutation, useQuery } from '@tanstack/react-query';
-import { getProducts } from '@/services/cardBagService';
 
 const Bag = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const { cartItems, cartQuantity } = useShoppingCart();
+  const { data, cartQuantity, isFetched, value } = useShoppingCart();
 
   const [subTotal, setSubtotal] = useState<number>(0);
 
-  const ArrayId: number[] = cartItems.map((item) => item.id);
-  const { data: items } = useQuery(['items', ArrayId], () => getProducts(ArrayId));
-  console.log(items);
-
   useEffect(() => {
-    const summary = items?.reduce((total, cartItem) => {
-      const item = items.find((i) => i.id === cartItem.id);
-      const cartsItem = cartItems.find((i) => i.id === cartItem.id);
+    const summary = data?.reduce((total, cartItem) => {
+      const item = data.find((i) => i.id === cartItem.id);
+      const cartsItem = value.find((i) => i.id === cartItem.id);
       return total + (item?.attributes?.price || 0) * cartsItem?.quantity!;
     }, 0);
     summary && setSubtotal(summary);
-  }, [cartItems]);
+  }, [data, value]);
 
   const shipping: number = subTotal === 0 ? 0 : 10;
 
   const handleCheckout = (): void => {
     router.push(Routes.checkout);
   };
+
   return (
     <Layout title="Bag">
       <section style={{ marginTop: '80px', width: '100%' }}>
@@ -85,7 +81,7 @@ const Bag = () => {
                 </Typography>
                 <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
                   <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
-                    {items?.map(
+                    {data?.map(
                       ({
                         id,
                         attributes: {

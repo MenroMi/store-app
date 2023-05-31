@@ -1,6 +1,8 @@
-import { createContext, ReactNode, useContext, useEffect } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { useSessionStorage } from '@/hooks/useSessionStorage/useSessionStorage';
-import { StaticImageData } from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import { getProductById } from '@/services/cardBagService';
+import { AttrFromData } from '@/types/cardListTypes';
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -9,10 +11,6 @@ type ShoppingCartProviderProps = {
 export type CartItem = {
   id: number;
   quantity: number;
-  // productName: string;
-  // productCategory: string;
-  // productImageSrc: StaticImageData | string;
-  // productPrice: number;
 };
 
 export type ShoppingCartContext = {
@@ -21,7 +19,9 @@ export type ShoppingCartContext = {
   decreaseCartQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
   cartQuantity: number;
-  cartItems: CartItem[];
+  data: AttrFromData[];
+  isFetched: boolean;
+  value: { id: number; quantity: number }[];
 };
 
 const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -30,16 +30,45 @@ export function useShoppingCart() {
   return useContext(ShoppingCartContext);
 }
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
-  const [cartItems, setCartItems] = useSessionStorage<CartItem[]>('shopping-cart', []);
+  const { value, setValue } = useSessionStorage<CartItem[]>('shopping-cart');
+  const [valueIDs, setValueIDs] = useState<number[]>([]);
 
-  const cartQuantity = cartItems?.reduce((quantity, item) => item.quantity + quantity, 0);
+  useEffect(() => {
+    let IDs: number[] = [];
+
+    if (value.length > 0) {
+      for (let i = 0; i < value.length; i++) {
+        if (valueIDs.indexOf(value[i].id) > -1) {
+          continue;
+        }
+
+        IDs.push(value[i].id);
+      }
+
+      setValueIDs((prev) => [...prev, ...IDs.filter((item) => item)]);
+    }
+
+    if (value.length === 0) {
+      setValueIDs([]);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const { data, isFetched } = useQuery({
+    queryKey: ['bagData', valueIDs],
+    queryFn: () => getProductById(valueIDs),
+    keepPreviousData: true,
+  });
+
+  const cartQuantity = value?.reduce((quantity, item) => item.quantity + quantity, 0);
 
   function getItemQuantity(id: number) {
-    return cartItems && (cartItems.find((item) => item.id === id)?.quantity || 0);
+    return value && (value.find((item) => item.id === id)?.quantity || 0);
   }
 
   function increaseCartQuantity(id: number) {
-    setCartItems((currItems) => {
+    setValue((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
         return [...currItems, { id, quantity: 1 }];
       } else {
@@ -55,7 +84,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   }
 
   function decreaseCartQuantity(id: number) {
-    setCartItems((currItems) => {
+    setValue((currItems) => {
       return currItems.map((item) => {
         if (item.id === id) {
           if (item.quantity <= 1) {
@@ -71,9 +100,15 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   }
 
   function removeFromCart(id: number) {
-    setCartItems((currItems) => {
-      return currItems.filter((item) => item.id !== id);
-    });
+    setValueIDs((prev) => prev.filter((prevID) => prevID !== id));
+
+    if (value.length === 1) {
+      setValue([]);
+    } else {
+      setValue((currItems) => {
+        return currItems.filter((item) => item.id !== id);
+      });
+    }
   }
 
   return (
@@ -83,8 +118,10 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         increaseCartQuantity,
         decreaseCartQuantity,
         removeFromCart,
-        cartItems,
+        isFetched,
+        data,
         cartQuantity,
+        value,
       }}
     >
       {children}
