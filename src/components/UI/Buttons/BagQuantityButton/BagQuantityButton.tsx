@@ -11,15 +11,11 @@ import RemoveIcon from 'src/assets/icons/remove.svg';
 
 // styles
 import { CustomButtonWrapper, CustomFabButton } from './styles';
-import { useContext } from 'react';
-// import { BagContext } from '@/context/BagContext';
-import { CardBagContextType } from '@/types/productCardBag';
 import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 // interface
 interface IBagQuantityButtonProps {
   id: number;
-  // quantity: number;
 }
 
 const BagQuantityButton: React.FC<IBagQuantityButtonProps> = ({ id }) => {
