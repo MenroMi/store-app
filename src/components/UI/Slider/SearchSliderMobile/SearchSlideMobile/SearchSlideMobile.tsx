@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Box } from '@mui/material';
 
 // styled components
-import { CustomTypographyName } from '@/components/UI/Cards/Card/CardStyles';
+import { CustomTypographyName } from '@/components/UI/Cards/Card/styles';
 import { MobileSliderWrapper } from './styles';
 
 // interface

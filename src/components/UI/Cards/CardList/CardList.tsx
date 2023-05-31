@@ -20,7 +20,12 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import FullScreenLoader from '../../Loader/FullScreenLoader';
 
 // styled component
-import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
+import {
+  CardsGridContainer,
+  CatalogIsEmptyContainer,
+  CustomLoaderWrapper,
+  CustomSearchOverlay,
+} from './styles';
 
 // interface
 import { AttrFromData } from '@/types/cardListTypes';
@@ -33,7 +38,7 @@ const CardList = () => {
 
   const query = makeArray(router.query);
 
-  const { data, isFetching, isError, isRefetching } = useQuery({
+  const { data, isFetching, isError } = useQuery({
     queryKey: ['filteredData', query],
     queryFn: () => getFilteredData(query),
     keepPreviousData: true,
@@ -51,20 +56,9 @@ const CardList = () => {
       }}
     >
       {isFetching ? (
-        <Box
-          sx={{
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'rgba(255,255, 255, 0.5)',
-            backdropFilter: 'blur(5px)',
-            position: 'absolute',
-            zIndex: '5000',
-            top: '0',
-            transition: '0.3s ease-in',
-          }}
-        >
+        <CustomLoaderWrapper>
           <FullScreenLoader />
-        </Box>
+        </CustomLoaderWrapper>
       ) : (
         <>
           {Array.isArray(data?.data) && data?.data.length !== 0 ? (

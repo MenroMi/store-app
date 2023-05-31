@@ -63,3 +63,14 @@ export const CatalogIsEmptyContainer = styled('div')({
   transform: 'translateX(-49%) translateY(-50%)',
   gap: '20px',
 });
+
+export const CustomLoaderWrapper = styled('div')({
+  height: '100%',
+  width: '100%',
+  backgroundColor: 'rgba(255,255, 255, 0.5)',
+  backdropFilter: 'blur(5px)',
+  position: 'absolute',
+  zIndex: '5000',
+  top: '0',
+  transition: '0.3s ease-in',
+});

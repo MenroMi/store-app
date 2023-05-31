@@ -1,6 +1,7 @@
 // basic
 import Image from 'next/image';
 import React, { useContext } from 'react';
+import { useRouter } from 'next/router';
 
 // mui
 import { Box, Grid } from '@mui/material';
@@ -23,14 +24,13 @@ import {
   CustomGridContainer,
   ResetButton,
 } from './styles';
-import { useRouter } from 'next/router';
 
 // FUNCTIONAL COMPONENT
 const SearchResult: React.FC = () => {
   const theme = useTheme<Theme>();
-  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
   const router = useRouter();
   const context = useContext(FiltersContext);
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   return (
     <Box sx={{ alignSelf: 'flex-end', flex: 2 }}>

@@ -44,7 +44,7 @@ import {
   HeaderSearchDiv,
   HeaderSearchLayout,
 } from './styles';
-import { CustomTypographyName } from '../../Cards/Card/CardStyles';
+import { CustomTypographyName } from '../../Cards/Card/styles';
 import SearchPopularTerms from '../SearchPopularTerms/SearchPopularTerms';
 import useDebounceQuery from '@/hooks/useDebounceQuery';
 
@@ -66,28 +66,34 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   );
 
   const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    let searchObj: {
-      [x: string]: string[];
+    const resetFiltersAndCloseSearch = (
+      defaultValue: { [x: string]: string[] },
+      defaultPage: number,
+      defaultBool: boolean
+    ) => {
+      contextFilters!.setActiveFilters(defaultValue);
+      contextFilters!.setPage(defaultPage);
+      setSearchOpen(defaultBool);
+      return;
     };
 
     if (inputValue.length <= 0) {
-      searchObj = {
-        name: [],
-        page: ['1'],
-      };
-      contextFilters!.setActiveFilters(searchObj);
-      contextFilters!.setPage(1);
-      setSearchOpen(false);
-      return;
+      resetFiltersAndCloseSearch(
+        {
+          name: [],
+          page: ['1'],
+        },
+        1,
+        false
+      );
     } else {
-      searchObj = {
-        name: [`${inputValue}`],
-      };
-
-      contextFilters!.setActiveFilters(searchObj);
-      contextFilters!.setPage(1);
-      setSearchOpen(false);
-      return;
+      resetFiltersAndCloseSearch(
+        {
+          name: [`${inputValue}`],
+        },
+        1,
+        false
+      );
     }
   };
 

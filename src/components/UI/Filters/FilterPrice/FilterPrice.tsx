@@ -13,15 +13,12 @@ import { getFilteredData } from '@/services/searchApi';
 
 // utils
 import makeArray from '@/utils/filters/makeRouterQueryArray';
+import { handleChanges, maxNumber } from '@/utils/filters/filterPriceUtils';
 
 // context
 import { FiltersContext } from '@/contexts/filtersContext';
 
 // constants
-import { regExpOnlyNumbs } from '@/constants';
-
-// interface
-import { InputsData } from '@/types/filterListTypes';
 
 const FilterPrice: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -36,31 +33,9 @@ const FilterPrice: React.FC = (): JSX.Element => {
     queryFn: () => getFilteredData(query),
   });
 
-  const handleChanges = (value: string | number) => {
-    if (regExpOnlyNumbs.test(String(value))) {
-      return;
-    } else {
-      setActualAmount(() => +value);
-    }
-  };
-
   useEffect(() => {
-    const maxNumber = () => {
-      let arrayWithPrice: number[];
-      let maxN: number;
+    maxNumber(data?.data, setMax);
 
-      if (data?.data.length <= 0 || typeof data?.data === 'undefined') {
-        maxN = 0;
-        return maxN;
-      } else {
-        arrayWithPrice = data?.data?.map((product: InputsData) => product?.attributes?.price);
-        maxN = Math.max(...arrayWithPrice);
-      }
-
-      setMax((prev) => (prev > maxN ? prev : maxN));
-    };
-
-    maxNumber();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [max]);
 
@@ -70,7 +45,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel htmlFor="outlined-adornment-amount">Up to Amount</InputLabel>
           <OutlinedInput
-            onChange={(e) => handleChanges(e.target.value)}
+            onChange={(e) => handleChanges(e.target.value, setActualAmount)}
             onKeyDown={(e) => {
               contextFilters?.isChecked(e);
             }}
@@ -84,7 +59,9 @@ const FilterPrice: React.FC = (): JSX.Element => {
         </FormControl>
       </Box>
       <Slider
-        onChange={(e, value) => handleChanges(value as number)}
+        onChange={(_, value) => {
+          handleChanges(value as number, setActualAmount);
+        }}
         onChangeCommitted={(e) => {
           contextFilters?.isChecked(e);
         }}

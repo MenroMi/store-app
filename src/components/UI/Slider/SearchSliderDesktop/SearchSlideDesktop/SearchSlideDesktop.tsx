@@ -5,7 +5,7 @@ import { Box, Button } from '@mui/material';
 import { blurDataURL } from '@/constants/urls';
 
 // styled components
-import { CustomImage, CustomTypographyName } from '@/components/UI/Cards/Card/CardStyles';
+import { CustomImage, CustomTypographyName } from '@/components/UI/Cards/Card/styles';
 import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 
 // interface
