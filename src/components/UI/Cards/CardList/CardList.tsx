@@ -20,7 +20,7 @@ import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import FullScreenLoader from '../../Loader/FullScreenLoader';
 
 // styled component
-import { CardsGridContainer, CatalogIsEmptyContainer, CustomSearchOverlay } from './CardListStyles';
+import { CardsGridContainer, CatalogIsEmptyContainer, CustomProguctsBlock, CustomSearchOverlay } from './CardListStyles';
 
 // interface
 import { AttrFromData } from '@/types/cardListTypes';
@@ -46,7 +46,7 @@ const CardList = () => {
 
   return (
     <CustomSearchOverlay
-      sx={{
+    sx={{
         overflowY: `${isFetching ? 'clip' : 'scroll'}`,
       }}
     >
@@ -66,7 +66,7 @@ const CardList = () => {
           <FullScreenLoader />
         </Box>
       ) : (
-        <>
+        <CustomProguctsBlock >
           {Array.isArray(data?.data) && data?.data.length !== 0 ? (
             <CardsGridContainer container>
               {data?.data.map(
@@ -121,7 +121,7 @@ const CardList = () => {
               </Typography>
             </CatalogIsEmptyContainer>
           )}
-        </>
+          </CustomProguctsBlock>
       )}
     </CustomSearchOverlay>
   );

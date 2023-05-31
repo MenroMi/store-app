@@ -279,17 +279,19 @@ export default function Header() {
                       key={name}
                       onClick={async () => {
                         if (name === 'Log out') {
-                          setIsFailed(false);
-                          setIsOpen(true);
-                          setMessage('Succesfully logged out');
+                          await push(to);
                           setUser(null);
                           localStorage.removeItem('token');
                           sessionStorage.removeItem('token');
-                          await push(to);
+                          setIsFailed(false);
+                          setIsOpen(true);
+                          setMessage('Succesfully logged out');
+                        } else if (name === 'Home' && !user){
+                          push(Routes.search)
                         } else {
                           await push(to);
-                          setIsBurgerClicked(false);
                         }
+                        setIsBurgerClicked(false);
                       }}
                     >
                       <Image

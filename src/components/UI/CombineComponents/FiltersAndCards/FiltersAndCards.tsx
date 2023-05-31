@@ -50,6 +50,7 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
           p: `${queryUpMd && context?.hide ? '0 40px' : !queryUpMd ? '0' : '0 40px 0 0'}`,
           width: '100%',
           height: '100%',
+          
         }}
       >
         <CardList />
