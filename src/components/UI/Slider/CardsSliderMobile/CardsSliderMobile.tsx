@@ -10,8 +10,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Button, Typography, Box } from '@mui/material';
 
 // components
-import Card from '../../Cards/Card/Card';
-import DropDownMenu from '../../Menu/DropDownMenu/DropDownMenu';
+import Card from '@/components/UI/Cards/Card/Card';
+import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
 
 // styled components
@@ -21,14 +21,14 @@ import { CustomEmptyStateWrapper, CustomSlider } from './styles';
 import { Routes } from '@/constants/routes';
 
 // images
-import noProducts from '@/assets/icons/no-products.svg';
+import noProducts from '@/assets/icons/noProducts.svg';
 
 // types
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';
-import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 import { useRouter } from 'next/router';
 import { myProfileSliderMobileOptions } from '@/constants/ui';
-import SlideMobile from '../SlideMobile/SlideMobile';
+import SlideMobile from '@/components/UI/Slider/SlideMobile/SlideMobile';
 
 export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps) => {
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);

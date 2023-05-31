@@ -80,7 +80,6 @@ export default function Description({ product, sizes }: IDescriptionProps) {
         <CustomButton
           variant="outlined"
           onClick={() => {
-            router.back();
             contextStorage?.addUniqueID(product.attributes?.name, product.id);
           }}
         >
