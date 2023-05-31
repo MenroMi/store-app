@@ -44,6 +44,8 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
         sx={{
           maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
           p: `${queryUpMd && context?.hide ? '0 40px' : !queryUpMd ? '0' : '0 40px 0 0'}`,
+          width: '100%',
+          height: '100%',
         }}
       >
         <CardList />

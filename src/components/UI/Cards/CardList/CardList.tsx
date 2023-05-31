@@ -23,6 +23,7 @@ import FullScreenLoader from '../../Loader/FullScreenLoader';
 import {
   CardsGridContainer,
   CatalogIsEmptyContainer,
+  CustomProguctsBlock,
   CustomLoaderWrapper,
   CustomSearchOverlay,
 } from './styles';
@@ -31,6 +32,7 @@ import {
 import { AttrFromData } from '@/types/cardListTypes';
 import { getFilteredData } from '@/services/searchApi';
 import { useQuery } from '@tanstack/react-query';
+import { Routes } from '@/constants/routes';
 
 const CardList = () => {
   const theme = useTheme<Theme>();
@@ -60,7 +62,7 @@ const CardList = () => {
           <FullScreenLoader />
         </CustomLoaderWrapper>
       ) : (
-        <>
+        <CustomProguctsBlock>
           {Array.isArray(data?.data) && data?.data.length !== 0 ? (
             <CardsGridContainer container>
               {data?.data.map(
@@ -73,7 +75,14 @@ const CardList = () => {
                     gender: { data: genderData },
                   },
                 }: AttrFromData) => (
-                  <Grid item key={id}>
+                  <Grid
+                    item
+                    key={id}
+                    sx={{ cursor: 'pointer' }}
+                    onClick={async () => {
+                      await router.push(`${Routes.products}/${id}`);
+                    }}
+                  >
                     <Card
                       productCategory={
                         genderData ? (genderData.id === 3 ? "Men's Shoes" : "Women's Shoes") : ''
@@ -115,7 +124,7 @@ const CardList = () => {
               </Typography>
             </CatalogIsEmptyContainer>
           )}
-        </>
+        </CustomProguctsBlock>
       )}
     </CustomSearchOverlay>
   );

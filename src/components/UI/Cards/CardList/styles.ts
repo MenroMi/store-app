@@ -3,16 +3,17 @@ import { Grid } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 export const CustomSearchOverlay = styled('div')({
-  height: 'calc(100vh - 350px)',
-  width: '100%',
-  overflowY: 'scroll',
-  overflowX: 'hidden',
-  position: 'relative',
-  [theme.breakpoints.down('md')]: {
-    height: 'calc(100vh - 306px)',
+  height: 'calc(100vh - 280px)',
+  width: `100%`,
+  display:'flex',
+ 
+  justifyContent: 'center',
+  [theme.breakpoints.down(900)]: {
+    height: 'calc(100vh - 230px)',
+    paddingLeft:'20px',
   },
-  [theme.breakpoints.down('sm')]: {
-    height: 'calc(100vh - 306px)',
+  [theme.breakpoints.down(600)]: {
+    height: 'calc(100vh - 215px)',
   },
 
   '&::-webkit-scrollbar': {
@@ -28,15 +29,43 @@ export const CustomSearchOverlay = styled('div')({
   },
 });
 
+export const CustomProguctsBlock = styled('div')({
+  maxHeight: 'calc(100%)',
+  display: 'flex',
+  justifyContent: 'center',
+  maxWidth: `calc(${320 * 5}px + ${54 * 4}px)`,
+  [theme.breakpoints.down(1916)]: {
+    maxWidth: `calc(${320 * 4}px + ${54 * 3}px)`,
+  },
+  [theme.breakpoints.down(1542)]: {
+    maxWidth: `calc(${320 * 3}px + ${54 * 2}px )`,
+  },
+  [theme.breakpoints.down(1168)]: {
+    maxWidth: `calc(${320 * 2}px + ${54 * 1}px)`,
+  },
+  [theme.breakpoints.down(714)]: {
+    maxWidth: `calc(${320}px )`,
+  },
+  [theme.breakpoints.down(600)]: {
+    maxWidth: `calc(${152 * 3}px + ${16 * 2}px)`,
+  },
+  [theme.breakpoints.down(540)]: {
+    maxWidth: `calc(${152 * 2}px + ${16 * 1}px)`,
+  },
+  [theme.breakpoints.down(360)]: {
+    maxWidth: `calc(${152 * 1}px )`,
+  },
+});
+
+
+
 export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   '&.MuiGrid-root': {
     marginTop: '2.25em',
   },
   position: 'relative',
   width: '100%',
-  justifySelf: 'center',
-  justifyContent: 'center',
-  alignContent: 'start',
+  justifyContent: 'start',
   columnGap: '54px',
   rowGap: '40px',
   height: '100%',
@@ -45,10 +74,9 @@ export const CardsGridContainer = styled(Grid)(({ theme }) => ({
     '&.MuiGrid-root': {
       marginTop: '1em',
     },
-    columnGap: '20px',
-    rowGap: '16px',
-    justifyContent: 'space-around',
-    padding: '0 4px 0 20px',
+    columnGap: '16px',
+    rowGap: '20px',
+    justifyContent: 'start',
   },
 }));
 

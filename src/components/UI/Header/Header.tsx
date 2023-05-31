@@ -1,5 +1,5 @@
 // basic
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -27,17 +27,15 @@ import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 
 // context
-import { StorageContext } from '@/contexts/sessionStorageContext';
 import { UserContext } from '@/components/Providers/user';
 
 // constants
 import { Routes } from '@/constants';
 import { NAV_BURGER_LINKS } from '@/constants/routes';
+import { NotificationContext } from '@/components/Providers/notification';
 
 // components
 import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
-
-import { NotificationContext } from '@/components/Providers/notification';
 import UserMenu from '../Menu/UserMenu/UserMenu';
 import SearchHeader from '../Search/SearchHeader/SearchHeader';
 
@@ -45,7 +43,7 @@ import SearchHeader from '../Search/SearchHeader/SearchHeader';
 import * as styles from './styles';
 
 // interface
-import { INavItem } from '@/types/INavItem';
+import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 export default function Header() {
   const [isBurgerClicled, setIsBurgerClicked] = useState<boolean>(false);
@@ -54,58 +52,15 @@ export default function Header() {
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
 
   const { user, setUser } = useContext(UserContext);
+  const { cartQuantity } = useShoppingCart();
   const { setIsFailed, setIsOpen, setMessage } = useContext(NotificationContext);
-  const contextStorage = useContext(StorageContext);
   const { push, pathname } = useRouter();
-
-  // const logOut = (e: React.MouseEvent<HTMLElement>) => {
-  //   if (e.currentTarget.textContent === 'Log Out') {
-  //     setUser(null);
-  //     localStorage.removeItem('token');
-  //     sessionStorage.removeItem('token');
-  //   }
-  // };
-
-  // /**
-  //  *
-  //  * @param item navigation item
-  //  * @param itemToChech dynamic navigation item
-  //  * @param unAuthItem item value if auth
-  //  * @param authItem item value if not auth
-  //  * @param type type of item field
-  //  * @returns
-  //  */
-
-  // const dynamicParams = (
-  //   item: INavItem,
-  //   itemToCheck: string,
-  //   unAuthItem: string,
-  //   authItem: string,
-  //   type: string
-  // ) => {
-  //   if (type === 'name') {
-  //     return item.name === itemToCheck
-  //       ? item.name === itemToCheck && user
-  //         ? unAuthItem
-  //         : authItem
-  //       : item.name;
-  //   } else if (type === 'link')
-  //     return item.name === itemToCheck
-  //       ? item.to === itemToCheck && user
-  //         ? unAuthItem
-  //         : authItem
-  //       : item.to;
-  // };
 
   const {
     palette: {
       primary: { main },
     },
   } = useTheme<Theme>();
-
-  useEffect(() => {
-    contextStorage?.setNewLengthFromStorage();
-  }, [contextStorage]);
 
   return (
     <styles.Header sx={styles.Header_Adaptive}>
@@ -214,7 +169,7 @@ export default function Header() {
                   <Box
                     bgcolor={main}
                     sx={{
-                      display: `${contextStorage?.storageLength === 0 ? 'none' : 'block'}`,
+                      display: `${cartQuantity === 0 ? 'none' : 'block'}`,
                       position: 'absolute',
                       top: '-5px',
                       right: '-10px',
@@ -231,7 +186,7 @@ export default function Header() {
                         transform: 'translateX(-50%)',
                       }}
                     >
-                      {contextStorage?.storageLength}
+                      {cartQuantity}
                     </Box>
                   </Box>
                 </Box>
@@ -279,17 +234,19 @@ export default function Header() {
                       key={name}
                       onClick={async () => {
                         if (name === 'Log out') {
-                          setIsFailed(false);
-                          setIsOpen(true);
-                          setMessage('Succesfully logged out');
+                          await push(to);
                           setUser(null);
                           localStorage.removeItem('token');
                           sessionStorage.removeItem('token');
-                          await push(to);
+                          setIsFailed(false);
+                          setIsOpen(true);
+                          setMessage('Succesfully logged out');
+                        } else if (name === 'Home' && !user){
+                          push(Routes.search)
                         } else {
                           await push(to);
-                          setIsBurgerClicked(false);
                         }
+                        setIsBurgerClicked(false);
                       }}
                     >
                       <Image

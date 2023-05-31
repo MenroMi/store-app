@@ -14,6 +14,7 @@ let theme = createTheme({
       iconLight: '#6E7278',
       iconDark: '#292D32',
       caption: '#494949',
+      selection: 'rgb(254, 131, 126, 0.4)',
     },
   },
 });
@@ -146,6 +147,9 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           fontFamily: 'inherit',
+          '&::selection': {
+              backgroundColor: theme.palette.text.selection,
+          }
         },
       },
       defaultProps: {

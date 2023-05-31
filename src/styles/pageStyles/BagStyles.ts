@@ -22,5 +22,6 @@ export const CustomBagBtnsWrapper = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',
-  marginTop: '53px',
+  marginTop: '50px',
+  marginBottom: '50px',
 }));

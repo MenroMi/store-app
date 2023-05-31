@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles';
+import Image from 'next/image';
 
 export const CustomBagWrapper = styled('div')(() => ({
   display: 'flex',
@@ -12,3 +13,7 @@ export const CustomBox = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
 }));
+
+export const CustomImage = styled(Image)({
+  objectFit: 'cover',
+});

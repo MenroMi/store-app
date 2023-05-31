@@ -23,7 +23,7 @@ import { Routes } from '@/constants/routes';
 import SliderArrow from '../SliderArrow/SliderArrow';
 
 // images
-import noProducts from '@/assets/icons/no-products.svg';
+import noProducts from '@/assets/icons/noProducts.svg';
 
 // types
 import { ICardsSliderProps } from '@/types/cardsSliderTypes';

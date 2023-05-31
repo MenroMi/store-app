@@ -6,7 +6,7 @@ import {
   CustomGalleryImage,
   CustomIconButton,
 } from './ImagesGalleryStyles';
-import { Box, Grid, useMediaQuery } from '@mui/material';
+import { Box, Grid, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 
 import defImg from '@/assets/defImg.png';
@@ -14,9 +14,9 @@ import RightArraow from '@/assets/icons/right.svg';
 import LeftArraow from '@/assets/icons/left.svg';
 
 import { useState } from 'react';
-import theme from './../../../../utils/mui/theme';
 
 export default function ImagesGallery({ images }: IImageGalleryProps) {
+  const theme = useTheme();
   const [mainImageIndex, setMainImageIndex] = useState<number>(0);
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
@@ -67,13 +67,13 @@ export default function ImagesGallery({ images }: IImageGalleryProps) {
             ))}
           </Grid>
           <Grid container item xs={queryDownLg ? 12 : 10} justifyContent="center">
-            <CustomGalleryImageContainer isMain={true} position="relative">
+            <CustomGalleryImageContainer ismain='true' position="relative">
               <CustomGalleryImage
                 src={images.data[mainImageIndex]?.attributes.url || defImg}
                 alt="Main Image"
                 blurDataURL={blurDataURL}
                 priority={true}
-                isMain={true}
+                ismain='true'
                 fill
               />
               <Box position="absolute" bottom={25} right={25}>
@@ -104,13 +104,13 @@ export default function ImagesGallery({ images }: IImageGalleryProps) {
         </Grid>
       ) : (
         <Grid container item overflow="hidden">
-          <CustomGalleryImageContainer isMain={true} position="relative">
+          <CustomGalleryImageContainer ismain='true' position="relative">
             <CustomGalleryImage
               src={defImg}
               alt="Main Image"
               blurDataURL={blurDataURL}
               priority={true}
-              isMain={true}
+              ismain='true'
               fill
             />
           </CustomGalleryImageContainer>

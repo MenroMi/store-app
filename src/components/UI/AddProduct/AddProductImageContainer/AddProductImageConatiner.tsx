@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ImageContainer, CustomImage, DeleteIconContainer } from './AddProductImageConatinerStyles';
 import { Box, Theme, useMediaQuery, useTheme } from '@mui/material';
 
-import deleteIcon from '@/assets/icons/delete-icon.svg';
+import deleteIcon from '@/assets/icons/deleteIcon.svg';
 import Image from 'next/image';
 import { ModalContext } from '@/components/Providers/modal';
 
