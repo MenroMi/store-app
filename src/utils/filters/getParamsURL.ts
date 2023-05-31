@@ -27,6 +27,10 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
   }
 
   if (searchParams.size > 0) {
+    if (router.pathname === '/catalog/products/[id]' && typeof router.query.id !== 'undefined') {
+      router.push(`${Routes.products}/${router.query.id}`);
+      return;
+    }
     searchParams.delete('page');
 
     searchParams.append('page', `${page}`);
