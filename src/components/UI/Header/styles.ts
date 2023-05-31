@@ -89,7 +89,7 @@ export const Cart = styled('section')`
 export const Burger = styled('section')`
   position: relative;
   display: flex;
-  z-index: 10000;
+  z-index: 1000;
   align-items: center;
 `;
 
