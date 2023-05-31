@@ -29,9 +29,11 @@ import Notification from '@/components/UI/Notification/Notificaton';
 import { NotificationContext } from '@/components/Providers/notification';
 import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
+import { CardsSliderMobile } from '@/components/UI/Slider/CardsSliderMobile/CardsSliderMobile';
 
 export default function Home() {
   const theme = useTheme<Theme>();
+  const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryClient = useQueryClient();
@@ -83,14 +85,14 @@ export default function Home() {
       <Box sx={{ display: 'flex', gap: '60px', mt: queryDownMd ? 0 : '38px' }}>
         <AsideProfileMenu />
 
-        <Box sx={{ maxWidth: '1480px', m: '38px' }}>
+        <Box sx={{ m: '38px' }}>
           <UserProfile
             avatarSrc={getProfilePhoto(user)}
             profileTopBgSrc={profileTopBg}
             userBonusPoints="1 374"
             username={user?.firstName || user?.username || 'Guest'}
           />
-          <Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '1480px' }}>
             <Box
               sx={{
                 display: 'flex',
@@ -116,13 +118,23 @@ export default function Home() {
               )}
             </Box>
 
-            <CardsSlider
-              products={userProducts?.data?.products}
-              deleteProduct={() => {
-                setIsDeleting(true);
-                mutate(clickedId!);
-              }}
-            />
+            {queryDownLg ? (
+              <CardsSliderMobile
+                products={userProducts?.data?.products}
+                deleteProduct={() => {
+                  setIsDeleting(true);
+                  mutate(clickedId!);
+                }}
+              />
+            ) : (
+              <CardsSlider
+                products={userProducts?.data?.products}
+                deleteProduct={() => {
+                  setIsDeleting(true);
+                  mutate(clickedId!);
+                }}
+              />
+            )}
 
             {queryDownMd && userProducts?.data?.products?.length > 0 && (
               <Button
