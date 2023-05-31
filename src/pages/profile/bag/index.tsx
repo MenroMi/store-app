@@ -59,7 +59,7 @@ const Bag = () => {
 
   return (
     <Layout title="Bag">
-      <section style={{ marginTop: '80px', width: '100%' }}>
+      <section style={{ marginTop: queryUpLg ? '65px' : '20px', width: '100%' }}>
         {cartQuantity > 0 ? (
           <Grid
             container
@@ -78,7 +78,7 @@ const Bag = () => {
                 <Typography variant="h2" sx={{ marginLeft: '15px' }}>
                   Chart
                 </Typography>
-                <Grid item xs={12} mt={5} sx={{ marginTop: '55px' }}>
+                <Grid item xs={12} mt={5} sx={{ marginTop: queryUpLg ? '55px' : '20px' }}>
                   <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
                     {data?.map(
                       ({
@@ -118,8 +118,8 @@ const Bag = () => {
               {/* Right Container */}
               <Box
                 sx={{
-                  marginLeft: queryUpLg ? '80px' : queryUpSm ? '20px' : '0',
-                  marginRight: queryUpSm ? '20px' : '0',
+                  marginLeft: queryUpLg ? '80px' : queryUpSm ? '15px' : '10px',
+                  marginRight: queryUpSm ? '15px' : '10px',
                 }}
               >
                 <Box
