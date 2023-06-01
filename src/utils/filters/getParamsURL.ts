@@ -24,11 +24,11 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
     }
   }
 
-  if (searchParams.size === 0 && router.pathname === '/catalog/search') {
+  if (searchParams.toString() === '' && router.pathname === '/catalog/search') {
     searchParams.append('page', `${page}`);
   }
 
-  if (searchParams.size > 0) {
+  if (searchParams.toString() !== '') {
     if (!/\/catalog\/search*/g.test(router.pathname)) {
       router.push(`${router.asPath}`);
       return;
