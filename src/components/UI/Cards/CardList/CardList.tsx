@@ -24,7 +24,6 @@ import {
   CardsGridContainer,
   CatalogIsEmptyContainer,
   CustomProguctsBlock,
-  CustomLoaderWrapper,
   CustomSearchOverlay,
 } from './styles';
 
@@ -58,9 +57,7 @@ const CardList = () => {
       }}
     >
       {isFetching ? (
-        <CustomLoaderWrapper>
-          <FullScreenLoader />
-        </CustomLoaderWrapper>
+        <FullScreenLoader />
       ) : (
         <CustomProguctsBlock>
           {Array.isArray(data?.data) && data?.data.length !== 0 ? (

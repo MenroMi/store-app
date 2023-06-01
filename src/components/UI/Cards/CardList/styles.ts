@@ -5,12 +5,12 @@ import theme from '@/utils/mui/theme';
 export const CustomSearchOverlay = styled('div')({
   height: 'calc(100vh - 280px)',
   width: `100%`,
-  display:'flex',
- 
+  display: 'flex',
+
   justifyContent: 'center',
   [theme.breakpoints.down(900)]: {
     height: 'calc(100vh - 230px)',
-    paddingLeft:'20px',
+    paddingLeft: '20px',
   },
   [theme.breakpoints.down(600)]: {
     height: 'calc(100vh - 215px)',
@@ -57,8 +57,6 @@ export const CustomProguctsBlock = styled('div')({
   },
 });
 
-
-
 export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   '&.MuiGrid-root': {
     marginTop: '2.25em',
@@ -90,15 +88,4 @@ export const CatalogIsEmptyContainer = styled('div')({
   top: '50%',
   transform: 'translateX(-49%) translateY(-50%)',
   gap: '20px',
-});
-
-export const CustomLoaderWrapper = styled('div')({
-  height: '100%',
-  width: '100%',
-  backgroundColor: 'rgba(255,255, 255, 0.5)',
-  backdropFilter: 'blur(5px)',
-  position: 'absolute',
-  zIndex: '5000',
-  top: '0',
-  transition: '0.3s ease-in',
 });
