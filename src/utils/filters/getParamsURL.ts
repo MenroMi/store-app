@@ -22,11 +22,11 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
     }
   }
 
-  if (searchParams.size === 0 && router.pathname === '/catalog/search') {
+  if (searchParams.toString() === '' && router.pathname === '/catalog/search') {
     searchParams.append('page', `${page}`);
   }
 
-  if (searchParams.size > 0) {
+  if (searchParams.toString() !== '') {
     if (router.pathname === '/catalog/products/[id]' && typeof router.query.id !== 'undefined') {
       router.push(`${Routes.products}/${router.query.id}`);
       return;
