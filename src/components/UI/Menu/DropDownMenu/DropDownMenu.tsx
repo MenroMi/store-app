@@ -68,7 +68,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
               setAnchorElement(null);
               isOpen(true);
               setIsFailed(false);
-              setMessage('Product added to Bag');
+              setMessage('Product was added to Bag');
             }}
           >
             {label}

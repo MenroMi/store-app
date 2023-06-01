@@ -93,7 +93,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
             increaseCartQuantity(product.id);
             setIsOpen(true);
             setIsFailed(false);
-            setMessage('Product added to Bag');
+            setMessage('Product was added to Bag');
           }}
         >
           Add to Bag
