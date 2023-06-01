@@ -1,5 +1,6 @@
 // basic
 import Image from 'next/image';
+import { useContext } from 'react';
 
 // mui
 import { Typography, useTheme, Box, Theme, useMediaQuery } from '@mui/material';
@@ -10,6 +11,7 @@ import { CustomButton } from './styles';
 
 // context
 import { useShoppingCart } from '@/providers/shoppingCard';
+import { NotificationContext } from '@/providers/notification';
 
 // interface
 interface IBagDeleteButtonProps {
@@ -20,10 +22,18 @@ const BagDeleteButton: React.FC<IBagDeleteButtonProps> = ({ id }) => {
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
   const { removeFromCart } = useShoppingCart();
 
   return (
-    <CustomButton onClick={() => removeFromCart(id)}>
+    <CustomButton
+      onClick={() => {
+        removeFromCart(id);
+        setIsOpen(true);
+        setIsFailed(false);
+        setMessage('Product was deleted from Bag');
+      }}
+    >
       <Box
         component={Image}
         src={DeleteIcon}
