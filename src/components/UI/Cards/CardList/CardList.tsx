@@ -55,20 +55,7 @@ const CardList = () => {
       }}
     >
       {isFetching ? (
-        <Box
-          sx={{
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'rgba(255,255, 255, 0.5)',
-            backdropFilter: 'blur(5px)',
-            position: 'absolute',
-            zIndex: '5000',
-            top: '0',
-            transition: '0.3s ease-in',
-          }}
-        >
           <FullScreenLoader />
-        </Box>
       ) : (
           <CustomProguctsBlock filterOpen={context ? context.hide : false}>
           {Array.isArray(data?.data) && data?.data.length !== 0 ? (
