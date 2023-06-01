@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 export const CustomSearchOverlay = styled('div')({
-  height: 'calc(100vh - 280px)',
+  height: 'calc(100vh - 290px)',
   width: `100%`,
   display: 'flex',
 
@@ -29,19 +29,32 @@ export const CustomSearchOverlay = styled('div')({
   },
 });
 
-export const CustomProguctsBlock = styled('div')({
+export interface ICustomProguctsBlockProps{
+  filterOpen: boolean;
+}
+
+export const CustomProguctsBlock = styled('div')<ICustomProguctsBlockProps>(({ theme, filterOpen }) => ({
   maxHeight: 'calc(100%)',
   display: 'flex',
   justifyContent: 'center',
-  maxWidth: `calc(${320 * 5}px + ${54 * 4}px)`,
+  maxWidth: filterOpen 
+  ? `calc(${320 * 5}px + ${54 * 4}px)` 
+  : `calc(${320 * 4}px + ${54 * 3}px)`,
+  width:'100%',
   [theme.breakpoints.down(1916)]: {
-    maxWidth: `calc(${320 * 4}px + ${54 * 3}px)`,
+    maxWidth: filterOpen 
+    ? `calc(${320 * 4}px + ${54 * 3}px)` 
+    : `calc(${320 * 3}px + ${54 * 2}px)`,
   },
   [theme.breakpoints.down(1542)]: {
-    maxWidth: `calc(${320 * 3}px + ${54 * 2}px )`,
+    maxWidth: filterOpen
+      ? `calc(${320 * 3}px + ${54 * 2}px )`
+      : `calc(${320 * 2}px + ${54 * 1}px )`,
   },
   [theme.breakpoints.down(1168)]: {
-    maxWidth: `calc(${320 * 2}px + ${54 * 1}px)`,
+    maxWidth:filterOpen 
+    ? `calc(${320 * 2}px + ${54 * 1}px)`
+    : `calc(${320 * 1}px)`,
   },
   [theme.breakpoints.down(714)]: {
     maxWidth: `calc(${320}px )`,
@@ -55,7 +68,7 @@ export const CustomProguctsBlock = styled('div')({
   [theme.breakpoints.down(360)]: {
     maxWidth: `calc(${152 * 1}px )`,
   },
-});
+}));
 
 export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   '&.MuiGrid-root': {

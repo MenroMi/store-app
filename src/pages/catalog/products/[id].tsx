@@ -39,7 +39,7 @@ export default function SingleProductPage() {
   return (
     <Layout title="Product">
       <ProductContainer container>
-        <ImagesGallery images={product.attributes?.images} />
+        <ImagesGallery images={product?.attributes?.images} />
         <Description product={product} sizes={sizes} />
       </ProductContainer>
     </Layout>

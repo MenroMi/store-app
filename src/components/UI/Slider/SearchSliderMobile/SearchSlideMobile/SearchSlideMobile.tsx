@@ -63,8 +63,8 @@ const SearchSlideMobile: React.FC<ISlideProps> = ({
           <CustomTypographyName variant="subtitle1">{'$' + productPrice}</CustomTypographyName>
         </Box>
       </Box>
-      <Image src={productImageSrc} alt="something" width={70} height={70} />
-    </MobileSlideWrapper>
+      <Image src={productImageSrc} alt="Product image" width={70} height={70} />
+    </MobileSliderWrapper>
   );
 };
 
