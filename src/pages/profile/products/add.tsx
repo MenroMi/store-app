@@ -17,14 +17,14 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
-import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
+import FormProduct from '@/components/Forms/FormProduct/FormProduct';
 
 // constants
 import { Routes } from '@/constants/routes';
 
 // services
 import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/productApi';
-import { IProductData } from '@/types/addProductTypes';
+import { IProductData } from '@/types/formProductTypes';
 
 // context
 import { ImagesContext } from '@/components/Providers/images';
@@ -72,17 +72,16 @@ export default function AddProduct() {
 
   // contexts
   const { setClickedId } = useContext(ModalContext);
-  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+  const { selectedImages, setSelectedImages, setCurrentImageIds } = useContext(ImagesContext);
 
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const router = useRouter();
 
   useEffect(() => {
-    router.events.on('routeChangeStart', () => setSelectedImages([]));
-
     return () => {
-      router.events.off('routeChangeStart', () => setSelectedImages([]));
+      setSelectedImages([]);
+      setCurrentImageIds([]);
     };
   }, []);
 
@@ -143,15 +142,14 @@ export default function AddProduct() {
       mutate(imagesToPost);
     } else {
       setLoading(false);
-      console.log('images');
     }
-    console.log(selectedImages);
   };
   return (
     <Layout title="Add Product">
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
-        <FormAddProduct
+        <FormProduct
+          title="Add product"
           isLoading={loading}
           sizes={sizesData}
           productName={productName}

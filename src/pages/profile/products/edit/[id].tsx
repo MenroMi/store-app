@@ -17,7 +17,7 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
-import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
+import FormProduct from '@/components/Forms/FormProduct/FormProduct';
 
 // constants
 import { Routes } from '@/constants/routes';
@@ -28,15 +28,16 @@ import {
   getDataWithField,
   getProductById,
   getUserID,
-  postProduct,
   uploadImage,
 } from '@/services/productApi';
-import { IProductData, ISelectedImage } from '@/types/addProductTypes';
+import { IProductData, ISelectedImage } from '@/types/formProductTypes';
 
 // context
 import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
 import { NotificationContext } from '@/components/Providers/notification';
+
+// interfaces, types
 import { IGetStaticProps } from '@/types/productTypes';
 
 export default function AddProduct() {
@@ -88,17 +89,10 @@ export default function AddProduct() {
 
   // contexts
   const { setClickedId } = useContext(ModalContext);
-  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+  const { selectedImages, setSelectedImages, currentImageIds, setCurrentImageIds } =
+    useContext(ImagesContext);
 
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
-
-  useEffect(() => {
-    router.events.on('routeChangeStart', () => setSelectedImages([]));
-
-    return () => {
-      router.events.off('routeChangeStart', () => setSelectedImages([]));
-    };
-  }, []);
 
   useEffect(() => {
     const images = product?.attributes?.images?.data?.map((image: any) => ({
@@ -106,7 +100,17 @@ export default function AddProduct() {
       url: image?.attributes?.url,
     }));
 
+    const imageIds = product?.attributes?.images?.data?.map((image: any) => image?.id.toString());
+
     setSelectedImages([...images]);
+    setCurrentImageIds([...imageIds]);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      setSelectedImages([]);
+      setCurrentImageIds([]);
+    };
   }, []);
 
   // executes when we add an image
@@ -119,8 +123,6 @@ export default function AddProduct() {
           ...prevState,
           { id: Date.now(), url: URL.createObjectURL(image), imageFile: image },
         ]);
-
-        console.log(selectedImages);
       }
     }
   };
@@ -138,10 +140,6 @@ export default function AddProduct() {
       // get image ids returned from server
       const uploadedImageIds = responses?.map((response) => response.data[0].id.toString());
 
-      const currentImageIds = selectedImages
-        ?.filter((image: ISelectedImage) => image.imageFile === null)
-        .map((image: ISelectedImage) => image.id);
-
       const productData: IProductData = {
         data: {
           description: description,
@@ -157,8 +155,6 @@ export default function AddProduct() {
           userID: id?.data.id,
         },
       };
-
-      console.log(productData);
 
       return editProduct(
         productData,
@@ -178,17 +174,15 @@ export default function AddProduct() {
       mutate(imagesToPost);
     } else {
       setLoading(false);
-      console.log('images');
     }
-
-    console.log(selectedImages);
   };
   return (
     <Layout title="Add Product">
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
 
-        <FormAddProduct
+        <FormProduct
+          title="Edit product"
           isLoading={loading}
           sizes={sizesData}
           productName={productName}

@@ -5,7 +5,7 @@ import { getDataFromServer } from './apiClient';
 // constants
 import { baseURL } from '@/constants/urls';
 // interfaces
-import { IProductData } from '@/types/addProductTypes';
+import { IProductData } from '@/types/formProductTypes';
 
 export const getDataWithField = async (endpoint: string, fieldName: string = 'name') =>
   await getDataFromServer(`${endpoint}`, `?fields=${fieldName}`).then((res) => res?.data?.data);

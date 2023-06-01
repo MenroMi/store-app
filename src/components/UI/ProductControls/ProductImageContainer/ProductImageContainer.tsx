@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ImageContainer, CustomImage, DeleteIconContainer } from './AddProductImageConatinerStyles';
+import { ImageContainer, CustomImage, DeleteIconContainer } from './ProductImageContainerStyles';
 import { Box, Theme, useMediaQuery, useTheme } from '@mui/material';
 
 import deleteIcon from '@/assets/icons/deleteIcon.svg';
@@ -8,12 +8,12 @@ import { ModalContext } from '@/components/Providers/modal';
 
 import deleteIconMobile from '@/assets/icons/close.svg';
 
-interface IAddProductImageConatinerProps {
+interface IProductImageConatinerProps {
   src: string;
   id: number;
 }
 
-export default function AddProductImageConatiner({ src, id }: IAddProductImageConatinerProps) {
+export default function ProductImageContainer({ src, id }: IProductImageConatinerProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
 
@@ -47,7 +47,7 @@ export default function AddProductImageConatiner({ src, id }: IAddProductImageCo
               right: 0,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center', 
+              justifyContent: 'center',
               backgroundColor: 'rgba(255, 255, 255, 0.3)',
               p: 0.6,
               m: 0.6,

@@ -19,41 +19,42 @@ import {
 import imageIcon from '@/assets/icons/gallery.svg';
 
 // styles
-import { CustomUploadWrapper } from './AddProductUploadImageStyles';
+import { CustomUploadWrapper } from './ProductUploadImageStyles';
 
 // interfaces
-import { IAddProductUploadImageProps, ISelectedImage } from '@/types/addProductTypes';
-import AddProductImageConatiner from '../AddProductImageContainer/AddProductImageConatiner';
+import { IProductUploadImageProps, ISelectedImage } from '@/types/formProductTypes';
+import ProductImageConatiner from '../ProductImageContainer/ProductImageContainer';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
 import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
 import { deleteImage } from '@/services/productApi';
 
-export default function AddProductUploadImage({ handleChooseImage }: IAddProductUploadImageProps) {
+export default function ProductUploadImage({ handleChooseImage }: IProductUploadImageProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
-  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+  const { selectedImages, setSelectedImages, setCurrentImageIds, currentImageIds } =
+    useContext(ImagesContext);
   const { clickedId, setIsOpen } = useContext(ModalContext);
 
   const handleDeleteImage = async (id: number) => {
-    console.log(clickedId);
     const clickedImage: ISelectedImage | undefined = selectedImages?.find(
       (image) => image.id === id
     );
 
     if (!clickedImage?.imageFile) {
       setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+      setCurrentImageIds((prevIds) => prevIds.filter((currentId) => +currentId !== id));
+
       deleteImage(
         clickedImage!.id,
         localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
       );
     } else {
       setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
-      setIsOpen(false);
-      console.log('selected:', selectedImages);
     }
+    setIsOpen(false);
   };
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
@@ -107,7 +108,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
         >
           {selectedImages?.map((productImage) => (
             <Grid key={productImage?.id} item xs={6}>
-              <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
+              <ProductImageConatiner src={productImage?.url} id={productImage?.id} />
             </Grid>
           ))}
 
@@ -162,7 +163,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
               key={productImage?.id}
               sx={{ maxWidth: { xs: '200px', sm: '300px' }, alignSelf: 'center' }}
             >
-              <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
+              <ProductImageConatiner src={productImage?.url} id={productImage?.id} />
             </Box>
           ))}
         </Box>

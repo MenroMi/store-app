@@ -7,9 +7,9 @@ import React from 'react';
 import downArrow from '@/assets/icons/down.svg';
 
 // interfaces
-import { IAddProductSelect } from '@/types/addProductTypes';
+import { IProductSelect } from '@/types/formProductTypes';
 
-export default function AddProductSelect({
+export default function ProductSelect({
   id,
   label,
   selectedValue,
@@ -18,7 +18,7 @@ export default function AddProductSelect({
   selectName,
   width = '100%',
   marginRight = 0,
-}: IAddProductSelect) {
+}: IProductSelect) {
   return (
     <FormControl sx={{ mr: marginRight, width: width }}>
       <FormLabel htmlFor={id}>

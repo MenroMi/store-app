@@ -1,4 +1,4 @@
-import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
+import ProductRadioGroup from '@/components/UI/ProductControls/ProductRadioGroup/ProductRadioGroup';
 import { CustomTypography, CustomButton } from './DescriptionStyles';
 import { Box, Grid, Typography, Radio, useMediaQuery } from '@mui/material';
 
@@ -67,7 +67,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
             queryDownMini ? '226px' : queryDownSmall ? '304px' : queryDownFive ? '382px' : ''
           })/2)`}
         >
-          <AddProductRadioGroup
+          <ProductRadioGroup
             availableSize={product.attributes?.size.data}
             handleSelectSize={setSelectedSize}
             sizes={sizes}

@@ -1,4 +1,4 @@
-import { ISizesOptionsData } from "@/types/addProductTypes";
+import { ISizesOptionsData } from "@/types/formProductTypes";
 import { AttrFromData, ImageAttrData } from '@/types/cardListTypes';
 
 export interface IDescriptionProps {

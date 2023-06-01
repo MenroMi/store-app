@@ -21,11 +21,11 @@ export interface ISelectedImage {
   };
 }
 
-export interface IAddProductUploadImageProps {
+export interface IProductUploadImageProps {
   handleChooseImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export interface IAddProductRadioGroup {
+export interface IProductRadioGroup {
   selectedSize: string | number;
   handleSelectSize: (size: string) => void;
   sizes: ISizesOptionsData[] | undefined;
@@ -33,7 +33,7 @@ export interface IAddProductRadioGroup {
   isAddPage: boolean;
 }
 
-export interface IAddProductSelect {
+export interface IProductSelect {
   id: string;
   label: string;
   selectedValue: string;
@@ -44,7 +44,8 @@ export interface IAddProductSelect {
   marginRight?: string | number;
 }
 
-export interface IFormAddProductProps {
+export interface IFormProductProps {
+  title: string;
   productName: string;
   brand: string;
   category: string;
