@@ -12,7 +12,7 @@ const onReloadFiltersFromURL = (
       if (typeof router.query[key] === 'undefined') {
         continue;
       } else {
-        setActiveFilters((prev: any) => {
+        setActiveFilters((prev: ActiveFiltersTypes) => {
           return {
             ...prev,
             [key]: Array.isArray(router.query[key])

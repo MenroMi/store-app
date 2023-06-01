@@ -76,14 +76,14 @@ export const getFilters = async () => {
   return res;
 };
 
-export const getFilteredData = async (query: any) => {
+export const getFilteredData = async (query: { [x: string]: string | string[] }) => {
   let url: string = `/products?populate=*&`;
   let page: number = 1;
 
   if (typeof query !== 'undefined') {
     for (let prop in query) {
       if (!Array.isArray(query[prop])) {
-        query[prop] = query[prop].split(',');
+        query[prop] = (query[prop] as string).split(',');
       }
 
       if (query[prop].length <= 0) {
@@ -98,7 +98,7 @@ export const getFilteredData = async (query: any) => {
           url += `filters[name][$containsi]=${query[prop][0]}&`;
           continue;
         case 'page':
-          page = query[prop].join();
+          page = +query[prop][0];
           continue;
       }
 

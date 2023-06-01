@@ -1,6 +1,10 @@
 // basic
 import Image from 'next/image';
 import Router, { useRouter } from 'next/router';
+import React, { useContext } from 'react';
+
+// rq
+import { useQuery } from '@tanstack/react-query';
 
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
@@ -10,14 +14,21 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 // utils
 import makeArray from '@/utils/filters/makeRouterQueryArray';
 
+// context
+import { FiltersContext } from '@/contexts/filtersContext';
+
 // image
 import singInImg from '@/assets/singInBg.png';
 import emptyIcon from '@/assets/icons/empty.svg';
 
+// constants
+import { Routes } from '@/constants/routes';
+
 // component
 import Card from '@/components/UI/Cards/Card/Card';
 import DropDownMenu from '@/components/UI/Menu/DropDownMenu/DropDownMenu';
-import FullScreenLoader from '../../Loader/FullScreenLoader';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
+import ResetFilterButton from '@/components/UI/Buttons/ResetFilterButton/ResetFilterButton';
 
 // styled component
 import {
@@ -30,12 +41,8 @@ import {
 // interface
 import { AttrFromData } from '@/types/cardListTypes';
 import { getFilteredData } from '@/services/searchApi';
-import { useQuery } from '@tanstack/react-query';
-import { Routes } from '@/constants/routes';
-import { useContext } from 'react';
-import { FiltersContext } from '@/contexts/filtersContext';
 
-const CardList = () => {
+const CardList: React.FC = () => {
   const theme = useTheme<Theme>();
   const router = useRouter();
   const context = useContext(FiltersContext);
@@ -71,22 +78,7 @@ const CardList = () => {
         <Typography variant="h4" sx={{ opacity: '0.5', width: '100%', textAlign: 'center' }}>
           Oops... {data?.msg}
         </Typography>
-        <Button
-          variant="outlined"
-          sx={{
-            backgroundColor: theme?.palette?.primary?.main,
-            color: theme?.palette?.primary?.contrastText,
-            '&:hover': {
-              backgroundColor: theme?.palette?.primary?.dark,
-            },
-            '&:active': {
-              backgroundColor: theme?.palette?.primary?.light,
-            },
-          }}
-          onClick={() => router.push(Routes.search)}
-        >
-          Reset filters
-        </Button>
+        <ResetFilterButton />
       </>
     );
   }
@@ -165,22 +157,7 @@ const CardList = () => {
               >
                 Catalog is empty.
               </Typography>
-              <Button
-                variant="outlined"
-                sx={{
-                  backgroundColor: theme?.palette?.primary?.main,
-                  color: theme?.palette?.primary?.contrastText,
-                  '&:hover': {
-                    backgroundColor: theme?.palette?.primary?.dark,
-                  },
-                  '&:active': {
-                    backgroundColor: theme?.palette?.primary?.light,
-                  },
-                }}
-                onClick={() => router.push(Routes.search)}
-              >
-                Reset your filters
-              </Button>
+              <ResetFilterButton />
             </CatalogIsEmptyContainer>
           )}
         </CustomProguctsBlock>

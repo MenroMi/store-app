@@ -28,8 +28,8 @@ export interface IFiltersContext {
   isError: boolean;
   error: Error | unknown;
   data: FilterListRender[] | undefined;
-  onHideFilters: any;
-  isChecked: any;
+  onHideFilters: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  isChecked: (e: React.SyntheticEvent<Element, Event> | Event, value?: number | number[]) => void;
   activeFilters: ActiveFiltersTypes;
   setPage: (x: number) => void;
   setActiveFilters: (x: ActiveFiltersTypes) => void;
@@ -82,33 +82,47 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
 
   const onHide = () => setHide(!hide);
 
-  const onHideFilters = (e: any): void => {
-    if (e.target?.dataset?.overlay) {
+  const onHideFilters = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+    let target = e.target as HTMLButtonElement;
+
+    if (target?.dataset?.overlay) {
       setHide(true);
     }
     return;
   };
 
-  const isChecked = (e: any) => {
-    let checked: boolean;
-    let name: string;
+  const isChecked = (
+    e: React.SyntheticEvent<Element, Event> | Event,
+    value?: number | number[]
+  ): void => {
+    let targetBtns = e.target as HTMLButtonElement;
+    let target = e.target as HTMLButtonElement;
+    let { checked } = e.target as HTMLInputElement;
+    let keyboardEnter = e as React.KeyboardEvent<HTMLDivElement>;
+
+    let checkedRes: boolean;
+    let nameRes: string;
     let label: string;
 
     switch (e.type) {
       case 'mouseup': {
-        return onCheckedPrice(setActiveFilters, e.target.textContent);
+        return onCheckedPrice(setActiveFilters, targetBtns.textContent || '');
       }
       case 'keydown': {
-        return e.code === 'Enter' ? onCheckedPrice(setActiveFilters, e.target.value) : null;
+        if (keyboardEnter.code === 'Enter') {
+          return onCheckedPrice(setActiveFilters, targetBtns.value || '');
+        }
+
+        return;
       }
       default:
-        checked = e.target.checked;
-        name = e.target.name;
-        label = e.target.getAttribute('datatype');
+        checkedRes = checked;
+        nameRes = targetBtns.name;
+        label = target.getAttribute('datatype') || '';
         if (label === 'brand') {
-          onCheckedCheckbox(setActiveFilters, checked, name, label, { name: [] });
+          onCheckedCheckbox(setActiveFilters, checkedRes, nameRes, label, { name: [] });
         } else {
-          onCheckedCheckbox(setActiveFilters, checked, name, label);
+          onCheckedCheckbox(setActiveFilters, checkedRes, nameRes, label);
         }
 
         return;

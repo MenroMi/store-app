@@ -1,10 +1,6 @@
 import { ICategory } from '@/types/cardsSliderTypes';
 import { ISizesOptionsData } from '@/types/addProductTypes';
 
-export interface ICardListProps {
-  products?: any[];
-}
-
 export interface ImageAttrData {
   data: Array<{
     id: number;

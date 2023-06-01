@@ -46,9 +46,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
           <InputLabel htmlFor="outlined-adornment-amount">Up to Amount</InputLabel>
           <OutlinedInput
             onChange={(e) => handleChanges(e.target.value, setActualAmount)}
-            onKeyDown={(e) => {
-              contextFilters?.isChecked(e);
-            }}
+            onKeyDown={contextFilters?.isChecked}
             name="input-price"
             id="outlined-adornment-amount"
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
@@ -62,9 +60,7 @@ const FilterPrice: React.FC = (): JSX.Element => {
         onChange={(_, value) => {
           handleChanges(value as number, setActualAmount);
         }}
-        onChangeCommitted={(e) => {
-          contextFilters?.isChecked(e);
-        }}
+        onChangeCommitted={contextFilters?.isChecked}
         title="price"
         name="price"
         valueLabelDisplay="auto"

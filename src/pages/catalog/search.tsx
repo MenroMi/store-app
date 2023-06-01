@@ -1,5 +1,5 @@
 // basic
-import { useContext, useEffect, useState } from 'react';
+import { MouseEventHandler, useContext, useEffect, useState } from 'react';
 
 // mui
 import { Box } from '@mui/material';
@@ -58,7 +58,7 @@ export default function SearchResultPage(): JSX.Element {
 
       <FiltersAndCards />
       <CustomSearchOverlay
-        onClick={(e) => onHideFilters(e)}
+        onClick={onHideFilters}
         sx={{
           display: `${!hide && mobileVer && !queryUpMd ? 'block' : 'none'}`,
           backgroundColor: `${!hide && mobileVer && !queryUpMd && 'rgba(243, 243, 243, 0.9)'}`,

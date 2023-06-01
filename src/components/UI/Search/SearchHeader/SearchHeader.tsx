@@ -58,7 +58,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-  const { data } = useDebounceQuery(
+  const { data, isFetched } = useDebounceQuery(
     ['searchData', inputValue],
     () => getSearchProducts(inputValue),
     500
@@ -146,7 +146,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
               <Typography sx={{ order: 2, display: { lg: 'none', xs: 'block' } }}>
                 Search result:
               </Typography>
-              {typeof data === 'undefined' ? (
+              {typeof data === 'undefined' || !isFetched ? (
                 <Box
                   sx={{
                     position: 'relative',
@@ -157,7 +157,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                 >
                   <FullScreenLoader />
                 </Box>
-              ) : !/Error/g.test(data?.name) ? (
+              ) : isFetched && !/Error/g.test(data?.name) ? (
                 queryDownLg ? (
                   <SearchSliderMobile products={data} />
                 ) : (
@@ -184,7 +184,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                     variant="h4"
                     sx={{ opacity: '0.5', width: '100%', textAlign: 'center' }}
                   >
-                    Oops... {data?.msg}. Please try again later
+                    Oops... {data?.msg!}. Please try again later
                   </Typography>
                 </Box>
               )}
