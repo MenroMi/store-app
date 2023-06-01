@@ -6,8 +6,8 @@ import { DehydratedState } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 
 // context
-import FiltersProvider from '@/contexts/filtersContext';
-import StorageProvider from '@/contexts/sessionStorageContext';
+import FiltersProvider from '@/providers/filters';
+import StorageProvider from '@/providers/sessionStorage';
 
 // providers
 import { ThemeProvider } from '@mui/material/styles';
@@ -15,7 +15,7 @@ import ReactQueryProvider from './queryClient';
 import UserProvider from './user';
 import { ModalProvider } from './modal';
 import ImagesProvider from './images';
-import { ShoppingCartProvider } from '@/contexts/shoppingCardContext';
+import { ShoppingCartProvider } from '@/providers/shoppingCard';
 import { NotificationProvider } from './notification';
 
 export interface IProvidersProps {

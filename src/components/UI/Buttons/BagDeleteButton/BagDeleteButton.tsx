@@ -9,7 +9,7 @@ import DeleteIcon from '@/assets/icons/delete.svg';
 import { CustomButton } from './styles';
 
 // context
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
 interface IBagDeleteButtonProps {

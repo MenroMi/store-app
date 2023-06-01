@@ -10,7 +10,7 @@ import FiltersList from '@/components/UI/Filters/FiltersList/FiltersList';
 import PaginationMui from '@/components/UI/Pagination/Pagination';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // styled component
 import { CustomAside } from './styles';

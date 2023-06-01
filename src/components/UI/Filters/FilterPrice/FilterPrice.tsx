@@ -15,13 +15,13 @@ import { getFilteredData } from '@/services/searchApi';
 import makeArray from '@/utils/filters/makeRouterQueryArray';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // constants
-import { regExpOnlyNumbs } from '@/constants';
 
 // interface
 import { InputsData } from '@/types/filterListTypes';
+import { regExpOnlyNumbs } from '@/constants/urls';
 
 const FilterPrice: React.FC = (): JSX.Element => {
   const router = useRouter();

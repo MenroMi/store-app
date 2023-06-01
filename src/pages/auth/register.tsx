@@ -10,13 +10,13 @@ import theme from '@/utils/mui/theme';
 
 // components
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
-import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
+import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
+import AuthLayout from '@/components/Layout/AuthLayout/AuthLayout';
 
 // constants
 import { Routes } from '@/constants/routes';
 import { registration } from '@/services/authService';
 import { IFormData } from '@/types/formDataTypes';
-import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
 
 const Registration = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -44,7 +44,7 @@ const Registration = () => {
   };
 
   return (
-    <SplitLayout title="Registration">
+    <AuthLayout title="Registration">
       {isSuccess ? (
         <InfoComment email={formData.email} />
       ) : (
@@ -94,7 +94,7 @@ const Registration = () => {
           </Box>
         </>
       )}
-    </SplitLayout>
+    </AuthLayout>
   );
 };
 

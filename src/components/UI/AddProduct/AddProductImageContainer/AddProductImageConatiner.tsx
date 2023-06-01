@@ -4,7 +4,7 @@ import { Box, Theme, useMediaQuery, useTheme } from '@mui/material';
 
 import deleteIcon from '@/assets/icons/deleteIcon.svg';
 import Image from 'next/image';
-import { ModalContext } from '@/components/Providers/modal';
+import { ModalContext } from '@/providers/modal';
 
 import deleteIconMobile from '@/assets/icons/close.svg';
 

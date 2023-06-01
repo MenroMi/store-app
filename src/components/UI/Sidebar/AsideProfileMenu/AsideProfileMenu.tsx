@@ -18,10 +18,10 @@ import AsideProfile from '../AsideProfile/AsideProfile';
 // constants
 import { ASIDE_MENU_LINKS } from '@/constants/routes';
 import { Fragment, useContext } from 'react';
-import { UserContext } from '@/components/Providers/user';
+import { UserContext } from '@/providers/user';
 import { useRouter } from 'next/router';
 import theme from '@/utils/mui/theme';
-import { NotificationContext } from '@/components/Providers/notification';
+import { NotificationContext } from '@/providers/notification';
 
 const AsideProfileMenu: React.FC = (): JSX.Element => {
   const {

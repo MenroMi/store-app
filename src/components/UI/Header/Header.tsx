@@ -27,12 +27,11 @@ import BurgerIcon from '@/assets/icons/burger.svg';
 import CloseIcon from '@/assets/icons/close.svg';
 
 // context
-import { UserContext } from '@/components/Providers/user';
+import { UserContext } from '@/providers/user';
 
 // constants
-import { Routes } from '@/constants';
-import { NAV_BURGER_LINKS } from '@/constants/routes';
-import { NotificationContext } from '@/components/Providers/notification';
+import { NAV_BURGER_LINKS, Routes } from '@/constants/routes';
+import { NotificationContext } from '@/providers/notification';
 
 // components
 import AsideProfile from '@/components/UI/Sidebar/AsideProfile/AsideProfile';
@@ -43,7 +42,7 @@ import SearchHeader from '../Search/SearchHeader/SearchHeader';
 import * as styles from './styles';
 
 // interface
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 export default function Header() {
   const [isBurgerClicled, setIsBurgerClicked] = useState<boolean>(false);

@@ -9,7 +9,7 @@ import { getProductById } from '@/services/cardBagService';
 import { AttrFromData } from '@/types/cardListTypes';
 
 // hooks
-import useSessionStorage from '@/hooks/useSessionStorage/useSessionStorage';
+import useSessionStorage from '@/hooks/useSessionStorage';
 
 type ShoppingCartProviderProps = {
   children: ReactNode;

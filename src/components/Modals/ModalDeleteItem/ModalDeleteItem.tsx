@@ -7,7 +7,7 @@ import { createPortal } from 'react-dom';
 import { Box, Button, Typography } from '@mui/material';
 
 // context
-import { ModalContext } from '@/components/Providers/modal';
+import { ModalContext } from '@/providers/modal';
 
 // styles
 import { CustomModalBox, CustomModalWrapper } from './ModalDeleteItemStyles';

@@ -3,11 +3,11 @@ import { CustomTypography, CustomButton } from './DescriptionStyles';
 import { Box, Grid, Typography, Radio, useMediaQuery } from '@mui/material';
 
 import { IDescriptionProps } from '@/types/productTypes';
-import { StorageContext } from '@/contexts/sessionStorageContext';
+import { StorageContext } from '@/providers/sessionStorage';
 import { useState, ChangeEvent, useContext } from 'react';
 import theme from '@/utils/mui/theme';
 import { useRouter } from 'next/router';
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 export default function Description({ product, sizes }: IDescriptionProps) {
   // const contextStorage = useContext(StorageContext);

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { ModalContext } from '@/components/Providers/modal';
+import { ModalContext } from '@/providers/modal';
 
 // images
 import dotsBtn from '@/assets/icons/dots.svg';
@@ -22,7 +22,7 @@ import { MenuItemParams } from '@/types';
 import { Routes } from '@/constants/routes';
 import { homeItems, othersItems } from '@/constants/ui';
 import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
 interface IDropDownMenuProps {

@@ -25,8 +25,8 @@ import { CustomUploadWrapper } from './AddProductUploadImageStyles';
 import { IAddProductUploadImageProps } from '@/types/addProductTypes';
 import AddProductImageConatiner from '../AddProductImageContainer/AddProductImageConatiner';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
-import { ImagesContext } from '@/components/Providers/images';
-import { ModalContext } from '@/components/Providers/modal';
+import { ImagesContext } from '@/providers/images';
+import { ModalContext } from '@/providers/modal';
 
 export default function AddProductUploadImage({ handleChooseImage }: IAddProductUploadImageProps) {
   const theme = useTheme<Theme>();

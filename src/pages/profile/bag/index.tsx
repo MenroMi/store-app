@@ -25,7 +25,7 @@ import {
 import { CustomButton } from '@/styles/pageStyles/CheckoutStyles';
 
 // context
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // router
 import router from 'next/router';
