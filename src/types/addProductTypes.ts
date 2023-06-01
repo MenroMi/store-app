@@ -15,7 +15,10 @@ export interface ISizesOptionsData {
 export interface ISelectedImage {
   url: string;
   id: number;
-  imageFile: File;
+  imageFile?: File | undefined;
+  data?: {
+    id?: number;
+  };
 }
 
 export interface IAddProductUploadImageProps {
@@ -26,7 +29,7 @@ export interface IAddProductRadioGroup {
   selectedSize: string | number;
   handleSelectSize: (size: string) => void;
   sizes: ISizesOptionsData[] | undefined;
-  availableSize?:  ISizesOptionsData | undefined;
+  availableSize?: ISizesOptionsData | undefined;
   isAddPage: boolean;
 }
 
@@ -69,7 +72,7 @@ export interface IFormAddProductProps {
 export interface IProductData {
   data: {
     description?: string;
-    images: string[];
+    images: string[] | undefined[] | (string | undefined)[];
     name: string;
     categories: string;
     price: number;

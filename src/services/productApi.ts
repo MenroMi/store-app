@@ -31,12 +31,28 @@ export const postProduct = (data: IProductData, token: string) =>
     },
   });
 
+export const editProduct = (data: IProductData, token: string, id: number | string) =>
+  axios.put(`${baseURL}products/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+export const deleteImage = (id: number | string, token: string) =>
+  axios.delete(`${baseURL}upload/files/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
 export const getProductById = async (id: number | string) => {
-  const { data } = await axios.get(`${baseURL}products/${id}?populate=images,color,gender,size`);
+  const { data } = await axios.get(
+    `${baseURL}products/${id}?populate=images,color,gender,size,categories,brand`
+  );
   return data.data;
-}
+};
 
 export const getProducts = async () => {
   const { data } = await axios.get(`${baseURL}products?pagination[limit]=-1`);
   return data?.data;
-}
+};

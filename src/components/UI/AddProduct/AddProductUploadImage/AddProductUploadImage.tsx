@@ -22,11 +22,12 @@ import imageIcon from '@/assets/icons/gallery.svg';
 import { CustomUploadWrapper } from './AddProductUploadImageStyles';
 
 // interfaces
-import { IAddProductUploadImageProps } from '@/types/addProductTypes';
+import { IAddProductUploadImageProps, ISelectedImage } from '@/types/addProductTypes';
 import AddProductImageConatiner from '../AddProductImageContainer/AddProductImageConatiner';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
 import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
+import { deleteImage } from '@/services/productApi';
 
 export default function AddProductUploadImage({ handleChooseImage }: IAddProductUploadImageProps) {
   const theme = useTheme<Theme>();
@@ -37,8 +38,22 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
   const { clickedId, setIsOpen } = useContext(ModalContext);
 
   const handleDeleteImage = async (id: number) => {
-    setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
-    setIsOpen(false);
+    console.log(clickedId);
+    const clickedImage: ISelectedImage | undefined = selectedImages?.find(
+      (image) => image.id === id
+    );
+
+    if (!clickedImage?.imageFile) {
+      setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+      deleteImage(
+        clickedImage!.id,
+        localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
+      );
+    } else {
+      setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+      setIsOpen(false);
+      console.log('selected:', selectedImages);
+    }
   };
 
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);

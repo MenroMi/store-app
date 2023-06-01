@@ -16,7 +16,6 @@ interface IAddProductImageConatinerProps {
 export default function AddProductImageConatiner({ src, id }: IAddProductImageConatinerProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
 
   const { setIsOpen, setClickedId } = useContext(ModalContext);
 

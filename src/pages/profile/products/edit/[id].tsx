@@ -23,15 +23,26 @@ import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
 import { Routes } from '@/constants/routes';
 
 // services
-import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/productApi';
-import { IProductData } from '@/types/addProductTypes';
+import {
+  editProduct,
+  getDataWithField,
+  getProductById,
+  getUserID,
+  postProduct,
+  uploadImage,
+} from '@/services/productApi';
+import { IProductData, ISelectedImage } from '@/types/addProductTypes';
 
 // context
 import { ImagesContext } from '@/components/Providers/images';
 import { ModalContext } from '@/components/Providers/modal';
 import { NotificationContext } from '@/components/Providers/notification';
+import { IGetStaticProps } from '@/types/productTypes';
 
 export default function AddProduct() {
+  const router = useRouter();
+  const productId = typeof router.query?.id === 'string' ? router.query.id : '';
+
   // useQuery
   const { data: brandsData } = useQuery(['brands'], () => getDataWithField('brands'));
   const { data: gendersData } = useQuery(['genders'], () => getDataWithField('genders'));
@@ -40,13 +51,14 @@ export default function AddProduct() {
   const { data: id } = useQuery(['id'], () =>
     getUserID(localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest')
   );
+  const { data: product } = useQuery(['product', productId], () => getProductById(productId));
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation((images: any) => handlePostProduct(images), {
+  const { mutate } = useMutation((images: any) => handleEditProduct(images), {
     onSuccess: () => {
       setIsOpen(true);
-      setMessage('Product had been added successfully!');
+      setMessage('Product was edited successfully!');
       setIsFailed(false);
       setClickedId(null);
       setSelectedImages([]);
@@ -62,13 +74,17 @@ export default function AddProduct() {
 
   // states
   const [loading, setLoading] = useState<boolean>(false);
-  const [productName, setProductName] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
-  const [category, setCategory] = useState<string>('5');
-  const [gender, setGender] = useState<string>('3');
-  const [brand, setBrand] = useState<string>('9');
-  const [selectedSize, setSelectedSize] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+  const [productName, setProductName] = useState<string>(product?.attributes?.name || '');
+  const [price, setPrice] = useState<string>(product?.attributes?.price || '');
+  const [category, setCategory] = useState<string>(
+    product?.attributes?.categories?.data?.[0]?.id || ''
+  );
+  const [gender, setGender] = useState<string>(product?.attributes?.gender?.data?.id || '');
+  const [brand, setBrand] = useState<string>(product?.attributes?.brand?.data?.id || '');
+  const [selectedSize, setSelectedSize] = useState<string>(
+    product?.attributes?.size?.data?.id.toString() || ''
+  );
+  const [description, setDescription] = useState<string>(product?.attributes?.description || '');
 
   // contexts
   const { setClickedId } = useContext(ModalContext);
@@ -76,14 +92,21 @@ export default function AddProduct() {
 
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
-  const router = useRouter();
-
   useEffect(() => {
     router.events.on('routeChangeStart', () => setSelectedImages([]));
 
     return () => {
       router.events.off('routeChangeStart', () => setSelectedImages([]));
     };
+  }, []);
+
+  useEffect(() => {
+    const images = product?.attributes?.images?.data?.map((image: any) => ({
+      id: image?.id,
+      url: image?.attributes?.url,
+    }));
+
+    setSelectedImages([...images]);
   }, []);
 
   // executes when we add an image
@@ -96,40 +119,51 @@ export default function AddProduct() {
           ...prevState,
           { id: Date.now(), url: URL.createObjectURL(image), imageFile: image },
         ]);
+
+        console.log(selectedImages);
       }
     }
   };
 
-  const handlePostProduct = async (images: File[]) => {
+  const handleEditProduct = async (images: any) => {
     // promises to upload all images to server
-    const uploadPromises = images.map((image: File) => uploadImage(image));
+    const uploadPromises = images
+      .filter((image: File) => image !== null)
+      .map((image: File) => uploadImage(image));
 
     try {
       // upload all images
       const responses = await Promise.all(uploadPromises);
 
       // get image ids returned from server
-      const imageIds = responses.map((response) => response.data[0].id);
+      const uploadedImageIds = responses?.map((response) => response.data[0].id.toString());
+
+      const currentImageIds = selectedImages
+        ?.filter((image: ISelectedImage) => image.imageFile === null)
+        .map((image: ISelectedImage) => image.id);
 
       const productData: IProductData = {
         data: {
           description: description,
-          images: imageIds,
+          images: [...currentImageIds!, ...uploadedImageIds],
           name: productName,
           categories: category,
           price: +price,
           brand: brand,
           gender: gender,
           teamName: 'ea-team',
-          uniqueID: Date.now(),
+          uniqueID: product?.attributes?.uniqueID,
           size: selectedSize,
           userID: id?.data.id,
         },
       };
 
-      return postProduct(
+      console.log(productData);
+
+      return editProduct(
         productData,
-        localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
+        localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest',
+        productId
       );
     } catch (err) {
       console.log(err);
@@ -139,18 +173,21 @@ export default function AddProduct() {
   const handleSubmit = () => {
     setLoading(true);
     if (selectedImages && selectedImages?.length > 0) {
-      const imagesToPost = selectedImages?.map((image) => image.imageFile);
+      const imagesToPost = selectedImages?.map((image) => image?.imageFile || null);
+
       mutate(imagesToPost);
     } else {
       setLoading(false);
       console.log('images');
     }
+
     console.log(selectedImages);
   };
   return (
     <Layout title="Add Product">
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
+
         <FormAddProduct
           isLoading={loading}
           sizes={sizesData}
@@ -180,19 +217,22 @@ export default function AddProduct() {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }: IGetStaticProps) {
   const queryClient = new QueryClient();
 
-  await Promise.all([
-    queryClient.prefetchQuery(['brands'], () => getDataWithField('brands')),
-    queryClient.prefetchQuery(['genders'], () => getDataWithField('genders')),
-    queryClient.prefetchQuery(['categories'], () => getDataWithField('categories')),
-    queryClient.prefetchQuery(['sizes'], () => getDataWithField('sizes', 'value')),
-  ]);
+  await queryClient.prefetchQuery(['product', params.id], () => getProductById(params.id));
+  await queryClient.prefetchQuery(['sizes'], () => getDataWithField('sizes', 'value'));
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
+  };
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
   };
 }
