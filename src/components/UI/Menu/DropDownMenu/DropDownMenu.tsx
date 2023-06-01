@@ -23,6 +23,7 @@ import { Routes } from '@/constants/routes';
 import { homeItems, othersItems } from '@/constants/ui';
 import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { NotificationContext } from '@/components/Providers/notification';
 
 // interface
 export interface IDropDownMenuProps {
@@ -44,6 +45,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
   const open = Boolean(anchorElement);
   const { setIsOpen, setClickedId } = useContext(ModalContext);
   const { increaseCartQuantity } = useShoppingCart();
+  const { setIsOpen: isOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const openDropDownMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElement(e.currentTarget);
@@ -64,6 +66,9 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
             onClick={() => {
               increaseCartQuantity(productID!);
               setAnchorElement(null);
+              isOpen(true);
+              setIsFailed(false);
+              setMessage('Product was added to Bag');
             }}
           >
             {label}

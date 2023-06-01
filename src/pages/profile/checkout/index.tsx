@@ -49,7 +49,7 @@ const Checkout = ({ loading }: ICheckoutProps) => {
                 disabled={loading && true}
                 sx={{ width: queryUpSm ? '400px' : '80%' }}
               >
-                {loading ? <ButtonLoader /> : 'Search for more'}
+                {loading ? <ButtonLoader /> : 'Search products'}
               </CustomButton>
             </CheckoutMessage>
           </ContentContainer>

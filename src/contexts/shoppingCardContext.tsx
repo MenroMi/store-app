@@ -10,6 +10,7 @@ import { AttrFromData } from '@/types/cardListTypes';
 
 // hooks
 import useSessionStorage from '@/hooks/useSessionStorage/useSessionStorage';
+import { NotificationContext } from '@/components/Providers/notification';
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -25,6 +26,7 @@ export type ShoppingCartContext = {
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;
   cartQuantity: number;
   data: AttrFromData[];
   isFetched: boolean;
@@ -39,6 +41,8 @@ export function useShoppingCart() {
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [value, setValue] = useSessionStorage<CartItem[]>('shopping-cart', []);
   const [valueIDs, setValueIDs] = useState<number[]>([]);
+
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   useEffect(() => {
     let IDs: number[] = [];
@@ -110,6 +114,15 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         return currItems.filter((item) => item.id !== id);
       });
     }
+    onSuccess: {
+      setIsOpen(true);
+      setIsFailed(false);
+      setMessage('Avatar was deleted');
+    }
+  }
+
+  function clearCart() {
+    setValue([]);
   }
 
   return (
@@ -119,6 +132,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         increaseCartQuantity,
         decreaseCartQuantity,
         removeFromCart,
+        clearCart,
         isFetched,
         data,
         cartQuantity,

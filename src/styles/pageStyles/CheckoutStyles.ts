@@ -26,7 +26,7 @@ export const CheckoutMessage = styled(Box)(({ theme }) => ({
 }));
 
 export const ContentContainer = styled(Grid)(({ theme }) => ({
-  paddingTop: '135px',
+  paddingTop: '200px',
   paddingBottom: '40px',
   [theme.breakpoints.between('xs', 'sm')]: {
     height: '100%',

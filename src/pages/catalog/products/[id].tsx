@@ -1,15 +1,23 @@
-import Layout from '@/components/Layout/MainLayout';
-import Description from '@/components/UI/Product/Description/Description';
-import ImagesGallery from '@/components/UI/Gallery/ImagesGallery/ImagesGallery';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
-
-import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
-import { getDataWithField, getProductById } from '@/services/productApi';
-import { IGetStaticProps } from '@/types/productTypes';
-
+// basic
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
+
+// layout
+import Layout from '@/components/Layout/MainLayout';
+
+// coponents
+import Description from '@/components/UI/Product/Description/Description';
+import ImagesGallery from '@/components/UI/Gallery/ImagesGallery/ImagesGallery';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
+import Notification from '@/components/UI/Notification/Notificaton';
+
+// styles
+import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
+
+// services
+import { getDataWithField, getProductById } from '@/services/productApi';
+import { IGetStaticProps } from '@/types/productTypes';
 import { FiltersContext } from '@/contexts/filtersContext';
 
 export default function SingleProductPage() {
@@ -42,6 +50,7 @@ export default function SingleProductPage() {
         <ImagesGallery images={product?.attributes?.images} />
         <Description product={product} sizes={sizes} />
       </ProductContainer>
+      <Notification />
     </Layout>
   );
 }

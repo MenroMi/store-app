@@ -1,26 +1,36 @@
-import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
-import { CustomTypography, CustomButton } from './DescriptionStyles';
-import { Box, Grid, Typography, Radio, useMediaQuery } from '@mui/material';
-
-import { IDescriptionProps } from '@/types/productTypes';
-import { StorageContext } from '@/contexts/sessionStorageContext';
+// basic
 import { useState, ChangeEvent, useContext } from 'react';
+
+// components
+import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
+
+// styled components
+import { CustomTypography, CustomButton } from './DescriptionStyles';
+
+// mui
+import { Box, Grid, Typography, Radio, useMediaQuery } from '@mui/material';
 import theme from '@/utils/mui/theme';
-import { useRouter } from 'next/router';
+
+// context
 import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { NotificationContext } from '@/components/Providers/notification';
+
+// interface
+import { IDescriptionProps } from '@/types/productTypes';
 
 export default function Description({ product, sizes }: IDescriptionProps) {
-  // const contextStorage = useContext(StorageContext);
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryDownFive = useMediaQuery<unknown>(theme.breakpoints.down(586));
   const queryDownSmall = useMediaQuery<unknown>(theme.breakpoints.down(438));
   const queryDownMini = useMediaQuery<unknown>(theme.breakpoints.down(360));
-  const router = useRouter();
+
   const [selectedValue, setSelectedValue] = useState<string>('rose');
   const [selectedSize, setSelectedSize] = useState<string>(
     product.attributes?.size.data?.id.toString() || '-1'
   );
+
   const { increaseCartQuantity } = useShoppingCart();
+  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
@@ -77,7 +87,15 @@ export default function Description({ product, sizes }: IDescriptionProps) {
         </Box>
       </Grid>
       <Grid item xs={12} maxHeight={62}>
-        <CustomButton variant="outlined" onClick={() => increaseCartQuantity(product.id)}>
+        <CustomButton
+          variant="outlined"
+          onClick={() => {
+            increaseCartQuantity(product.id);
+            setIsOpen(true);
+            setIsFailed(false);
+            setMessage('Product was added to Bag');
+          }}
+        >
           Add to Bag
         </CustomButton>
       </Grid>
