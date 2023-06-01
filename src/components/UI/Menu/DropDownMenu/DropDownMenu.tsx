@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { StorageContext } from '@/contexts/sessionStorageContext';
 import { ModalContext } from '@/components/Providers/modal';
 
 // images
@@ -23,6 +22,8 @@ import { MenuItemParams } from '@/types';
 import { Routes } from '@/constants/routes';
 import { homeItems, othersItems } from '@/constants/ui';
 import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { NotificationContext } from '@/components/Providers/notification';
+import { StorageContext } from '@/contexts/sessionStorageContext';
 
 // interface
 interface IDropDownMenuProps {
@@ -44,6 +45,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
   const open = Boolean(anchorElement);
   const { setIsOpen, setClickedId } = useContext(ModalContext);
   const { increaseCartQuantity } = useShoppingCart();
+  const { setIsOpen: isOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const openDropDownMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElement(e.currentTarget);
@@ -64,6 +66,9 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
             onClick={() => {
               increaseCartQuantity(productID!);
               setAnchorElement(null);
+              isOpen(true);
+              setIsFailed(false);
+              setMessage('Product was added to Bag');
             }}
           >
             {label}
@@ -122,7 +127,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
   };
 
   return (
-    <>
+    <Box zIndex={1} onClick={(e) => e.stopPropagation()}>
       <CustomDotsBtn
         aria-label="dropdown-menu"
         onClick={(e) => openDropDownMenu(e)}
@@ -152,7 +157,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
           ? setMenuItems(homeItems!)
           : setMenuItems(othersItems!)}
       </CustomDropDownMenu>
-    </>
+    </Box>
   );
 };
 

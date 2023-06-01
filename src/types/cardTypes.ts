@@ -8,6 +8,7 @@ export interface ICardProps {
   productImageSrc: StaticImageData | string;
   productName: string;
   productPrice: number;
+  productId?: number;
   marginRight?: string | number;
   children?: JSX.Element;
 }
