@@ -52,6 +52,7 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
               productName={product.name}
               productImageSrc={product?.images[0]?.url}
               productPrice={product.price}
+              id={product.id}
               key={product.id}
             >
               <DropDownMenu productID={product.id} productName={product.name} />
@@ -82,6 +83,7 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
             productName={product.name}
             productImageSrc={product?.images[0]?.url}
             productPrice={product.price}
+            productId={product.id}
             key={product.id}
           >
             <DropDownMenu productID={product.id} productName={product.name} />
