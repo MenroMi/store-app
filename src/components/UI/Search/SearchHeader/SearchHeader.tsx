@@ -9,7 +9,15 @@ import { FiltersContext } from '@/contexts/filtersContext';
 import { getSearchProducts } from '@/services/searchApi';
 
 // mui
-import { Theme, useMediaQuery, useTheme, InputAdornment, Box, Typography } from '@mui/material';
+import {
+  Theme,
+  useMediaQuery,
+  useTheme,
+  InputAdornment,
+  Box,
+  Typography,
+  Button,
+} from '@mui/material';
 
 // plugins
 import 'slick-carousel/slick/slick.css';
@@ -24,6 +32,7 @@ import SearchSliderDesktop from '@/components/UI/Slider/SearchSliderDesktop/Sear
 import logo from '@/assets/icons/logo.svg';
 import close from '@/assets/icons/close.svg';
 import search from '@/assets/icons/search.svg';
+import emptyIcon from '@/assets/icons/empty.svg';
 
 // styled components
 import {
@@ -60,6 +69,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
 
     setInputValue(value.textContent!);
   };
+
   return (
     <HeaderSearchLayout>
       <HeaderSearchContainer>
@@ -147,10 +157,36 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                 >
                   <FullScreenLoader />
                 </Box>
-              ) : queryDownLg ? (
-                <SearchSliderMobile products={data} />
+              ) : !/Error/g.test(data?.name) ? (
+                queryDownLg ? (
+                  <SearchSliderMobile products={data} />
+                ) : (
+                  <SearchSliderDesktop products={data} />
+                )
               ) : (
-                <SearchSliderDesktop products={data} />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: '2',
+                  }}
+                >
+                  <Box
+                    component={Image}
+                    src={emptyIcon}
+                    alt="catalog is empty"
+                    priority={true}
+                    sx={{ width: '72px', height: '72px', opacity: '0.1' }}
+                  />
+                  <Typography
+                    variant="h4"
+                    sx={{ opacity: '0.5', width: '100%', textAlign: 'center' }}
+                  >
+                    Oops... {data?.msg}. Please try again later
+                  </Typography>
+                </Box>
               )}
             </Box>
           </HeaderDiv>

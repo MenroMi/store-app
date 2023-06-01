@@ -4,27 +4,34 @@ import { AttrFromData } from '@/types/cardListTypes';
 export const getSearchProducts = async (value: string) => {
   let url: string = '/products?populate=*&';
 
-  const allProducts = await getDataFromServer(url, `filters[name][$containsi]=${value}`).then(
-    (res) => res.data.data
-  );
+  try {
+    const allProducts = await getDataFromServer(url, `filters[name][$containsi]=${value}`).then(
+      (res) => res.data.data
+    );
 
-  const productsEA = allProducts.map(({ id, attributes }: AttrFromData) => {
-    const { name, images, price, gender, teamName, categories } = attributes;
+    const productsEA = allProducts?.map(({ id, attributes }: AttrFromData) => {
+      const { name, images, price, gender, teamName, categories } = attributes;
 
+      return {
+        id,
+        attributes: {
+          name,
+          images,
+          price,
+          gender,
+          teamName,
+          categories,
+        },
+      };
+    });
+
+    return productsEA;
+  } catch (error) {
     return {
-      id,
-      attributes: {
-        name,
-        images,
-        price,
-        gender,
-        teamName,
-        categories,
-      },
+      name: (error as Error).name,
+      msg: (error as Error).message,
     };
-  });
-
-  return productsEA;
+  }
 };
 
 export const getFilters = async () => {
