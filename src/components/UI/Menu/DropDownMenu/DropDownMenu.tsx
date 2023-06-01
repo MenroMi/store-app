@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { StorageContext } from '@/contexts/sessionStorageContext';
 import { ModalContext } from '@/components/Providers/modal';
 
 // images
@@ -36,7 +35,6 @@ interface IDropDownMenuProps {
 const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, top, right }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
-  const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
   const { setIsOpen, setClickedId } = useContext(ModalContext);
@@ -106,7 +104,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, to
   };
 
   return (
-    <>
+    <Box zIndex={1} onClick={(e) => e.stopPropagation()}>
       <CustomDotsBtn
         aria-label="dropdown-menu"
         onClick={(e) => openDropDownMenu(e)}
@@ -136,7 +134,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, to
           ? setMenuItems(homeItems!)
           : setMenuItems(othersItems!)}
       </CustomDropDownMenu>
-    </>
+    </Box>
   );
 };
 

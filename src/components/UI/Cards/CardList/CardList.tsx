@@ -80,9 +80,7 @@ const CardList = () => {
                     gender: { data: genderData },
                   },
                 }: AttrFromData) => (
-                  <Grid item key={id} sx={{cursor: 'pointer'}} onClick={async () => { 
-                    await router.push(`${Routes.products}/${id}`);
-                  }}>
+                  <Grid item key={id}>
                     <Card
                       productCategory={
                         genderData ? (genderData.id === 3 ? "Men's Shoes" : "Women's Shoes") : ''
@@ -96,6 +94,7 @@ const CardList = () => {
                       }
                       productName={name}
                       productPrice={price}
+                      productId={id}
                     >
                       <DropDownMenu productName={name} productID={id} />
                     </Card>
