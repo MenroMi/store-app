@@ -6,7 +6,7 @@ export const maxNumber = (dataArray: InputsData[], setMax: Dispatch<SetStateActi
   let arrayWithPrice: number[];
   let maxN: number;
 
-  if (dataArray.length <= 0 || typeof dataArray === 'undefined') {
+  if (typeof dataArray === 'undefined' || dataArray.length <= 0) {
     maxN = 0;
     return maxN;
   } else {

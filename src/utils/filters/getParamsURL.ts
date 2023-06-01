@@ -7,6 +7,7 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
     router.query as string | string[][] | Record<string, string> | URLSearchParams | undefined
   );
   let values: string[];
+  let url = /\/catalog\/search*/g.test(router.pathname);
 
   for (let _ in filters) {
     for (let [key, _] of searchParams.entries()) {
@@ -24,12 +25,12 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
     }
   }
 
-  if (searchParams.toString() === '' && router.pathname === '/catalog/search') {
+  if (searchParams.toString() === '' && url) {
     searchParams.append('page', `${page}`);
   }
 
   if (searchParams.toString() !== '') {
-    if (!/\/catalog\/search*/g.test(router.pathname)) {
+    if (!url) {
       router.push(`${router.asPath}`);
       return;
     }

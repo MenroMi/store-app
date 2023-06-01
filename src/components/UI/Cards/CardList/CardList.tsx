@@ -5,7 +5,7 @@ import Router, { useRouter } from 'next/router';
 // mui
 import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 
 // utils
 import makeArray from '@/utils/filters/makeRouterQueryArray';
@@ -42,7 +42,7 @@ const CardList = () => {
 
   const query = makeArray(router.query);
 
-  const { data, isFetching, isError } = useQuery({
+  const { data, isFetching, isError, isFetched } = useQuery({
     queryKey: ['filteredData', query],
     queryFn: () => getFilteredData(query),
     keepPreviousData: true,
@@ -51,6 +51,44 @@ const CardList = () => {
   if (isError) {
     Router.push('/404');
     return null;
+  }
+
+  if (isFetched && /Error/g.test(data?.name)) {
+    return (
+      <>
+        <Box
+          component={Image}
+          src={emptyIcon}
+          alt="catalog is empty"
+          width={queryDownMd ? 150 : 200}
+          height={queryDownMd ? 150 : 200}
+          priority={true}
+          sx={{
+            mt: '100px',
+            opacity: '0.1',
+          }}
+        />
+        <Typography variant="h4" sx={{ opacity: '0.5', width: '100%', textAlign: 'center' }}>
+          Oops... {data?.msg}
+        </Typography>
+        <Button
+          variant="outlined"
+          sx={{
+            backgroundColor: theme?.palette?.primary?.main,
+            color: theme?.palette?.primary?.contrastText,
+            '&:hover': {
+              backgroundColor: theme?.palette?.primary?.dark,
+            },
+            '&:active': {
+              backgroundColor: theme?.palette?.primary?.light,
+            },
+          }}
+          onClick={() => router.push(Routes.search)}
+        >
+          Reset filters
+        </Button>
+      </>
+    );
   }
 
   return (
@@ -105,7 +143,11 @@ const CardList = () => {
               )}
             </CardsGridContainer>
           ) : (
-            <CatalogIsEmptyContainer>
+            <CatalogIsEmptyContainer
+              sx={{
+                left: `${context?.hide ? '50%' : '58%'}`,
+              }}
+            >
               <Box
                 component={Image}
                 src={emptyIcon}

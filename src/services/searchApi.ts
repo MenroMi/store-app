@@ -100,8 +100,21 @@ export const getFilteredData = async (query: any) => {
       }
     }
   }
+  try {
+    const products = await getDataFromServer(
+      url,
+      `pagination[page]=${page}&pagination[pageSize]=25`
+    );
 
-  const products = await getDataFromServer(url, `pagination[page]=${page}&pagination[pageSize]=25`);
-
-  return products?.data;
+    if (products.status === 200) {
+      return products?.data;
+    } else {
+      throw new Error(products.statusText);
+    }
+  } catch (error) {
+    return {
+      name: (error as Error).name,
+      msg: (error as Error).message,
+    };
+  }
 };
