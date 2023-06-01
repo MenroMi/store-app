@@ -18,7 +18,7 @@ const onCreateSlides = (
   return mappingDataForSlides(products)?.map((product) => {
     const { category, name, img, price, id, slider } = product as IProductAfterMapping;
 
-    return slider === 2 && router === undefined ? (
+    return router === undefined && slider === 2 ? (
       <Slide
         productCategory={category}
         productName={name}

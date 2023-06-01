@@ -1,5 +1,5 @@
 import { IProduct } from '@/types/cardsSliderTypes';
-import { IImageAttribute, IProductAfterMapping } from '@/types/slideTypes';
+import { IProductAfterMapping } from '@/types/slideTypes';
 import { StaticImageData } from 'next/image';
 import signIn from '@/assets/singInBg.png';
 
@@ -13,8 +13,6 @@ const mappingDataForSlides = (products: IProduct[]) => {
 
   let res: IProductAfterMapping[] = products.map((product) => {
     if (typeof product?.attributes !== 'undefined') {
-      console.log(product);
-
       category = product?.attributes?.categories!.data?.[0]
         ? product?.attributes.categories!.data[0].attributes?.name
         : 'Classic';

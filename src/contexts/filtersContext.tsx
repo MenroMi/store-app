@@ -69,7 +69,6 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
       typeof lengthRouterQuery === 'undefined' ||
       (lengthRouterQuery === 1 && typeof router.query.page !== 'undefined')
     ) {
-      console.log('REMOVE ACTIVE FILTERS');
       setActiveFilters({ page: ['1'] });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
