@@ -27,10 +27,13 @@ import { AttrFromData } from '@/types/cardListTypes';
 import { getFilteredData } from '@/services/searchApi';
 import { useQuery } from '@tanstack/react-query';
 import { Routes } from '@/constants/routes';
+import { useContext } from 'react';
+import { FiltersContext } from '@/contexts/filtersContext';
 
 const CardList = () => {
   const theme = useTheme<Theme>();
   const router = useRouter();
+  const context = useContext(FiltersContext)
 
   const query = makeArray(router.query);
 
@@ -52,24 +55,11 @@ const CardList = () => {
       }}
     >
       {isFetching ? (
-        <Box
-          sx={{
-            height: '100%',
-            width: '100%',
-            backgroundColor: 'rgba(255,255, 255, 0.5)',
-            backdropFilter: 'blur(5px)',
-            position: 'absolute',
-            zIndex: '5000',
-            top: '0',
-            transition: '0.3s ease-in',
-          }}
-        >
           <FullScreenLoader />
-        </Box>
       ) : (
-        <CustomProguctsBlock >
+          <CustomProguctsBlock filterOpen={context ? context.hide : false}>
           {Array.isArray(data?.data) && data?.data.length !== 0 ? (
-            <CardsGridContainer container>
+            <CardsGridContainer container >
               {data?.data.map(
                 ({
                   id,
