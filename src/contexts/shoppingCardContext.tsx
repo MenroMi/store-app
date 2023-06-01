@@ -25,6 +25,7 @@ export type ShoppingCartContext = {
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;
   cartQuantity: number;
   data: AttrFromData[];
   isFetched: boolean;
@@ -112,6 +113,10 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     }
   }
 
+  function clearCart() {
+    setValue([]);
+  }
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -119,6 +124,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         increaseCartQuantity,
         decreaseCartQuantity,
         removeFromCart,
+        clearCart,
         isFetched,
         data,
         cartQuantity,

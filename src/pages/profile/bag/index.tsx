@@ -13,8 +13,8 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import CountBagComponent from '@/components/UI/CountBagComponent/CountBagComponent';
-import EmptyStateProducts from '@/components/UI/EmptyStateProducts/EmptyStateProducts';
 import CardBag from '@/components/UI/Cards/ProductCardBag/CardBag';
+import EmptyStateCardBag from '@/components/UI/EmptyStateCardBag/EmptyStateCardBag';
 
 // styled components
 import {
@@ -38,7 +38,7 @@ const Bag = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const { data, cartQuantity, isFetched, value } = useShoppingCart();
+  const { data, cartQuantity, isFetched, value, clearCart } = useShoppingCart();
 
   const [subTotal, setSubtotal] = useState<number>(0);
 
@@ -55,29 +55,24 @@ const Bag = () => {
 
   const handleCheckout = (): void => {
     router.push(Routes.checkout);
+    clearCart();
   };
 
   return (
-    <Layout title="Bag">
+    <Layout title="Bag | Shop Store">
       <section style={{ marginTop: queryUpLg ? '65px' : '20px', width: '100%' }}>
         {cartQuantity > 0 ? (
-          <Grid
-            container
-            p={2}
-            sx={{
-              padding: '0',
-            }}
-          >
+          <Grid container p={2}>
             <CustomBagPageWrapper py={8} sx={{ flexDirection: queryUpLg ? 'row' : 'column' }}>
               {/* Left container */}
               <Box
                 sx={{
-                  width: '100%',
+                  width: queryUpLg ? '100%' : 'auto',
+                  marginLeft: '20px',
+                  marginRight: queryUpLg ? '0' : '20px',
                 }}
               >
-                <Typography variant="h2" sx={{ marginLeft: '15px' }}>
-                  Chart
-                </Typography>
+                <Typography variant="h2">Chart</Typography>
                 <Grid item xs={12} mt={5} sx={{ marginTop: queryUpLg ? '55px' : '20px' }}>
                   <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
                     {data?.map(
@@ -118,8 +113,8 @@ const Bag = () => {
               {/* Right Container */}
               <Box
                 sx={{
-                  marginLeft: queryUpLg ? '80px' : queryUpSm ? '15px' : '10px',
-                  marginRight: queryUpSm ? '15px' : '10px',
+                  marginLeft: queryUpLg ? '80px' : queryUpSm ? '20px' : '20px',
+                  marginRight: queryUpSm ? '20px' : '20px',
                 }}
               >
                 <Box
@@ -177,10 +172,7 @@ const Bag = () => {
           </Grid>
         ) : (
           <Box>
-            <Typography variant="h2" sx={{ margin: '80px 0 205px 200px' }}>
-              Chart
-            </Typography>
-            <EmptyStateProducts />
+            <EmptyStateCardBag />
           </Box>
         )}
       </section>
