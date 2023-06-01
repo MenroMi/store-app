@@ -15,6 +15,7 @@ import Layout from '@/components/Layout/MainLayout';
 import CountBagComponent from '@/components/UI/CountBagComponent/CountBagComponent';
 import CardBag from '@/components/UI/Cards/ProductCardBag/CardBag';
 import EmptyStateCardBag from '@/components/UI/EmptyStateCardBag/EmptyStateCardBag';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 // styled components
 import {
@@ -175,6 +176,7 @@ const Bag = () => {
             <EmptyStateCardBag />
           </Box>
         )}
+        <Notification />
       </section>
     </Layout>
   );

@@ -1,52 +1,65 @@
-import Layout from '@/components/Layout/MainLayout';
-import Description from '@/components/UI/Product/Description/Description';
-import ImagesGallery from '@/components/UI/Gallery/ImagesGallery/ImagesGallery';
-import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
-
-import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
-import { getDataWithField, getProductById } from '@/services/productApi';
-import { IGetStaticProps } from '@/types/productTypes';
-
+// basic
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
+// layout
+import Layout from '@/components/Layout/MainLayout';
+
+// coponents
+import Description from '@/components/UI/Product/Description/Description';
+import ImagesGallery from '@/components/UI/Gallery/ImagesGallery/ImagesGallery';
+import FullScreenLoader from '@/components/UI/Loader/FullScreenLoader';
+import Notification from '@/components/UI/Notification/Notificaton';
+
+// styles
+import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
+
+// services
+import { getDataWithField, getProductById } from '@/services/productApi';
+import { IGetStaticProps } from '@/types/productTypes';
+
 export default function SingleProductPage() {
-    const router = useRouter();
-    const productId = typeof router.query?.id === "string" ? router.query.id : "";
-    
-    const { data: product, isLoading: productLoading } = useQuery(['product', productId], () => getProductById(productId));
-    const { data: sizes, isLoading: sizesLoading } = useQuery(['sizes'], () => getDataWithField('sizes', 'value'));
+  const router = useRouter();
+  const productId = typeof router.query?.id === 'string' ? router.query.id : '';
 
-    if (productLoading || sizesLoading) {
-        return <FullScreenLoader />;
-    }
+  const { data: product, isLoading: productLoading } = useQuery(['product', productId], () =>
+    getProductById(productId)
+  );
+  const { data: sizes, isLoading: sizesLoading } = useQuery(['sizes'], () =>
+    getDataWithField('sizes', 'value')
+  );
 
-    return (
-        <Layout title="Product">
-            <ProductContainer container>
-                <ImagesGallery images={product.attributes?.images}/>
-                <Description product={product} sizes={sizes}/>
-            </ProductContainer>
-        </Layout>
-    );
-};
+  if (productLoading || sizesLoading) {
+    return <FullScreenLoader />;
+  }
 
-export async function getStaticProps({ params } : IGetStaticProps ) {
-    const queryClient = new QueryClient();
+  return (
+    <Layout title="Product">
+      <ProductContainer container>
+        <ImagesGallery images={product.attributes?.images} />
+        <Description product={product} sizes={sizes} />
+      </ProductContainer>
+      <Notification />
+    </Layout>
+  );
+}
 
-    await queryClient.prefetchQuery(['product', params.id], () => getProductById(params.id));
-    await queryClient.prefetchQuery(['sizes'], () => getDataWithField('sizes', 'value'));
+export async function getStaticProps({ params }: IGetStaticProps) {
+  const queryClient = new QueryClient();
 
-    return {
-        props: {
-            dehydratedState: dehydrate(queryClient),
-        },
-    };
+  await queryClient.prefetchQuery(['product', params.id], () => getProductById(params.id));
+  await queryClient.prefetchQuery(['sizes'], () => getDataWithField('sizes', 'value'));
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 }
 
 export async function getStaticPaths() {
-    return {
-        paths: [],
-        fallback: 'blocking',
-    };
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
 }

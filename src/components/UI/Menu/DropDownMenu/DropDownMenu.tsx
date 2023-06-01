@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { StorageContext } from '@/contexts/sessionStorageContext';
 import { ModalContext } from '@/components/Providers/modal';
 
 // images
@@ -24,6 +23,7 @@ import { Routes } from '@/constants/routes';
 import { homeItems, othersItems } from '@/constants/ui';
 import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { NotificationContext } from '@/components/Providers/notification';
 
 // interface
 interface IDropDownMenuProps {
@@ -33,14 +33,19 @@ interface IDropDownMenuProps {
   right?: string;
 }
 
-const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, top, right }): JSX.Element => {
+const DropDownMenu: React.FC<IDropDownMenuProps> = ({
+  productID,
+  productName,
+  top,
+  right,
+}): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
-  const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
   const { setIsOpen, setClickedId } = useContext(ModalContext);
   const { increaseCartQuantity } = useShoppingCart();
+  const { setIsOpen: isOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const openDropDownMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorElement(e.currentTarget);
@@ -61,6 +66,9 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, to
             onClick={() => {
               increaseCartQuantity(productID!);
               setAnchorElement(null);
+              isOpen(true);
+              setIsFailed(false);
+              setMessage('Product added to Bag');
             }}
           >
             {label}
