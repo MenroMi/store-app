@@ -14,16 +14,16 @@ export interface ImageAttrData {
   } | null>;
 }
 
-interface GenderAttrData {
+export interface GenderAttrData {
   data: {
     id: number;
     attributes: {
       name: string;
-    }
+    };
   };
 }
 
-interface SizeArrtData {
+export interface SizeArrtData {
   data: ISizesOptionsData;
 }
 

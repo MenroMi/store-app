@@ -26,14 +26,19 @@ import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 import { useShoppingCart } from '@/contexts/shoppingCardContext';
 
 // interface
-interface IDropDownMenuProps {
+export interface IDropDownMenuProps {
   productID: number;
   productName: string;
   top?: string;
   right?: string;
 }
 
-const DropDownMenu: React.FC<IDropDownMenuProps> = ({ productID, productName, top, right }): JSX.Element => {
+const DropDownMenu: React.FC<IDropDownMenuProps> = ({
+  productID,
+  productName,
+  top,
+  right,
+}): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const contextStorage = useContext(StorageContext);
