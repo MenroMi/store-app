@@ -53,7 +53,7 @@ const CardList = () => {
   return (
     <CustomSearchOverlay
       sx={{
-        overflowY: `${isFetching ? 'clip' : 'scroll'}`,
+        overflowY: `${isFetching ? 'clip' : 'auto'}`,
       }}
     >
       {isFetching ? (

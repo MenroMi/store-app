@@ -66,7 +66,6 @@ export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   justifyContent: 'start',
   columnGap: '54px',
   rowGap: '40px',
-  height: '100%',
 
   [theme.breakpoints.down('sm')]: {
     '&.MuiGrid-root': {
