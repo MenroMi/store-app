@@ -97,7 +97,7 @@ const CardList = () => {
         overflowY: `${isFetching ? 'clip' : 'auto'}`,
       }}
     >
-      {isFetching ? (
+      {isFetching && !isFetched ? (
         <FullScreenLoader />
       ) : (
         <CustomProguctsBlock filterOpen={context ? context.hide : false}>
@@ -165,6 +165,22 @@ const CardList = () => {
               >
                 Catalog is empty.
               </Typography>
+              <Button
+                variant="outlined"
+                sx={{
+                  backgroundColor: theme?.palette?.primary?.main,
+                  color: theme?.palette?.primary?.contrastText,
+                  '&:hover': {
+                    backgroundColor: theme?.palette?.primary?.dark,
+                  },
+                  '&:active': {
+                    backgroundColor: theme?.palette?.primary?.light,
+                  },
+                }}
+                onClick={() => router.push(Routes.search)}
+              >
+                Reset your filters
+              </Button>
             </CatalogIsEmptyContainer>
           )}
         </CustomProguctsBlock>
