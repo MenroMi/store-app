@@ -114,7 +114,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
   };
 
   return (
-    <>
+    <Box zIndex={1} onClick={(e) => e.stopPropagation()}>
       <CustomDotsBtn
         aria-label="dropdown-menu"
         onClick={(e) => openDropDownMenu(e)}
@@ -144,7 +144,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
           ? setMenuItems(homeItems!)
           : setMenuItems(othersItems!)}
       </CustomDropDownMenu>
-    </>
+    </Box>
   );
 };
 

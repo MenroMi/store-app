@@ -12,6 +12,8 @@ import {
 // interface
 import { ICardProps } from '@/types/cardTypes';
 import { blurDataURL } from '@/constants/urls';
+import { Routes } from '@/constants/routes';
+import { useRouter } from 'next/router';
 
 // FUNCTIONAL COMPONENT
 const Card: React.FC<ICardProps> = ({
@@ -19,11 +21,15 @@ const Card: React.FC<ICardProps> = ({
   productImageSrc,
   productName,
   productPrice,
+  productId,
   marginRight,
   children,
 }): JSX.Element => {
+  const router = useRouter();
   return (
-    <CustomCardWrapper marginRight={marginRight}>
+    <CustomCardWrapper marginRight={marginRight} sx={{cursor: 'pointer'}} onClick={async (e) => { 
+      await router.push(`${Routes.products}/${productId}`);
+    }}>
       <Box
         sx={{
           height: { sm: '380px', xs: '250px' },

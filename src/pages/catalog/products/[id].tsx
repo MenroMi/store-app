@@ -33,16 +33,15 @@ export default function SingleProductPage() {
     return <FullScreenLoader />;
   }
 
-  return (
-    <Layout title="Product">
-      <ProductContainer container>
-        <ImagesGallery images={product.attributes?.images} />
-        <Description product={product} sizes={sizes} />
-      </ProductContainer>
-      <Notification />
-    </Layout>
-  );
-}
+    return (
+        <Layout title="Product">
+            <ProductContainer container>
+                <ImagesGallery images={product?.attributes?.images}/>
+                <Description product={product} sizes={sizes}/>
+            </ProductContainer>
+        </Layout>
+    );
+};
 
 export async function getStaticProps({ params }: IGetStaticProps) {
   const queryClient = new QueryClient();
