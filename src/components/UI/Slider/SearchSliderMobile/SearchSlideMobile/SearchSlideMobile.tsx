@@ -64,7 +64,7 @@ const SearchSlideMobile: React.FC<ISlideProps> = ({
         </Box>
       </Box>
       <Image src={productImageSrc} alt="Product image" width={70} height={70} />
-    </MobileSliderWrapper>
+    </MobileSlideWrapper>
   );
 };
 
