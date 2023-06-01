@@ -80,7 +80,7 @@ export default function Header() {
                 },
               }}
             >
-              <Typography variant="h6">Products</Typography>
+              <Typography variant="h6">{user ? 'My profile' : 'Products'}</Typography>
             </styles.NavListLink>
             {user  && <styles.NavListLink
               href={Routes.search}
