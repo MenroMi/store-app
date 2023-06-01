@@ -29,12 +29,12 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
   }
 
   if (searchParams.size > 0) {
-    if (router.pathname === '/catalog/products/[id]' && typeof router.query.id !== 'undefined') {
-      router.push(`${Routes.products}/${router.query.id}`);
+    if (!/\/catalog\/search*/g.test(router.pathname)) {
+      router.push(`${router.asPath}`);
       return;
     }
-    searchParams.delete('page');
 
+    searchParams.delete('page');
     searchParams.append('page', `${page}`);
 
     router.push(`${Routes.forParamsURL}?${searchParams.toString()}`, undefined, { shallow: true });
