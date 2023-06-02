@@ -31,12 +31,13 @@ export const postProduct = (data: IProductData, token: string) =>
     },
   });
 
-export const editProduct = (data: IProductData, token: string, id: number | string) =>
-  axios.put(`${baseURL}products/${id}`, data, {
+export const editProduct = (data: IProductData, token: string, id: number | string) => {
+  return axios.put(`${baseURL}products/${id}`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+};
 
 export const deleteImage = (id: number | string, token: string) =>
   axios.delete(`${baseURL}upload/files/${id}`, {

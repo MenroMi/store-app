@@ -24,6 +24,7 @@ import { Routes } from '@/constants/routes';
 
 // services
 import {
+  deleteImage,
   editProduct,
   getDataWithField,
   getProductById,
@@ -89,8 +90,13 @@ export default function AddProduct() {
 
   // contexts
   const { setClickedId } = useContext(ModalContext);
-  const { selectedImages, setSelectedImages, currentImageIds, setCurrentImageIds } =
-    useContext(ImagesContext);
+  const {
+    selectedImages,
+    setSelectedImages,
+    currentImageIds,
+    setCurrentImageIds,
+    imageIdsToDelete,
+  } = useContext(ImagesContext);
 
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
@@ -133,12 +139,23 @@ export default function AddProduct() {
       .filter((image: File) => image !== null)
       .map((image: File) => uploadImage(image));
 
+    const deletePromises = imageIdsToDelete?.map((id) =>
+      deleteImage(
+        id.toString(),
+        localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
+      )
+    );
+
     try {
       // upload all images
-      const responses = await Promise.all(uploadPromises);
+      const uploadResponses = await Promise.all(uploadPromises);
+
+      if (deletePromises) {
+        await Promise.all(deletePromises);
+      }
 
       // get image ids returned from server
-      const uploadedImageIds = responses?.map((response) => response.data[0].id.toString());
+      const uploadedImageIds = uploadResponses?.map((response) => response.data[0].id.toString());
 
       const productData: IProductData = {
         data: {

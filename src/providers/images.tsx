@@ -10,6 +10,8 @@ interface IImagesContext {
   setSelectedImages: Dispatch<SetStateAction<ISelectedImage[]>>;
   currentImageIds: number[] | null;
   setCurrentImageIds: Dispatch<SetStateAction<number[]>>;
+  imageIdsToDelete: number[] | null;
+  setImageIdsToDelete: Dispatch<SetStateAction<number[]>>;
 }
 
 export const ImagesContext = createContext<IImagesContext>({
@@ -17,11 +19,14 @@ export const ImagesContext = createContext<IImagesContext>({
   setSelectedImages: () => {},
   currentImageIds: null,
   setCurrentImageIds: () => {},
+  imageIdsToDelete: null,
+  setImageIdsToDelete: () => {},
 });
 
 export default function ImagesProvider({ children }: IImagesProviderProps) {
   const [selectedImages, setSelectedImages] = useState<ISelectedImage[]>([]);
   const [currentImageIds, setCurrentImageIds] = useState<number[]>([]);
+  const [imageIdsToDelete, setImageIdsToDelete] = useState<number[]>([]);
 
   return (
     <ImagesContext.Provider
@@ -30,6 +35,8 @@ export default function ImagesProvider({ children }: IImagesProviderProps) {
         setSelectedImages: setSelectedImages,
         currentImageIds: currentImageIds,
         setCurrentImageIds: setCurrentImageIds,
+        imageIdsToDelete: imageIdsToDelete,
+        setImageIdsToDelete: setImageIdsToDelete,
       }}
     >
       {children}

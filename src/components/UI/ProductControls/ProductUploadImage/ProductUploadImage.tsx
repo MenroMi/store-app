@@ -34,8 +34,13 @@ export default function ProductUploadImage({ handleChooseImage }: IProductUpload
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
-  const { selectedImages, setSelectedImages, setCurrentImageIds, currentImageIds } =
-    useContext(ImagesContext);
+  const {
+    selectedImages,
+    setSelectedImages,
+    setCurrentImageIds,
+    imageIdsToDelete,
+    setImageIdsToDelete,
+  } = useContext(ImagesContext);
   const { clickedId, setIsOpen } = useContext(ModalContext);
 
   const handleDeleteImage = async (id: number) => {
@@ -46,11 +51,14 @@ export default function ProductUploadImage({ handleChooseImage }: IProductUpload
     if (!clickedImage?.imageFile) {
       setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
       setCurrentImageIds((prevIds) => prevIds.filter((currentId) => +currentId !== id));
+      setImageIdsToDelete((prevIds) => [...prevIds, id]);
 
-      deleteImage(
-        clickedImage!.id,
-        localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
-      );
+      // deleteImage(
+      //   clickedImage!.id,
+      //   localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
+      // );
+
+      console.log(imageIdsToDelete);
     } else {
       setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
     }
