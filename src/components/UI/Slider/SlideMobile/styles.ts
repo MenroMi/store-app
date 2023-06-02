@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import theme from '@/utils/mui/theme';
 
 export const MobileSliderWrapper = styled('div')(() => ({
   position: 'relative',
@@ -10,4 +9,5 @@ export const MobileSliderWrapper = styled('div')(() => ({
   alignItems: 'center',
   marginTop: '10px',
   padding: '10px',
+  cursor: 'pointer',
 }));

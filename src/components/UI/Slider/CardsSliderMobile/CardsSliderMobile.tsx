@@ -41,6 +41,7 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
         <CustomSlider {...myProfileSliderMobileOptions}>
           {products?.map((product) => (
             <SlideMobile
+              productId={product.id}
               productCategory={product.categories[0].name}
               productName={product.name}
               productImageSrc={product?.images[0]?.url}
@@ -80,6 +81,7 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
             productName={product.name}
             productImageSrc={product?.images[0]?.url}
             productPrice={product.price}
+            productId={product.id}
             key={product.id}
           >
             <DropDownMenu productID={product.id} productName={product.name} />

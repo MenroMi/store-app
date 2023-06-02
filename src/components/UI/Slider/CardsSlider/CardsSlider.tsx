@@ -1,3 +1,4 @@
+
 // basic
 import React, { useState } from 'react';
 import Image from 'next/image';
@@ -48,6 +49,7 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
         <CustomSlider {...sliderSettings}>
           {products?.map((product) => (
             <Slide
+              productId={product.id}
               productCategory={product.categories[0].name}
               productName={product.name}
               productImageSrc={product?.images[0]?.url}

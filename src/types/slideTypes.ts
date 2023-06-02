@@ -4,6 +4,7 @@ export interface ICustomSlideWrapperProps {
 }
 
 export interface ISlideProps {
+  productId: string | number;
   productCategory: string;
   productImageSrc: StaticImageData | string;
   productName: string;

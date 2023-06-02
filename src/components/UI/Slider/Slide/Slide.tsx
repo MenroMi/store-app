@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 // mui
 import { Typography, Box } from '@mui/material';
 
@@ -9,6 +11,9 @@ import {
   CustomTypographyName,
 } from './SlideStyles';
 
+// constants
+import { Routes } from '@/constants/routes';
+
 // interface
 import { ISlideProps } from '@/types/slideTypes';
 
@@ -18,14 +23,22 @@ const keyStr =
 // FUNCTIONAL COMPONENT
 const Slide: React.FC<ISlideProps> = ({
   productCategory,
+  productId,
   productImageSrc,
   productName,
   productPrice,
   marginRight,
   children,
 }): JSX.Element => {
+  const router = useRouter();
+  
   return (
-    <CustomSlideWrapper marginRight={marginRight}>
+    <CustomSlideWrapper
+      marginRight={marginRight}
+      onClick={async (e) => {
+        await router.push(`${Routes.products}/${productId}`);
+      }}
+    >
       <Box sx={{ height: { xs: '250px', sm: '380px' }, overflow: 'hidden', position: 'relative' }}>
         <CustomImage
           src={productImageSrc}
