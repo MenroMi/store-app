@@ -76,10 +76,7 @@ const SearchResult: React.FC = () => {
               fontSize: { md: '24px', sm: '16px', xs: '15px' },
               mr: '5px',
             }}
-            onClick={() => {
-              context?.setActiveFilters({ page: ['1'] });
-              router.push(Routes.search);
-            }}
+            onClick={() => router.push(Routes.search)}
           >
             Reset Filters
           </ResetButton>

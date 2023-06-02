@@ -22,10 +22,7 @@ const ResetFilterButton: React.FC = () => {
           backgroundColor: theme?.palette?.primary?.light,
         },
       }}
-      onClick={async () => {
-        context?.setActiveFilters({ page: ['1'] });
-        router.push(Routes.search);
-      }}
+      onClick={() => router.push(Routes.search)}
     >
       Reset filters
     </Button>

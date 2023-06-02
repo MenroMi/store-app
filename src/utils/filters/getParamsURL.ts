@@ -26,9 +26,6 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, pa
     }
   }
 
-  console.log(router);
-  console.log(filters);
-
   if (searchParams.toString() === '' && url) {
     searchParams.append('page', `${page}`);
   }
