@@ -36,10 +36,6 @@ const ErrorLayout = ({title = 'Shoes Shop', children}: IErrorLayout) => {
   const queryDownFold = useMediaQuery<unknown>(theme.breakpoints.down(370));
   const {user} = useContext(UserContext)
 
-  const handleGoBack = () => {
-   router.back();
-  };
-
   const handleGoHome = () => {
     router.push(user ? Routes.myProducts : Routes.search);
   };
@@ -87,9 +83,6 @@ const ErrorLayout = ({title = 'Shoes Shop', children}: IErrorLayout) => {
                 </Box>
               )}
               <Box sx={{ display: 'flex', flexDirection: queryDownFold ? 'column' : 'row', gap: 2 }}>
-                <CustomButton variant="outlined" onClick={handleGoBack}>
-                  Go back
-                </CustomButton>
                 <CustomButton variant="contained" onClick={handleGoHome}>
                   Go home
                 </CustomButton>

@@ -16,6 +16,7 @@ export const CustomFabButton = styled(Fab)(() => ({
   marginRight: '5px',
   backgroundColor: '#FFFFFF',
   color: '#6E7278',
+  zIndex: '1',
   '&:hover': {
     backgroundColor: '#FE645E',
     color: '#5C5C5C',

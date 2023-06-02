@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 // mui
-import { Grid, Stack, Typography, Box, useMediaQuery } from '@mui/material';
+import { Grid, Stack, Typography, Box, useMediaQuery} from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 // images
@@ -16,12 +16,16 @@ import CountBagComponent from '@/components/UI/CountBagComponent/CountBagCompone
 import CardBag from '@/components/UI/Cards/ProductCardBag/CardBag';
 import EmptyStateCardBag from '@/components/UI/EmptyStateCardBag/EmptyStateCardBag';
 import Notification from '@/components/UI/Notification/Notificaton';
+import BagQuantityButton from '@/components/UI/Buttons/BagQuantityButton/BagQuantityButton';
+import BagDeleteButton from '@/components/UI/Buttons/BagDeleteButton/BagDeleteButton';
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // styled components
 import {
   CustomBagPageWrapper,
   CustomTotalSummaryWrapper,
   CustomBagBtnsWrapper,
+  CustomBagBtnWrapper,
 } from '@/styles/pageStyles/BagStyles';
 import { CustomButton } from '@/styles/pageStyles/CheckoutStyles';
 
@@ -39,9 +43,10 @@ const Bag = () => {
   const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const { data, cartQuantity, isFetched, value, clearCart } = useShoppingCart();
+  const { data, cartQuantity, value, clearCart } = useShoppingCart();
 
   const [subTotal, setSubtotal] = useState<number>(0);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   useEffect(() => {
     const summary = data?.reduce((total, cartItem) => {
@@ -54,16 +59,17 @@ const Bag = () => {
 
   const shipping: number = subTotal === 0 ? 0 : 10;
 
-  const handleCheckout = (): void => {
-    router.push(Routes.checkout);
-    clearCart();
-  };
-
   return (
     <Layout title="Bag | Shop Store">
       <section style={{ marginTop: queryUpLg ? '65px' : '20px', width: '100%' }}>
         {cartQuantity > 0 ? (
-          <Grid container p={2}>
+          <Grid
+            container
+            p={2}
+            sx={{
+              padding: '0',
+            }}
+          >
             <CustomBagPageWrapper py={8} sx={{ flexDirection: queryUpLg ? 'row' : 'column' }}>
               {/* Left container */}
               <Box
@@ -75,7 +81,7 @@ const Bag = () => {
               >
                 <Typography variant="h2">Chart</Typography>
                 <Grid item xs={12} mt={5} sx={{ marginTop: queryUpLg ? '55px' : '20px' }}>
-                  <Stack spacing={{ xl: 16, lg: 12, md: 10, sm: 8, xs: 4 }} mb={3}>
+                  <Stack spacing={{ xl: 10, lg: 8, md: 7, sm: 6, xs: 4 }} mb={3}>
                     {data?.map(
                       ({
                         id,
@@ -86,26 +92,39 @@ const Bag = () => {
                           gender: { data: genderData },
                         },
                       }: AttrFromData) => (
-                        <CardBag
-                          key={id}
-                          id={id}
-                          productCategory={
-                            genderData
-                              ? genderData.id === 3
-                                ? "Men's Shoes"
-                                : "Women's Shoes"
-                              : ''
-                          }
-                          productImageSrc={
-                            imagesData
-                              ? imagesData[0]
-                                ? imagesData[0].attributes.url
+                        <Box key={id} sx={{ padding: '0' }}>
+                          <CardBag
+                            key={id}
+                            id={id}
+                            productCategory={
+                              genderData
+                                ? genderData.id === 3
+                                  ? "Men's Shoes"
+                                  : "Women's Shoes"
+                                : ''
+                            }
+                            productImageSrc={
+                              imagesData
+                                ? imagesData[0]
+                                  ? imagesData[0].attributes.url
+                                  : singInImg
                                 : singInImg
-                              : singInImg
-                          }
-                          productName={name}
-                          productPrice={price}
-                        />
+                            }
+                            productName={name}
+                            productPrice={price}
+                          />
+                          <CustomBagBtnWrapper
+                            sx={{
+                              maxHeight: queryUpSm ? '28px' : '20px',
+                              bottom: queryUpSm ? '43px' : '30px',
+                              marginRight: queryUpSm ? '15px' : '10px',
+                              marginLeft: queryUpSm ? '263px' : '134px',
+                            }}
+                          >
+                            <BagQuantityButton id={id} />
+                            <BagDeleteButton id={id} />
+                          </CustomBagBtnWrapper>
+                        </Box>
                       )
                     )}
                   </Stack>
@@ -158,12 +177,28 @@ const Bag = () => {
                     <CustomBagBtnsWrapper>
                       <CustomButton
                         variant="contained"
-                        onClick={handleCheckout}
+                        disabled={isRedirecting}
+                        onClick={async () => {
+                          setIsRedirecting(true);
+                          await router.push(Routes.checkout);
+                          clearCart();
+                        }}
+                        sx={{ width: queryUpLg ? '400px' : queryUpSm ? '80%' : '100%' }}
+                      >
+                        {isRedirecting ? <ButtonLoader /> : 'Checkout'}
+                      </CustomButton>
+                      <CustomButton
+                        variant="outlined"
+                        disabled={isRedirecting}
+                        onClick={async () => {
+                          setIsRedirecting(true);
+                          await router.push(Routes.search);
+                        }}
                         sx={{
-                          width: queryUpSm ? '400px' : '80%',
+                          width: queryUpLg ? '400px' : queryUpSm ? '80%' : '100%',
                         }}
                       >
-                        Checkout
+                        Back to search
                       </CustomButton>
                     </CustomBagBtnsWrapper>
                   </Box>
