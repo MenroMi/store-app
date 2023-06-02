@@ -41,7 +41,7 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
         <CustomSlider {...myProfileSliderMobileOptions}>
           {products?.map((product) => (
             <SlideMobile
-              productId={product.id}
+              id={product.id}
               productCategory={product.categories[0].name}
               productName={product.name}
               productImageSrc={product?.images[0]?.url}

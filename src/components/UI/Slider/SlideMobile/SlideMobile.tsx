@@ -1,4 +1,3 @@
-
 // basic
 import Image from 'next/image';
 
@@ -16,7 +15,7 @@ import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SlideMobile: React.FC<ISlideProps> = ({
-  productId,
+  id,
   productCategory,
   productImageSrc,
   productName,
@@ -28,7 +27,7 @@ const SlideMobile: React.FC<ISlideProps> = ({
   return (
     <MobileSliderWrapper
       onClick={async (e) => {
-        await router.push(`${Routes.products}/${productId}`);
+        await router.push(`${Routes.products}/${id}`);
       }}
     >
       <Box
