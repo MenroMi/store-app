@@ -1,5 +1,6 @@
-// next
+// basic
 import router from 'next/router';
+import { useState } from 'react';
 
 // constants
 import { Routes } from '@/constants/routes';
@@ -11,24 +12,21 @@ import Layout from '@/components/Layout/MainLayout';
 import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
+// components
+import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
+
 // styles
 import {
   CheckoutMessage,
   ContentContainer,
   CustomButton,
 } from '@/styles/pageStyles/CheckoutStyles';
-import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
-export interface ICheckoutProps {
-  loading?: boolean;
-}
-
-const Checkout = ({ loading }: ICheckoutProps) => {
+const Checkout = () => {
+  const queryUpLg = useMediaQuery(theme.breakpoints.up('lg'));
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const handleSearch = (): void => {
-    router.push(Routes.search);
-  };
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   return (
     <Layout title="Checkout | Shop Store">
@@ -45,11 +43,13 @@ const Checkout = ({ loading }: ICheckoutProps) => {
               <Typography variant="h4">We are happy that you found shoes that fits you</Typography>
               <CustomButton
                 variant="contained"
-                onClick={handleSearch}
-                disabled={loading && true}
-                sx={{ width: queryUpSm ? '400px' : '80%' }}
+                onClick={async () => {
+                  setIsRedirecting(true);
+                  await router.push(Routes.search);
+                }}
+                sx={{ width: queryUpLg ? '400px' : queryUpSm ? '80%' : '100%' }}
               >
-                {loading ? <ButtonLoader /> : 'Search products'}
+                {isRedirecting ? <ButtonLoader /> : 'Back to search'}
               </CustomButton>
             </CheckoutMessage>
           </ContentContainer>

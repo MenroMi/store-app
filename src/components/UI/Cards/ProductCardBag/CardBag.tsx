@@ -1,12 +1,10 @@
 // basic
 import Image, { StaticImageData } from 'next/image';
+import router from 'next/router';
+import { Routes } from '@/constants/routes';
 
 // mui
 import { Box, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
-
-// components
-import BagQuantityButton from '../../Buttons/BagQuantityButton/BagQuantityButton';
-import BagDeleteButton from '../../Buttons/BagDeleteButton/BagDeleteButton';
 
 // styled components
 import { CustomBagWrapper, CustomBox, CustomImage } from './styles';
@@ -36,7 +34,11 @@ const CardBag = ({
   return (
     <div>
       <CustomBagWrapper
+        onClick={async (e) => {
+          await router.push(`${Routes.products}/${id}`);
+        }}
         sx={{
+          cursor: 'pointer',
           minHeight: queryUpSm ? '244px' : '121px',
           padding: queryUpSm ? '15px' : '10px',
           '&:hover': {
@@ -98,14 +100,6 @@ const CardBag = ({
             <Box>
               <Typography variant="h3">{productPrice}$</Typography>
             </Box>
-          </CustomBox>
-          <CustomBox
-            sx={{
-              maxHeight: { sm: '28px', xs: '20px' },
-            }}
-          >
-            <BagQuantityButton id={id} />
-            <BagDeleteButton id={id} />
           </CustomBox>
         </CustomBox>
       </CustomBagWrapper>
