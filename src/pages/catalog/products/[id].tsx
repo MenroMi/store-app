@@ -18,7 +18,7 @@ import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
 // services
 import { getDataWithField, getProductById } from '@/services/productApi';
 import { IGetStaticProps } from '@/types/productTypes';
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 export default function SingleProductPage() {
   const router = useRouter();

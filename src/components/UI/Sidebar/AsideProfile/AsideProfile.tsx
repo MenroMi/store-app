@@ -1,7 +1,7 @@
 // basic
 import Image from 'next/image';
 import { useContext } from 'react';
-import { UserContext } from '@/components/Providers/user';
+import { UserContext } from '@/providers/user';
 
 // mui
 import { Box, Typography } from '@mui/material';

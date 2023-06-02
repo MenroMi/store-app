@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { Box, useTheme, Theme, useMediaQuery } from '@mui/material';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // components
 import SearchPath from '@/components/UI/Search/SearchPath/SearchPath';

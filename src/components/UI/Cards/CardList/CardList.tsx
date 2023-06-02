@@ -15,7 +15,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import makeArray from '@/utils/filters/makeRouterQueryArray';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // image
 import singInImg from '@/assets/singInBg.png';

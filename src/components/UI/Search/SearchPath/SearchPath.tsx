@@ -16,7 +16,7 @@ import makeArray from '@/utils/filters/makeRouterQueryArray';
 import getActualSearchingName from '@/utils/search/getActualSearchingName';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // styled component
 import { CustomFlexWrapper } from './styles';

@@ -11,16 +11,16 @@ import { Link as LinkMui, Box, useTheme, useMediaQuery } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 // components
-import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
+import AuthLayout from '@/components/Layout/AuthLayout/AuthLayout';
+import Notification from '@/components/UI/Notification/Notificaton';
 
 // constants
 import { Routes } from '@/constants/routes';
 import { IFormData } from '@/types/formDataTypes';
-import { UserContext } from '@/components/Providers/user';
+import { UserContext } from '@/providers/user';
 import { getUser } from '@/services/userService';
-import { NotificationContext } from '@/components/Providers/notification';
-import Notification from '@/components/UI/Notification/Notificaton';
+import { NotificationContext } from '@/providers/notification';
 
 const Authorization = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -77,7 +77,7 @@ const Authorization = () => {
   };
 
   return (
-    <SplitLayout title="Login">
+    <AuthLayout title="Login">
       <Typography variant="h2">Welcome back</Typography>
       <Typography
         variant="body1"
@@ -123,7 +123,7 @@ const Authorization = () => {
       </Box>
 
       <Notification />
-    </SplitLayout>
+    </AuthLayout>
   );
 };
 

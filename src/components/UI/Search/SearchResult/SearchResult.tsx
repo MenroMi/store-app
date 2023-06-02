@@ -9,7 +9,7 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // image
 import hideFilterIcon from '@/assets/icons/filter.svg';
@@ -24,6 +24,7 @@ import {
   CustomGridContainer,
   ResetButton,
 } from './styles';
+import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SearchResult: React.FC = () => {
@@ -75,7 +76,10 @@ const SearchResult: React.FC = () => {
               fontSize: { md: '24px', sm: '16px', xs: '15px' },
               mr: '5px',
             }}
-            onClick={() => router.push(router.pathname + `?page=1`)}
+            onClick={() => {
+              context?.setActiveFilters({ page: ['1'] });
+              router.push(Routes.search);
+            }}
           >
             Reset Filters
           </ResetButton>

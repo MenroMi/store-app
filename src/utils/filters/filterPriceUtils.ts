@@ -1,4 +1,4 @@
-import { regExpOnlyNumbs } from '@/constants';
+import { regExpOnlyNumbs } from '@/constants/urls';
 import { InputsData } from '@/types/filterListTypes';
 import { Dispatch, SetStateAction } from 'react';
 

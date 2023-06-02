@@ -1,4 +1,4 @@
-import { NotificationContext } from '@/components/Providers/notification';
+import { NotificationContext } from '@/providers/notification';
 import { Alert, Snackbar } from '@mui/material';
 import React, { useContext } from 'react';
 

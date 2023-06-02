@@ -10,8 +10,8 @@ import DeleteIcon from '@/assets/icons/delete.svg';
 import { CustomButton } from './styles';
 
 // context
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
-import { NotificationContext } from '@/components/Providers/notification';
+import { useShoppingCart } from '@/providers/shoppingCard';
+import { NotificationContext } from '@/providers/notification';
 
 // interface
 interface IBagDeleteButtonProps {

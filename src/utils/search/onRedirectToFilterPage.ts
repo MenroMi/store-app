@@ -1,7 +1,7 @@
-import { IFiltersContext } from '@/contexts/filtersContext';
+import { IFiltersContext } from '@/providers/filters';
 import { Dispatch, SetStateAction } from 'react';
 
-const resetFiltersAndCloseSearch = (
+const onResetFiltersAndCloseSearch = (
   defaultValue: { [x: string]: string[] },
   defaultPage: number,
   defaultBool: boolean,
@@ -20,7 +20,7 @@ const onRedirectToFilterPage = (
   setSearchOpen: Dispatch<SetStateAction<boolean>>
 ) => {
   if (value.length <= 0) {
-    resetFiltersAndCloseSearch(
+    onResetFiltersAndCloseSearch(
       {
         name: [],
         page: ['1'],
@@ -31,7 +31,7 @@ const onRedirectToFilterPage = (
       setSearchOpen
     );
   } else {
-    resetFiltersAndCloseSearch(
+    onResetFiltersAndCloseSearch(
       {
         name: [`${value}`],
       },

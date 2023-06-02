@@ -1,10 +1,13 @@
-import { Routes } from '@/constants';
+import { Routes } from '@/constants/routes';
 import theme from '@/utils/mui/theme';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
+import { FiltersContext } from '@/providers/filters';
+import { useContext } from 'react';
 
 const ResetFilterButton: React.FC = () => {
   const router = useRouter();
+  const context = useContext(FiltersContext);
 
   return (
     <Button
@@ -19,7 +22,10 @@ const ResetFilterButton: React.FC = () => {
           backgroundColor: theme?.palette?.primary?.light,
         },
       }}
-      onClick={() => router.push(Routes.search)}
+      onClick={async () => {
+        context?.setActiveFilters({ page: ['1'] });
+        router.push(Routes.search);
+      }}
     >
       Reset filters
     </Button>

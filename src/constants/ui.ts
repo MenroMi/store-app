@@ -1,5 +1,5 @@
-import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 import { MenuItemParams } from '@/types';
+import { IUpdateProfileInput } from '@/types/updateProfileTypes';
 
 export const homeItems: MenuItemParams[] = [
   { id: 1, label: 'View', method: () => {} },
@@ -20,19 +20,43 @@ export const UPDATE_PROFILE_INPUTS: IUpdateProfileInput[] = [
     label: 'Name',
     type: 'text',
   },
-
   {
     id: 'lastName',
     placeholder: 'Meldrum',
     label: 'Surname',
     type: 'text',
   },
-
   {
     id: 'phoneNumber',
     placeholder: '(949) 354-2574',
     label: 'Phone number',
     type: 'tel',
+  },
+];
+export const AUTH_INPUTS: IUpdateProfileInput[] = [
+  {
+    id: 'name',
+    placeholder: 'Hayman Andrews',
+    label: 'Name',
+    type: 'text',
+  },
+  {
+    id: 'email',
+    placeholder: 'example@mail.com',
+    label: 'Email',
+    type: 'email',
+  },
+  {
+    id: 'password',
+    placeholder: 'at least 8 characters',
+    label: 'Password',
+    type: 'password',
+  },
+  {
+    id: 'confirm',
+    placeholder: 'at least 8 characters',
+    label: 'Confirm password',
+    type: 'password',
   },
 ];
 

@@ -7,10 +7,10 @@ import { getProductById } from '@/services/cardBagService';
 
 // types
 import { AttrFromData } from '@/types/cardListTypes';
+import { NotificationContext } from './notification';
+import  useSessionStorage  from '@/hooks/useSessionStorage';
 
 // hooks
-import useSessionStorage from '@/hooks/useSessionStorage/useSessionStorage';
-import { NotificationContext } from '@/components/Providers/notification';
 
 type ShoppingCartProviderProps = {
   children: ReactNode;

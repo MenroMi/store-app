@@ -16,8 +16,8 @@ import { getFilteredData } from '@/services/searchApi';
 import makeArray from '@/utils/filters/makeRouterQueryArray';
 
 // context Provider
-import { IFiltersContext } from '@/contexts/filtersContext';
-import { FiltersContext } from '@/contexts/filtersContext';
+import { IFiltersContext } from '@/providers/filters';
+import { FiltersContext } from '@/providers/filters';
 
 // components
 import FiltersAndCards from '@/components/UI/CombineComponents/FiltersAndCards/FiltersAndCards';

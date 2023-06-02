@@ -16,7 +16,7 @@ import makeArray from '@/utils/filters/makeRouterQueryArray';
 import { handleChanges, maxNumber } from '@/utils/filters/filterPriceUtils';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // constants
 

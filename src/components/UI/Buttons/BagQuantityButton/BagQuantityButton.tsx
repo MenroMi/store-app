@@ -11,7 +11,7 @@ import RemoveIcon from 'src/assets/icons/remove.svg';
 
 // styles
 import { CustomButtonWrapper, CustomFabButton } from './styles';
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
 interface IBagQuantityButtonProps {
