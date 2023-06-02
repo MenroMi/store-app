@@ -1,6 +1,7 @@
 // basic
 import Image from 'next/image';
 import React, { useContext } from 'react';
+import { useRouter } from 'next/router';
 
 // mui
 import { Box, Grid } from '@mui/material';
@@ -8,7 +9,7 @@ import { useTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // image
 import hideFilterIcon from '@/assets/icons/filter.svg';
@@ -23,14 +24,14 @@ import {
   CustomGridContainer,
   ResetButton,
 } from './styles';
-import { useRouter } from 'next/router';
+import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SearchResult: React.FC = () => {
   const theme = useTheme<Theme>();
-  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
   const router = useRouter();
   const context = useContext(FiltersContext);
+  const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
   return (
     <Box sx={{ alignSelf: 'flex-end', flex: 2 }}>
@@ -75,7 +76,7 @@ const SearchResult: React.FC = () => {
               fontSize: { md: '24px', sm: '16px', xs: '15px' },
               mr: '5px',
             }}
-            onClick={() => router.push(router.pathname + `?page=1`)}
+            onClick={() => router.push(Routes.search)}
           >
             Reset Filters
           </ResetButton>

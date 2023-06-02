@@ -1,10 +1,14 @@
 import { Routes } from '@/constants/routes';
 import { ActiveFiltersTypes } from '@/types/filterListTypes';
-export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: number) => {
+import { NextRouter } from 'next/router';
+
+// function
+export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, page: number) => {
   const searchParams = new URLSearchParams(
     router.query as string | string[][] | Record<string, string> | URLSearchParams | undefined
   );
   let values: string[];
+  let url = /\/catalog\/search*/g.test(router.pathname);
 
   for (let _ in filters) {
     for (let [key, _] of searchParams.entries()) {
@@ -22,17 +26,17 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
     }
   }
 
-  if (searchParams.toString() === '' && router.pathname === '/catalog/search') {
+  if (searchParams.toString() === '' && url) {
     searchParams.append('page', `${page}`);
   }
 
   if (searchParams.toString() !== '') {
-    if (router.pathname === '/catalog/products/[id]' && typeof router.query.id !== 'undefined') {
-      router.push(`${Routes.products}/${router.query.id}`);
+    if (!url && filters?.name === undefined) {
+      router.push(`${router.asPath}`);
       return;
     }
-    searchParams.delete('page');
 
+    searchParams.delete('page');
     searchParams.append('page', `${page}`);
 
     router.push(`${Routes.forParamsURL}?${searchParams.toString()}`, undefined, { shallow: true });

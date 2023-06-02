@@ -17,19 +17,19 @@ import Layout from '@/components/Layout/MainLayout';
 
 // components
 import AsideProfileMenu from '@/components/UI/Sidebar/AsideProfileMenu/AsideProfileMenu';
-import FormAddProduct from '@/components/Forms/FormAddProduct/FormAddProduct';
+import FormProduct from '@/components/Forms/FormProduct/FormProduct';
 
 // constants
 import { Routes } from '@/constants/routes';
 
 // services
 import { getDataWithField, getUserID, postProduct, uploadImage } from '@/services/productApi';
-import { IProductData } from '@/types/addProductTypes';
+import { IProductData } from '@/types/formProductTypes';
 
 // context
-import { ImagesContext } from '@/components/Providers/images';
-import { ModalContext } from '@/components/Providers/modal';
-import { NotificationContext } from '@/components/Providers/notification';
+import { ImagesContext } from '@/providers/images';
+import { ModalContext } from '@/providers/modal';
+import { NotificationContext } from '@/providers/notification';
 
 export default function AddProduct() {
   // useQuery
@@ -43,7 +43,7 @@ export default function AddProduct() {
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation((images: File[]) => handlePostProduct(images), {
+  const { mutate } = useMutation((images: any) => handlePostProduct(images), {
     onSuccess: () => {
       setIsOpen(true);
       setMessage('Product had been added successfully!');
@@ -72,17 +72,16 @@ export default function AddProduct() {
 
   // contexts
   const { setClickedId } = useContext(ModalContext);
-  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+  const { selectedImages, setSelectedImages, setCurrentImageIds } = useContext(ImagesContext);
 
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   const router = useRouter();
 
   useEffect(() => {
-    router.events.on('routeChangeStart', () => setSelectedImages([]));
-
     return () => {
-      router.events.off('routeChangeStart', () => setSelectedImages([]));
+      setSelectedImages([]);
+      setCurrentImageIds([]);
     };
   }, []);
 
@@ -141,13 +140,16 @@ export default function AddProduct() {
     if (selectedImages && selectedImages?.length > 0) {
       const imagesToPost = selectedImages?.map((image) => image.imageFile);
       mutate(imagesToPost);
+    } else {
+      setLoading(false);
     }
   };
   return (
     <Layout title="Add Product">
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
-        <FormAddProduct
+        <FormProduct
+          title="Add product"
           isLoading={loading}
           sizes={sizesData}
           productName={productName}

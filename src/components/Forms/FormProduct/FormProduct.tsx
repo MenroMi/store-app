@@ -16,15 +16,16 @@ import {
 } from '@mui/material';
 
 // components
-import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
-import AddProductSelect from '@/components/UI/AddProduct/AddProductSelect/AddProductSelect';
-import AddProductUploadImage from '@/components/UI/AddProduct/AddProductUploadImage/AddProductUploadImage';
+import AddProductRadioGroup from '@/components/UI/ProductControls/ProductRadioGroup/ProductRadioGroup';
+import AddProductSelect from '@/components/UI/ProductControls/ProductSelect/ProductSelect';
+import AddProductUploadImage from '@/components/UI/ProductControls/ProductUploadImage/ProductUploadImage';
 
 // interfaces
-import { IFormAddProductProps } from '@/types/addProductTypes';
+import { IFormProductProps } from '@/types/formProductTypes';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
-export default function FormAddProduct({
+export default function FormProduct({
+  title,
   productName,
   category,
   gendersOptions,
@@ -46,7 +47,7 @@ export default function FormAddProduct({
   handleSubmit,
   handleSelectSize,
   handleChooseImage,
-}: IFormAddProductProps) {
+}: IFormProductProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
 
@@ -59,7 +60,7 @@ export default function FormAddProduct({
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4.5 }}>
-          <Typography variant="h2">Add product</Typography>
+          <Typography variant="h2">{title}</Typography>
           {!queryDownLg && (
             <>
               <Button

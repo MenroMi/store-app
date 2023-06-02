@@ -4,7 +4,7 @@ import router from 'next/router';
 import { Routes } from '@/constants/routes';
 
 // components
-import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
+import ProductRadioGroup from '@/components/UI/ProductControls/ProductRadioGroup/ProductRadioGroup';
 import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 
 // styled components
@@ -15,8 +15,8 @@ import { Box, Grid, Typography, Radio, useMediaQuery } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 // context
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
-import { NotificationContext } from '@/components/Providers/notification';
+import { NotificationContext } from '@/providers/notification';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
 import { IDescriptionProps } from '@/types/productTypes';
@@ -81,7 +81,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
             queryDownMini ? '226px' : queryDownSmall ? '304px' : queryDownFive ? '382px' : ''
           })/2)`}
         >
-          <AddProductRadioGroup
+          <ProductRadioGroup
             availableSize={product.attributes?.size.data}
             handleSelectSize={setSelectedSize}
             sizes={sizes}

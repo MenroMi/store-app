@@ -1,9 +1,5 @@
 import { ICategory } from '@/types/cardsSliderTypes';
-import { ISizesOptionsData } from '@/types/addProductTypes';
-
-export interface ICardListProps {
-  products?: any[];
-}
+import { ISizesOptionsData } from '@/types/formProductTypes';
 
 export interface ImageAttrData {
   data: Array<{
@@ -14,16 +10,16 @@ export interface ImageAttrData {
   } | null>;
 }
 
-interface GenderAttrData {
+export interface GenderAttrData {
   data: {
     id: number;
     attributes: {
       name: string;
-    }
+    };
   };
 }
 
-interface SizeArrtData {
+export interface SizeArrtData {
   data: ISizesOptionsData;
 }
 

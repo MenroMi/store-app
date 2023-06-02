@@ -1,4 +1,4 @@
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 import { getFilteredData } from '@/services/searchApi';
 import { Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -75,7 +75,7 @@ const PaginationMui: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.data]);
 
-  return (
+  return !/Error/g.test(data?.name) && data?.data !== undefined && data?.data.length > 0 ? (
     <Pagination
       sx={{
         display: `${Object.entries(router.query).length > 0 && maxPage === 0 ? 'none' : 'block'}`,
@@ -87,7 +87,7 @@ const PaginationMui: React.FC = () => {
       color="primary"
       size="large"
     />
-  );
+  ) : null;
 };
 
 export default PaginationMui;

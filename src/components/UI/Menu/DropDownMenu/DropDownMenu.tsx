@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { ModalContext } from '@/components/Providers/modal';
+import { ModalContext } from '@/providers/modal';
 
 // images
 import dotsBtn from '@/assets/icons/dots.svg';
@@ -21,12 +21,12 @@ import { MenuItemParams } from '@/types';
 // constants
 import { Routes } from '@/constants/routes';
 import { homeItems, othersItems } from '@/constants/ui';
-import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
-import { NotificationContext } from '@/components/Providers/notification';
+import { NotificationContext } from '@/providers/notification';
+import { StorageContext } from '@/providers/sessionStorage';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
-interface IDropDownMenuProps {
+export interface IDropDownMenuProps {
   productID: number;
   productName: string;
   top?: string;
@@ -40,7 +40,7 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
   right,
 }): JSX.Element => {
   const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
-  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+  const contextStorage = useContext(StorageContext);
   const router = useRouter();
   const open = Boolean(anchorElement);
   const { setIsOpen, setClickedId } = useContext(ModalContext);
@@ -95,12 +95,25 @@ const DropDownMenu: React.FC<IDropDownMenuProps> = ({
           <MenuItem
             key={id}
             onClick={async () => {
-              setIsRedirecting(true);
               await router.push(`${Routes.products}/${productID}`);
             }}
             sx={{ maxHeight: '36px' }}
           >
-            {isRedirecting ? <ButtonLoader /> : label}
+            {label}
+          </MenuItem>
+        );
+      }
+
+      if (label === 'Edit') {
+        return (
+          <MenuItem
+            key={id}
+            onClick={async () => {
+              await router.push(`${Routes.edit}/${productID}`);
+            }}
+            sx={{ maxHeight: '36px' }}
+          >
+            {label}
           </MenuItem>
         );
       }

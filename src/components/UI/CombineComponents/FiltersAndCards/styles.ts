@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled, Box } from '@mui/material';
 
 export const CustomAside = styled('aside')(({ theme }) => ({
   height: '550px',
@@ -26,4 +26,13 @@ export const CustomAside = styled('aside')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
+}));
+
+export const CustomMainFilters = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  rowGap: '16px',
+  width: '100%',
+  height: '100%',
 }));

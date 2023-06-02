@@ -30,7 +30,6 @@ const FormSettings = ({ loading, formData, setFormData, handleSubmit }: IUpdateF
             sx={{ mt: 1 }}
             id={id}
             placeholder={placeholder}
-            required
             type={type}
             value={formData[id as keyof ISettings]}
             onChange={handleChange}

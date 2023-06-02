@@ -10,10 +10,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Button, Typography, Box } from '@mui/material';
 
 // components
-import Card from '../../Cards/Card/Card';
-import DropDownMenu from '../../Menu/DropDownMenu/DropDownMenu';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
-import Slide from '../Slide/Slide';
 
 // styled components
 import { CustomEmptyStateWrapper, CustomSlider } from './CardsSliderStyles';
@@ -30,6 +27,7 @@ import { ICardsSliderProps } from '@/types/cardsSliderTypes';
 import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 import { useRouter } from 'next/router';
 import { myProfileSliderOptions } from '@/constants/ui';
+import onCreateSlides from '@/utils/slider/createSlides';
 
 export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   const sliderSettings = {
@@ -45,24 +43,11 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
   if (products?.length > 3) {
     return (
       <>
-        <CustomSlider {...sliderSettings}>
-          {products?.map((product) => (
-            <Slide
-              productCategory={product.categories[0].name}
-              productName={product.name}
-              productImageSrc={product?.images[0]?.url}
-              productPrice={product.price}
-              id={product.id}
-              key={product.id}
-            >
-              <DropDownMenu productID={product.id} productName={product.name} />
-            </Slide>
-          ))}
-        </CustomSlider>
+        <CustomSlider {...sliderSettings}>{onCreateSlides(products)}</CustomSlider>
 
         <ModalDeleteItem
           deleteMessage="Are you sure to delete selected item?"
-          deleteHandler={deleteProduct}
+          deleteHandler={deleteProduct!}
         />
       </>
     );
@@ -77,21 +62,10 @@ export const CardsSlider = ({ products, deleteProduct }: ICardsSliderProps) => {
           flexWrap: 'wrap',
         }}
       >
-        {products?.map((product) => (
-          <Card
-            productCategory={product.categories[0].name}
-            productName={product.name}
-            productImageSrc={product?.images[0]?.url}
-            productPrice={product.price}
-            productId={product.id}
-            key={product.id}
-          >
-            <DropDownMenu productID={product.id} productName={product.name} />
-          </Card>
-        ))}
+        {onCreateSlides(products)}
         <ModalDeleteItem
           deleteMessage="Are you sure to delete selected item?"
-          deleteHandler={deleteProduct}
+          deleteHandler={deleteProduct!}
         />
       </Box>
     );

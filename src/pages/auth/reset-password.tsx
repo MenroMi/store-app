@@ -1,109 +1,101 @@
 // basic
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
 
 // mui
 import Typography from '@mui/material/Typography';
-import { Link as LinkMui, Box, useTheme } from '@mui/material';
+import { Link as LinkMui, Box, useTheme, useMediaQuery } from '@mui/material';
+import theme from '@/utils/mui/theme';
 
 // components
-import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
+import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
+import AuthLayout from '@/components/Layout/AuthLayout/AuthLayout';
 
 // constants
 import { Routes } from '@/constants/routes';
+import { registration } from '@/services/authService';
 import { IFormData } from '@/types/formDataTypes';
-import { useMutation } from '@tanstack/react-query';
-import { reset } from '@/services/authService';
-import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
-import Notification from '@/components/UI/Notification/Notificaton';
-import { NotificationContext } from '@/components/Providers/notification';
 
-const Reset = () => {
+const Registration = () => {
   const [formData, setFormData] = useState<IFormData>({
+    name: '',
+    email: '',
     password: '',
     confirm: '',
+    checked: false,
   });
-  const { mutate, isError } = useMutation(reset);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const {
-    query: { code = '' },
-    push,
-  } = useRouter();
+  const { mutate, isLoading, isError, isSuccess } = useMutation(registration);
+  const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
   const {
     palette: {
       primary: { main },
     },
   } = useTheme();
 
-  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { password, confirm } = formData;
-    if (password && confirm && password === confirm) {
-      setLoading(true);
-      mutate(
-        { password, passwordConfirmation: confirm, code },
-        {
-          onError: () => {
-            setLoading(false);
-          },
-          onSuccess: () => {
-            setIsOpen(true);
-            setIsFailed(false);
-            setMessage("You've succesfully changed your password");
-            push(Routes.login);
-          },
-        }
-      );
+    const { email, name, confirm, password } = formData;
+    if (email && password && name && confirm && password === confirm) {
+      mutate({ username: name, email, password }, {
+      });
     }
   };
+
   return (
-    <SplitLayout title="Reset Password">
-      {isError ? (
-        <InfoComment />
+    <AuthLayout title="Registration">
+      {isSuccess ? (
+        <InfoComment email={formData.email} />
       ) : (
         <>
-          <Typography variant="h2">Reset password</Typography>
+          <Typography variant="h2">Create an account</Typography>
           <Typography
             variant="body1"
             sx={{
               mt: 2,
-              mb: 6,
+              mb: isError ? 0 : 6,
             }}
           >
-            Please create new password here.
+            Create an account to get an easy access to your dream shopping.
           </Typography>
+          {isError && (
+            <Typography
+              variant="h4Bold"
+              sx={{ pb: 2, pt: queryDownMd ? '7.3px' : '1.14px', color: main }}
+            >
+              This name or email is taken
+            </Typography>
+          )}
           <Box component={'div'} sx={{ maxWidth: '436px', width: 1 }}>
             <FormRegistration
               handleSubmit={handleSubmit}
+              loading={isLoading}
               formData={formData}
               setFormData={setFormData}
-              loading={loading}
             />
-            <LinkMui
-              component={Link}
-              href={Routes.login}
-              underline="none"
+            <Box
+              component={'div'}
               sx={{
-                display: 'block',
-                textAlign: 'center',
                 maxWidth: '436px',
+                textAlign: 'center',
                 mt: 2,
               }}
             >
-              <Typography variant="caption">Back to log in</Typography>
-            </LinkMui>
+              <Typography variant="caption" sx={{ display: 'inline' }}>
+                Already have an account?{' '}
+              </Typography>
+              <LinkMui component={Link} href={Routes.login} underline="none">
+                <Typography variant="caption" sx={{ color: main, display: 'inline' }}>
+                  Log in
+                </Typography>
+              </LinkMui>
+            </Box>
           </Box>
         </>
       )}
-
-      <Notification />
-    </SplitLayout>
+    </AuthLayout>
   );
 };
 
-export default Reset;
+export default Registration;

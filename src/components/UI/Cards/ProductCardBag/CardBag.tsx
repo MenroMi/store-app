@@ -7,8 +7,7 @@ import { Routes } from '@/constants/routes';
 import { Box, Typography, useTheme, Theme, useMediaQuery } from '@mui/material';
 
 // styled components
-import { CustomBagWrapper, CustomBox } from './styles';
-import { CustomImage } from '../Card/CardStyles';
+import { CustomBagWrapper, CustomBox, CustomImage } from './styles';
 
 // interface
 export type CartItemProps = {

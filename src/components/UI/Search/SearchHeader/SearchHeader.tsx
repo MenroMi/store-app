@@ -1,25 +1,23 @@
 // basic
-import React, {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from 'react';
 import Image from 'next/image';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // services
 import { getSearchProducts } from '@/services/searchApi';
 
-// rq
-import { useQuery } from '@tanstack/react-query';
-
 // mui
-import { Theme, useMediaQuery, useTheme, InputAdornment, Box, Typography } from '@mui/material';
+import {
+  Theme,
+  useMediaQuery,
+  useTheme,
+  InputAdornment,
+  Box,
+  Typography,
+  Button,
+} from '@mui/material';
 
 // plugins
 import 'slick-carousel/slick/slick.css';
@@ -34,6 +32,7 @@ import SearchSliderDesktop from '@/components/UI/Slider/SearchSliderDesktop/Sear
 import logo from '@/assets/icons/logo.svg';
 import close from '@/assets/icons/close.svg';
 import search from '@/assets/icons/search.svg';
+import emptyIcon from '@/assets/icons/empty.svg';
 
 // styled components
 import {
@@ -44,9 +43,9 @@ import {
   HeaderSearchDiv,
   HeaderSearchLayout,
 } from './styles';
-import { CustomTypographyName } from '../../Cards/Card/CardStyles';
 import SearchPopularTerms from '../SearchPopularTerms/SearchPopularTerms';
 import useDebounceQuery from '@/hooks/useDebounceQuery';
+import onRedirectToFilterPage from '@/utils/search/onRedirectToFilterPage';
 
 // interface
 interface ISearchHeaderProps {
@@ -59,43 +58,18 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
   const theme = useTheme<Theme>();
   const queryDownSm = useMediaQuery<unknown>(theme.breakpoints.down('sm'));
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
-  const { data } = useDebounceQuery(
+  const { data, isFetched } = useDebounceQuery(
     ['searchData', inputValue],
     () => getSearchProducts(inputValue),
     500
   );
-
-  const onRedirectToFilterPage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    let searchObj: {
-      [x: string]: string[];
-    };
-
-    if (inputValue.length <= 0) {
-      searchObj = {
-        name: [],
-        page: ['1'],
-      };
-      contextFilters!.setActiveFilters(searchObj);
-      contextFilters!.setPage(1);
-      setSearchOpen(false);
-      return;
-    } else {
-      searchObj = {
-        name: [`${inputValue}`],
-      };
-
-      contextFilters!.setActiveFilters(searchObj);
-      contextFilters!.setPage(1);
-      setSearchOpen(false);
-      return;
-    }
-  };
 
   const onClickPopularTerm = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const value = e.target as HTMLElement;
 
     setInputValue(value.textContent!);
   };
+
   return (
     <HeaderSearchLayout>
       <HeaderSearchContainer>
@@ -172,7 +146,7 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
               <Typography sx={{ order: 2, display: { lg: 'none', xs: 'block' } }}>
                 Search result:
               </Typography>
-              {typeof data === 'undefined' ? (
+              {typeof data === 'undefined' || !isFetched ? (
                 <Box
                   sx={{
                     position: 'relative',
@@ -183,14 +157,42 @@ const SearchHeader = ({ setSearchOpen }: ISearchHeaderProps) => {
                 >
                   <FullScreenLoader />
                 </Box>
-              ) : queryDownLg ? (
-                <SearchSliderMobile products={data} />
+              ) : isFetched && !/Error/g.test(data?.name) ? (
+                queryDownLg ? (
+                  <SearchSliderMobile products={data} />
+                ) : (
+                  <SearchSliderDesktop products={data} />
+                )
               ) : (
-                <SearchSliderDesktop products={data} />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: '2',
+                  }}
+                >
+                  <Box
+                    component={Image}
+                    src={emptyIcon}
+                    alt="catalog is empty"
+                    priority={true}
+                    sx={{ width: '72px', height: '72px', opacity: '0.1' }}
+                  />
+                  <Typography
+                    variant="h4"
+                    sx={{ opacity: '0.5', width: '100%', textAlign: 'center' }}
+                  >
+                    Oops... {data?.msg!}. Please try again later
+                  </Typography>
+                </Box>
               )}
             </Box>
           </HeaderDiv>
-          <ButtonSeeAll onClick={(e) => onRedirectToFilterPage(e)}>
+          <ButtonSeeAll
+            onClick={() => onRedirectToFilterPage(contextFilters, inputValue, setSearchOpen)}
+          >
             {`See all ` + inputValue}
           </ButtonSeeAll>
         </>

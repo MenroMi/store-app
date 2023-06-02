@@ -1,6 +1,7 @@
 // basic
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useContext, useEffect } from 'react';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -17,10 +18,12 @@ import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
 // services
 import { getDataWithField, getProductById } from '@/services/productApi';
 import { IGetStaticProps } from '@/types/productTypes';
+import { FiltersContext } from '@/providers/filters';
 
 export default function SingleProductPage() {
   const router = useRouter();
   const productId = typeof router.query?.id === 'string' ? router.query.id : '';
+  const contextFilters = useContext(FiltersContext);
 
   const { data: product, isLoading: productLoading } = useQuery(['product', productId], () =>
     getProductById(productId)
@@ -28,6 +31,13 @@ export default function SingleProductPage() {
   const { data: sizes, isLoading: sizesLoading } = useQuery(['sizes'], () =>
     getDataWithField('sizes', 'value')
   );
+
+  useEffect(() => {
+    return () => {
+      contextFilters?.setActiveFilters({ name: [] });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (productLoading || sizesLoading) {
     return <FullScreenLoader />;

@@ -14,13 +14,13 @@ const LayoutAuthPages = styled('div')`
   position: relative;
 `;
 
-interface ISplitLayoutProps{
+interface IAuthLayoutProps{
   children: React.ReactNode;
   title?: string;
   isErrorPage?: boolean;
 };
 
-const SplitLayout = ({ children, title = 'Shoes Shop', isErrorPage }: ISplitLayoutProps) => {
+const AuthLayout = ({ children, title = 'Shoes Shop', isErrorPage }: IAuthLayoutProps) => {
   const { pathname, push } = useRouter();
   const theme = useTheme<Theme>();
   const queryDownMd = useMediaQuery<unknown>(theme.breakpoints.down('md'));
@@ -80,4 +80,4 @@ const SplitLayout = ({ children, title = 'Shoes Shop', isErrorPage }: ISplitLayo
   );
 };
 
-export default SplitLayout;
+export default AuthLayout;

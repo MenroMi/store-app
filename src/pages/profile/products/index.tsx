@@ -22,11 +22,11 @@ import { Routes } from '@/constants/routes';
 import { deleteProduct, getUserProducts } from '@/services/myProfileApi';
 
 // contexts
-import { UserContext } from '@/components/Providers/user';
-import { ModalContext } from '@/components/Providers/modal';
+import { UserContext } from '@/providers/user';
+import { ModalContext } from '@/providers/modal';
 import { useRouter } from 'next/router';
 import Notification from '@/components/UI/Notification/Notificaton';
-import { NotificationContext } from '@/components/Providers/notification';
+import { NotificationContext } from '@/providers/notification';
 import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 import { CardsSliderMobile } from '@/components/UI/Slider/CardsSliderMobile/CardsSliderMobile';

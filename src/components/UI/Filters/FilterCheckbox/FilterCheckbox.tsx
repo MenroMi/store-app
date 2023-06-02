@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { FormControlLabel, Typography, Checkbox, useTheme, Theme } from '@mui/material';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // interface
 import { AttrTypes } from '@/types/filterListTypes';

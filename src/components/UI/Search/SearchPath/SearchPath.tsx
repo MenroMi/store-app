@@ -1,18 +1,25 @@
 // basic
 import React, { useContext } from 'react';
+import { useRouter } from 'next/router';
+
+// rq
+import { useQuery } from '@tanstack/react-query';
 
 // mui
 import { useTheme, Theme, Typography, useMediaQuery } from '@mui/material';
 
+// services
+import { getFilteredData } from '@/services/searchApi';
+
+// utils
+import makeArray from '@/utils/filters/makeRouterQueryArray';
+import getActualSearchingName from '@/utils/search/getActualSearchingName';
+
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // styled component
 import { CustomFlexWrapper } from './styles';
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
-import makeArray from '@/utils/filters/makeRouterQueryArray';
-import { getFilteredData } from '@/services/searchApi';
 
 // FUNCTIONAL COMPONENT
 const SearchPath: React.FC = (): JSX.Element => {
@@ -42,18 +49,7 @@ const SearchPath: React.FC = (): JSX.Element => {
           fontSize: { sm: '25px', xs: '15px' },
         }}
       >
-        {`${
-          typeof context?.activeFilters?.brand?.length === 'undefined' ||
-          context?.activeFilters?.brand?.length <= 0
-            ? typeof context?.activeFilters?.name?.length === 'undefined' ||
-              context?.activeFilters?.name?.length <= 0 ||
-              typeof router.query?.name === 'undefined'
-              ? 'All shoes'
-              : `${context?.activeFilters?.name[0]}`
-            : context?.activeFilters?.brand?.length > 1
-            ? `${context?.activeFilters?.brand[0]} and others...`
-            : context?.activeFilters?.brand[0]
-        } (${
+        {`${getActualSearchingName(context?.activeFilters?.brand, context?.activeFilters?.name)} (${
           typeof data?.meta?.pagination?.total === 'undefined' ? 0 : data?.meta?.pagination?.total
         })`}
       </Typography>
