@@ -33,9 +33,9 @@ import {
 import { IProductData, ISelectedImage } from '@/types/formProductTypes';
 
 // context
-import { ImagesContext } from '@/components/Providers/images';
-import { ModalContext } from '@/components/Providers/modal';
-import { NotificationContext } from '@/components/Providers/notification';
+import { ImagesContext } from '@/providers/images';
+import { ModalContext } from '@/providers/modal';
+import { NotificationContext } from '@/providers/notification';
 
 // interfaces, types
 import { IGetStaticProps } from '@/types/productTypes';

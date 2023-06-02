@@ -25,8 +25,8 @@ import { CustomUploadWrapper } from './ProductUploadImageStyles';
 import { IProductUploadImageProps, ISelectedImage } from '@/types/formProductTypes';
 import ProductImageConatiner from '../ProductImageContainer/ProductImageContainer';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
-import { ImagesContext } from '@/components/Providers/images';
-import { ModalContext } from '@/components/Providers/modal';
+import { ImagesContext } from '@/providers/images';
+import { ModalContext } from '@/providers/modal';
 import { deleteImage } from '@/services/productApi';
 
 export default function ProductUploadImage({ handleChooseImage }: IProductUploadImageProps) {
