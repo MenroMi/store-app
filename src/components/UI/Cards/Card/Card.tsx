@@ -7,7 +7,7 @@ import {
   CustomTypographyWrapper,
   CustomImage,
   CustomTypographyName,
-} from './CardStyles';
+} from './styles';
 
 // interface
 import { ICardProps } from '@/types/cardTypes';

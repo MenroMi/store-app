@@ -1,6 +1,7 @@
 // basic
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useContext, useEffect } from 'react';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';

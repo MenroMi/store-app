@@ -19,7 +19,7 @@ const FiltersList: React.FC = (): JSX.Element => {
   const context = useContext(FiltersContext);
   const router = useRouter();
 
-  const isInputs = (inputs: object[], label: string) => {
+  const isInputs = (inputs: InputsData[], label: string) => {
     switch (label) {
       case 'brand':
         return inputs && <FilterBrand label={label} inputs={inputs} />;
@@ -55,7 +55,10 @@ const FiltersList: React.FC = (): JSX.Element => {
     }
   };
 
-  const isFilter = (values: object[], label: string): JSX.Element | undefined | JSX.Element[] => {
+  const isFilter = (
+    values: InputsData[],
+    label: string
+  ): JSX.Element | undefined | JSX.Element[] => {
     switch (label) {
       case 'gender':
         return isInputs(values, label);

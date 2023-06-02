@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
-import theme from '@/utils/mui/theme';
 
-export const MobileSliderWrapper = styled('div')(() => ({
+export const MobileSlideWrapper = styled('div')(() => ({
   position: 'relative',
   display: 'flex',
   justifyContent: 'space-between',

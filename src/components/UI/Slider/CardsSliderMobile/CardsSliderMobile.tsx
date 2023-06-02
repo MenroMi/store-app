@@ -59,7 +59,7 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
 
         <ModalDeleteItem
           deleteMessage="Are you sure to delete selected item?"
-          deleteHandler={deleteProduct}
+          deleteHandler={deleteProduct!}
         />
       </>
     );
@@ -87,7 +87,7 @@ export const CardsSliderMobile = ({ products, deleteProduct }: ICardsSliderProps
         ))}
         <ModalDeleteItem
           deleteMessage="Are you sure to delete selected item?"
-          deleteHandler={deleteProduct}
+          deleteHandler={deleteProduct!}
         />
       </Box>
     );
