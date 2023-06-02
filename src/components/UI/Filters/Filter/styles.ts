@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 
-export const CustomFilterHeader = styled('div')(() => ({
+export const CustomFilterHeader = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -8,4 +8,4 @@ export const CustomFilterHeader = styled('div')(() => ({
   h6: {
     lineHeight: '19px',
   },
-}));
+});

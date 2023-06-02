@@ -4,27 +4,34 @@ import { AttrFromData } from '@/types/cardListTypes';
 export const getSearchProducts = async (value: string) => {
   let url: string = '/products?populate=*&';
 
-  const allProducts = await getDataFromServer(url, `filters[name][$containsi]=${value}`).then(
-    (res) => res.data.data
-  );
+  try {
+    const allProducts = await getDataFromServer(url, `filters[name][$containsi]=${value}`).then(
+      (res) => res.data.data
+    );
 
-  const productsEA = allProducts.map(({ id, attributes }: AttrFromData) => {
-    const { name, images, price, gender, teamName, categories } = attributes;
+    const productsEA = allProducts?.map(({ id, attributes }: AttrFromData) => {
+      const { name, images, price, gender, teamName, categories } = attributes;
 
+      return {
+        id,
+        attributes: {
+          name,
+          images,
+          price,
+          gender,
+          teamName,
+          categories,
+        },
+      };
+    });
+
+    return productsEA;
+  } catch (error) {
     return {
-      id,
-      attributes: {
-        name,
-        images,
-        price,
-        gender,
-        teamName,
-        categories,
-      },
+      name: (error as Error).name,
+      msg: (error as Error).message,
     };
-  });
-
-  return productsEA;
+  }
 };
 
 export const getFilters = async () => {
@@ -69,14 +76,14 @@ export const getFilters = async () => {
   return res;
 };
 
-export const getFilteredData = async (query: any) => {
+export const getFilteredData = async (query: { [x: string]: string | string[] }) => {
   let url: string = `/products?populate=*&`;
   let page: number = 1;
 
   if (typeof query !== 'undefined') {
     for (let prop in query) {
       if (!Array.isArray(query[prop])) {
-        query[prop] = query[prop].split(',');
+        query[prop] = (query[prop] as string).split(',');
       }
 
       if (query[prop].length <= 0) {
@@ -91,7 +98,7 @@ export const getFilteredData = async (query: any) => {
           url += `filters[name][$containsi]=${query[prop][0]}&`;
           continue;
         case 'page':
-          page = query[prop].join();
+          page = +query[prop][0];
           continue;
       }
 
@@ -100,8 +107,21 @@ export const getFilteredData = async (query: any) => {
       }
     }
   }
+  try {
+    const products = await getDataFromServer(
+      url,
+      `pagination[page]=${page}&pagination[pageSize]=25`
+    );
 
-  const products = await getDataFromServer(url, `pagination[page]=${page}&pagination[pageSize]=25`);
-
-  return products?.data;
+    if (products.status === 200) {
+      return products?.data;
+    } else {
+      throw new Error(products.statusText);
+    }
+  } catch (error) {
+    return {
+      name: (error as Error).name,
+      msg: (error as Error).message,
+    };
+  }
 };

@@ -1,6 +1,12 @@
-import { Box, Typography, Theme, useTheme } from '@mui/material';
-import { CustomTypographyName } from '../../Cards/Card/CardStyles';
+// basic
 import { useEffect, useState } from 'react';
+
+// mui
+import { Box, Typography, Theme, useTheme } from '@mui/material';
+
+// styled components
+import { CustomTypographyName } from '@/components/UI/Cards/Card/styles';
+import { CustomPopularTermsWrapper } from './styles';
 
 // interface
 interface ISearchPopularTermsProps {
@@ -19,13 +25,9 @@ const SearchPopularTerms: React.FC<ISearchPopularTermsProps> = ({ onChangeSearch
   }, [popular]);
 
   return (
-    <Box
+    <CustomPopularTermsWrapper
       sx={{
-        maxWidth: '500px',
-        width: '100%',
         display: { lg: 'flex', xs: 'none' },
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         order: { lg: 2 },
       }}
     >
@@ -53,7 +55,7 @@ const SearchPopularTerms: React.FC<ISearchPopularTermsProps> = ({ onChangeSearch
           </CustomTypographyName>
         ))}
       </Box>
-    </Box>
+    </CustomPopularTermsWrapper>
   );
 };
 

@@ -23,20 +23,20 @@ const keyStr =
 // FUNCTIONAL COMPONENT
 const Slide: React.FC<ISlideProps> = ({
   productCategory,
-  productId,
   productImageSrc,
   productName,
   productPrice,
   marginRight,
   children,
+  id,
 }): JSX.Element => {
   const router = useRouter();
-  
+
   return (
     <CustomSlideWrapper
       marginRight={marginRight}
       onClick={async (e) => {
-        await router.push(`${Routes.products}/${productId}`);
+        await router.push(`${Routes.products}/${id}`);
       }}
     >
       <Box sx={{ height: { xs: '250px', sm: '380px' }, overflow: 'hidden', position: 'relative' }}>

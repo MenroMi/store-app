@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 // mui
-import { Box, Button, Theme, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Theme, useMediaQuery, useTheme } from '@mui/material';
 
 // components
 import CardList from '@/components/UI/Cards/CardList/CardList';
@@ -13,7 +13,7 @@ import PaginationMui from '@/components/UI/Pagination/Pagination';
 import { FiltersContext } from '@/providers/filters';
 
 // styled component
-import { CustomAside } from './styles';
+import { CustomAside, CustomMainFilters } from './styles';
 
 // FUNCTIONAL COMPONENT
 const FiltersAndCards: React.FC = (): JSX.Element => {
@@ -39,23 +39,18 @@ const FiltersAndCards: React.FC = (): JSX.Element => {
         </CustomAside>
       ) : null}
 
-      <Box
+      <CustomMainFilters
         component="main"
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          rowGap: '16px',
           maxWidth: `${context?.hide ? '1920px' : '1580px'}`,
           p: `${queryUpMd && context?.hide ? '0 40px' : !queryUpMd ? '0' : '0 40px 0 0'}`,
           width: '100%',
           height: '100%',
-          
         }}
       >
         <CardList />
         <PaginationMui />
-      </Box>
+      </CustomMainFilters>
     </Box>
   );
 };

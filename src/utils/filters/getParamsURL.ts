@@ -1,8 +1,9 @@
 import { Routes } from '@/constants/routes';
 import { ActiveFiltersTypes } from '@/types/filterListTypes';
+import { NextRouter } from 'next/router';
 
 // function
-export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: number) => {
+export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, page: number) => {
   const searchParams = new URLSearchParams(
     router.query as string | string[][] | Record<string, string> | URLSearchParams | undefined
   );
@@ -30,7 +31,7 @@ export const getParamsURL = (router: any, filters: ActiveFiltersTypes, page: num
   }
 
   if (searchParams.toString() !== '') {
-    if (!url) {
+    if (!url && filters?.name === undefined) {
       router.push(`${router.asPath}`);
       return;
     }

@@ -14,11 +14,12 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 // styled component
 import { CustomTextField } from './styles';
+import { AttrTypes, InputsData } from '@/types/filterListTypes';
 
 // interface
 interface IFilterBrand {
   label: string;
-  inputs: object[];
+  inputs: InputsData[];
 }
 
 // variable for checkbox
@@ -28,9 +29,9 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
   const router = useRouter();
   const [searchingBrand, setSearchingBrand] = useState<string>('');
 
-  const visibleBrandFilters = (inputs: any) => {
-    return inputs.filter((input: any) =>
-      input?.attributes?.name.toLowerCase().startsWith(searchingBrand.toLowerCase())
+  const visibleBrandFilters = (inputs: InputsData[]) => {
+    return inputs.filter((input: InputsData) =>
+      input?.attributes?.name!.toLowerCase().startsWith(searchingBrand.toLowerCase())
     );
   };
 
@@ -50,20 +51,18 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
           ),
         }}
       />
-      {visibleBrandFilters(inputs).map((input: any) => {
+      {visibleBrandFilters(inputs).map((input: InputsData) => {
         const { id, attributes } = input;
-        const {
-          products: { data },
-        } = attributes;
+        const { products } = attributes as AttrTypes;
 
-        if (data?.length <= 0) {
+        if (typeof products?.data === 'undefined' || products?.data?.length <= 0) {
           return;
         }
 
         checked =
           typeof router.query.brand === 'undefined'
             ? false
-            : router.query.brand?.includes(attributes?.name);
+            : router.query.brand?.includes(attributes?.name!);
 
         return (
           <Fragment key={id}>
@@ -77,7 +76,7 @@ const FilterBrand: React.FC<IFilterBrand> = ({ label, inputs }) => {
               />
 
               <Box component="p" sx={{ color: '#6e7278', fontWeight: '300' }}>
-                ({data?.length > 100 ? '+100' : data?.length})
+                ({products?.data?.length > 100 ? '+100' : products?.data?.length})
               </Box>
             </Box>
           </Fragment>

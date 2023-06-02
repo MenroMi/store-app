@@ -26,7 +26,7 @@ import { StorageContext } from '@/providers/sessionStorage';
 import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
-interface IDropDownMenuProps {
+export interface IDropDownMenuProps {
   productID: number;
   productName: string;
   top?: string;

@@ -40,6 +40,7 @@ import { NotificationContext } from '@/providers/notification';
 
 // interfaces, types
 import { IGetStaticProps } from '@/types/productTypes';
+import { FiltersContext } from '@/providers/filters';
 
 export default function AddProduct() {
   const router = useRouter();
@@ -97,6 +98,7 @@ export default function AddProduct() {
     setCurrentImageIds,
     imageIdsToDelete,
   } = useContext(ImagesContext);
+  const contextFilters = useContext(FiltersContext);
 
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
@@ -116,6 +118,7 @@ export default function AddProduct() {
     return () => {
       setSelectedImages([]);
       setCurrentImageIds([]);
+      contextFilters?.setActiveFilters({});
     };
   }, []);
 
