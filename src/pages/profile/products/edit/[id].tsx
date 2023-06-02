@@ -177,7 +177,7 @@ export default function AddProduct() {
     }
   };
   return (
-    <Layout title="Add Product">
+    <Layout title="Edit product">
       <Box sx={{ display: 'flex', gap: '60px', mt: '38px' }}>
         <AsideProfileMenu />
 
