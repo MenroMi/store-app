@@ -80,8 +80,11 @@ const FiltersProvider: React.FC<IFiltersProvider> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (typeof lengthRouterQuery === 'undefined' || lengthRouterQuery <= 0) {
-      setActiveFilters({});
+    if (
+      typeof lengthRouterQuery === 'undefined' ||
+      (lengthRouterQuery <= 1 && router.query.page !== undefined)
+    ) {
+      setActiveFilters({ page: ['1'] });
     }
   }, [lengthRouterQuery]);
 

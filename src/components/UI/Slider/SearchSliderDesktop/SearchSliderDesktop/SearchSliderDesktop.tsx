@@ -1,5 +1,7 @@
 // basic
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -7,7 +9,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Box, Typography } from '@mui/material';
 
 // images
-import signIn from '@/assets/singInBg.png';
 import emptyIcon from '@/assets/icons/empty.svg';
 
 // constants
@@ -15,48 +16,30 @@ import { searchSliderOptionsOnDesktop } from '@/constants/ui';
 
 // components
 import SliderArrow from '@/components/UI/Slider/SliderArrow/SliderArrow';
-import SearchSlideDesktop from '@/components/UI/Slider/SearchSliderDesktop/SearchSlideDesktop/SearchSlideDesktop';
 
 // styled components
 import { CustomEmptyStateWrapper } from '@/components/UI/Slider/CardsSlider/CardsSliderStyles';
 import { SearchSlider } from './styles';
 
 // interface
-import { AttrFromData } from '@/types/cardListTypes';
-interface ISearchHeaderSliderProps {
-  products: AttrFromData[];
-}
+import { ICardsSliderProps } from '@/types/cardsSliderTypes';
+import onCreateSlides from '@/utils/slider/createSlides';
 
-const SearchSliderDesktop: React.FC<ISearchHeaderSliderProps> = ({ products }): JSX.Element => {
+const SearchSliderDesktop: React.FC<ICardsSliderProps> = ({ products }): JSX.Element => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const sliderSettings = {
     nextArrow: <SliderArrow />,
     prevArrow: <SliderArrow next={false} />,
     ...searchSliderOptionsOnDesktop,
   };
 
-  const mappingSearchSlides = (products: AttrFromData[]) => {
-    return products?.map((product: AttrFromData) => (
-      <SearchSlideDesktop
-        productCategory={
-          product.attributes.categories!.data?.[0]
-            ? product.attributes.categories!.data[0].attributes.name
-            : 'Classic'
-        }
-        productName={product.attributes.name}
-        productImageSrc={
-          product.attributes.images.data?.[0]
-            ? product.attributes.images.data[0].attributes.url
-            : signIn
-        }
-        productPrice={product.attributes.price}
-        key={product.id}
-        id={product.id}
-      />
-    ));
-  };
-
   if (products?.length > 3) {
-    return <SearchSlider {...sliderSettings}>{mappingSearchSlides(products)}</SearchSlider>;
+    return (
+      <SearchSlider {...sliderSettings}>
+        {onCreateSlides(products, router, setIsLoading, isLoading)}
+      </SearchSlider>
+    );
   } else if (products?.length > 0) {
     return (
       <Box
@@ -68,7 +51,7 @@ const SearchSliderDesktop: React.FC<ISearchHeaderSliderProps> = ({ products }): 
           flex: '1',
         }}
       >
-        {mappingSearchSlides(products)}
+        {onCreateSlides(products, router, setIsLoading, isLoading)}
       </Box>
     );
   } else {

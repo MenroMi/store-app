@@ -5,12 +5,12 @@ import theme from '@/utils/mui/theme';
 export const CustomSearchOverlay = styled('div')({
   height: 'calc(100vh - 290px)',
   width: `100%`,
-  display:'flex',
- 
+  display: 'flex',
+
   justifyContent: 'center',
   [theme.breakpoints.down(900)]: {
     height: 'calc(100vh - 230px)',
-    paddingLeft:'20px',
+    paddingLeft: '20px',
   },
   [theme.breakpoints.down(600)]: {
     height: 'calc(100vh - 215px)',
@@ -29,48 +29,44 @@ export const CustomSearchOverlay = styled('div')({
   },
 });
 
-export interface ICustomProguctsBlockProps{
+export interface ICustomProguctsBlockProps {
   filterOpen: boolean;
 }
 
-export const CustomProguctsBlock = styled('div')<ICustomProguctsBlockProps>(({ theme, filterOpen }) => ({
-  maxHeight: 'calc(100%)',
-  display: 'flex',
-  justifyContent: 'center',
-  maxWidth: filterOpen 
-  ? `calc(${320 * 5}px + ${54 * 4}px)` 
-  : `calc(${320 * 4}px + ${54 * 3}px)`,
-  width:'100%',
-  [theme.breakpoints.down(1916)]: {
-    maxWidth: filterOpen 
-    ? `calc(${320 * 4}px + ${54 * 3}px)` 
-    : `calc(${320 * 3}px + ${54 * 2}px)`,
-  },
-  [theme.breakpoints.down(1542)]: {
-    maxWidth: filterOpen
-      ? `calc(${320 * 3}px + ${54 * 2}px )`
-      : `calc(${320 * 2}px + ${54 * 1}px )`,
-  },
-  [theme.breakpoints.down(1168)]: {
-    maxWidth:filterOpen 
-    ? `calc(${320 * 2}px + ${54 * 1}px)`
-    : `calc(${320 * 1}px)`,
-  },
-  [theme.breakpoints.down(714)]: {
-    maxWidth: `calc(${320}px )`,
-  },
-  [theme.breakpoints.down(600)]: {
-    maxWidth: `calc(${152 * 3}px + ${16 * 2}px)`,
-  },
-  [theme.breakpoints.down(540)]: {
-    maxWidth: `calc(${152 * 2}px + ${16 * 1}px)`,
-  },
-  [theme.breakpoints.down(360)]: {
-    maxWidth: `calc(${152 * 1}px )`,
-  },
-}));
-
-
+export const CustomProguctsBlock = styled('div')<ICustomProguctsBlockProps>(
+  ({ theme, filterOpen }) => ({
+    maxHeight: 'calc(100%)',
+    display: 'flex',
+    justifyContent: 'center',
+    maxWidth: filterOpen ? `calc(${320 * 5}px + ${54 * 4}px)` : `calc(${320 * 4}px + ${54 * 3}px)`,
+    width: '100%',
+    [theme.breakpoints.down(1916)]: {
+      maxWidth: filterOpen
+        ? `calc(${320 * 4}px + ${54 * 3}px)`
+        : `calc(${320 * 3}px + ${54 * 2}px)`,
+    },
+    [theme.breakpoints.down(1542)]: {
+      maxWidth: filterOpen
+        ? `calc(${320 * 3}px + ${54 * 2}px )`
+        : `calc(${320 * 2}px + ${54 * 1}px )`,
+    },
+    [theme.breakpoints.down(1168)]: {
+      maxWidth: filterOpen ? `calc(${320 * 2}px + ${54 * 1}px)` : `calc(${320 * 1}px)`,
+    },
+    [theme.breakpoints.down(714)]: {
+      maxWidth: `calc(${320}px )`,
+    },
+    [theme.breakpoints.down(600)]: {
+      maxWidth: `calc(${152 * 3}px + ${16 * 2}px)`,
+    },
+    [theme.breakpoints.down(540)]: {
+      maxWidth: `calc(${152 * 2}px + ${16 * 1}px)`,
+    },
+    [theme.breakpoints.down(360)]: {
+      maxWidth: `calc(${152 * 1}px )`,
+    },
+  })
+);
 
 export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   '&.MuiGrid-root': {
@@ -81,7 +77,6 @@ export const CardsGridContainer = styled(Grid)(({ theme }) => ({
   justifyContent: 'start',
   columnGap: '54px',
   rowGap: '40px',
-  height: '100%',
 
   [theme.breakpoints.down('sm')]: {
     '&.MuiGrid-root': {
@@ -99,8 +94,7 @@ export const CatalogIsEmptyContainer = styled('div')({
   alignItems: 'center',
   justifyContent: 'center',
   position: 'absolute',
-  left: '51%',
   top: '50%',
-  transform: 'translateX(-49%) translateY(-50%)',
+  transform: 'translateX(-50%) translateY(-50%)',
   gap: '20px',
 });

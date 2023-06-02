@@ -9,8 +9,7 @@ import BagQuantityButton from '../../Buttons/BagQuantityButton/BagQuantityButton
 import BagDeleteButton from '../../Buttons/BagDeleteButton/BagDeleteButton';
 
 // styled components
-import { CustomBagWrapper, CustomBox } from './styles';
-import { CustomImage } from '../Card/CardStyles';
+import { CustomBagWrapper, CustomBox, CustomImage } from './styles';
 
 // interface
 export type CartItemProps = {
@@ -21,13 +20,13 @@ export type CartItemProps = {
   productPrice: number;
 };
 
-  const CardBag = ({
-    id,
-    productCategory,
-    productImageSrc,
-    productName,
-    productPrice
-  }: CartItemProps) => {
+const CardBag = ({
+  id,
+  productCategory,
+  productImageSrc,
+  productName,
+  productPrice,
+}: CartItemProps) => {
   const theme = useTheme<Theme>();
   const queryUpSm = useMediaQuery(theme.breakpoints.up('sm'));
 

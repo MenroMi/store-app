@@ -1,17 +1,15 @@
 // mui
-import { Box, Button } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 
 // constants
 import { blurDataURL } from '@/constants/urls';
 
 // styled components
-import { CustomImage, CustomTypographyName } from '@/components/UI/Cards/Card/CardStyles';
+import { CustomImage, CustomTypographyName } from '@/components/UI/Cards/Card/styles';
 import { CustomSearchSlideWrapper, CustomSearchSlide } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
-import { useRouter } from 'next/router';
-import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SearchSlideDesktop: React.FC<ISlideProps> = ({
@@ -22,8 +20,6 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
   children,
   id,
 }): JSX.Element => {
-  const router = useRouter();
-
   return (
     <CustomSearchSlideWrapper>
       <CustomSearchSlide
@@ -40,7 +36,6 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
           blurDataURL={blurDataURL}
           sx={{ objectPosition: 'bottom' }}
         />
-        {children}
       </CustomSearchSlide>
       <Box sx={{ p: '5px' }}>
         <CustomTypographyName variant="h6">{productName}</CustomTypographyName>
@@ -49,13 +44,7 @@ const SearchSlideDesktop: React.FC<ISlideProps> = ({
           <CustomTypographyName variant="subtitle2Small">{'$' + productPrice}</CustomTypographyName>
         </Box>
       </Box>
-      <Button
-        onClick={() => {
-          router.push(`${Routes.products}/${id}`);
-        }}
-      >
-        See more
-      </Button>
+      {children}
     </CustomSearchSlideWrapper>
   );
 };
