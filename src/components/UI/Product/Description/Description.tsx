@@ -1,8 +1,11 @@
 // basic
 import { useState, ChangeEvent, useContext } from 'react';
+import router from 'next/router';
+import { Routes } from '@/constants/routes';
 
 // components
 import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
+import ButtonLoader from '../../Buttons/ButtonLoader/ButtonLoader';
 
 // styled components
 import { CustomTypography, CustomButton } from './DescriptionStyles';
@@ -28,6 +31,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
   const [selectedSize, setSelectedSize] = useState<string>(
     product.attributes?.size.data?.id.toString() || '-1'
   );
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   const { increaseCartQuantity } = useShoppingCart();
   const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
@@ -86,9 +90,9 @@ export default function Description({ product, sizes }: IDescriptionProps) {
           />
         </Box>
       </Grid>
-      <Grid item xs={12} maxHeight={62}>
+      <Grid item xs={12}>
         <CustomButton
-          variant="outlined"
+          variant="contained"
           onClick={() => {
             increaseCartQuantity(product.id);
             setIsOpen(true);
@@ -98,8 +102,18 @@ export default function Description({ product, sizes }: IDescriptionProps) {
         >
           Add to Bag
         </CustomButton>
+        <CustomButton
+          variant="outlined"
+          onClick={async () => {
+            setIsRedirecting(true);
+            await router.push(Routes.search);
+          }}
+          sx={{ marginTop: '20px' }}
+        >
+          {isRedirecting ? <ButtonLoader /> : 'Back to search'}
+        </CustomButton>
       </Grid>
-      <Grid item xs={12} mt={queryDownLg ? 4 : 8} mb={2}>
+      <Grid item xs={12} mt={queryDownLg ? 2 : 2} mb={2}>
         <CustomTypography variant={queryDownLg ? 'h4Bold' : 'h5'}>Description</CustomTypography>
         <Typography variant="body1" fontSize={16} mt={queryDownLg ? 1 : 2}>
           {product.attributes?.description}

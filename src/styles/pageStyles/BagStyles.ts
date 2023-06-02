@@ -21,7 +21,13 @@ export const CustomTotalSummaryWrapper = styled(Box)(() => ({
 export const CustomBagBtnsWrapper = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
   marginTop: '50px',
   marginBottom: '50px',
+}));
+
+export const CustomBagBtnWrapper = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  position: 'relative',
 }));

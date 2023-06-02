@@ -1,5 +1,5 @@
 // react
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // services
@@ -10,7 +10,6 @@ import { AttrFromData } from '@/types/cardListTypes';
 
 // hooks
 import useSessionStorage from '@/hooks/useSessionStorage/useSessionStorage';
-import { NotificationContext } from '@/components/Providers/notification';
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -29,7 +28,6 @@ export type ShoppingCartContext = {
   clearCart: () => void;
   cartQuantity: number;
   data: AttrFromData[];
-  isFetched: boolean;
   value: { id: number; quantity: number }[];
 };
 
@@ -41,8 +39,6 @@ export function useShoppingCart() {
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [value, setValue] = useSessionStorage<CartItem[]>('shopping-cart', []);
   const [valueIDs, setValueIDs] = useState<number[]>([]);
-
-  const { setIsOpen, setIsFailed, setMessage } = useContext(NotificationContext);
 
   useEffect(() => {
     let IDs: number[] = [];
@@ -60,7 +56,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     }
   }, [value]);
 
-  const { data, isFetched } = useQuery({
+  const { data } = useQuery({
     queryKey: ['bagData', valueIDs],
     queryFn: () => getProductById(valueIDs),
     keepPreviousData: true,
@@ -114,11 +110,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         return currItems.filter((item) => item.id !== id);
       });
     }
-    onSuccess: {
-      setIsOpen(true);
-      setIsFailed(false);
-      setMessage('Avatar was deleted');
-    }
   }
 
   function clearCart() {
@@ -133,7 +124,6 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         decreaseCartQuantity,
         removeFromCart,
         clearCart,
-        isFetched,
         data,
         cartQuantity,
         value,
