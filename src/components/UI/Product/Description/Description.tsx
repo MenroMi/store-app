@@ -2,7 +2,7 @@
 import { useState, ChangeEvent, useContext } from 'react';
 
 // components
-import AddProductRadioGroup from '@/components/UI/AddProduct/AddProductRadioGroup/AddProductRadioGroup';
+import ProductRadioGroup from '@/components/UI/ProductControls/ProductRadioGroup/ProductRadioGroup';
 
 // styled components
 import { CustomTypography, CustomButton } from './DescriptionStyles';
@@ -77,7 +77,7 @@ export default function Description({ product, sizes }: IDescriptionProps) {
             queryDownMini ? '226px' : queryDownSmall ? '304px' : queryDownFive ? '382px' : ''
           })/2)`}
         >
-          <AddProductRadioGroup
+          <ProductRadioGroup
             availableSize={product.attributes?.size.data}
             handleSelectSize={setSelectedSize}
             sizes={sizes}

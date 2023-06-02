@@ -9,6 +9,7 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, pa
   );
   let values: string[];
   let url = /\/catalog\/search*/g.test(router.pathname);
+  let url = /\/catalog\/search*/g.test(router.pathname);
 
   for (let _ in filters) {
     for (let [key, _] of searchParams.entries()) {
@@ -27,6 +28,7 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, pa
   }
 
   if (searchParams.toString() === '' && url) {
+  if (searchParams.toString() === '' && url) {
     searchParams.append('page', `${page}`);
   }
 
@@ -35,6 +37,7 @@ export const getParamsURL = (router: NextRouter, filters: ActiveFiltersTypes, pa
       router.push(`${router.asPath}`);
       return;
     }
+
 
     searchParams.delete('page');
     searchParams.append('page', `${page}`);

@@ -19,25 +19,49 @@ import {
 import imageIcon from '@/assets/icons/gallery.svg';
 
 // styles
-import { CustomUploadWrapper } from './AddProductUploadImageStyles';
+import { CustomUploadWrapper } from './ProductUploadImageStyles';
 
 // interfaces
-import { IAddProductUploadImageProps } from '@/types/addProductTypes';
-import AddProductImageConatiner from '../AddProductImageContainer/AddProductImageConatiner';
+import { IProductUploadImageProps, ISelectedImage } from '@/types/formProductTypes';
+import ProductImageConatiner from '../ProductImageContainer/ProductImageContainer';
 import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
 import { ImagesContext } from '@/providers/images';
 import { ModalContext } from '@/providers/modal';
+import { deleteImage } from '@/services/productApi';
 
-export default function AddProductUploadImage({ handleChooseImage }: IAddProductUploadImageProps) {
+export default function ProductUploadImage({ handleChooseImage }: IProductUploadImageProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
-  const { selectedImages, setSelectedImages } = useContext(ImagesContext);
+  const {
+    selectedImages,
+    setSelectedImages,
+    setCurrentImageIds,
+    imageIdsToDelete,
+    setImageIdsToDelete,
+  } = useContext(ImagesContext);
   const { clickedId, setIsOpen } = useContext(ModalContext);
 
   const handleDeleteImage = async (id: number) => {
-    setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+    const clickedImage: ISelectedImage | undefined = selectedImages?.find(
+      (image) => image.id === id
+    );
+
+    if (!clickedImage?.imageFile) {
+      setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+      setCurrentImageIds((prevIds) => prevIds.filter((currentId) => +currentId !== id));
+      setImageIdsToDelete((prevIds) => [...prevIds, id]);
+
+      // deleteImage(
+      //   clickedImage!.id,
+      //   localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
+      // );
+
+      console.log(imageIdsToDelete);
+    } else {
+      setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
+    }
     setIsOpen(false);
   };
 
@@ -92,7 +116,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
         >
           {selectedImages?.map((productImage) => (
             <Grid key={productImage?.id} item xs={6}>
-              <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
+              <ProductImageConatiner src={productImage?.url} id={productImage?.id} />
             </Grid>
           ))}
 
@@ -147,7 +171,7 @@ export default function AddProductUploadImage({ handleChooseImage }: IAddProduct
               key={productImage?.id}
               sx={{ maxWidth: { xs: '200px', sm: '300px' }, alignSelf: 'center' }}
             >
-              <AddProductImageConatiner src={productImage?.url} id={productImage?.id} />
+              <ProductImageConatiner src={productImage?.url} id={productImage?.id} />
             </Box>
           ))}
         </Box>

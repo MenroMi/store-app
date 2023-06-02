@@ -31,6 +31,7 @@ export enum Routes {
   forWomen = '/catalog/search?gender=women',
   forMen = '/catalog/search?gender=men',
   products = '/catalog/products',
+  edit = '/profile/products/edit'
 }
 
 export const NAV_LINKS = [
