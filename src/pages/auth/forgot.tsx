@@ -8,14 +8,14 @@ import { Link as LinkMui, Box } from '@mui/material';
 
 // components
 import FormRegistration from '@/components/Forms/FormRegistration/FormRegistration';
-import SplitLayout from '@/components/Layout/SplitLayout/SplitLayout';
+import AuthLayout from '@/components/Layout/AuthLayout/AuthLayout';
+import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
 
 // constants
 import { Routes } from '@/constants/routes';
 import { IFormData } from '@/types/formDataTypes';
 import { forgot } from '@/services/authService';
 import { useMutation } from '@tanstack/react-query';
-import InfoComment from '@/components/UI/Comments/InfoComment/InfoCommet';
 
 const Forgot = () => {
   const [formData, setFormData] = useState<IFormData>({
@@ -29,7 +29,7 @@ const Forgot = () => {
     email && mutate({ email });
   };
   return (
-    <SplitLayout title="Forgot Password">
+    <AuthLayout title="Forgot Password">
       {isSuccess ? (
         <InfoComment email={formData.email} />
       ) : (
@@ -68,7 +68,7 @@ const Forgot = () => {
           </Box>
         </>
       )}
-    </SplitLayout>
+    </AuthLayout>
   );
 };
 

@@ -24,7 +24,7 @@ const Sign = () => {
 
   return (
     <LayoutSignPage>
-      <Image src={singMobBg} alt={`singMobBg`} fill style={{ objectFit: 'cover', zIndex: 1000 }} priority={true}/>
+      <Image src={singMobBg} alt={`singMobBg`} fill style={{ objectFit: 'cover', zIndex: 1000 }} priority={true} />
       <Box
         component={'div'}
         sx={{

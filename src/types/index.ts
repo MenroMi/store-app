@@ -20,3 +20,10 @@ export interface ISettings {
   phoneNumber: number | string;
   avatar?: IAvatar | null;
 }
+
+export interface IRegistration {
+  name?: string;
+  email?: string;
+  password?: string;
+  confirm?: string;
+}

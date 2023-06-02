@@ -12,8 +12,8 @@ import { Box, Grid, Typography, Radio, useMediaQuery } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 // context
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
-import { NotificationContext } from '@/components/Providers/notification';
+import { NotificationContext } from '@/providers/notification';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
 import { IDescriptionProps } from '@/types/productTypes';

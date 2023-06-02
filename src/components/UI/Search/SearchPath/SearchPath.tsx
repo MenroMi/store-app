@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { useTheme, Theme, Typography, useMediaQuery } from '@mui/material';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // styled component
 import { CustomFlexWrapper } from './styles';

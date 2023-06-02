@@ -21,11 +21,11 @@ import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 
 // constants
 import { ISettings } from '@/types';
-import { UserContext } from '@/components/Providers/user';
+import { UserContext } from '@/providers/user';
 import { deleteAvatar, getUser, updateUser } from '@/services/userService';
 import { uploadImage } from '@/services/productApi';
 import { Routes } from '@/constants/routes';
-import { NotificationContext } from '@/components/Providers/notification';
+import { NotificationContext } from '@/providers/notification';
 import Notification from '@/components/UI/Notification/Notificaton';
 import { IUser } from '@/types/userTypes';
 

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { MenuItem, Box } from '@mui/material';
 
 // context
-import { ModalContext } from '@/components/Providers/modal';
+import { ModalContext } from '@/providers/modal';
 
 // images
 import dotsBtn from '@/assets/icons/dots.svg';
@@ -21,9 +21,9 @@ import { MenuItemParams } from '@/types';
 // constants
 import { Routes } from '@/constants/routes';
 import { homeItems, othersItems } from '@/constants/ui';
-import { useShoppingCart } from '@/contexts/shoppingCardContext';
-import { NotificationContext } from '@/components/Providers/notification';
-import { StorageContext } from '@/contexts/sessionStorageContext';
+import { NotificationContext } from '@/providers/notification';
+import { StorageContext } from '@/providers/sessionStorage';
+import { useShoppingCart } from '@/providers/shoppingCard';
 
 // interface
 interface IDropDownMenuProps {

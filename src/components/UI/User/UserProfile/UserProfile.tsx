@@ -7,7 +7,7 @@ import { Box, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
 // interface
 import { IUserProfileProps } from '@/types/userProfileTypes';
 import { useContext } from 'react';
-import { UserContext } from '@/components/Providers/user';
+import { UserContext } from '@/providers/user';
 import { getProfilePhoto } from '@/utils/profile/profilePhoto';
 
 export default function UserProfile({
