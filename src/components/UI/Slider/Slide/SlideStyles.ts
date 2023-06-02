@@ -1,3 +1,4 @@
+
 import { ICustomSlideWrapperProps } from '@/types/slideTypes';
 import theme from '@/utils/mui/theme';
 import { styled, Typography } from '@mui/material';
@@ -9,6 +10,7 @@ export const CustomSlideWrapper = styled('div')<ICustomSlideWrapperProps>(({ mar
   flexDirection: 'column',
   maxWidth: '320px',
   maxHeight: '443px',
+  cursor: 'pointer',
 
   '&:not(:last-child)': {
     marginRight: marginRight || 0,

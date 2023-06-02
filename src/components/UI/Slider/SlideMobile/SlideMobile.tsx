@@ -10,17 +10,26 @@ import { MobileSliderWrapper } from './styles';
 
 // interface
 import { ISlideProps } from '@/types/slideTypes';
+import { useRouter } from 'next/router';
+import { Routes } from '@/constants/routes';
 
 // FUNCTIONAL COMPONENT
 const SlideMobile: React.FC<ISlideProps> = ({
+  id,
   productCategory,
   productImageSrc,
   productName,
   productPrice,
   children,
 }): JSX.Element => {
+  const router = useRouter();
+
   return (
-    <MobileSliderWrapper>
+    <MobileSliderWrapper
+      onClick={async (e) => {
+        await router.push(`${Routes.products}/${id}`);
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
