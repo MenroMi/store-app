@@ -92,7 +92,7 @@ const Bag = () => {
                           gender: { data: genderData },
                         },
                       }: AttrFromData) => (
-                        <Box sx={{ padding: '0' }}>
+                        <Box key={id} sx={{ padding: '0' }}>
                           <CardBag
                             key={id}
                             id={id}
