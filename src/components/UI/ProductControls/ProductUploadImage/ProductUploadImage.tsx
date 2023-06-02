@@ -15,6 +15,10 @@ import {
   useTheme,
 } from '@mui/material';
 
+// components
+import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
+import ProductImageConatiner from '../ProductImageContainer/ProductImageContainer';
+
 // assets
 import imageIcon from '@/assets/icons/gallery.svg';
 
@@ -23,24 +27,19 @@ import { CustomUploadWrapper } from './ProductUploadImageStyles';
 
 // interfaces
 import { IProductUploadImageProps, ISelectedImage } from '@/types/formProductTypes';
-import ProductImageConatiner from '../ProductImageContainer/ProductImageContainer';
-import ModalDeleteItem from '@/components/Modals/ModalDeleteItem/ModalDeleteItem';
+
+// context
 import { ImagesContext } from '@/providers/images';
 import { ModalContext } from '@/providers/modal';
-import { deleteImage } from '@/services/productApi';
 
 export default function ProductUploadImage({ handleChooseImage }: IProductUploadImageProps) {
   const theme = useTheme<Theme>();
   const queryDownLg = useMediaQuery<unknown>(theme.breakpoints.down('lg'));
   const queryUpMd = useMediaQuery<unknown>(theme.breakpoints.up('md'));
 
-  const {
-    selectedImages,
-    setSelectedImages,
-    setCurrentImageIds,
-    imageIdsToDelete,
-    setImageIdsToDelete,
-  } = useContext(ImagesContext);
+  const { selectedImages, setSelectedImages, setCurrentImageIds, setImageIdsToDelete } =
+    useContext(ImagesContext);
+
   const { clickedId, setIsOpen } = useContext(ModalContext);
 
   const handleDeleteImage = async (id: number) => {
@@ -52,13 +51,6 @@ export default function ProductUploadImage({ handleChooseImage }: IProductUpload
       setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
       setCurrentImageIds((prevIds) => prevIds.filter((currentId) => +currentId !== id));
       setImageIdsToDelete((prevIds) => [...prevIds, id]);
-
-      // deleteImage(
-      //   clickedImage!.id,
-      //   localStorage.getItem('token') || sessionStorage.getItem('token') || 'guest'
-      // );
-
-      console.log(imageIdsToDelete);
     } else {
       setSelectedImages((prevImages) => prevImages.filter((image) => image.id !== id));
     }
