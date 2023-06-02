@@ -1,7 +1,9 @@
 // basic
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { IGetStaticProps } from '@/types/productTypes';
+import { Routes } from '@/constants/routes';
 
 // layout
 import Layout from '@/components/Layout/MainLayout';
@@ -17,7 +19,6 @@ import { ProductContainer } from '@/styles/pageStyles/ProductStyles';
 
 // services
 import { getDataWithField, getProductById } from '@/services/productApi';
-import { IGetStaticProps } from '@/types/productTypes';
 import { FiltersContext } from '@/providers/filters';
 
 export default function SingleProductPage() {
@@ -28,6 +29,11 @@ export default function SingleProductPage() {
   const { data: product, isLoading: productLoading } = useQuery(['product', productId], () =>
     getProductById(productId)
   );
+
+  useEffect(() => {
+    !product && router.push(Routes.error404);   
+  }, [product]);
+
   const { data: sizes, isLoading: sizesLoading } = useQuery(['sizes'], () =>
     getDataWithField('sizes', 'value')
   );
