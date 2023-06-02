@@ -1,5 +1,5 @@
 import { ICategory } from '@/types/cardsSliderTypes';
-import { ISizesOptionsData } from '@/types/addProductTypes';
+import { ISizesOptionsData } from '@/types/formProductTypes';
 
 export interface ICardListProps {
   products?: any[];

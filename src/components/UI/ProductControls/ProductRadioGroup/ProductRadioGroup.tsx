@@ -1,5 +1,5 @@
 // libs
-import { IAddProductRadioGroup } from '@/types/addProductTypes';
+import { IProductRadioGroup } from '@/types/formProductTypes';
 import {
   FormControl,
   FormLabel,
@@ -12,13 +12,13 @@ import {
   Theme,
 } from '@mui/material';
 
-export default function AddProductRadioGroup({
+export default function ProductRadioGroup({
   selectedSize,
   availableSize,
   handleSelectSize,
   sizes,
   isAddPage
-}: IAddProductRadioGroup) {
+}: IProductRadioGroup) {
   const theme = useTheme<Theme>();
   return (
     <FormControl>
