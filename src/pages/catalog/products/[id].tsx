@@ -31,7 +31,7 @@ export default function SingleProductPage() {
   );
 
   useEffect(() => {
-    !product && router.push(Routes.error404);   
+    !product && router.push(Routes.error404);
   }, [product]);
 
   const { data: sizes, isLoading: sizesLoading } = useQuery(['sizes'], () =>
@@ -39,19 +39,8 @@ export default function SingleProductPage() {
   );
 
   useEffect(() => {
-    let newActiveFilters = { ...contextFilters?.activeFilters };
-
-    for (let key in newActiveFilters) {
-      if (key === 'name') {
-        continue;
-      }
-
-      delete newActiveFilters[key];
-      continue;
-    }
-
     return () => {
-      contextFilters?.setActiveFilters({ ...newActiveFilters });
+      contextFilters?.setActiveFilters({ page: ['1'] });
       return;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
