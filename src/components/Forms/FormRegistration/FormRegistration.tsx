@@ -67,9 +67,9 @@ const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }:
               type={type}
               autoComplete={(id === 'password' || id === 'confirm') ? "current-password" : "on"}
               inputProps={{
-                minLength: (id === 'password' || id === 'confirm') && 8,
-                title: id === 'confirm' ? `passwords don't match` : '',
-                pattern: id === 'confirm' && `${formData.password}`,
+                minLength: (id === 'password' || id === 'confirm') ? 8 : 0,
+                title: id === 'confirm' ? `passwords don't match` : undefined,
+                pattern: id === 'confirm' ? `${formData.password}` : undefined,
               }}
               value={formData[id as keyof IRegistration]}
               onChange={handleChange}
