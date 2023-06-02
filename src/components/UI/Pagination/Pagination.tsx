@@ -1,4 +1,4 @@
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 import { getFilteredData } from '@/services/searchApi';
 import { Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';

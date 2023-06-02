@@ -28,7 +28,7 @@ import { getFilteredData } from '@/services/searchApi';
 import { useQuery } from '@tanstack/react-query';
 import { Routes } from '@/constants/routes';
 import { useContext } from 'react';
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 const CardList = () => {
   const theme = useTheme<Theme>();

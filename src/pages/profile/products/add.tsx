@@ -27,9 +27,9 @@ import { getDataWithField, getUserID, postProduct, uploadImage } from '@/service
 import { IProductData } from '@/types/addProductTypes';
 
 // context
-import { ImagesContext } from '@/components/Providers/images';
-import { ModalContext } from '@/components/Providers/modal';
-import { NotificationContext } from '@/components/Providers/notification';
+import { ImagesContext } from '@/providers/images';
+import { ModalContext } from '@/providers/modal';
+import { NotificationContext } from '@/providers/notification';
 
 export default function AddProduct() {
   // useQuery

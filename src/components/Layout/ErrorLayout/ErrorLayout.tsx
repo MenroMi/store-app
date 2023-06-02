@@ -9,7 +9,7 @@ import { Button, styled, Box, useMediaQuery  } from '@mui/material';
 import theme from '@/utils/mui/theme';
 
 // context Provider
-import { UserContext } from '@/components/Providers/user';
+import { UserContext } from '@/providers/user';
 
 // components constants
 import Header from '@/components/UI/Header';

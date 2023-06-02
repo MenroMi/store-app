@@ -10,7 +10,7 @@ import React, {
 import Image from 'next/image';
 
 // context
-import { FiltersContext } from '@/contexts/filtersContext';
+import { FiltersContext } from '@/providers/filters';
 
 // services
 import { getSearchProducts } from '@/services/searchApi';

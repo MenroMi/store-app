@@ -25,6 +25,8 @@ import { Routes } from '@/constants/routes';
 import { IFormProps } from '@/types/formTypes';
 import ButtonLoader from '@/components/UI/Buttons/ButtonLoader/ButtonLoader';
 import { ChangeEvent } from 'react';
+import { AUTH_INPUTS } from '@/constants/ui';
+import { IRegistration } from '@/types';
 
 const FormMui = styled('form')({
   display: 'flex',
@@ -49,98 +51,31 @@ const FormRegistration = ({ handleSubmit, formData = {}, setFormData, loading }:
   return (
     <FormMui action="" onSubmit={handleSubmit}>
       <Box component={'div'} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        {Object.keys(formData).includes('name') && (
-          <FormControl>
-            <FormLabel htmlFor="name">
-              <Typography variant="caption" sx={{ display: 'inline' }}>
-                Name{' '}
-              </Typography>
+        {AUTH_INPUTS.filter(input => Object.keys(formData).includes(input.id)).map(({ id, placeholder, label, type }) => (
+          <FormControl key={id}>
+            <FormLabel htmlFor={id}>
+              <Typography variant="caption" sx={{ display: 'inline' }}>{label}{' '}</Typography>
               <Typography variant="caption" sx={{ display: 'inline', color: main }}>
                 *
               </Typography>
             </FormLabel>
             <OutlinedInput
               sx={{ mt: 1 }}
-              id="name"
-              placeholder="Hayman Andrews"
+              id={id}
+              placeholder={placeholder}
               required
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </FormControl>
-        )}
-        {Object.keys(formData).includes('email') && (
-          <FormControl>
-            <FormLabel htmlFor="email">
-              <Typography variant="caption" sx={{ display: 'inline' }}>
-                Email{' '}
-              </Typography>
-              <Typography variant="caption" sx={{ display: 'inline', color: main }}>
-                *
-              </Typography>
-            </FormLabel>
-            <OutlinedInput
-              sx={{ mt: 1 }}
-              id="email"
-              placeholder="example@mail.com"
-              required
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              
-            />
-          </FormControl>
-          
-        )}
-        {Object.keys(formData).includes('password') && (
-          <FormControl>
-            <FormLabel htmlFor="password">
-              <Typography variant="caption" sx={{ display: 'inline' }}>
-                Password{' '}
-              </Typography>
-              <Typography variant="caption" sx={{ display: 'inline', color: main }}>
-                *
-              </Typography>
-            </FormLabel>
-            <OutlinedInput
-              sx={{ mt: 1 }}
-              id="password"
-              required
-              placeholder="at least 8 characters"
-              type="password"
-              inputProps={{ minLength: 8 }}
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </FormControl>
-        )}
-        {Object.keys(formData).includes('confirm') && (
-          <FormControl>
-            <FormLabel htmlFor="confirm">
-              <Typography variant="caption" sx={{ display: 'inline' }}>
-                Confirm password{' '}
-              </Typography>
-              <Typography variant="caption" sx={{ display: 'inline', color: main }}>
-                *
-              </Typography>
-            </FormLabel>
-            <OutlinedInput
-              sx={{  mt: 1 }}
-              id="confirm"
-              required
-              placeholder="at least 8 characters"
-              type="password"
+              type={type}
+              autoComplete={(id === 'password' || id === 'confirm') ? "current-password" : "on"}
               inputProps={{
-                minLength: 8,
-                title: `passwords don't match`,
-                pattern: `${formData.password}`,
+                minLength: (id === 'password' || id === 'confirm') && 8,
+                title: id === 'confirm' ? `passwords don't match` : '',
+                pattern: id === 'confirm' && `${formData.password}`,
               }}
-              value={formData.confirm}
+              value={formData[id as keyof IRegistration]}
               onChange={handleChange}
             />
           </FormControl>
-        )}
+        ))}
       </Box>
       {pathname === Routes.login && (
         <Box
