@@ -33,8 +33,20 @@ export default function SingleProductPage() {
   );
 
   useEffect(() => {
+    let newActiveFilters = { ...contextFilters?.activeFilters };
+
+    for (let key in newActiveFilters) {
+      if (key === 'name') {
+        continue;
+      }
+
+      delete newActiveFilters[key];
+      continue;
+    }
+
     return () => {
-      contextFilters?.setActiveFilters({ name: [] });
+      contextFilters?.setActiveFilters({ ...newActiveFilters });
+      return;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
